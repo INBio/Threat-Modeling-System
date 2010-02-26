@@ -1,0 +1,63 @@
+<!DOCTYPE web-app PUBLIC
+"-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+"http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+	<display-name>IABIN - Modeling Web Application</display-name>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+            /WEB-INF/applicationContext.xml,
+			classpath*:org/inbio/modeling/**/applicationContext*.xml,
+		</param-value>
+	</context-param>
+    <!-- Otras opciones para hacer lo mismo
+		 Opcion 1:
+			classpath*:org/inbio/modeling/web/**/applicationContext*.xml,
+			classpath*:org/inbio/modeling/core/**/applicationContext*.xml
+
+		 Opcion 2:
+			classpath*:org/inbio/modeling/web/context/applicationContext-*.xml
+			classpath*:org/inbio/modeling/core/context/applicationContext.xml,
+			classpath*:org/inbio/modeling/core/context/applicationContext-*.xml
+    -->
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<servlet>
+		<servlet-name>dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<!-- Main dispatcher -->
+	<servlet-mapping>
+		<servlet-name>dispatcher</servlet-name>
+		<url-pattern>*.html</url-pattern>
+	</servlet-mapping>
+
+	<!-- Session time out -->
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+
+	<!-- Welcome jsp -->
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+
+	<!-- Define the basename for a resource bundle -->
+	<context-param>
+		<param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+		<param-value>org.inbio.modeling.web.i18n.messages</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>/WEB-INF/classes/log4j.xml</param-value>
+	</context-param>
+
+</web-app>
