@@ -8,8 +8,6 @@
 	<name>Modeling application</name>
 	<url>http://maven.apache.org</url>
 
-
-
 	<developers>
 		<developer>
 			<id>asanabria</id>
@@ -23,27 +21,47 @@
 			<timezone>-6</timezone>
 		</developer>
 	</developers>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.0.2</version>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-    <modules>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.0.2</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<modules>
 		<module>modeling-core</module>
 		<module>modeling-web</module>
 	</modules>
-    <properties>
+	<properties>
 		<netbeans.hint.deploy.server>Tomcat60</netbeans.hint.deploy.server>
 	</properties>
 
+	<distributionManagement>
+		<repository>
+			<id>inbio</id>
+			<url>http://pulsatrix.inbio.ac.cr:9876/archiva/repository/inbio/</url>
+		</repository>
+	</distributionManagement>
+
+	<repositories>
+		<repository>
+			<id>inbio</id>
+			<name>INBio - Archiva Managed Repository</name>
+			<url>http://pulsatrix.inbio.ac.cr:9876/archiva/repository/inbio/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 </project>
 
 
