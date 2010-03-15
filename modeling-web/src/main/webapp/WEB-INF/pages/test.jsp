@@ -1,15 +1,26 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ include file="common/includes.jsp" %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%@include file="common/taglibs" %>
 
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    </head>
-    <body>
-        <div id="contenido">
-            <h1><fmt:message key="welcome"/></h1>
-        </div>
-    </body>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<%@ include file="common/theme" %>
+		<%@ include file="common/javascript" %>
+	</head>
+	<body>
+		<div id="contenido">
+			<h1><fmt:message key="welcome"/></h1>
+			<table>
+				<tr>
+					<td>Nombre de la colecci&oacute;n</td>
+				</tr>
+				<c:forEach items="${collections}" var="collection">
+					<tr>
+						<td><c:out value="${collection}" /></td>
+					</tr>
+				</c:forEach>
+			</table>
+		</div>
+	</body>
 </html>

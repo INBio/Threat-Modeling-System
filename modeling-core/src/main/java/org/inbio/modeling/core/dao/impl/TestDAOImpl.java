@@ -42,7 +42,7 @@ public class TestDAOImpl extends BaseDAOImpl implements TestDAO {
         @Override
         public String mapRow(ResultSet rs, int rowNum) throws SQLException {
             String s = new String();
-            s = rs.getString("id");
+            s = rs.getString("name");
             return s;
         }
     }

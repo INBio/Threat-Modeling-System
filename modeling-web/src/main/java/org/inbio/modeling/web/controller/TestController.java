@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 import org.inbio.modeling.core.manager.TestManager;
 
@@ -30,7 +29,7 @@ public class TestController implements Controller {
 			System.out.println("Name: "+value);
 		}
 
-        return new ModelAndView("test");
+        return new ModelAndView("test", "collections", testList);
     }
 
     public TestManager getTestManager() {
