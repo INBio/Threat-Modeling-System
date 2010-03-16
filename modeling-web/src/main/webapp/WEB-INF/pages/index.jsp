@@ -12,7 +12,8 @@
     </head>
     <body>
         <div id="contenido">
-            <h1><fmt:message key="welcome"/></h1>
+            <h1><fmt:message key="examples"/></h1>
+			<a href="test.html">Ejemplo 1</a>
         </div>
     </body>
 </html>
