@@ -18,12 +18,14 @@
           class="org.springframework.web.servlet.mvc.ParameterizableViewController"
           p:viewName="index" />
 
-    <bean id="layerController" class="org.inbio.modeling.web.controller.LayerController">
+    <bean id="layerController"
+		  class="org.inbio.modeling.web.controller.LayerController"
+		  p:commandName="layersForm"
+		  p:commandClass="org.inbio.modeling.web.forms.LayersForm">
         <property name="layerManager" ref="layerManager" />
 	</bean>
 
-    <bean name="intervalsController"
-          class="org.inbio.modeling.web.controller.IntervalsController"
+	<bean name="intervalsController" class="org.inbio.modeling.web.controller.IntervalsController"
 		  p:commandName="layersForm"
 		  p:commandClass="org.inbio.modeling.web.forms.LayersForm"/>
 

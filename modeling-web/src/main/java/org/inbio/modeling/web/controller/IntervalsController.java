@@ -17,49 +17,39 @@
  */
 package org.inbio.modeling.web.controller;
 
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.inbio.modeling.core.dto.LayerDTO;
 import org.inbio.modeling.web.forms.LayersForm;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.AbstractCommandController;
+import org.springframework.web.servlet.mvc.AbstractFormController;
 
 /**
  *
  * @author asanabria
  */
-public class IntervalsController  extends AbstractCommandController{
+public class IntervalsController extends AbstractFormController {
 
-	@Override
-	protected ModelAndView handle(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
-
-		System.out.println("#-> Testing functionality 1");
-		LayersForm layers = (LayersForm)command;
-
-		System.out.println("#-> "+layers.getSelectedLayers().size());
-
-		return new ModelAndView("intervals");
-	}
-
-
-
-	/*
 
 	@Override
 	protected ModelAndView processFormSubmission(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
 
-		System.out.println("#-> Testing functionality 1");
 		LayersForm layers = (LayersForm)command;
 
 		System.out.println("#-> "+layers.getSelectedLayers().size());
 
-		return new ModelAndView("intervals");
+		ModelAndView mv = new ModelAndView("intervals", "layers", layers.getSelectedLayers());
+		mv.addObject("values", layers.getSelectedValues());
+		return mv;
 	}
 
 	@Override
 	protected ModelAndView showForm(HttpServletRequest request, HttpServletResponse response, BindException errors) throws Exception {
+
+		System.out.println("asdfasdfasdfasdfasd");
+
 		return new ModelAndView("intervals");
 	}
-	 *
-	 */
 }

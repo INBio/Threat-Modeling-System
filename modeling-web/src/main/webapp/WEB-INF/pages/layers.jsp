@@ -22,7 +22,7 @@
 				for each(var selected in selectedElements){
 					if ( selected.checked == true ){
 
-						selectedValue = document.getElementById("layerValue_"+selected.value);
+						selectedValue = document.getElementById("layer_"+selected.value);
 
 						if(selected.value != undefined &&
 								selectedValue.value != undefined){
@@ -50,7 +50,7 @@
 
 			function setValueToZero(selected){
 
-				var selectedValue = document.getElementById("layerValue_"+selected.value);
+				var selectedValue = document.getElementById("layer_"+selected.value);
 
 				if(selected.checked == true){
 					selectedValue.disabled = false;
@@ -67,7 +67,7 @@
 
 			function send(){
 
-				var form = document.forms["layersForm"].submit();
+				document.forms["layersForm"].submit();
 				return true;
 			}
 			//-->
@@ -91,17 +91,17 @@
 					<td><fmt:message key="layer.layerName"/></td>
 					<td><fmt:message key="layer.importanceValue"/></td>
 				</tr>
-				<form action="intervals.html" id="layersForm">
+				<form method="post" action="intervals.html" id="layersForm">
 					<c:forEach items="${layers}" var="layer"  varStatus="current">
 						<tr>
 							<td>
-								<input type="checkbox" name="selectedLayers" value="${current.index}" onclick="setValueToZero(this);"/>
+								<input type="checkbox" name="selectedLayers" value="${layer}" onclick="setValueToZero(this);"/>
 							</td>
 							<td>
 								<c:out value="${layer}" />
 							</td>
 							<td>
-								<input  type="text" disabled="true" maxlength="2" id="layerValue_${current.index}" name="importanceValue" onkeyup="calculateValues();">
+								<input  type="text" disabled="true" maxlength="2" id="layer_${layer}" name="selectedValues" onkeyup="calculateValues();">
 							</td>
 						</tr>
 					</c:forEach>

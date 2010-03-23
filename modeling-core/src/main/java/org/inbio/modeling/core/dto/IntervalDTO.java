@@ -15,32 +15,39 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.inbio.modeling.web.forms;
-
-import java.util.List;
+package org.inbio.modeling.core.dto;
 
 /**
  *
  * @author asanabria
  */
-public class LayersForm {
+public class IntervalDTO {
 
-	private List selectedLayers;
-	private List selectedValues;
+	private int min;
+	private int max;
+	private String description;
 
-	public List getSelectedLayers() {
-		return selectedLayers;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setSelectedLayers(List selectedLayers) {
-		this.selectedLayers = selectedLayers;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public List getSelectedValues() {
-		return selectedValues;
+	public int getMax() {
+		return max;
 	}
 
-	public void setSelectedValues(List selectedValues) {
-		this.selectedValues = selectedValues;
+	public void setMax(int max) {
+		this.max = max;
+	}
+
+	public int getMin() {
+		return min;
+	}
+
+	public void setMin(int min) {
+		this.min = min;
 	}
 }

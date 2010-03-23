@@ -17,37 +17,37 @@
  */
 package org.inbio.modeling.web.controller;
 
-import org.springframework.web.servlet.mvc.Controller;
-import org.springframework.web.servlet.ModelAndView;
-import javax.servlet.ServletException;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import java.io.IOException;
-import java.util.List;
 import org.inbio.modeling.core.manager.LayerManager;
+import org.inbio.modeling.core.dto.LayerDTO;
+import org.inbio.modeling.web.forms.LayersForm;
+import org.springframework.validation.BindException;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.AbstractFormController;
 
-public class LayerController implements Controller {
+public class LayerController extends AbstractFormController {
 
     protected final Log logger = LogFactory.getLog(getClass());
 
     LayerManager layerManager;
 
-    @Override
-    public ModelAndView handleRequest( HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
+	@Override
+	protected ModelAndView showForm(HttpServletRequest request, HttpServletResponse response, BindException errors) throws Exception {
         logger.info("Starting " + this.getClass());
 
 		List <String> testList = layerManager.getLayerList();
 
-		for (String value: testList){
-			System.out.println("Name: "+value);
-		}
-
         return new ModelAndView("layers", "layers", testList);
-    }
+	}
+
+	@Override
+	protected ModelAndView processFormSubmission(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 
 	public LayerManager getLayerManager() {
 		return layerManager;

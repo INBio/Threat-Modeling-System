@@ -15,7 +15,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.inbio.modeling.web.forms;
+
+package org.inbio.modeling.core.dto;
 
 import java.util.List;
 
@@ -23,24 +24,42 @@ import java.util.List;
  *
  * @author asanabria
  */
-public class LayersForm {
+public class LayerDTO {
 
-	private List selectedLayers;
-	private List selectedValues;
+	private int	   weight;
+	private String name;
+	private String description;
+	private List<IntervalDTO> intervals;
 
-	public List getSelectedLayers() {
-		return selectedLayers;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setSelectedLayers(List selectedLayers) {
-		this.selectedLayers = selectedLayers;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public List getSelectedValues() {
-		return selectedValues;
+	public List<IntervalDTO> getIntervals() {
+		return intervals;
 	}
 
-	public void setSelectedValues(List selectedValues) {
-		this.selectedValues = selectedValues;
+	public void setIntervals(List<IntervalDTO> intervals) {
+		this.intervals = intervals;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getWeight() {
+		return weight;
+	}
+
+	public void setWeight(int weight) {
+		this.weight = weight;
 	}
 }
