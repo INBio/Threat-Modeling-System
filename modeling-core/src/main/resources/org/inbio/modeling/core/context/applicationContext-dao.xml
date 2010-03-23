@@ -12,6 +12,6 @@
         <property name="dataSource" ref="dataSource" />
 	</bean>
 
-    <bean id="testDAO" class="org.inbio.modeling.core.dao.impl.TestDAOImpl" parent="baseDAO" />
+    <bean id="layerDAO" class="org.inbio.modeling.core.dao.impl.LayerDAOImpl" parent="baseDAO" />
 
 </beans>

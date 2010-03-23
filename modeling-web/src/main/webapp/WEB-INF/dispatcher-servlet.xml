@@ -18,8 +18,10 @@
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="mappings">
             <props>
+                <prop key="about.html">aboutController</prop>
                 <prop key="index.html">indexController</prop>
-                <prop key="test.html">testController</prop>
+                <prop key="layers.html">layerController</prop>
+                <prop key="intervals.html">intervalsController</prop>
             </props>
         </property>
     </bean>

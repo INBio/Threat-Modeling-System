@@ -1,11 +1,13 @@
 <link rel="stylesheet" 
 	  type="text/css"
-	  href="<c:out value="${pageContext.request.contextPath}"/>/<spring:theme code='styleSheet'/>"/>
+	  href="<c:out value="${pageContext.request.contextPath}"/><spring:theme code='styleSheet'/>"/>
 
 <link rel="stylesheet" 
 		type="text/css"
-		href="<c:out value="${pageContext.request.contextPath}"/>/<spring:theme code='autocomplete'/>"/>
+		href="<c:out
+		value="${pageContext.request.contextPath}"/><spring:theme code='autocomplete'/>"/>
 
 <link rel="stylesheet" 
 		type="text/css"
-		href="<c:out value="${pageContext.request.contextPath}"/>/<spring:theme code='tree'/>"/>
+		href="<c:out
+		value="${pageContext.request.contextPath}"/><spring:theme code='tree'/>"/>

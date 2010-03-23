@@ -12,8 +12,8 @@
     </head>
     <body>
         <div id="contenido">
-            <h1><fmt:message key="examples"/></h1>
-			<a href="test.html">Ejemplo 1</a>
+            <h1>Contenidos</h1>
+			<a href="layers.html">Capas</a>
         </div>
     </body>
 </html>

@@ -8,8 +8,8 @@
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
 	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
-    <bean id="testManager" class="org.inbio.modeling.core.manager.impl.TestManagerImpl">
-        <property name="testDAO" ref="testDAO" />
+    <bean id="layerManager" class="org.inbio.modeling.core.manager.impl.LayerManagerImpl">
+        <property name="layerDAO" ref="layerDAO" />
 	</bean>
 
 </beans>

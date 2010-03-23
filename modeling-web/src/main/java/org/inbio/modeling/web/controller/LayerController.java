@@ -26,13 +26,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import java.io.IOException;
 import java.util.List;
-import org.inbio.modeling.core.manager.TestManager;
+import org.inbio.modeling.core.manager.LayerManager;
 
-public class TestController implements Controller {
+public class LayerController implements Controller {
 
     protected final Log logger = LogFactory.getLog(getClass());
 
-    TestManager testManager;
+    LayerManager layerManager;
 
     @Override
     public ModelAndView handleRequest( HttpServletRequest request, HttpServletResponse response)
@@ -40,20 +40,20 @@ public class TestController implements Controller {
 
         logger.info("Starting " + this.getClass());
 
-		List <String> testList = testManager.getTestList();
+		List <String> testList = layerManager.getLayerList();
 
 		for (String value: testList){
 			System.out.println("Name: "+value);
 		}
 
-        return new ModelAndView("test", "collections", testList);
+        return new ModelAndView("layers", "layers", testList);
     }
 
-    public TestManager getTestManager() {
-        return testManager;
-    }
+	public LayerManager getLayerManager() {
+		return layerManager;
+	}
 
-    public void setTestManager(TestManager testManager) {
-        this.testManager = testManager;
-    }
+	public void setLayerManager(LayerManager layerManager) {
+		this.layerManager = layerManager;
+	}
 }

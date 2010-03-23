@@ -15,12 +15,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-ackage org.inbio.modeling.core.dao;
+package org.inbio.modeling.web.forms;
 
 import java.util.List;
 
-public interface TestDAO extends BaseDAO {
+/**
+ *
+ * @author asanabria
+ */
+public class LayersForm {
 
-    public List<String> getTestList();
+	private List selectedLayers;
 
+	public List getSelectedLayers() {
+		return selectedLayers;
+	}
+
+	public void setSelectedLayers(List selectedLayers) {
+		this.selectedLayers = selectedLayers;
+	}
 }

@@ -15,32 +15,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.inbio.modeling.core.manager.impl;
+package org.inbio.modeling.core.manager;
 
 import java.util.List;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.inbio.modeling.core.dao.TestDAO;
-import org.inbio.modeling.core.manager.TestManager;
 
-public class TestManagerImpl implements TestManager {
+public interface LayerManager{
 
-	TestDAO testDAO;
-	
-    protected final Log logger = LogFactory.getLog(getClass());
+    public List<String> getLayerList();
 
-
-    @Override
-    public List<String> getTestList() {
-        logger.info("Starting getList()");
-        return testDAO.getTestList();
-    }
-
-    public TestDAO getTestDAO() {
-        return testDAO;
-    }
-
-    public void setTestDAO(TestDAO testDAO) {
-        this.testDAO = testDAO;
-    }
 }

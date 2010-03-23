@@ -9,11 +9,22 @@
 	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
     <!-- The index controller -->
+    <bean name="aboutController"
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+		  p:viewName="common/about" />
+
+    <!-- The index controller -->
     <bean name="indexController"
           class="org.springframework.web.servlet.mvc.ParameterizableViewController"
           p:viewName="index" />
 
-    <bean id="testController" class="org.inbio.modeling.web.controller.TestController">
-        <property name="testManager" ref="testManager" />
+    <bean id="layerController" class="org.inbio.modeling.web.controller.LayerController">
+        <property name="layerManager" ref="layerManager" />
 	</bean>
+
+    <bean name="intervalsController"
+          class="org.inbio.modeling.web.controller.IntervalsController"
+		  p:commandName="layersForm"
+		  p:commandClass="org.inbio.modeling.web.forms.LayersForm"/>
+
 </beans>
