@@ -45,7 +45,7 @@ public class LayerController extends AbstractFormController {
 
 	@Override
 	protected ModelAndView processFormSubmission(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
-		throw new UnsupportedOperationException("Not supported yet.");
+		return new ModelAndView("index");
 	}
 
 	public LayerManager getLayerManager() {

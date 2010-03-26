@@ -60,6 +60,6 @@ public class IntervalsController extends AbstractFormController {
 
 	@Override
 	protected ModelAndView showForm(HttpServletRequest request, HttpServletResponse response, BindException errors) throws Exception {
-		throw new UnsupportedOperationException("Not supported yet.");
+		return new ModelAndView("index");
 	}
 }

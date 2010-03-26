@@ -19,12 +19,11 @@ public class ShowMapController extends AbstractFormController {
 
 	@Override
 	protected ModelAndView processFormSubmission(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
-		System.out.println("Probando, probando... ");
 		return new ModelAndView("showResultingMap");
 	}
 
 	@Override
 	protected ModelAndView showForm(HttpServletRequest request, HttpServletResponse response, BindException errors) throws Exception {
-		throw new UnsupportedOperationException("Not supported yet.");
+		return new ModelAndView("index");
 	}
 }
