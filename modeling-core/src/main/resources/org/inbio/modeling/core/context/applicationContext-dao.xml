@@ -12,6 +12,10 @@
         <property name="dataSource" ref="dataSource" />
 	</bean>
 
+	<!-- DAO's -->
     <bean id="layerDAO" class="org.inbio.modeling.core.dao.impl.LayerDAOImpl" parent="baseDAO" />
+
+	<!-- DTOFactories's -->
+    <bean id="layerDTOFactory" class="org.inbio.modeling.core.dto.LayerDTOFactory" />
 
 </beans>

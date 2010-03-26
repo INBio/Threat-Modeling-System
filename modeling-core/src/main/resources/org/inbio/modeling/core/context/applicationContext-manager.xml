@@ -10,6 +10,7 @@
 
     <bean id="layerManager" class="org.inbio.modeling.core.manager.impl.LayerManagerImpl">
         <property name="layerDAO" ref="layerDAO" />
+        <property name="layerDTOFactory" ref="layerDTOFactory" />
 	</bean>
 
 </beans>

@@ -31,12 +31,9 @@ public class LayerDAOImpl extends BaseDAOImpl implements LayerDAO {
 	}
 
 	@Override
-	public List<String> getLayerList() {
+	public List<String> getAvailableLayers() {
 
 		String dirName = System.getenv("HOME")+"/Layers/";
-
-		System.out.println(dirName);
-
 		List<String> names = new ArrayList<String>();
 
 		try{

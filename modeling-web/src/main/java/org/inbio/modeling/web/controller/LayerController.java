@@ -22,9 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.inbio.modeling.core.manager.LayerManager;
 import org.inbio.modeling.core.dto.LayerDTO;
-import org.inbio.modeling.web.forms.LayersForm;
+import org.inbio.modeling.core.manager.LayerManager;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractFormController;
@@ -39,9 +38,9 @@ public class LayerController extends AbstractFormController {
 	protected ModelAndView showForm(HttpServletRequest request, HttpServletResponse response, BindException errors) throws Exception {
         logger.info("Starting " + this.getClass());
 
-		List <String> testList = layerManager.getLayerList();
+		List <LayerDTO> layerList = layerManager.getLayerList();
 
-        return new ModelAndView("layers", "layers", testList);
+        return new ModelAndView("layers", "layers", layerList);
 	}
 
 	@Override

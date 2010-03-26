@@ -21,6 +21,6 @@ import java.util.List;
 
 public interface LayerDAO extends BaseDAO {
 
-    public List<String> getLayerList();
+    public List<String> getAvailableLayers();
 
 }

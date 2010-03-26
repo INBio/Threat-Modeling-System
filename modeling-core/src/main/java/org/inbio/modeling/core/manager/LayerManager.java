@@ -18,9 +18,10 @@
 package org.inbio.modeling.core.manager;
 
 import java.util.List;
+import org.inbio.modeling.core.dto.LayerDTO;
 
 public interface LayerManager{
 
-    public List<String> getLayerList();
+    public List<LayerDTO> getLayerList();
 
 }

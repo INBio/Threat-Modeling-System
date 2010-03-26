@@ -34,24 +34,23 @@
 				<tr>
 					<td><fmt:message key="common.layers"/></td>
 				</tr>
-				<form method="post" action="intervals.html" id="intevalsForm">
+				<form method="post" action="showResultingMap.html" id="intevalsForm">
 					<c:forEach items="${layers}" var="layer"  varStatus="current">
 						<tr>
 							<td>
-								<c:out value="${layer}" />
+								<c:out value="${layer.name}" />
 							</td>
-						</tr>
-					</c:forEach>
-					<c:forEach items="${values}" var="value"  varStatus="current">
-						<tr>
 							<td>
-								<c:out value="${value}" />
+								<c:out value="${layer.weight}" />
 							</td>
 						</tr>
 					</c:forEach>
 					<tr>
 						<td align="right">
 							<input id="submitButton" type="button" onclick="send();" value='<fmt:message key="common.acceptChanges"/>' />
+						</td>
+						<td>
+							<input id="submitTesing" type="submit" onclick="send();" value='Submit' />
 						</td>
 					</tr>
 				</form>

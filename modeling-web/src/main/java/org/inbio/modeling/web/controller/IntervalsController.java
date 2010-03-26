@@ -17,6 +17,7 @@
  */
 package org.inbio.modeling.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,18 +39,27 @@ public class IntervalsController extends AbstractFormController {
 
 		LayersForm layers = (LayersForm)command;
 
-		System.out.println("#-> "+layers.getSelectedLayers().size());
+		List<LayerDTO> list = new ArrayList<LayerDTO>();
+		LayerDTO layerDTO = null;
+		int index = 0;
+		String weight = null;
 
-		ModelAndView mv = new ModelAndView("intervals", "layers", layers.getSelectedLayers());
-		mv.addObject("values", layers.getSelectedValues());
-		return mv;
+		for(String layer : layers.getSelectedLayers()){
+			layerDTO = new LayerDTO();
+			layerDTO.setName(layer);
+			list.add(layerDTO);
+		}
+
+		for(LayerDTO layer : list){
+			weight = layers.getSelectedValues().get(index);
+			layer.setWeight(Integer.parseInt(weight));
+		}
+		
+		return new ModelAndView("intervals", "layers", list);
 	}
 
 	@Override
 	protected ModelAndView showForm(HttpServletRequest request, HttpServletResponse response, BindException errors) throws Exception {
-
-		System.out.println("asdfasdfasdfasdfasd");
-
-		return new ModelAndView("intervals");
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 }

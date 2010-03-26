@@ -21,19 +21,21 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.inbio.modeling.core.dao.LayerDAO;
+import org.inbio.modeling.core.dto.LayerDTO;
+import org.inbio.modeling.core.dto.LayerDTOFactory;
 import org.inbio.modeling.core.manager.LayerManager;
 
 public class LayerManagerImpl implements LayerManager {
 
-	LayerDAO layerDAO;
-	
     protected final Log logger = LogFactory.getLog(getClass());
 
+	private LayerDAO layerDAO;
+	private LayerDTOFactory layerDTOFactory;
 
     @Override
-    public List<String> getLayerList() {
+    public List<LayerDTO> getLayerList() {
         logger.info("Starting getList()");
-        return layerDAO.getLayerList();
+		return layerDTOFactory.createDTOList(layerDAO.getAvailableLayers());
     }
 
 	public LayerDAO getLayerDAO() {
@@ -42,5 +44,13 @@ public class LayerManagerImpl implements LayerManager {
 
 	public void setLayerDAO(LayerDAO layerDAO) {
 		this.layerDAO = layerDAO;
+	}
+
+	public LayerDTOFactory getLayerDTOFactory() {
+		return layerDTOFactory;
+	}
+
+	public void setLayerDTOFactory(LayerDTOFactory layerDTOFactory) {
+		this.layerDTOFactory = layerDTOFactory;
 	}
 }

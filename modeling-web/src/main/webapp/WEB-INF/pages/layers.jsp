@@ -95,13 +95,13 @@
 					<c:forEach items="${layers}" var="layer"  varStatus="current">
 						<tr>
 							<td>
-								<input type="checkbox" name="selectedLayers" value="${layer}" onclick="setValueToZero(this);"/>
+								<input type="checkbox" name="selectedLayers" value="${layer.name}" onclick="setValueToZero(this);"/>
 							</td>
 							<td>
-								<c:out value="${layer}" />
+								<c:out value="${layer.name}" />
 							</td>
 							<td>
-								<input  type="text" disabled="true" maxlength="2" id="layer_${layer}" name="selectedValues" onkeyup="calculateValues();">
+								<input  type="text" disabled="true" maxlength="2" id="layer_${layer.name}" name="selectedValues" onkeyup="calculateValues();">
 							</td>
 						</tr>
 					</c:forEach>

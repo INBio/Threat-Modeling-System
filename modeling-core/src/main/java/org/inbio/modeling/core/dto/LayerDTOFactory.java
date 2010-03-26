@@ -15,32 +15,30 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.inbio.modeling.web.forms;
+package org.inbio.modeling.core.dto;
 
+import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  *
  * @author asanabria
  */
-public class LayersForm {
+public class LayerDTOFactory {
 
-	private List<String> selectedLayers;
-	private List<String> selectedValues;
-
-	public List<String> getSelectedLayers() {
-		return selectedLayers;
+	public LayerDTO createDTO(String layerName){
+		LayerDTO lDTO = new LayerDTO();
+		lDTO.setName(layerName);
+		return lDTO;
 	}
 
-	public void setSelectedLayers(List<String> selectedLayers) {
-		this.selectedLayers = selectedLayers;
-	}
+	public List<LayerDTO> createDTOList(List<String> layerNames){
 
-	public List<String> getSelectedValues() {
-		return selectedValues;
-	}
+		List<LayerDTO> resultList = new ArrayList<LayerDTO>();
+		for(String layerName : layerNames)
+			resultList.add(this.createDTO(layerName));
 
-	public void setSelectedValues(List<String> selectedValues) {
-		this.selectedValues = selectedValues;
+		return resultList;
 	}
 }
