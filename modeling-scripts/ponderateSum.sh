@@ -1,43 +1,40 @@
-
 #!/bin/sh
 
 # This script is Free Software under the GNU GPL (>= 3.0)
 #
-# Convert a vector map into a raster map.
-#
+# Do the map algebra: R = M1 * W1 + M2 *W2 where
+# M1:	Map 1
+# W1:	Relative weight of M1
+# M2:	Map 2
+# W2:	Relative weight of M2
+# R	:	Resulting map.
 #
 
 # Arguments
 SUFFIX=$1
 
-MAP1=$2
-WEIGHT_MAP1=$3
+# Map 1 and weight
+M1=$2
+WEIGHT_M1=$3
 
-MAP2=$4
-WEIGHT_MAP2=$5
+# Map 2 and weight
+M2=$4
+WEIGHT_M2=$5
 
 # Variables
-RMAP1="R_$(basename $MAP1 .shp)_$SUFFIX"
-RMAP2="R_$(basename $MAP2 .shp)_$SUFFIX"
-RESULT="RES_$SUFFIX"
+RESMAP="RES_$SUFFIX"
+
+# Raster maps names
+RMAP1="R_$(basename $M1 .shp)_$SUFFIX"
+RMAP2="R_$(basename $M2 .shp)_$SUFFIX"
 
 # Initialization
-LOCATION="Default"
-MAPSET="PERMANENT"
-DBASE="$HOME/Projects/sand_box/grass"
-
-export GISRC="$HOME/.grassrc6"
+export GISRC="/tmp/.grassrc6_$SUFFIX"
 export GISBASE="/usr/lib/grass64"
 export PATH="$PATH:$GISBASE/bin:$GISBASE/scripts"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$GISBASE/lib"
 
-echo "LOCATION_NAME: $LOCATION"	>  $HOME/.grassrc6
-echo "MAPSET: $MAPSET"			>> $HOME/.grassrc6
-echo "DIGITIZER: none"			>> $HOME/.grassrc6
-echo "GISDBASE: $DBASE"			>> $HOME/.grassrc6
-echo "GRASS_GUI: text"			>> $HOME/.grassrc6
-
 # Import the map.
-RES=$(r.mapcalc "$RESULT = $RMAP1*$WEIGHT_MAP1 + $RMAP2*$WEIGHT_MAP2");
+RESULT=$(r.mapcalc "$RESMAP = $RMAP1*$WEIGHT_M1 + $RMAP2*$WEIGHT_M2");
 
-exit $RES;
+exit $RESULT;

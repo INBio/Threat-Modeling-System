@@ -1,20 +1,19 @@
-
-#!/bin/sh
-
+#! /bin/sh
+#
 # This script is Free Software under the GNU GPL (>= 3.0)
 #
-# Convert a vector map into a raster map.
-#
-#
+# Change the configuration of the executed scripts
 
 # Arguments
 LOCATION=$1
 SUFFIX=$2
 
-MAPSET="PERMANENT"
+# Variables
 DBASE="$HOME/Projects/sand_box/grass"
-GISRC="$HOME/.grassrc6_$SUFFIX"
+GISRC="/tmp/.grassrc6_$SUFFIX"
+MAPSET="PERMANENT"
 
+# writes the options to the file.
 echo "LOCATION_NAME: $LOCATION"	>  $GISRC
 echo "MAPSET: $MAPSET"			>> $GISRC 
 echo "DIGITIZER: none"			>> $GISRC

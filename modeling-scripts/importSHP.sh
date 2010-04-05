@@ -1,4 +1,4 @@
-#!/bin/sh
+#! /bin/sh
 
 # This script is Free Software under the GNU GPL (>= 3.0)
 #
@@ -15,29 +15,22 @@ SUFFIX=$2
 
 # Variables
 VMAP="V_$(basename $MAP .shp)_$SUFFIX"
+LOCATION="LOC_$SUFFIX"
 
-# Initialization
-LOCATION="Default"
-MAPSET="PERMANENT"
-DBASE="$HOME/Projects/sand_box/grass"
-
-export GISRC="$HOME/.grassrc6"
+# Environment initialization
 export GISBASE="/usr/lib/grass64"
 export PATH="$PATH:$GISBASE/bin:$GISBASE/scripts"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$GISBASE/lib"
 
-echo "LOCATION_NAME: $LOCATION"	>  $HOME/.grassrc6
-echo "MAPSET: $MAPSET"			>> $HOME/.grassrc6
-echo "DIGITIZER: none"			>> $HOME/.grassrc6
-echo "GISDBASE: $DBASE"			>> $HOME/.grassrc6
-echo "GRASS_GUI: text"			>> $HOME/.grassrc6
+#temporal GRASS RC file
+export GISRC="/tmp/.grassrc6_$SUFFIX"
 
 # Import the map.
-if [ -d "$DBASE/loc_$SUFFIX" ];
+if [ -d "$DBASE/LOC_$SUFFIX" ];
 then
 	RESULT=$(v.in.ogr dsn=$MAP output=$VMAP --quiet);
 else
-	RESULT=$(v.in.ogr dsn=$MAP output=$VMAP location=loc_$SUFFIX --quiet);
+	RESULT=$(v.in.ogr dsn=$MAP output=$VMAP location=$LOCATION --quiet);
 fi;
 
 exit $RESULT;
