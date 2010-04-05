@@ -16,14 +16,14 @@ SUFFIX=$2
 # Variables
 VMAP="V_$(basename $MAP .shp)_$SUFFIX"
 LOCATION="LOC_$SUFFIX"
+DBASE="$HOME/Projects/sand_box/grass"
 
 # Environment initialization
+export GISRC="/tmp/.grassrc6_$SUFFIX" #temporal GRASS RC file
 export GISBASE="/usr/lib/grass64"
 export PATH="$PATH:$GISBASE/bin:$GISBASE/scripts"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$GISBASE/lib"
 
-#temporal GRASS RC file
-export GISRC="/tmp/.grassrc6_$SUFFIX"
 
 # Import the map.
 if [ -d "$DBASE/LOC_$SUFFIX" ];
