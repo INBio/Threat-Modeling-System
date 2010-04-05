@@ -56,7 +56,7 @@ export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$GISBASE/lib"
 
 # Import the maps.
 echo "#-> Importing $MAP1"
-v.in.ogr dsn=$MAP1 output=$VMAP1 location=loc_$TIME;
+v.in.ogr dsn=$MAP1 output=$VMAP1 location=loc_$TIME --quiet
 
 echo "LOCATION_NAME: loc_$TIME"	>  $HOME/.grassrc6
 echo "MAPSET: $MAPSET"			>> $HOME/.grassrc6
@@ -65,13 +65,13 @@ echo "GISDBASE: $DBASE"			>> $HOME/.grassrc6
 echo "GRASS_GUI: text"			>> $HOME/.grassrc6
 
 echo "#-> Importing $MAP2"
-v.in.ogr dsn=$MAP2 output=$VMAP2 
+v.in.ogr dsn=$MAP2 output=$VMAP2 --quiet
 
 # Convert from vector to raster.
 echo "#-> Converting into raster format $MAP1"
-v.to.rast input=$VMAP1 output=$RMAP1 use=cat
+v.to.rast input=$VMAP1 output=$RMAP1 use=cat --quiet
 echo "#-> Converting into raster format $MAP2"
-v.to.rast input=$VMAP2 output=$RMAP2 use=cat
+v.to.rast input=$VMAP2 output=$RMAP2 use=cat --quiet
 
 # Reclasification of the raster information.
 # Changing resolution.
@@ -82,12 +82,12 @@ r.mapcalc "$RESULT = $RMAP1*$WEIGHT_MAP1 + $RMAP2*$WEIGHT_MAP2"
 
 #exporting the work
 echo "#-> Exporting to png"
-r.to.png input=$RESULT output=$RESULT.png
+r.out.png input=$RESULT output=$RESULT.png --quiet
 
 echo "#-> Exporting to vectorial "
-r.to.vect input=$RESULT output=$RESULT feature=area
+r.to.vect input=$RESULT output=$RESULT feature=area --quiet
 
 echo "#-> Exporting to shapefile "
-v.out.ogr input=$RESULT type=area dsn=$RESULT layer=1 format=ESRI_Shapefile 
+v.out.ogr -c input=$RESULT type=area dsn=$RESULT layer=1 format=ESRI_Shapefile  --quiet
 
 exit;

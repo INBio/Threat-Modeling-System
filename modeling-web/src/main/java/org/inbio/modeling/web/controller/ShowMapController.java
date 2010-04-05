@@ -37,9 +37,12 @@ public class ShowMapController extends AbstractFormController {
 
 
 		List<String> commands = new ArrayList<String>();
+//		commands.add("/bin/sh");
+//		commands.add("-c");
+//		commands.add("/home/asanabria/Projects/active/iabin/modelado/src/modeling-scripts/process.sh /home/asanabria/Layers/cobertura_dd.shp 15 /home/asanabria/Layers/redcamino_dd.shp 85 500");
 		commands.add("/bin/sh");
 		commands.add("-c");
-		commands.add("v.in.ogr dsn=/home/asanabria/Layers/cobertura_dd.shp output=mapa location=modeling");
+		commands.add("/home/asanabria/Projects/active/iabin/modelado/src/modeling-scripts/import.sh /home/asanabria/Layers/cobertura_dd.shp 15 /home/asanabria/Layers/redcamino_dd.shp 85");
 
 		SystemCommandExecutorImpl commandExecutor = new SystemCommandExecutorImpl(commands);
 		int result = commandExecutor.executeCommand();
