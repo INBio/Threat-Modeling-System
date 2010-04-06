@@ -42,10 +42,12 @@ public class ShowMapController extends AbstractFormController {
 		List<String> commands = null;
 		SystemCommandExecutorImpl commandExecutor = null;
 
-		Long suffix = Calendar.getInstance().getTimeInMillis();
+//		Long suffix = Calendar.getInstance().getTimeInMillis();
+		Long suffix = new Long(1270573092378L);
 		System.out.println(" #-> Suffix: " + suffix);
 
 /* Step 1 */
+		/*
 		commands = new ArrayList<String>();
 
 		// Arguments of the command
@@ -61,8 +63,11 @@ public class ShowMapController extends AbstractFormController {
 		stderr = commandExecutor.getStandardError();
 		// Prints the output of the command for good or for bad.
 		this.printThis(result, stdout, stderr);
+		 *
+		 */
 
 /* Step 2 */
+		/*
 		commands = new ArrayList<String>();
 
 		// Arguments of the command
@@ -78,6 +83,8 @@ public class ShowMapController extends AbstractFormController {
 		stderr = commandExecutor.getStandardError();
 		// Prints the output of the command for good or for bad.
 		this.printThis(result, stdout, stderr);
+
+		 */
 
 /* Step 3 */
 		commands = new ArrayList<String>();
@@ -97,6 +104,7 @@ public class ShowMapController extends AbstractFormController {
 		this.printThis(result, stdout, stderr);
 
 /* Step 4 */
+		/*
 		commands = new ArrayList<String>();
 
 		// Arguments of the command
@@ -112,8 +120,11 @@ public class ShowMapController extends AbstractFormController {
 		stderr = commandExecutor.getStandardError();
 		// Prints the output of the command for good or for bad.
 		this.printThis(result, stdout, stderr);
+		 *
+		 */
 
 /* Step 5 */
+		/*
 		commands = new ArrayList<String>();
 
 		// Arguments of the command
@@ -129,9 +140,12 @@ public class ShowMapController extends AbstractFormController {
 		stderr = commandExecutor.getStandardError();
 		// Prints the output of the command for good or for bad.
 		this.printThis(result, stdout, stderr);
+		 *
+		 */
 
 
 /* Step 6 */
+		/*
 		commands = new ArrayList<String>();
 
 		// Arguments of the command
@@ -147,8 +161,11 @@ public class ShowMapController extends AbstractFormController {
 		stderr = commandExecutor.getStandardError();
 		// Prints the output of the command for good or for bad.
 		this.printThis(result, stdout, stderr);
+		 *
+		 */
 
 /* Step 6 */
+		/*
 		commands = new ArrayList<String>();
 
 		// Arguments of the command
@@ -166,14 +183,36 @@ public class ShowMapController extends AbstractFormController {
 		stderr = commandExecutor.getStandardError();
 		// Prints the output of the command for good or for bad.
 		this.printThis(result, stdout, stderr);
+		 *
+		 */
 
 /* Step 7 */
+		/*
 		commands = new ArrayList<String>();
 
 		// Arguments of the command
 		commands.add("/bin/sh");
 		commands.add("-c");
 		commands.add("/home/asanabria/Projects/active/iabin/modelado/src/modeling-scripts/exportPNG.sh " + suffix + " ");
+
+		commandExecutor = new SystemCommandExecutorImpl(commands);
+		// executes the command
+		result = commandExecutor.executeCommand();
+		// gets the output of the execution
+		stdout = commandExecutor.getStandardOutput();
+		stderr = commandExecutor.getStandardError();
+		// Prints the output of the command for good or for bad.
+		this.printThis(result, stdout, stderr);
+		 *
+		 */
+
+/* Step 8 */
+		commands = new ArrayList<String>();
+
+		// Arguments of the command
+		commands.add("/bin/sh");
+		commands.add("-c");
+		commands.add("/home/asanabria/Projects/active/iabin/modelado/src/modeling-scripts/getMinMaxValues.sh /home/asanabria/Layers/cobertura_dd.shp " + suffix + " ");
 
 		commandExecutor = new SystemCommandExecutorImpl(commands);
 		// executes the command
