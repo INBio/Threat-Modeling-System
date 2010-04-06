@@ -2,15 +2,15 @@
 
 # This script is Free Software under the GNU GPL (>= 3.0)
 #
-# return the minimun and the maximun values of a raster map.
-# in the format:  "min:max"
+# Returns a list of the differents categories of a raster map.
+#
 
 # Arguments
 MAP=$1
 SUFFIX=$2
 
 # Variables
-RMAP="R_$(basename $MAP .shp)_$SUFFIX"
+VMAP="V_$(basename $MAP .shp)_$SUFFIX"_r
 
 # Initialization
 export GISRC="/tmp/.grassrc6_$SUFFIX"
@@ -18,9 +18,7 @@ export GISBASE="/usr/lib/grass64"
 export PATH="$PATH:$GISBASE/bin:$GISBASE/scripts"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$GISBASE/lib"
 
-RANGE=$(r.info map=$RMAP -r)
-
-RESULT=$(echo $RANGE |sed "s/ /=/g" | awk -F= '{ printf "%s:%s",$2,$4}')
+RESULT=$( v.report map=$VMAP option=area units=k | awk -F'|' '{ printf "%s:%s\r",$1,$2}');
 
 echo $RESULT
 

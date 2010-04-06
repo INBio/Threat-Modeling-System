@@ -222,6 +222,42 @@ public class ShowMapController extends AbstractFormController {
 		stderr = commandExecutor.getStandardError();
 		// Prints the output of the command for good or for bad.
 		this.printThis(result, stdout, stderr);
+/* Step 8 */
+		
+		commands = new ArrayList<String>();
+
+		// Arguments of the command
+		commands.add("/bin/sh");
+		commands.add("-c");
+		commands.add("/home/asanabria/Projects/active/iabin/modelado/src/modeling-scripts/doVectorReclass.sh  /home/asanabria/Layers/cobertura_dd.shp  COB_AGROP " + suffix + " ");
+
+		commandExecutor = new SystemCommandExecutorImpl(commands);
+		// executes the command
+		result = commandExecutor.executeCommand();
+		// gets the output of the execution
+		stdout = commandExecutor.getStandardOutput();
+		stderr = commandExecutor.getStandardError();
+		// Prints the output of the command for good or for bad.
+		this.printThis(result, stdout, stderr);
+
+
+/* Step 9 */
+		commands = new ArrayList<String>();
+
+		// Arguments of the command
+		commands.add("/bin/sh");
+		commands.add("-c");
+		commands.add("/home/asanabria/Projects/active/iabin/modelado/src/modeling-scripts/getCategories.sh  /home/asanabria/Layers/cobertura_dd.shp " + suffix + " ");
+		System.out.println(commands);
+
+		commandExecutor = new SystemCommandExecutorImpl(commands);
+		// executes the command
+		result = commandExecutor.executeCommand();
+		// gets the output of the execution
+		stdout = commandExecutor.getStandardOutput();
+		stderr = commandExecutor.getStandardError();
+		// Prints the output of the command for good or for bad.
+		this.printThis(result, stdout, stderr);
 		System.out.println(" --- Ultimo --- ");
 
 		return new ModelAndView("showResultingMap");
