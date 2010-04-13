@@ -25,8 +25,8 @@ WEIGHT_M2=$5
 RESMAP="RES_$SUFFIX"
 
 # Raster maps names
-RMAP1="R_$(basename $M1 .shp)_$SUFFIX"
-RMAP2="R_$(basename $M2 .shp)_$SUFFIX"
+RMAP1=R_"$M1"_"$SUFFIX"
+RMAP2=R_"$M2"_"$SUFFIX"
 
 # Initialization
 export GISRC="/tmp/.grassrc6_$SUFFIX"

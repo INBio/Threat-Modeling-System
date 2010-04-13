@@ -18,11 +18,11 @@
 package org.inbio.modeling.web.controller;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.inbio.modeling.core.dto.IntervalDTO;
 import org.inbio.modeling.core.dto.LayerDTO;
 import org.inbio.modeling.core.manager.GrassManager;
 import org.inbio.modeling.web.forms.LayersForm;
@@ -34,44 +34,65 @@ import org.springframework.web.servlet.mvc.AbstractFormController;
  *
  * @author asanabria
  */
-public class IntervalsController extends AbstractFormController {
+public class ColumnController extends AbstractFormController {
 
 	private GrassManager grassManagerImpl;
 
 	@Override
-	protected ModelAndView processFormSubmission(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
+	protected ModelAndView processFormSubmission(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) {
 
 		LayersForm selectedLayers = (LayersForm)command;
-		List<LayerDTO> layers = new ArrayList<LayerDTO>();
+
+		List<LayerDTO> list = new ArrayList<LayerDTO>();
+		HashMap<String,String> columns = null;
 		LayerDTO layerDTO = null;
-		HashMap<String, String> h = null;
-		Long suffix = new Long(1271111604483L);
-		List<IntervalDTO> intervals = null;
+		int index = 0;
+		String weight = null;
+		Long suffix = Calendar.getInstance().getTimeInMillis();
+		suffix = new Long(1271111604483L);
+		boolean second = false;
 
-		String[] parts = null;
-		List<String> temp = selectedLayers.getDataColumnList();
+		try{
+			this.grassManagerImpl.configureEnvironment("Default", suffix);
 
-		for(String t : temp){
-			parts = t.split(":");
-			layerDTO = new LayerDTO();
-			layerDTO.setName(parts[0]);
+			// Gets the layers and its weights
+			for(String layer : selectedLayers.getSelectedLayers()){
+				//creates a new layer
+				layerDTO = new LayerDTO();
+				//set the name of the layer
+				layerDTO.setName(layer);
+				//set the weight of the layer
+				weight = selectedLayers.getSelectedValues().get(index++);
+				layerDTO.setWeight(Long.parseLong(weight));
 
-			h = new HashMap<String,String>();
-			h.put(parts[1], parts[2]);
-			if(parts[2].equals("CHARACTER")){
-				this.grassManagerImpl.simpleReclasification(layerDTO.getName(), parts[1], suffix);
+				// layer importation
+				if(second){
+					this.grassManagerImpl.configureEnvironment("LOC_"+suffix, suffix);
+				}else{
+					second = true;
+				}
+			//	this.grassManagerImpl.importLayer(layerDTO.getName(), suffix);
+				this.grassManagerImpl.configureEnvironment("LOC_"+suffix, suffix);
+				// Retrive data columns
+				columns = grassManagerImpl.retrieveAvailableColumns(layer, suffix);
+
+				layerDTO.setDataColumnList(columns);
+
+				list.add(layerDTO);
 			}
-			this.grassManagerImpl.convertLayer2Raster(layerDTO.getName(), suffix, true);
-			intervals = this.grassManagerImpl.getLayerCategories(layerDTO.getName(), "RAST", suffix);
 
-			layerDTO.setDataColumnList(h);
-			layerDTO.setIntervals(intervals);
-			layers.add(layerDTO);
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 
-		System.out.println("asdf");
-		
-		return new ModelAndView("intervals", "layers", layers);
+		// Gets the category information.
+		//grassManagerImpl.getLayerCategories(layerDTO.getName(), "RAST", new Long(layerDTO.getWeight()));
+
+
+
+
+
+		return new ModelAndView("columns", "layers", list);
 	}
 
 	@Override
@@ -79,7 +100,7 @@ public class IntervalsController extends AbstractFormController {
 		return new ModelAndView("index");
 	}
 
-	/* Getters and Setters */
+	/* Getters y Setters */
 	public GrassManager getGrassManagerImpl() {
 		return grassManagerImpl;
 	}

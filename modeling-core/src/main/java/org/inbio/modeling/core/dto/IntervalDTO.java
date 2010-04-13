@@ -23,8 +23,8 @@ package org.inbio.modeling.core.dto;
  */
 public class IntervalDTO {
 
-	private int min;
-	private int max;
+	private Double min;
+	private Double max;
 	private String description;
 
 	public String getDescription() {
@@ -35,19 +35,19 @@ public class IntervalDTO {
 		this.description = description;
 	}
 
-	public int getMax() {
+	public Double getMax() {
 		return max;
 	}
 
-	public void setMax(int max) {
+	public void setMax(Double max) {
 		this.max = max;
 	}
 
-	public int getMin() {
+	public Double getMin() {
 		return min;
 	}
 
-	public void setMin(int min) {
+	public void setMin(Double min) {
 		this.min = min;
 	}
 }

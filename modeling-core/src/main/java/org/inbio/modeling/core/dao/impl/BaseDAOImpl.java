@@ -17,10 +17,14 @@
  */
 package org.inbio.modeling.core.dao.impl;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.inbio.modeling.core.dao.BaseDAO;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 
 public class BaseDAOImpl extends SimpleJdbcDaoSupport implements BaseDAO{
+
+	protected final Log logger = LogFactory.getLog(this.getClass());
 
     public BaseDAOImpl(){
         super();

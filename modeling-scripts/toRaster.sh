@@ -8,10 +8,11 @@
 # Arguments
 MAP=$1
 SUFFIX=$2
+RECLASS=$3
 
 # Variables
-VMAP="V_$(basename $MAP .shp)_$SUFFIX"
-RMAP="R_$(basename $MAP .shp)_$SUFFIX"
+VMAP=V_"$MAP"_"$SUFFIX"
+RMAP=R_"$MAP"_"$SUFFIX"
 
 # Initialization
 export GISRC="/tmp/.grassrc6_$SUFFIX"
@@ -20,6 +21,10 @@ export PATH="$PATH:$GISBASE/bin:$GISBASE/scripts"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$GISBASE/lib"
 
 # Import the map.
-RESULT=$(v.to.rast input=$VMAP output=$RMAP use=cat --quiet);
+if [ "true" == "$RECLASS" ]; then
+	RESULT=$(v.to.rast input="$VMAP"_r output=$RMAP use=cat --overwrite --quiet);
+else
+	RESULT=$(v.to.rast input=$VMAP output=$RMAP use=cat --overwrite --quiet);
+fi;
 
 exit $RESULT;

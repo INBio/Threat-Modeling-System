@@ -91,7 +91,7 @@
 					<td><fmt:message key="layer.layerName"/></td>
 					<td><fmt:message key="layer.importanceValue"/></td>
 				</tr>
-				<form method="post" action="intervals.html" id="layersForm">
+				<form method="post" action="columns.html" id="layersForm">
 					<c:forEach items="${layers}" var="layer"  varStatus="current">
 						<tr>
 							<td>

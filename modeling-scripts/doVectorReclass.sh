@@ -12,14 +12,14 @@ COLUMN=$2
 SUFFIX=$3
 
 # Variables
-VMAP="V_$(basename $MAP .shp)_$SUFFIX"
-VOMAP="V_$(basename $MAP .shp)_$SUFFIX"_r
+VMAP=V_"$MAP"_"$SUFFIX"
+VOMAP="$VMAP"_r
 
 export GISRC="/tmp/.grassrc6_$SUFFIX"
 export GISBASE="/usr/lib/grass64"
 export PATH="$PATH:$GISBASE/bin:$GISBASE/scripts"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$GISBASE/lib"
 
-RESULT=$( v.reclass input=$VMAP output=$VOMAP column=$COLUMN --quiet);
+RESULT=$( v.reclass input=$VMAP output=$VOMAP column=$COLUMN --overwrite --quiet);
 
 exit $RESULT;

@@ -19,17 +19,26 @@
           p:viewName="index" />
 
     <bean id="layerController"
-		  class="org.inbio.modeling.web.controller.LayerController"
-		  p:commandName="layersForm"
-		  p:commandClass="org.inbio.modeling.web.forms.LayersForm">
+		  class="org.inbio.modeling.web.controller.LayerController">
+		<property name="commandName" value="layersForm" />
+        <property name="commandClass" value="org.inbio.modeling.web.forms.LayersForm" />
         <property name="layerManager" ref="layerManager" />
 	</bean>
+	<bean name="columnController" class="org.inbio.modeling.web.controller.ColumnController">
+		<property name="commandName" value="columnsForm" />
+        <property name="commandClass" value="org.inbio.modeling.web.forms.LayersForm" />
+        <property name="grassManagerImpl" ref="grassManager" />
+	</bean>
 
-	<bean name="intervalsController" class="org.inbio.modeling.web.controller.IntervalsController"
-		  p:commandName="layersForm"
-		  p:commandClass="org.inbio.modeling.web.forms.LayersForm"/>
-	<bean name="showMapController" class="org.inbio.modeling.web.controller.ShowMapController"
-		  p:commandName="layersForm"
-		  p:commandClass="org.inbio.modeling.web.forms.LayersForm"/>
+	<bean name="intervalsController" class="org.inbio.modeling.web.controller.IntervalsController" >
+		<property name="commandName" value="intervalsForm" />
+        <property name="commandClass" value="org.inbio.modeling.web.forms.LayersForm" />
+        <property name="grassManagerImpl" ref="grassManager" />
+	</bean>
+
+	<bean name="showMapController" class="org.inbio.modeling.web.controller.ShowMapController" >
+		<property name="commandName" value="intervalsForm" />
+        <property name="commandClass" value="org.inbio.modeling.web.forms.LayersForm" />
+	</bean>
 
 </beans>

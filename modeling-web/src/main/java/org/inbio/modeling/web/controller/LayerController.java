@@ -32,11 +32,10 @@ public class LayerController extends AbstractFormController {
 
     protected final Log logger = LogFactory.getLog(getClass());
 
-    LayerManager layerManager;
+    private LayerManager layerManager;
 
 	@Override
 	protected ModelAndView showForm(HttpServletRequest request, HttpServletResponse response, BindException errors) throws Exception {
-        logger.info("Starting " + this.getClass());
 
 		List <LayerDTO> layerList = layerManager.getLayerList();
 

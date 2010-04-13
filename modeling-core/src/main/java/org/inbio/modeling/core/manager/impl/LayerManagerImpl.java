@@ -34,7 +34,6 @@ public class LayerManagerImpl implements LayerManager {
 
     @Override
     public List<LayerDTO> getLayerList() {
-        logger.info("Starting getList()");
 		return layerDTOFactory.createDTOList(layerDAO.getAvailableLayers());
     }
 

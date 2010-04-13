@@ -14,6 +14,10 @@
 		<property name="ignoreInvalidKeys" value="true"/>
 	</bean>
 
+	<bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="WEB-INF/classes/grassConfig.properties"/>
+	</bean>
+
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" destroy-method="close">
 		<!-- Estas propiedad serán sobre escritas por el archivo /WEB-INF/classes/config.properties -->
 		<property name="driverClassName" value="org.postgresql.Driver"/>

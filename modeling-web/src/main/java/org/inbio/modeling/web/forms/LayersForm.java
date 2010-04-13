@@ -27,6 +27,7 @@ public class LayersForm {
 
 	private List<String> selectedLayers;
 	private List<String> selectedValues;
+	private List<String> dataColumnList;
 
 	public List<String> getSelectedLayers() {
 		return selectedLayers;
@@ -42,5 +43,13 @@ public class LayersForm {
 
 	public void setSelectedValues(List<String> selectedValues) {
 		this.selectedValues = selectedValues;
+	}
+
+	public List<String> getDataColumnList() {
+		return dataColumnList;
+	}
+
+	public void setDataColumnList(List<String> dataColumnList) {
+		this.dataColumnList = dataColumnList;
 	}
 }

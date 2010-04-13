@@ -26,31 +26,39 @@
 		</div>
 
 		<div id="contenido">
-			<h1><fmt:message key="title.intervals"/></h1>
+			<h1><fmt:message key="title.columns"/></h1>
 			<font color="red">
 				<b><c:out value="${status.errorMessage}"/></b>
 			</font>
-			<table border="3">
+			<table>
 				<tr>
 					<td><fmt:message key="common.layers"/></td>
 					<td><fmt:message key="layer.weight"/></td>
 					<td><fmt:message key="interval.column"/></td>
 				</tr>
-				<form method="post" action="showResultingMap.html" id="intevalsForm">
+				<form method="post" action="intervals.html" id="columnsForm">
 					<c:forEach items="${layers}" var="layer"  varStatus="current">
 						<tr>
 							<td>
 								<c:out value="${layer.name}" />
 							</td>
 							<td>
-							<c:forEach items="${layer.intervals}" var="interval"  varStatus="current">
-								<c:out value="${interval.description}" /><br />
-							</c:forEach>
+								<c:out value="${layer.weight}" />
 							</td>
+							<td>
+								<select name="dataColumnList" id="availableColumns">
+									<c:forEach items="${layer.dataColumnList}" var="column">
+										<option  value="<c:out value="${layer.name}" />:<c:out value="${column.key}" />:<c:out value="${column.value}" />" >
+											<c:out value="${column.key}" />&nbsp;&rArr;&nbsp;<c:out value="${column.value}" />
+										</option>
+									</c:forEach>
+								</select>
+							</td>
+						</tr>
 					</c:forEach>
 					<tr>
 						<td align="right">
-							<input id="submitButton" type="button" onclick="send('intevalsForm');" value='<fmt:message key="common.acceptChanges"/>' />
+							<input id="submitButton" type="button" onclick="send('columnsForm');" value='<fmt:message key="common.acceptChanges"/>' />
 						</td>
 					</tr>
 				</form>

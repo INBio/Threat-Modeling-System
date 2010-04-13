@@ -18,6 +18,7 @@
 
 package org.inbio.modeling.core.dto;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -26,10 +27,11 @@ import java.util.List;
  */
 public class LayerDTO {
 
-	private int	   weight;
+	private long   weight;
 	private String name;
 	private String description;
-	private List<IntervalDTO> intervals;
+	private HashMap<String,String>	dataColumnList;
+	private List<IntervalDTO>		intervals;
 
 	public String getDescription() {
 		return description;
@@ -55,11 +57,19 @@ public class LayerDTO {
 		this.name = name;
 	}
 
-	public int getWeight() {
+	public long getWeight() {
 		return weight;
 	}
 
-	public void setWeight(int weight) {
+	public void setWeight(long weight) {
 		this.weight = weight;
+	}
+
+	public HashMap<String, String> getDataColumnList() {
+		return dataColumnList;
+	}
+
+	public void setDataColumnList(HashMap<String, String> dataColumnList) {
+		this.dataColumnList = dataColumnList;
 	}
 }

@@ -13,4 +13,8 @@
         <property name="layerDTOFactory" ref="layerDTOFactory" />
 	</bean>
 
+    <bean id="grassManager" class="org.inbio.modeling.core.manager.impl.GrassManagerImpl">
+        <property name="grassDAOImpl" ref="grassDAO" />
+	</bean>
+
 </beans>

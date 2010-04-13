@@ -24,13 +24,12 @@ export GISBASE="/usr/lib/grass64"
 export PATH="$PATH:$GISBASE/bin:$GISBASE/scripts"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$GISBASE/lib"
 
-
 # Import the map.
 if [ -d "$DBASE/LOC_$SUFFIX" ];
 then
-	RESULT=$(v.in.ogr dsn=$MAP output=$VMAP --quiet);
+	RESULT=$(v.in.ogr dsn=$MAP.shp output=$VMAP --quiet);
 else
-	RESULT=$(v.in.ogr dsn=$MAP output=$VMAP location=$LOCATION --quiet);
+	RESULT=$(v.in.ogr dsn=$MAP.shp output=$VMAP location=$LOCATION --quiet);
 fi;
 
 exit $RESULT;
