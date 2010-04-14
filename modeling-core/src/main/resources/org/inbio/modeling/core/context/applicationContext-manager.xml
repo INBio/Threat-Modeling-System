@@ -16,5 +16,9 @@
     <bean id="grassManager" class="org.inbio.modeling.core.manager.impl.GrassManagerImpl">
         <property name="grassDAOImpl" ref="grassDAO" />
 	</bean>
+    <bean id="fileManager" class="org.inbio.modeling.core.manager.impl.FileManagerImpl">
+        <property name="tempHome" value="${temp.home}" />
+        <property name="fileName" value="${temp.file}" />
+	</bean>
 
 </beans>

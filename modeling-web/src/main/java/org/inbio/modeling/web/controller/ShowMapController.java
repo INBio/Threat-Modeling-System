@@ -20,6 +20,9 @@ package org.inbio.modeling.web.controller;
 import java.util.Calendar;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.inbio.modeling.core.dto.LayerDTO;
+import org.inbio.modeling.core.manager.FileManager;
+import org.inbio.modeling.core.manager.GrassManager;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractFormController;
@@ -30,31 +33,22 @@ import org.springframework.web.servlet.mvc.AbstractFormController;
  */
 public class ShowMapController extends AbstractFormController {
 
+	private GrassManager grassManagerImpl;
+	private FileManager fileManagerImpl;
 
 	@Override
 	protected ModelAndView processFormSubmission(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
 
 		Long suffix = Calendar.getInstance().getTimeInMillis();
-		//suffix = new Long(1270739103518L);
+		suffix = new Long(1271111604483L);
+		suffix = new Long(666L);
 
-		System.out.println(" #-> Suffix: " + suffix);
+		LayerDTO layer = null;
 
-		String m1 = "cobertura_dd";
-		String m2 = "redcamino_dd";
-
-		//this.configureEnvironment("Default", suffix);
-		//this.setResolution(0.01, suffix);
-		//this.importLayer(layerHome ,m1, suffix);
-		//this.configureEnvironment("LOC_"+suffix, suffix);
-		//this.setResolution(0.01, suffix);
-		//this.convertLayer2Raster(m1, suffix);
-		//this.importLayer(layerHome, m2, suffix);
-		//this.doSimpleReclasification(m1, "COB_AGROP", suffix);
-		//this.convertLayer2Raster(m1, suffix);
-		//this.convertLayer2Raster(m2, suffix);
-		//this.advanceReclasification(m1, suffix);
-		//this.getLayerCategories(m1, "RAST", suffix);
-		System.out.println("Jaleas de guayaba");
+		this.fileManagerImpl.writeReclasFile(layer, suffix);
+		//this.grassManagerImpl.advanceReclasification(layer.getName(), suffix);
+		//this.grassManagerImpl.executeWeightedSum(layer.getName(), 10L, layer.getName(), 90L, suffix);
+		//this.grassManagerImpl.exportLayer2Image(suffix);
 
 		return new ModelAndView("showResultingMap");
 	}
@@ -63,5 +57,21 @@ public class ShowMapController extends AbstractFormController {
 	@Override
 	protected ModelAndView showForm(HttpServletRequest request, HttpServletResponse response, BindException errors) throws Exception {
 		return new ModelAndView("index");
+	}
+
+	public GrassManager getGrassManagerImpl() {
+		return grassManagerImpl;
+	}
+
+	public void setGrassManagerImpl(GrassManager grassManagerImpl) {
+		this.grassManagerImpl = grassManagerImpl;
+	}
+
+	public FileManager getFileManagerImpl() {
+		return fileManagerImpl;
+	}
+
+	public void setFileManagerImpl(FileManager fileManagerImpl) {
+		this.fileManagerImpl = fileManagerImpl;
 	}
 }

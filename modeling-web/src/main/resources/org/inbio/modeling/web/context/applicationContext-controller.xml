@@ -37,6 +37,8 @@
 	</bean>
 
 	<bean name="showMapController" class="org.inbio.modeling.web.controller.ShowMapController" >
+        <property name="grassManagerImpl" ref="grassManager" />
+        <property name="fileManagerImpl" ref="fileManager" />
 		<property name="commandName" value="intervalsForm" />
         <property name="commandClass" value="org.inbio.modeling.web.forms.LayersForm" />
 	</bean>
