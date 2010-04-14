@@ -29,9 +29,9 @@ public interface GrassDAO extends BaseDAO {
 
 	public void convertLayer2Raster(String layerName, Long suffix, boolean reclasified) throws Exception;
 
-	public void executeWeightedSum(String layerName1, Long weight1, String layerName2, Long weight2, Long suffix) throws Exception;
+	public void executeWeightedSum(String layerName1, Long weight1, String layerName2, Long weight2, Long suffix, String outputName) throws Exception;
 
-	public void exportLayer2Image(Long suffix) throws Exception;
+	public void exportLayer2Image(Long suffix, String outputName) throws Exception;
 
 	public void getMinMaxValuesFromLayer(String layerName, Long suffix) throws Exception;
 

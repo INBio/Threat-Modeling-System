@@ -8,7 +8,8 @@
 SUFFIX=$1
 
 # Variables
-RESMAP="RES_$SUFFIX"
+#RESMAP="RES_$SUFFIX"
+RESMAP=R_"$2"_"$SUFFIX"
 
 # Initialization
 export GISRC="/tmp/.grassrc6_$SUFFIX"

@@ -15,6 +15,8 @@ ROMAP=R_"$MAP"_"$SUFFIX"_r
 
 RULES_FILE="/tmp/rules-$SUFFIX.rcl"
 
+echo "Que cosas no? $RULES_FILE"
+
 # Initialization
 export GISRC="/tmp/.grassrc6_$SUFFIX"
 export GISBASE="/usr/lib/grass64"
@@ -23,4 +25,6 @@ export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$GISBASE/lib"
 
 RESULT=$( r.reclass input=$RMAP output=$ROMAP rules=$RULES_FILE --overwrite);
 
-exit $RESULT;
+echo $RESULT
+
+exit;

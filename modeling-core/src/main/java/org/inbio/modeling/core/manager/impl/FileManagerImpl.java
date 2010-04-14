@@ -39,6 +39,7 @@ public class FileManagerImpl implements FileManager {
 
 	private String tempHome;
 	private String fileName;
+	private String fileExtension;
 
 	@Override
 	public void writeReclasFile(LayerDTO layer, Long suffix){
@@ -67,7 +68,7 @@ public class FileManagerImpl implements FileManager {
 
 		try {
 
-			file = new File(tempHome+fileName+suffix);
+			file = new File(tempHome+fileName+suffix+fileExtension);
 			fos  = new FileOutputStream(file);
 			dos  = new DataOutputStream(fos);
 
@@ -106,5 +107,13 @@ public class FileManagerImpl implements FileManager {
 
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
+	}
+
+	public String getFileExtension() {
+		return fileExtension;
+	}
+
+	public void setFileExtension(String fileExtension) {
+		this.fileExtension = fileExtension;
 	}
 }

@@ -18,14 +18,15 @@
 package org.inbio.modeling.web.controller;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.inbio.modeling.core.dto.LayerDTO;
 import org.inbio.modeling.core.manager.GrassManager;
 import org.inbio.modeling.web.forms.LayersForm;
+import org.inbio.modeling.web.session.SessionInfo;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractFormController;
@@ -41,58 +42,105 @@ public class ColumnController extends AbstractFormController {
 	@Override
 	protected ModelAndView processFormSubmission(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) {
 
-		LayersForm selectedLayers = (LayersForm)command;
-
-		List<LayerDTO> list = new ArrayList<LayerDTO>();
-		HashMap<String,String> columns = null;
+		LayersForm selectedLayers = null;
+		List<LayerDTO> layerList =  null;
+		SessionInfo sessionInfo = null;
+		Long currentSessionId = null;
+		HttpSession session = null;
+		ModelAndView model = null;
 		LayerDTO layerDTO = null;
-		int index = 0;
 		String weight = null;
-		Long suffix = Calendar.getInstance().getTimeInMillis();
-		suffix = new Long(1271111604483L);
-		boolean second = false;
+		int index = 0;
+
+
+		selectedLayers = (LayersForm)command;
+		layerList = new ArrayList<LayerDTO>();
+
+		// retrieve the session Information.
+		session = request.getSession();
+		sessionInfo = (SessionInfo)session.getAttribute("CurrentSessionInfo");
+		currentSessionId = sessionInfo.getCurrentSessionId();
 
 		try{
-			this.grassManagerImpl.configureEnvironment("Default", suffix);
 
 			// Gets the layers and its weights
 			for(String layer : selectedLayers.getSelectedLayers()){
-				//creates a new layer
+
+				// completes the available information of the layers.
 				layerDTO = new LayerDTO();
-				//set the name of the layer
+				// set the name (its the filename without extension)
 				layerDTO.setName(layer);
-				//set the weight of the layer
+				// set the weight of the layer.
 				weight = selectedLayers.getSelectedValues().get(index++);
 				layerDTO.setWeight(Long.parseLong(weight));
 
-				// layer importation
-				if(second){
-					this.grassManagerImpl.configureEnvironment("LOC_"+suffix, suffix);
-				}else{
-					second = true;
-				}
-			//	this.grassManagerImpl.importLayer(layerDTO.getName(), suffix);
-				this.grassManagerImpl.configureEnvironment("LOC_"+suffix, suffix);
-				// Retrive data columns
-				columns = grassManagerImpl.retrieveAvailableColumns(layer, suffix);
-
-				layerDTO.setDataColumnList(columns);
-
-				list.add(layerDTO);
+				// add the new LayerDTO to the list.
+				layerList.add(layerDTO);
 			}
+
+			//Import the layers
+			this.importLayers(layerList, currentSessionId);
+
+			// retrieve dataColumns
+			layerList = this.retrieveColumns(layerList, currentSessionId);
 
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 
-		// Gets the category information.
-		//grassManagerImpl.getLayerCategories(layerDTO.getName(), "RAST", new Long(layerDTO.getWeight()));
+		// assing layerList to the session
+		sessionInfo.setSelectedLayerList(layerList);
+		session.setAttribute("CurrentSessionInfo", sessionInfo);
+
+		// Send the layer list to the JSP
+		model = new ModelAndView();
+		model.setViewName("columns");
+		model.addObject("layers", layerList);
+
+        return model;
+	}
 
 
+	private List<LayerDTO> retrieveColumns(List<LayerDTO> layerList, Long currentSessionId){
+
+		HashMap<String,String> columns = null;
+
+		for (LayerDTO layerDTO: layerList){
+			try {
+				// Retrive data columns
+				columns = grassManagerImpl.retrieveAvailableColumns(layerDTO.getName(), currentSessionId);
+			} catch (Exception ex) {
+				logger.fatal(ex);
+			}
+
+			layerDTO.setDataColumnList(columns);
+		}
+
+		return layerList;
+	}
 
 
+	//TODO: make this better
+	private void importLayers(List<LayerDTO> layerList, Long currentSessionId){
 
-		return new ModelAndView("columns", "layers", list);
+		int counter = 0;
+
+		try {
+
+			// configure grass to the default location.
+			this.grassManagerImpl.configureEnvironment("Default", currentSessionId);
+
+			for (LayerDTO layerDTO: layerList){
+				if(counter++ == 1){
+					this.grassManagerImpl.configureEnvironment("LOC_"+currentSessionId, currentSessionId);
+				}
+
+				this.grassManagerImpl.importLayer(layerDTO.getName(), currentSessionId);
+			}
+
+		} catch (Exception ex) {
+			logger.fatal(ex);
+		}
 	}
 
 	@Override

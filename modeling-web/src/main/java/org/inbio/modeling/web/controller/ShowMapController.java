@@ -17,12 +17,15 @@
  */
 package org.inbio.modeling.web.controller;
 
-import java.util.Calendar;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.inbio.modeling.core.dto.LayerDTO;
 import org.inbio.modeling.core.manager.FileManager;
 import org.inbio.modeling.core.manager.GrassManager;
+import org.inbio.modeling.web.forms.LayersForm;
+import org.inbio.modeling.web.session.SessionInfo;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractFormController;
@@ -39,18 +42,65 @@ public class ShowMapController extends AbstractFormController {
 	@Override
 	protected ModelAndView processFormSubmission(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
 
-		Long suffix = Calendar.getInstance().getTimeInMillis();
-		suffix = new Long(1271111604483L);
-		suffix = new Long(666L);
+		LayersForm selectedLayers = null;
+		List<LayerDTO> layerList =  null;
+		SessionInfo sessionInfo = null;
+		Long currentSessionId = null;
+		HttpSession session = null;
+		ModelAndView model = null;
 
-		LayerDTO layer = null;
+		/**	Long currentSessionId = Calendar.getInstance().getTimeInMillis();
+			currentSessionId = new Long(1271111604483L);
+			currentSessionId = new Long(666L); */
 
-		this.fileManagerImpl.writeReclasFile(layer, suffix);
-		//this.grassManagerImpl.advanceReclasification(layer.getName(), suffix);
-		//this.grassManagerImpl.executeWeightedSum(layer.getName(), 10L, layer.getName(), 90L, suffix);
-		//this.grassManagerImpl.exportLayer2Image(suffix);
+		// TODO: retrieve the information from the Form
+		selectedLayers = (LayersForm)command;
 
-		return new ModelAndView("showResultingMap");
+
+		// retrieve the session Information.
+		session = request.getSession();
+		sessionInfo = (SessionInfo)session.getAttribute("CurrentSessionInfo");
+		currentSessionId = sessionInfo.getCurrentSessionId();
+
+		layerList = sessionInfo.getSelectedLayerList();
+
+		for(LayerDTO layer : layerList){
+			System.out.println("layer: "+layer.getName() + "  W: "+layer.getWeight());
+			this.fileManagerImpl.writeReclasFile(layer, currentSessionId);
+			this.grassManagerImpl.advanceReclasification(layer.getName(), currentSessionId);
+		}
+
+
+		LayerDTO M1 = null;
+		LayerDTO M2 = null;
+		LayerDTO R = null;
+
+		if(layerList.size() >= 2){
+			M1 = layerList.get(0);
+			M2 = layerList.get(1);
+			R  = new LayerDTO("Res1", 1);
+		}
+
+		for(int i = 2; i<layerList.size(); i++){
+
+			this.grassManagerImpl.executeWeightedSum(M1.getName(), M1.getWeight(), M2.getName(), M2.getWeight(), currentSessionId, R.getName());
+			M1 = R;
+			M2 = layerList.get(i);
+			R  = new LayerDTO("Res"+i, 1);
+			System.out.println("Testing");
+		}
+
+		this.grassManagerImpl.exportLayer2Image(currentSessionId, R.getName());
+
+		//save session
+		session.setAttribute("CurrentSessionInfo", sessionInfo);
+
+		// Send the layer list to the JSP
+		model = new ModelAndView();
+		model.setViewName("showResultingMap");
+		model.addObject("layers", layerList);
+
+		return model;
 	}
 
 

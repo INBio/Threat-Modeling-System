@@ -1,6 +1,6 @@
 /* Modeling - Application to model threats.
  *
- * Copyright (C) 2010  INBio ( Instituto Nacional de Biodiversidad )
+ * Copyright (C) 2010  INBio (Instituto Nacional de Biodiversidad)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,12 +20,16 @@ package org.inbio.modeling.web.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.inbio.modeling.core.dto.IntervalDTO;
+import org.inbio.modeling.core.dto.LayerDTO;
 import org.inbio.modeling.core.dto.LayerDTO;
 import org.inbio.modeling.core.manager.GrassManager;
 import org.inbio.modeling.web.forms.LayersForm;
+import org.inbio.modeling.web.session.SessionInfo;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractFormController;
@@ -41,37 +45,121 @@ public class IntervalsController extends AbstractFormController {
 	@Override
 	protected ModelAndView processFormSubmission(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
 
-		LayersForm selectedLayers = (LayersForm)command;
-		List<LayerDTO> layers = new ArrayList<LayerDTO>();
+
+		HashMap<String, String> selectedColumn = null;
+		LayersForm selectedLayers = null;
+		List<LayerDTO> layerList =  null;
+		SessionInfo sessionInfo = null;
+		Long currentSessionId = null;
+		HttpSession session = null;
+		ModelAndView model = null;
 		LayerDTO layerDTO = null;
-		HashMap<String, String> h = null;
-		Long suffix = new Long(1271111604483L);
+
 		List<IntervalDTO> intervals = null;
+		String[] columnElements = null;
 
-		String[] parts = null;
-		List<String> temp = selectedLayers.getDataColumnList();
+		layerList = new ArrayList<LayerDTO>();
 
-		for(String t : temp){
-			parts = t.split(":");
+		// get the information of the form.
+		selectedLayers = (LayersForm)command;
+		List<String> dataColumns = selectedLayers.getDataColumnList();
+
+		// retrieve the session Information.
+		session = request.getSession();
+		sessionInfo = (SessionInfo)session.getAttribute("CurrentSessionInfo");
+		currentSessionId = sessionInfo.getCurrentSessionId();
+
+
+		// extract and format the information of the dataColumn to use.
+		for(String dataColumn : dataColumns){
+
 			layerDTO = new LayerDTO();
-			layerDTO.setName(parts[0]);
 
-			h = new HashMap<String,String>();
-			h.put(parts[1], parts[2]);
-			if(parts[2].equals("CHARACTER")){
-				this.grassManagerImpl.simpleReclasification(layerDTO.getName(), parts[1], suffix);
+			// split the information that comes from the Form
+			columnElements = dataColumn.split(":");
+
+			// set the name of the layer for future recognition
+			layerDTO.setName(columnElements[0]);
+
+			// convert the array to a HashMap
+			selectedColumn = new HashMap<String,String>();
+			selectedColumn.put(columnElements[1], columnElements[2]);
+
+			//set the selectedColumn
+			layerDTO.setDataColumnList(selectedColumn);
+
+			// if the selected column is of type CHARACTER the layer has to be recategorize
+			if(columnElements[2].equals("CHARACTER")){
+				this.grassManagerImpl.simpleReclasification(layerDTO.getName(), columnElements[1], currentSessionId);
 			}
-			this.grassManagerImpl.convertLayer2Raster(layerDTO.getName(), suffix, true);
-			intervals = this.grassManagerImpl.getLayerCategories(layerDTO.getName(), "RAST", suffix);
 
-			layerDTO.setDataColumnList(h);
-			layerDTO.setIntervals(intervals);
-			layers.add(layerDTO);
+			//convert the layer to a raster format
+			this.layer2Raster(layerDTO.getName(), currentSessionId);
+
+			layerList.add(layerDTO);
 		}
 
-		System.out.println("asdf");
-		
-		return new ModelAndView("intervals", "layers", layers);
+		// combine the new information with the existing one
+		layerList = this.mergeData(sessionInfo.getSelectedLayerList() , layerList);
+
+		// retrieve the categories by layer.
+		layerList = this.setIntervals2Layers(currentSessionId, layerList);
+
+
+		// assing layerList to the session
+		sessionInfo.setSelectedLayerList(layerList);
+		session.setAttribute("CurrentSessionInfo", sessionInfo);
+
+		// Send the layer list to the JSP
+		model = new ModelAndView();
+		model.setViewName("intervals");
+		model.addObject("layers", layerList);
+
+        return model;
+	}
+
+	private List<LayerDTO> mergeData(List<LayerDTO> oldList, List<LayerDTO> newList){
+
+
+		for(LayerDTO oldLayer : oldList ){
+			for(LayerDTO newLayer : newList){
+				if(oldLayer.getName().equals(newLayer.getName())){
+					oldLayer.setDataColumnList(newLayer.getDataColumnList());
+				}
+			}
+		}
+
+		return oldList;
+	}
+
+	private List<LayerDTO> setIntervals2Layers(Long currentSessionId, List<LayerDTO> layerList){
+
+		List<IntervalDTO> intervals = null;
+
+		for(LayerDTO layer : layerList){
+
+			try {
+				// retrieve an asing the layer categories
+				intervals = this.grassManagerImpl.getLayerCategories(layer.getName(), "RAST", currentSessionId);
+				layer.setIntervals(intervals);
+			} catch (Exception ex) {
+				logger.fatal(ex);
+			}
+		}
+
+
+		return layerList;
+	}
+
+
+	private void layer2Raster(String layerName, Long currentSessionId){
+		try {
+			// convert the vectorial layer to another in raster format
+			this.grassManagerImpl.convertLayer2Raster(layerName, currentSessionId, true);
+		} catch (Exception ex) {
+			logger.fatal(ex);
+		}
+
 	}
 
 	@Override

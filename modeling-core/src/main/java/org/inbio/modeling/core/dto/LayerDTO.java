@@ -33,6 +33,13 @@ public class LayerDTO {
 	private HashMap<String,String>	dataColumnList;
 	private List<IntervalDTO>		intervals;
 
+	public LayerDTO() { }
+
+	public LayerDTO(String name, long weight ) {
+		this.weight = weight;
+		this.name = name;
+	}
+
 	public String getDescription() {
 		return description;
 	}

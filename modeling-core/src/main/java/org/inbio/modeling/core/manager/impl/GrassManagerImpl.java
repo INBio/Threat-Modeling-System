@@ -57,13 +57,13 @@ public class GrassManagerImpl implements GrassManager {
 	}
 
 	@Override
-	public void executeWeightedSum(String layerName1, Long weight1, String layerName2, Long weight2, Long suffix) throws Exception {
-		this.grassDAOImpl.executeWeightedSum(layerName1, weight1, layerName2, weight2, suffix);
+	public void executeWeightedSum(String layerName1, Long weight1, String layerName2, Long weight2, Long suffix, String outputName) throws Exception {
+		this.grassDAOImpl.executeWeightedSum(layerName1, weight1, layerName2, weight2, suffix, outputName);
 	}
 
 	@Override
-	public void exportLayer2Image(Long suffix) throws Exception {
-		this.grassDAOImpl.exportLayer2Image(suffix);
+	public void exportLayer2Image( Long suffix, String layerName) throws Exception {
+		this.grassDAOImpl.exportLayer2Image(suffix, layerName);
 	}
 
 	@Override

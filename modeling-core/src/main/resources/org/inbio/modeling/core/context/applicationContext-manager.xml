@@ -19,6 +19,7 @@
     <bean id="fileManager" class="org.inbio.modeling.core.manager.impl.FileManagerImpl">
         <property name="tempHome" value="${temp.home}" />
         <property name="fileName" value="${temp.file}" />
+        <property name="fileExtension" value="${temp.fileExtension}" />
 	</bean>
 
 </beans>

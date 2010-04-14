@@ -33,7 +33,7 @@
 			<table>
 				<tr>
 					<td><fmt:message key="common.layers"/></td>
-					<td><fmt:message key="layer.weight"/></td>
+					<td><fmt:message key="common.weight"/></td>
 					<td><fmt:message key="interval.column"/></td>
 				</tr>
 				<form method="post" action="intervals.html" id="columnsForm">

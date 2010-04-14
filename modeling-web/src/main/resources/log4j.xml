@@ -2,14 +2,14 @@
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
 
 	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
-		<param name="Threshold" value="DEBUG"/>
+		<param name="Threshold" value="ALL"/>
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%-5p [%c{1}]  %m%n"/>
 		</layout>
 	</appender>
 
 	<appender name="FILE" class="org.apache.log4j.FileAppender">
-		<param name="Threshold" value="all"/>
+		<param name="Threshold" value="INFO"/>
 		<!-- Ambientes Debian  --> 
 		<param name="File" value="${catalina.home}/logs/modeling.log" />
 		<param name="Append" value="true"/>
@@ -20,33 +20,33 @@
 
 	<!-- Alter the logging of known libs -->
 	<category name="org.inbio.modeling">
-		<priority value="all"/>
+		<priority value="ALL"/>
 	</category>
 
 	<category name="org.inbio">
-		<priority value="all"/>
+		<priority value="ALL"/>
 	</category>
 
 	<category name="org.hibernate">
-		<priority value="all"/>
+		<priority value="ERROR"/>
 	</category>	
 	<category name="org">
-		<priority value="all"/>
+		<priority value="ERROR"/>
 	</category>
 	<category name="net">
-		<priority value="all"/>
+		<priority value="ERROR"/>
 	</category>
 	<category name="com">
-		<priority value="all"/>
+		<priority value="ERROR"/>
 	</category>
 	<category name="httpclient">
-		<priority value="all"/>
+		<priority value="ERROR"/>
 	</category>
 	<category name="org.springframework.aop.interceptor.cache">
-		<priority value="all"/>
+		<priority value="ERRROR"/>
 	</category>
 	<category name="org.springframework">
-		<priority value="all"/>
+		<priority value="ERROR"/>
 	</category>
 	<root>
 		<!-- For live we use file logging -->

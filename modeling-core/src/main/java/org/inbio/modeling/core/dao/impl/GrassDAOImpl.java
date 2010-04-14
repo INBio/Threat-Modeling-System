@@ -128,7 +128,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	}
 
 	@Override
-	public void executeWeightedSum(String layerName1, Long weight1, String layerName2, Long weight2, Long suffix) throws Exception{
+	public void executeWeightedSum(String layerName1, Long weight1, String layerName2, Long weight2, Long suffix, String outputName) throws Exception{
 		int result = 0;
 		List<String> commands = null;
 		StringBuilder stdout = null;
@@ -144,6 +144,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		commands.add(weight1.toString());
 		commands.add(layerName2);
 		commands.add(weight2.toString());
+		commands.add(outputName);
 
 		logger.debug("Executing command: "+commands.toString());
 		commandExecutor = new SystemCommandExecutorImpl(commands);
@@ -157,7 +158,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	}
 
 	@Override
-	public void exportLayer2Image(Long suffix) throws Exception{
+	public void exportLayer2Image(Long suffix, String outputName) throws Exception{
 
 		int result = 0;
 		List<String> commands = null;
@@ -169,6 +170,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		// Arguments of the command
 		commands.add(scriptHome+exportPNG);
 		commands.add(suffix.toString());
+		commands.add(outputName);
 
 		logger.debug("Executing command: "+commands.toString());
 		commandExecutor = new SystemCommandExecutorImpl(commands);
@@ -266,7 +268,6 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		while(st.hasMoreTokens()){
 			temp = st.nextToken();
 			tarray = temp.split(":");
-			System.out.println("--> "+temp + " --- " + tarray.length + " --- " + tarray[0]);
 
 			interval = new IntervalDTO();
 			interval.setDescription(tarray[1]);

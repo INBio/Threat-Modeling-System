@@ -22,7 +22,8 @@ M2=$4
 WEIGHT_M2=$5
 
 # Variables
-RESMAP="RES_$SUFFIX"
+# RESMAP="RES_$SUFFIX"
+RESMAP=R_"$6"_"$SUFFIX"
 
 # Raster maps names
 RMAP1=R_"$M1"_"$SUFFIX"
