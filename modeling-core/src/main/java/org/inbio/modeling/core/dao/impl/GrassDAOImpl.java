@@ -32,7 +32,6 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	SystemCommandExecutorImpl commandExecutor = null;
 
 	/** Scripts (dependencies injected) */
-
 	private String scriptHome;
 	private String layerHome;
 	private String configuration;
@@ -102,7 +101,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	}
 
 	@Override
-	public void convertLayer2Raster(String layerName, Long suffix, boolean reclasified) throws Exception{
+	public void executeRasterization(String layerName, Long suffix, String column) throws Exception{
 
 		int result = 0;
 		List<String> commands = null;
@@ -114,7 +113,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		commands.add(scriptHome+rasterization);
 		commands.add(layerName);
 		commands.add(suffix.toString());
-		commands.add(Boolean.toString(reclasified));
+		commands.add(column);
 
 		logger.debug("Executing command: "+commands.toString());
 		commandExecutor = new SystemCommandExecutorImpl(commands);
@@ -158,7 +157,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	}
 
 	@Override
-	public void exportLayer2Image(Long suffix, String outputName) throws Exception{
+	public void exportAsImage(Long suffix, String outputName) throws Exception{
 
 		int result = 0;
 		List<String> commands = null;
@@ -184,7 +183,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	}
 
 	@Override
-	public void getMinMaxValuesFromLayer(String layerName, Long suffix) throws Exception{
+	public void retrieveMinMaxValues(String layerName, Long suffix) throws Exception{
 		int result = 0;
 		List<String> commands = null;
 		StringBuilder stdout = null;
@@ -209,33 +208,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	}
 
 	@Override
-	public void doSimpleReclasification(String layerName, String column, Long suffix) throws Exception{
-
-		int result = 0;
-		List<String> commands = null;
-		StringBuilder stdout = null;
-		StringBuilder stderr = null;
-		commands = new ArrayList<String>();
-
-		// Arguments of the command
-		commands.add(scriptHome+vectorialReclasification);
-		commands.add(layerName);
-		commands.add(column);
-		commands.add(suffix.toString());
-
-		logger.debug("Executing command: "+commands.toString());
-		commandExecutor = new SystemCommandExecutorImpl(commands);
-		// executes the command
-		result = commandExecutor.executeCommand();
-		// gets the output of the execution
-		stdout = commandExecutor.getStandardOutput();
-		stderr = commandExecutor.getStandardError();
-		// Prints the output of the command for good or for bad.
-		this.printThis(result, stdout, stderr);
-	}
-
-	@Override
-	public List<IntervalDTO> getLayerCategories(String layerName, String layerType, Long suffix) throws Exception{
+	public List<IntervalDTO> retrieveCategories(String layerName, String layerType, Long suffix) throws Exception{
 
 		int result = 0;
 		List<String> commands = null;
@@ -263,6 +236,9 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		// gets the output of the execution
 		stdout = commandExecutor.getStandardOutput();
 
+		// Prints the output of the command for good or for bad.
+		this.printThis(result, stdout, stderr);
+
 		StringTokenizer st = new StringTokenizer(stdout.toString(), "\n");
 
 		while(st.hasMoreTokens()){
@@ -277,14 +253,12 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		}
 
 		stderr = commandExecutor.getStandardError();
-		// Prints the output of the command for good or for bad.
-		this.printThis(result, stdout, stderr);
 
 		return intervals;
 	}
 
 	@Override
-	public void advanceReclasification(String layerName, Long suffix) throws Exception{
+	public void executeReclassification(String layerName, Long suffix) throws Exception{
 
 		int result = 0;
 		List<String> commands = null;
@@ -297,7 +271,8 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		commands.add(layerName);
 		commands.add(suffix.toString());
 
-
+	stdout = commandExecutor.getStandardOutput();
+		stderr = commandExecutor.getStandardError();
 		logger.debug("Executing command: "+commands.toString());
 		commandExecutor = new SystemCommandExecutorImpl(commands);
 		// executes the command
@@ -310,7 +285,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	}
 
 	@Override
-	public void setResolution(Double resolution, Long suffix) throws Exception{
+	public void asingResolution(Double resolution, Long suffix) throws Exception{
 
 		int result = 0;
 		List<String> commands = null;
@@ -337,7 +312,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	}
 
 	@Override
-	public HashMap<String, String> retrieveAvailableColumns(String layerName, Long suffix) throws Exception {
+	public HashMap<String, String> retrieveColumns(String layerName, Long suffix) throws Exception {
 		int result = 0;
 		List<String> commands = null;
 		StringBuilder stdout = null;
@@ -380,6 +355,34 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		return columns;
 	}
 
+ 	@Override
+	public void executeVectorReclasification(String layerName, String column, Long suffix) throws Exception{
+
+		int result = 0;
+		List<String> commands = null;
+		StringBuilder stdout = null;
+		StringBuilder stderr = null;
+		commands = new ArrayList<String>();
+
+		// Arguments of the command
+		commands.add(scriptHome+vectorialReclasification);
+		commands.add(layerName);
+		commands.add(column);
+		commands.add(suffix.toString());
+
+		logger.debug("Executing command: "+commands.toString());
+		commandExecutor = new SystemCommandExecutorImpl(commands);
+		// executes the command
+		result = commandExecutor.executeCommand();
+		// gets the output of the execution
+		stdout = commandExecutor.getStandardOutput();
+		stderr = commandExecutor.getStandardError();
+		// Prints the output of the command for good or for bad.
+		this.printThis(result, stdout, stderr);
+	}
+
+
+
 	@Override
 	public void deleteGRASSLocation(Long suffix){ }
 
@@ -392,6 +395,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		System.out.println(" #-> ***************************************** <-#");
 	}
 
+	/* getters & setters */
 	public String getAsignResolution() {
 		return asignResolution;
 	}

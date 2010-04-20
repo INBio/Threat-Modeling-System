@@ -11,7 +11,6 @@
 			//<!--
 
 			function send(formName){
-
 				document.forms[formName].submit();
 				return true;
 			}

@@ -20,6 +20,6 @@ export GISBASE="/usr/lib/grass64"
 export PATH="$PATH:$GISBASE/bin:$GISBASE/scripts"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$GISBASE/lib"
 
-RESULT=$( v.reclass input=$VMAP output=$VOMAP column=$COLUMN --overwrite --quiet);
+RESULT=$(v.reclass input=$VMAP output=$VOMAP column=$COLUMN --overwrite --quiet);
 
 exit $RESULT;

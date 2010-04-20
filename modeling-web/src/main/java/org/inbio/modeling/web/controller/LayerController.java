@@ -49,7 +49,7 @@ public class LayerController extends AbstractFormController {
 
 		// Generates the user id Number.
 		sessionInfo.setCurrentSessionId(Calendar.getInstance().getTimeInMillis());
-		sessionInfo.setCurrentSessionId( 1271278414030L);
+//		sessionInfo.setCurrentSessionId( 1271278414030L);
 
 
 		// Asing the SessionInfo Object to the session

@@ -20,15 +20,15 @@ package org.inbio.modeling.web.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.inbio.modeling.core.dto.IntervalDTO;
 import org.inbio.modeling.core.dto.LayerDTO;
-import org.inbio.modeling.core.dto.LayerDTO;
 import org.inbio.modeling.core.manager.GrassManager;
-import org.inbio.modeling.web.forms.LayersForm;
+import org.inbio.modeling.web.forms.GenericForm;
 import org.inbio.modeling.web.session.SessionInfo;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
@@ -47,7 +47,7 @@ public class IntervalsController extends AbstractFormController {
 
 
 		HashMap<String, String> selectedColumn = null;
-		LayersForm selectedLayers = null;
+		GenericForm selectedLayers = null;
 		List<LayerDTO> layerList =  null;
 		SessionInfo sessionInfo = null;
 		Long currentSessionId = null;
@@ -61,7 +61,7 @@ public class IntervalsController extends AbstractFormController {
 		layerList = new ArrayList<LayerDTO>();
 
 		// get the information of the form.
-		selectedLayers = (LayersForm)command;
+		selectedLayers = (GenericForm)command;
 		List<String> dataColumns = selectedLayers.getDataColumnList();
 
 		// retrieve the session Information.
@@ -74,6 +74,8 @@ public class IntervalsController extends AbstractFormController {
 		for(String dataColumn : dataColumns){
 
 			layerDTO = new LayerDTO();
+
+			System.out.println("Columns: "+dataColumn);
 
 			// split the information that comes from the Form
 			columnElements = dataColumn.split(":");
@@ -88,13 +90,11 @@ public class IntervalsController extends AbstractFormController {
 			//set the selectedColumn
 			layerDTO.setDataColumnList(selectedColumn);
 
-			// if the selected column is of type CHARACTER the layer has to be recategorize
-			if(columnElements[2].equals("CHARACTER")){
-				this.grassManagerImpl.simpleReclasification(layerDTO.getName(), columnElements[1], currentSessionId);
-			}
+			// vectorial reclasification
+			this.vectorialReclassification(layerDTO.getName(), columnElements[1], currentSessionId);
 
 			//convert the layer to a raster format
-			this.layer2Raster(layerDTO.getName(), currentSessionId);
+			this.layer2Raster(layerDTO.getName(), currentSessionId, columnElements[1]);
 
 			layerList.add(layerDTO);
 		}
@@ -117,6 +117,16 @@ public class IntervalsController extends AbstractFormController {
 
         return model;
 	}
+
+
+	private void vectorialReclassification(String layerName, String column, Long currentSessionId){
+		try {
+			this.grassManagerImpl.executeVectorReclasification(layerName, column, currentSessionId);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
 
 	private List<LayerDTO> mergeData(List<LayerDTO> oldList, List<LayerDTO> newList){
 
@@ -143,7 +153,7 @@ public class IntervalsController extends AbstractFormController {
 				intervals = this.grassManagerImpl.getLayerCategories(layer.getName(), "RAST", currentSessionId);
 				layer.setIntervals(intervals);
 			} catch (Exception ex) {
-				logger.fatal(ex);
+				ex.printStackTrace();
 			}
 		}
 
@@ -152,12 +162,12 @@ public class IntervalsController extends AbstractFormController {
 	}
 
 
-	private void layer2Raster(String layerName, Long currentSessionId){
+	private void layer2Raster(String layerName, Long currentSessionId, String column){
 		try {
 			// convert the vectorial layer to another in raster format
-			this.grassManagerImpl.convertLayer2Raster(layerName, currentSessionId, true);
+			this.grassManagerImpl.convertLayer2Raster(layerName, currentSessionId, column);
 		} catch (Exception ex) {
-			logger.fatal(ex);
+			ex.printStackTrace();
 		}
 
 	}

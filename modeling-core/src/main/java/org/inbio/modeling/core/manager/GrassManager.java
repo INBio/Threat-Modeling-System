@@ -27,7 +27,7 @@ public interface GrassManager{
 
 	public void importLayer(String layerName, Long suffix) throws Exception;
 
-	public void convertLayer2Raster(String layerName, Long suffix, boolean reclasified) throws Exception;
+	public void convertLayer2Raster(String layerName, Long suffix, String column) throws Exception;
 
 	public void executeWeightedSum(String layerName1, Long weight1, String layerName2, Long weight2, Long suffix, String outputName) throws Exception;
 
@@ -35,11 +35,12 @@ public interface GrassManager{
 
 	public void getMinMaxValuesFromLayer(String layerName, Long suffix) throws Exception;
 
-	public void simpleReclasification(String layerName, String column, Long suffix) throws Exception;
 
 	public List<IntervalDTO> getLayerCategories(String layerName, String layerType, Long suffix) throws Exception;
 
 	public void advanceReclasification(String layerName, Long suffix) throws Exception;
+
+	public void executeVectorReclasification(String layerName, String column, Long suffix) throws Exception;
 
 	public void setResolution(Double resolution, Long suffix) throws Exception;
 

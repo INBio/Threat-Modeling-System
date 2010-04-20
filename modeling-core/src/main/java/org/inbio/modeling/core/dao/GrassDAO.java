@@ -27,23 +27,23 @@ public interface GrassDAO extends BaseDAO {
 
 	public void importLayer(String layerName, Long suffix) throws Exception;
 
-	public void convertLayer2Raster(String layerName, Long suffix, boolean reclasified) throws Exception;
+	public void executeRasterization(String layerName, Long suffix, String column) throws Exception;
 
 	public void executeWeightedSum(String layerName1, Long weight1, String layerName2, Long weight2, Long suffix, String outputName) throws Exception;
 
-	public void exportLayer2Image(Long suffix, String outputName) throws Exception;
+	public void exportAsImage(Long suffix, String outputName) throws Exception;
 
-	public void getMinMaxValuesFromLayer(String layerName, Long suffix) throws Exception;
+	public void retrieveMinMaxValues(String layerName, Long suffix) throws Exception;
 
-	public void doSimpleReclasification(String layerName, String column, Long suffix) throws Exception;
+	public List<IntervalDTO> retrieveCategories(String layerName, String layerType, Long suffix) throws Exception;
 
-	public List<IntervalDTO> getLayerCategories(String layerName, String layerType, Long suffix) throws Exception;
+	public void executeReclassification(String layerName, Long suffix) throws Exception;
 
-	public void advanceReclasification(String layerName, Long suffix) throws Exception;
-
-	public void setResolution(Double resolution, Long suffix) throws Exception;
+	public void asingResolution(Double resolution, Long suffix) throws Exception;
 
 	public void deleteGRASSLocation(Long suffix);
 
-	public HashMap<String,String> retrieveAvailableColumns(String layerName, Long suffix) throws Exception;
+	public HashMap<String,String> retrieveColumns(String layerName, Long suffix) throws Exception;
+
+	public void executeVectorReclasification(String layerName, String column, Long suffix) throws Exception;
 }

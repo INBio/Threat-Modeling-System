@@ -38,7 +38,7 @@ public class GrassManagerImpl implements GrassManager {
 
 	@Override
 	public void advanceReclasification(String layerName, Long suffix) throws Exception {
-		this.grassDAOImpl.advanceReclasification(layerName, suffix);
+		this.grassDAOImpl.executeReclassification(layerName, suffix);
 	}
 
 	@Override
@@ -47,14 +47,10 @@ public class GrassManagerImpl implements GrassManager {
 	}
 
 	@Override
-	public void convertLayer2Raster(String layerName, Long suffix, boolean reclasified) throws Exception {
-		this.grassDAOImpl.convertLayer2Raster(layerName, suffix, reclasified);
+	public void convertLayer2Raster(String layerName, Long suffix, String column) throws Exception {
+		this.grassDAOImpl.executeRasterization(layerName, suffix, column);
 	}
 
-	@Override
-	public void simpleReclasification(String layerName, String column, Long suffix) throws Exception {
-		this.grassDAOImpl.doSimpleReclasification(layerName, column, suffix);
-	}
 
 	@Override
 	public void executeWeightedSum(String layerName1, Long weight1, String layerName2, Long weight2, Long suffix, String outputName) throws Exception {
@@ -63,17 +59,17 @@ public class GrassManagerImpl implements GrassManager {
 
 	@Override
 	public void exportLayer2Image( Long suffix, String layerName) throws Exception {
-		this.grassDAOImpl.exportLayer2Image(suffix, layerName);
+		this.grassDAOImpl.exportAsImage(suffix, layerName);
 	}
 
 	@Override
 	public List<IntervalDTO> getLayerCategories(String layerName, String layerType, Long suffix) throws Exception {
-		return this.grassDAOImpl.getLayerCategories(layerName, layerType, suffix);
+		return this.grassDAOImpl.retrieveCategories(layerName, layerType, suffix);
 	}
 
 	@Override
 	public void getMinMaxValuesFromLayer(String layerName, Long suffix) throws Exception {
-		this.grassDAOImpl.getMinMaxValuesFromLayer(layerName, suffix);
+		this.grassDAOImpl.retrieveMinMaxValues(layerName, suffix);
 	}
 
 	@Override
@@ -83,12 +79,17 @@ public class GrassManagerImpl implements GrassManager {
 
 	@Override
 	public void setResolution(Double resolution, Long suffix) throws Exception {
-		this.grassDAOImpl.setResolution(resolution, suffix);
+		this.grassDAOImpl.asingResolution(resolution, suffix);
 	}
 
 	@Override
 	public HashMap<String,String> retrieveAvailableColumns(String layerName, Long suffix) throws Exception {
-		return this.grassDAOImpl.retrieveAvailableColumns(layerName, suffix);
+		return this.grassDAOImpl.retrieveColumns(layerName, suffix);
+	}
+
+	@Override
+	public void executeVectorReclasification(String layerName, String column, Long suffix) throws Exception {
+		this.grassDAOImpl.executeVectorReclasification(layerName, column, suffix);
 	}
 
 	@Override

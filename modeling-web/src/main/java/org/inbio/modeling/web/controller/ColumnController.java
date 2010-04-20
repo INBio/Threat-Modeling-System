@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.inbio.modeling.core.dto.LayerDTO;
 import org.inbio.modeling.core.manager.GrassManager;
-import org.inbio.modeling.web.forms.LayersForm;
+import org.inbio.modeling.web.forms.GenericForm;
 import org.inbio.modeling.web.session.SessionInfo;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
@@ -42,24 +42,26 @@ public class ColumnController extends AbstractFormController {
 	@Override
 	protected ModelAndView processFormSubmission(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) {
 
-		LayersForm selectedLayers = null;
+		GenericForm selectedLayers = null;
 		List<LayerDTO> layerList =  null;
 		SessionInfo sessionInfo = null;
 		Long currentSessionId = null;
 		HttpSession session = null;
 		ModelAndView model = null;
 		LayerDTO layerDTO = null;
+		Double resolution = null;
 		String weight = null;
 		int index = 0;
 
 
-		selectedLayers = (LayersForm)command;
+		selectedLayers = (GenericForm)command;
 		layerList = new ArrayList<LayerDTO>();
 
 		// retrieve the session Information.
 		session = request.getSession();
 		sessionInfo = (SessionInfo)session.getAttribute("CurrentSessionInfo");
 		currentSessionId = sessionInfo.getCurrentSessionId();
+		resolution = Double.parseDouble(selectedLayers.getResolution());
 
 		try{
 
@@ -78,11 +80,14 @@ public class ColumnController extends AbstractFormController {
 				layerList.add(layerDTO);
 			}
 
+			// Change the resolution
+
 			//Import the layers
-			this.importLayers(layerList, currentSessionId);
+			this.importLayers(resolution, layerList, currentSessionId);
 
 			// retrieve dataColumns
 			layerList = this.retrieveColumns(layerList, currentSessionId);
+
 
 		}catch(Exception e){
 			e.printStackTrace();
@@ -100,6 +105,15 @@ public class ColumnController extends AbstractFormController {
         return model;
 	}
 
+	private void setResolution(Double resolution, Long currentSessionId){
+		try {
+			this.grassManagerImpl.setResolution(resolution, currentSessionId);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+	}
+
 
 	private List<LayerDTO> retrieveColumns(List<LayerDTO> layerList, Long currentSessionId){
 
@@ -110,9 +124,10 @@ public class ColumnController extends AbstractFormController {
 				// Retrive data columns
 				columns = grassManagerImpl.retrieveAvailableColumns(layerDTO.getName(), currentSessionId);
 			} catch (Exception ex) {
-				logger.fatal(ex);
+				ex.printStackTrace();
 			}
 
+			columns.remove("cat");
 			layerDTO.setDataColumnList(columns);
 		}
 
@@ -121,11 +136,14 @@ public class ColumnController extends AbstractFormController {
 
 
 	//TODO: make this better
-	private void importLayers(List<LayerDTO> layerList, Long currentSessionId){
+	private void importLayers(Double resolution, List<LayerDTO> layerList, Long currentSessionId){
 
 		int counter = 0;
 
 		try {
+
+			// change the resolution
+			this.grassManagerImpl.setResolution(resolution, currentSessionId);
 
 			// configure grass to the default location.
 			this.grassManagerImpl.configureEnvironment("Default", currentSessionId);
@@ -133,13 +151,14 @@ public class ColumnController extends AbstractFormController {
 			for (LayerDTO layerDTO: layerList){
 				if(counter++ == 1){
 					this.grassManagerImpl.configureEnvironment("LOC_"+currentSessionId, currentSessionId);
+					this.grassManagerImpl.setResolution(resolution, currentSessionId);
 				}
 
 				this.grassManagerImpl.importLayer(layerDTO.getName(), currentSessionId);
 			}
 
 		} catch (Exception ex) {
-			logger.fatal(ex);
+			ex.printStackTrace();
 		}
 	}
 

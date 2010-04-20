@@ -23,8 +23,9 @@ import java.util.List;
  *
  * @author asanabria
  */
-public class LayersForm {
+public class GenericForm {
 
+	private String		 resolution;
 	private List<String> selectedLayers;
 	private List<String> selectedValues;
 	private List<String> dataColumnList;
@@ -51,5 +52,13 @@ public class LayersForm {
 
 	public void setDataColumnList(List<String> dataColumnList) {
 		this.dataColumnList = dataColumnList;
+	}
+
+	public String getResolution() {
+		return resolution;
+	}
+
+	public void setResolution(String resolution) {
+		this.resolution = resolution;
 	}
 }

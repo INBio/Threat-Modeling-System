@@ -85,13 +85,21 @@
 			<font color="red">
 				<b><c:out value="${status.errorMessage}"/></b>
 			</font>
-			<table>
-				<tr>
-					<td><fmt:message key="common.selected"/></td>
-					<td><fmt:message key="layer.layerName"/></td>
-					<td><fmt:message key="layer.importanceValue"/></td>
-				</tr>
-				<form method="post" action="columns.html" id="layersForm">
+			<form method="post" action="columns.html" id="layersForm">
+				<table>
+					<tr>
+						<td><fmt:message key="common.resolution"/></td>
+						<td colspan="2">
+							<input id="resolution" name="resolution" type="text" />
+							<br />
+							<fmt:message key="layer.resolutionDecimalDegrees" />
+						</td>
+					</tr>
+					<tr>
+						<td><fmt:message key="common.selected"/></td>
+						<td><fmt:message key="layer.layerName"/></td>
+						<td><fmt:message key="layer.importanceValue"/></td>
+					</tr>
 					<c:forEach items="${layers}" var="layer"  varStatus="current">
 						<tr>
 							<td>
@@ -108,7 +116,7 @@
 					<tr>
 						<td colspan="1" align="left">
 							<fmt:message key="layer.importanceValueTotal"/>
-							<label id="totalImportanceValue" style="font-size: 24; color: red" title="<fmt:message key="layer.importanceValueHint"/>" >
+							<label id="totalImportanceValue" style="font-size: xx-large; color: red" title="<fmt:message key="layer.importanceValueHint"/>" >
 								0
 							</label>
 								%
@@ -118,8 +126,8 @@
 							<input id="submitButton" type="button" onclick="calculateValues();send();" value='<fmt:message key="layer.importanceValue"/>' />
 						</td>
 					</tr>
-				</form>
-			</table>
+				</table>
+			</form>
 		</div>
 	</body>
 </html>

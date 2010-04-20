@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
 import org.inbio.modeling.core.dto.LayerDTO;
 import org.inbio.modeling.core.manager.FileManager;
 import org.inbio.modeling.core.manager.GrassManager;
-import org.inbio.modeling.web.forms.LayersForm;
+import org.inbio.modeling.web.forms.GenericForm;
 import org.inbio.modeling.web.session.SessionInfo;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
@@ -42,7 +42,7 @@ public class ShowMapController extends AbstractFormController {
 	@Override
 	protected ModelAndView processFormSubmission(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
 
-		LayersForm selectedLayers = null;
+		GenericForm selectedLayers = null;
 		List<LayerDTO> layerList =  null;
 		SessionInfo sessionInfo = null;
 		Long currentSessionId = null;
@@ -54,7 +54,7 @@ public class ShowMapController extends AbstractFormController {
 			currentSessionId = new Long(666L); */
 
 		// TODO: retrieve the information from the Form
-		selectedLayers = (LayersForm)command;
+		selectedLayers = (GenericForm)command;
 
 
 		// retrieve the session Information.
