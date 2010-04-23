@@ -57,15 +57,18 @@ public class FileManagerImpl implements FileManager {
 
 			for(CategoryDTO category : layer.getCategories()){
 
-				if(category.isInterval()){
-					value = category.getValue().split("-");
-					category.setValue(value[0] + " thru " + value[1]);
-				}
+				if(this.validateFormat(category)){
 
-				line = category.getValue() +
-							" = " + index + " " + category.getDescription() + "\n";
-				index++;
-				dos.writeUTF(line);
+					if(category.isInterval()){
+						value = category.getValue().split("-");
+						category.setValue(value[0] + " thru " + value[1]);
+					}
+
+					line = category.getValue() +
+						" = " + index + " " + category.getDescription() + "\n";
+					index++;
+					dos.writeUTF(line);
+				}
 			}
 
 			dos.close();
@@ -73,6 +76,11 @@ public class FileManagerImpl implements FileManager {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private boolean validateFormat(CategoryDTO category){
+
+		return true;
 	}
 
 	/* getters y setters */

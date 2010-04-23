@@ -49,11 +49,6 @@ public class ShowMapController extends AbstractFormController {
 		HttpSession session = null;
 		ModelAndView model = null;
 
-		/**	Long currentSessionId = Calendar.getInstance().getTimeInMillis();
-			currentSessionId = new Long(1271111604483L);
-			currentSessionId = new Long(666L); */
-
-		// TODO: retrieve the information from the Form
 		selectedLayers = (GenericForm)command;
 
 
@@ -62,9 +57,8 @@ public class ShowMapController extends AbstractFormController {
 		sessionInfo = (SessionInfo)session.getAttribute("CurrentSessionInfo");
 		currentSessionId = sessionInfo.getCurrentSessionId();
 
-		layerList = sessionInfo.getSelectedLayerList();
 
-		for(LayerDTO layer : layerList){
+		for(LayerDTO layer : selectedLayers.getLayers()){
 			System.out.println("layer: "+layer.getName() + "  W: "+layer.getWeight());
 			this.fileManagerImpl.writeReclasFile(layer, currentSessionId);
 			this.grassManagerImpl.advanceReclasification(layer.getName(), currentSessionId);
@@ -75,17 +69,17 @@ public class ShowMapController extends AbstractFormController {
 		LayerDTO M2 = null;
 		LayerDTO R = null;
 
-		if(layerList.size() >= 2){
-			M1 = layerList.get(0);
-			M2 = layerList.get(1);
+		if(selectedLayers.getLayers().size() >= 2){
+			M1 = selectedLayers.getLayers().get(0);
+			M2 = selectedLayers.getLayers().get(1);
 			R  = new LayerDTO("Res1", 1);
 		}
 
-		for(int i = 2; i<layerList.size(); i++){
+		for(int i = 2; i<selectedLayers.getLayers().size(); i++){
 
 			this.grassManagerImpl.executeWeightedSum(M1.getName(), M1.getWeight(), M2.getName(), M2.getWeight(), currentSessionId, R.getName());
 			M1 = R;
-			M2 = layerList.get(i);
+			M2 = selectedLayers.getLayers().get(i);
 			R  = new LayerDTO("Res"+i, 1);
 			System.out.println("Testing");
 		}
