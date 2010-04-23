@@ -17,9 +17,9 @@
  */
 package org.inbio.modeling.core.manager.impl;
 
-import java.io.DataOutputStream;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -42,18 +42,16 @@ public class FileManagerImpl implements FileManager {
 	@Override
 	public void writeReclasFile(LayerDTO layer, Long suffix){
 
-		FileOutputStream fos = null;
-		DataOutputStream dos = null;
+		FileWriter fstream = null;
+		BufferedWriter out = null;
 		String[] value = null;
-		String line = null;
-		File file = null;
-		int index = 0;
+		String line = "";
+		int index = 1;
 
 		try {
 
-			file = new File(tempHome+fileName+suffix+fileExtension);
-			fos  = new FileOutputStream(file);
-			dos  = new DataOutputStream(fos);
+			fstream = new FileWriter(tempHome+fileName+suffix+fileExtension);
+			out = new BufferedWriter(fstream);
 
 			for(CategoryDTO category : layer.getCategories()){
 
@@ -65,14 +63,14 @@ public class FileManagerImpl implements FileManager {
 					}
 
 					line = category.getValue() +
-						" = " + index + " " + category.getDescription() + "\n";
+						" = " + index + " " + category.getDescription() +"\n";
 					index++;
-					dos.writeUTF(line);
+					out.write(line);
 				}
 			}
 
-			dos.close();
-			fos.close();
+			out.close();
+			fstream.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -80,7 +78,25 @@ public class FileManagerImpl implements FileManager {
 
 	private boolean validateFormat(CategoryDTO category){
 
-		return true;
+		if(category == null)
+			return false;
+
+		boolean result = false;
+		String temp[] = null;
+		String value = category.getValue();
+
+		if(value.matches("\\d+")){
+			result = true;
+		} if(value.matches("\\d+(,\\d+)+")){
+			result = true;
+			value = value.replace(",", " ");
+			category.setValue(value);
+		} else if(value.matches("\\d+-\\d")){
+			result = true;
+			category.setInterval(true);
+		}
+
+		return result;
 	}
 
 	/* getters y setters */

@@ -240,7 +240,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		// Prints the output of the command for good or for bad.
 		this.printThis(result, stdout, stderr);
 
-		StringTokenizer st = new StringTokenizer(stdout.toString(), "\n");
+		StringTokenizer st = new StringTokenizer(new String(stdout), "\n");
 
 		while(st.hasMoreTokens()){
 
