@@ -21,6 +21,8 @@ package org.inbio.modeling.core.dto;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.collections.FactoryUtils;
+import org.apache.commons.collections.map.LazyMap;
 
 /**
  *
@@ -31,8 +33,10 @@ public class LayerDTO {
 	private boolean selected;
 	private long   weight;
 	private String name;
+	private String selectedColumn;
 	private String description;
 	private Map<String,String>	columns;
+
 	private List<CategoryDTO>	categories;
 
 	public LayerDTO() { }
@@ -88,5 +92,13 @@ public class LayerDTO {
 
 	public void setColumns(Map<String, String> columns) {
 		this.columns = columns;
+	}
+
+	public String getSelectedColumn() {
+		return selectedColumn;
+	}
+
+	public void setSelectedColumn(String selectedColumn) {
+		this.selectedColumn = selectedColumn;
 	}
 }

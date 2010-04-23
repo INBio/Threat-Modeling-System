@@ -105,6 +105,7 @@
 							</td>
 						</tr>
 						<tr>
+
 							<td  id="<c:out value='${layer.name}' />_categories" colspan="3" style="display: none">
 								<c:forEach items="${layer.intervals}" var="interval"  varStatus="currentInterval">
 									<div>

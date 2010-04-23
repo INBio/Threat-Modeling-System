@@ -44,8 +44,8 @@ public class IntervalsController extends AbstractFormController {
 	protected ModelAndView processFormSubmission(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
 
 
-		HashMap<String, String> selectedColumn = null;
-		GenericForm selectedLayers = null;
+		HashMap<String, String> column = null;
+		GenericForm layersInformation = null;
 		List<LayerDTO> layerList =  null;
 		SessionInfo sessionInfo = null;
 		Long currentSessionId = null;
@@ -57,10 +57,9 @@ public class IntervalsController extends AbstractFormController {
 		String[] columnElements = null;
 
 		layerList = new ArrayList<LayerDTO>();
-/*
+
 		// get the information of the form.
-		selectedLayers = (GenericForm)command;
-		List<String> dataColumns = selectedLayers.getDataColumnList();
+		layersInformation = (GenericForm)command;
 
 		// retrieve the session Information.
 		session = request.getSession();
@@ -69,40 +68,24 @@ public class IntervalsController extends AbstractFormController {
 
 
 		// extract and format the information of the dataColumn to use.
-		for(String dataColumn : dataColumns){
-
-			layerDTO = new LayerDTO();
-
-			System.out.println("Columns: "+dataColumn);
+		for(LayerDTO layer : layersInformation.getLayers()){
 
 			// split the information that comes from the Form
-			columnElements = dataColumn.split(":");
-
-			// set the name of the layer for future recognition
-			layerDTO.setName(columnElements[0]);
+			columnElements = layer.getSelectedColumn().split(":");
 
 			// convert the array to a HashMap
-			selectedColumn = new HashMap<String,String>();
-			selectedColumn.put(columnElements[1], columnElements[2]);
-
-			//set the selectedColumn
-			layerDTO.setDataColumnList(selectedColumn);
+			column = new HashMap<String,String>();
+			column.put(columnElements[0], columnElements[1]);
+			layer.setColumns(column);
 
 			// vectorial reclasification
-			this.vectorialReclassification(layerDTO.getName(), columnElements[1], currentSessionId);
+			this.vectorialReclassification(layer.getName(), columnElements[0], currentSessionId);
 
 			//convert the layer to a raster format
-			this.layer2Raster(layerDTO.getName(), currentSessionId, columnElements[1]);
+			this.layer2Raster(layer.getName(), currentSessionId, columnElements[0]);
 
-			layerList.add(layerDTO);
+			layerList.add(layer);
 		}
-		// combine the new information with the existing one
-		layerList = this.mergeData(sessionInfo.getSelectedLayerList() , layerList);
-
-		// retrieve the categories by layer.
-		layerList = this.setIntervals2Layers(currentSessionId, layerList);
-
-*/
 
 		// assing layerList to the session
 		sessionInfo.setSelectedLayerList(layerList);
@@ -124,42 +107,6 @@ public class IntervalsController extends AbstractFormController {
 			ex.printStackTrace();
 		}
 	}
-
-/*
-	private List<LayerDTO> mergeData(List<LayerDTO> oldList, List<LayerDTO> newList){
-
-
-		for(LayerDTO oldLayer : oldList ){
-			for(LayerDTO newLayer : newList){
-				if(oldLayer.getName().equals(newLayer.getName())){
-					oldLayer.setDataColumnList(newLayer.getDataColumnList());
-				}
-			}
-		}
-
-		return oldList;
-	}
-	private List<LayerDTO> setIntervals2Layers(Long currentSessionId, List<LayerDTO> layerList){
-
-		List<CategoryDTO> intervals = null;
-
-		for(LayerDTO layer : layerList){
-
-			try {
-				// retrieve an asing the layer categories
-				intervals = this.grassManagerImpl.getLayerCategories(layer.getName(), "RAST", currentSessionId);
-				layer.setIntervals(intervals);
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-		}
-
-
-		return layerList;
-	}
- *
- *
- */
 
 
 	private void layer2Raster(String layerName, Long currentSessionId, String column){
