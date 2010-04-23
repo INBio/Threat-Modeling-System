@@ -30,39 +30,38 @@
 			<font color="red">
 				<b><c:out value="${status.errorMessage}"/></b>
 			</font>
-			<table>
-				<tr>
-					<td><fmt:message key="common.layers"/></td>
-					<td><fmt:message key="common.weight"/></td>
-					<td><fmt:message key="interval.column"/></td>
-				</tr>
-				<form method="post" action="intervals.html" id="columnsForm">
-					<c:forEach items="${layers}" var="layer"  varStatus="current">
-						<tr>
-							<td>
+			<div id="contenido" >
+				<div id="title">
+
+				</div>
+				<div id="columnsFrame">
+					<div id="columnsTitle" >
+						<fmt:message key="common.layers"/>
+						<fmt:message key="common.weight"/>
+						<fmt:message key="interval.column"/>
+					</div>
+					<div id="columnsList">
+						<form:form action="intervals.html" id="columnsForm" commandName="currentStatus">
+							<c:forEach items="${currentStatus.layers}" var="layer"  varStatus="current">
 								<c:out value="${layer.name}" />
-							</td>
-							<td>
 								<c:out value="${layer.weight}" />
-							</td>
-							<td>
-								<select name="dataColumnList" id="availableColumns">
-									<c:forEach items="${layer.dataColumnList}" var="column">
-										<option  value="<c:out value="${layer.name}" />:<c:out value="${column.key}" />:<c:out value="${column.value}" />" >
+								<form:hidden  path="layers[${current.index}].name" />
+								<form:hidden path="layers[${current.index}].weight"/>
+								<form:select path="layers[${current.index}].columns" multiple="false" >
+									<c:forEach items="${layer.columns}"  var="column">
+										<form:option  value="${column.key}:${column.value}">
 											<c:out value="${column.key}" />&nbsp;&rArr;&nbsp;<c:out value="${column.value}" />
-										</option>
+										</form:option>
 									</c:forEach>
-								</select>
-							</td>
-						</tr>
-					</c:forEach>
-					<tr>
-						<td align="right">
-							<input id="submitButton" type="button" onclick="send('columnsForm');" value='<fmt:message key="common.acceptChanges"/>' />
-						</td>
-					</tr>
-				</form>
-			</table>
+								</form:select>
+							</c:forEach>
+						</form:form>
+					</div>
+					<div id="buttons">
+						<input id="submitButton" type="button" onclick="send('columnsForm');" value='<fmt:message key="common.acceptChanges"/>' />
+					</div>
+				</div>
+			</div>
 		</div>
 	</body>
 </html>

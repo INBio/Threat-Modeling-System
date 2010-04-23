@@ -18,8 +18,8 @@
 package org.inbio.modeling.web.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -42,51 +42,42 @@ public class ColumnController extends AbstractFormController {
 	@Override
 	protected ModelAndView processFormSubmission(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) {
 
-		GenericForm selectedLayers = null;
-		List<LayerDTO> layerList =  null;
+		GenericForm currentStatus = null;
 		SessionInfo sessionInfo = null;
 		Long currentSessionId = null;
 		HttpSession session = null;
 		ModelAndView model = null;
-		LayerDTO layerDTO = null;
+		List<LayerDTO> layersDTO = null;
 		Double resolution = null;
-		String weight = null;
-		int index = 0;
 
-
-		selectedLayers = (GenericForm)command;
-		layerList = new ArrayList<LayerDTO>();
-
+		currentStatus = (GenericForm)command;
+		
 		// retrieve the session Information.
 		session = request.getSession();
 		sessionInfo = (SessionInfo)session.getAttribute("CurrentSessionInfo");
 		currentSessionId = sessionInfo.getCurrentSessionId();
-		resolution = Double.parseDouble(selectedLayers.getResolution());
-
+		resolution = Double.parseDouble(currentStatus.getResolution());
+		
 		try{
 
+			layersDTO = new ArrayList<LayerDTO>();
+			layersDTO.addAll(currentStatus.getLayers());
+
 			// Gets the layers and its weights
-			for(String layer : selectedLayers.getSelectedLayers()){
+			for(LayerDTO layer : currentStatus.getLayers()){
 
-				// completes the available information of the layers.
-				layerDTO = new LayerDTO();
-				// set the name (its the filename without extension)
-				layerDTO.setName(layer);
-				// set the weight of the layer.
-				weight = selectedLayers.getSelectedValues().get(index++);
-				layerDTO.setWeight(Long.parseLong(weight));
-
-				// add the new LayerDTO to the list.
-				layerList.add(layerDTO);
+				if(layer.isSelected() == false){
+					layersDTO.remove(layer);
+				}
 			}
 
-			// Change the resolution
+			currentStatus.setLayers(layersDTO);
 
 			//Import the layers
-			this.importLayers(resolution, layerList, currentSessionId);
+			this.importLayers(resolution, currentStatus.getLayers(), currentSessionId);
 
 			// retrieve dataColumns
-			layerList = this.retrieveColumns(layerList, currentSessionId);
+			currentStatus.setLayers(this.retrieveColumns(currentStatus.getLayers(), currentSessionId));
 
 
 		}catch(Exception e){
@@ -94,13 +85,14 @@ public class ColumnController extends AbstractFormController {
 		}
 
 		// assing layerList to the session
-		sessionInfo.setSelectedLayerList(layerList);
+		// FIXME
+		sessionInfo.setSelectedLayerList(currentStatus.getLayers());
 		session.setAttribute("CurrentSessionInfo", sessionInfo);
 
 		// Send the layer list to the JSP
 		model = new ModelAndView();
 		model.setViewName("columns");
-		model.addObject("layers", layerList);
+		model.addObject("currentStatus", currentStatus);
 
         return model;
 	}
@@ -114,10 +106,9 @@ public class ColumnController extends AbstractFormController {
 
 	}
 
-
 	private List<LayerDTO> retrieveColumns(List<LayerDTO> layerList, Long currentSessionId){
 
-		HashMap<String,String> columns = null;
+		Map<String,String> columns = null;
 
 		for (LayerDTO layerDTO: layerList){
 			try {
@@ -128,12 +119,11 @@ public class ColumnController extends AbstractFormController {
 			}
 
 			columns.remove("cat");
-			layerDTO.setDataColumnList(columns);
+			layerDTO.setColumns(columns);
 		}
 
 		return layerList;
 	}
-
 
 	//TODO: make this better
 	private void importLayers(Double resolution, List<LayerDTO> layerList, Long currentSessionId){
@@ -166,6 +156,8 @@ public class ColumnController extends AbstractFormController {
 	protected ModelAndView showForm(HttpServletRequest request, HttpServletResponse response, BindException errors) throws Exception {
 		return new ModelAndView("index");
 	}
+
+
 
 	/* Getters y Setters */
 	public GrassManager getGrassManagerImpl() {

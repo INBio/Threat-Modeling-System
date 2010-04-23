@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 import org.inbio.modeling.core.dao.GrassDAO;
-import org.inbio.modeling.core.dto.IntervalDTO;
+import org.inbio.modeling.core.dto.CategoryDTO;
 import org.inbio.system.command.impl.SystemCommandExecutorImpl;
 
 public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
@@ -208,7 +208,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	}
 
 	@Override
-	public List<IntervalDTO> retrieveCategories(String layerName, String layerType, Long suffix) throws Exception{
+	public List<CategoryDTO> retrieveCategories(String layerName, String layerType, Long suffix) throws Exception{
 
 		int result = 0;
 		List<String> commands = null;
@@ -217,10 +217,11 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		commands = new ArrayList<String>();
 
 
-		List<IntervalDTO> intervals = new ArrayList<IntervalDTO>();
+		List<CategoryDTO> intervals = new ArrayList<CategoryDTO>();
 		String temp = null;
 		String[] tarray = null;
-		IntervalDTO interval = null;
+		CategoryDTO category = null;
+		List<String> values = null;
 
 
 		// Arguments of the command
@@ -242,14 +243,15 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		StringTokenizer st = new StringTokenizer(stdout.toString(), "\n");
 
 		while(st.hasMoreTokens()){
+
 			temp = st.nextToken();
 			tarray = temp.split(":");
 
-			interval = new IntervalDTO();
-			interval.setDescription(tarray[1]);
-			interval.setMin(Double.parseDouble(tarray[0]));
-			interval.setMax(Double.parseDouble(tarray[0]));
-			intervals.add(interval);
+			category = new CategoryDTO();
+			category.setValue(tarray[0]);
+			category.setDescription(tarray[1]);
+
+			intervals.add(category);
 		}
 
 		stderr = commandExecutor.getStandardError();

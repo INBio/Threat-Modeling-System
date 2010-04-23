@@ -17,7 +17,11 @@
  */
 package org.inbio.modeling.web.forms;
 
+import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.collections.FactoryUtils;
+import org.apache.commons.collections.list.LazyList;
+import org.inbio.modeling.core.dto.LayerDTO;
 
 /**
  *
@@ -25,33 +29,21 @@ import java.util.List;
  */
 public class GenericForm {
 
-	private String		 resolution;
-	private List<String> selectedLayers;
-	private List<String> selectedValues;
-	private List<String> dataColumnList;
+	private String			resolution;
+	private List<LayerDTO>  layers = LazyList.decorate(
+		new ArrayList(),
+		FactoryUtils.instantiateFactory(LayerDTO.class));
 
-	public List<String> getSelectedLayers() {
-		return selectedLayers;
+
+	public GenericForm() {
 	}
 
-	public void setSelectedLayers(List<String> selectedLayers) {
-		this.selectedLayers = selectedLayers;
+	public List<LayerDTO> getLayers() {
+		return layers;
 	}
 
-	public List<String> getSelectedValues() {
-		return selectedValues;
-	}
-
-	public void setSelectedValues(List<String> selectedValues) {
-		this.selectedValues = selectedValues;
-	}
-
-	public List<String> getDataColumnList() {
-		return dataColumnList;
-	}
-
-	public void setDataColumnList(List<String> dataColumnList) {
-		this.dataColumnList = dataColumnList;
+	public void setLayers(List<LayerDTO> layers) {
+		this.layers = layers;
 	}
 
 	public String getResolution() {

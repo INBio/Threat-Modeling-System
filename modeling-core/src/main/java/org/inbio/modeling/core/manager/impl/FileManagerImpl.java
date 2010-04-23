@@ -21,11 +21,9 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.inbio.modeling.core.dto.IntervalDTO;
+import org.inbio.modeling.core.dto.CategoryDTO;
 import org.inbio.modeling.core.dto.LayerDTO;
 import org.inbio.modeling.core.manager.FileManager;
 
@@ -46,25 +44,10 @@ public class FileManagerImpl implements FileManager {
 
 		FileOutputStream fos = null;
 		DataOutputStream dos = null;
+		String[] value = null;
 		String line = null;
 		File file = null;
 		int index = 0;
-
-		IntervalDTO inte = null;
-		layer = new LayerDTO();
-		List<IntervalDTO>  list = new ArrayList<IntervalDTO>();
-
-		for(int i = 0; i < 5 ;i++){
-			inte = new IntervalDTO();
-
-			inte.setMin(new Double(i*500.698));
-			inte.setMax(new Double(i*700.698));
-			inte.setDescription(" Category "+i);
-			list.add(inte);
-		}
-
-		layer.setIntervals(list);
-
 
 		try {
 
@@ -72,16 +55,16 @@ public class FileManagerImpl implements FileManager {
 			fos  = new FileOutputStream(file);
 			dos  = new DataOutputStream(fos);
 
-			for(IntervalDTO interval : layer.getIntervals()){
+			for(CategoryDTO category : layer.getCategories()){
 
-				if(interval.getMin() == interval.getMax()){
-					line = interval.getMin() +
-							" = " + index++ + " " + interval.getDescription() +"\n";
-				}else{
-					line = interval.getMin() + " thru " + interval.getMax() +
-							" = " + index++ + " " + interval.getDescription() + "\n";
+				if(category.isInterval()){
+					value = category.getValue().split("-");
+					category.setValue(value[0] + " thru " + value[1]);
 				}
 
+				line = category.getValue() +
+							" = " + index + " " + category.getDescription() + "\n";
+				index++;
 				dos.writeUTF(line);
 			}
 

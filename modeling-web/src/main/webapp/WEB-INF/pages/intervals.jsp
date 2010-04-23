@@ -87,7 +87,7 @@
 				<b><c:out value="${status.errorMessage}"/></b>
 			</font>
 			<table border="3" >
-				<form method="post" action="showResultingMap.html" id="intevalsForm">
+				<form:form action="showResultingMap.html" method="post">
 					<c:forEach items="${layers}" var="layer"  varStatus="current">
 						<tr>
 							<td>
@@ -106,11 +106,11 @@
 						</tr>
 						<tr>
 							<td  id="<c:out value='${layer.name}' />_categories" colspan="3" style="display: none">
-								<c:forEach items="${layer.intervals}" var="interval"  varStatus="current">
+								<c:forEach items="${layer.intervals}" var="interval"  varStatus="currentInterval">
 									<div>
 										<input type="checkbox" name="${layer.name}"/>
-										<input  type="text" id="" value="${interval.min}"  style="width: 150px" />
-										<input  value="<c:out value="${interval.description}" />">
+										<form:input path="layerList.[${current.index}].intevals[${currentInterval}].min" />
+										<form:input path="layerList.[${current.index}].intevals[${currentInterval}].description" />
 										<br />
 									</div>
 								</c:forEach>
@@ -128,7 +128,7 @@
 							<input id="addButton" type="button" onclick="addCategory();" value='<fmt:message key="interval.addCategory"/>' />
 						</td>
 					</tr>
-				</form>
+				</form:form>
 			</table>
 		</div>
 	</body>

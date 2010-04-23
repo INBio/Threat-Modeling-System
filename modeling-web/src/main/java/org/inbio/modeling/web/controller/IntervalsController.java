@@ -20,12 +20,10 @@ package org.inbio.modeling.web.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.inbio.modeling.core.dto.IntervalDTO;
+import org.inbio.modeling.core.dto.CategoryDTO;
 import org.inbio.modeling.core.dto.LayerDTO;
 import org.inbio.modeling.core.manager.GrassManager;
 import org.inbio.modeling.web.forms.GenericForm;
@@ -55,11 +53,11 @@ public class IntervalsController extends AbstractFormController {
 		ModelAndView model = null;
 		LayerDTO layerDTO = null;
 
-		List<IntervalDTO> intervals = null;
+		List<CategoryDTO> intervals = null;
 		String[] columnElements = null;
 
 		layerList = new ArrayList<LayerDTO>();
-
+/*
 		// get the information of the form.
 		selectedLayers = (GenericForm)command;
 		List<String> dataColumns = selectedLayers.getDataColumnList();
@@ -98,13 +96,13 @@ public class IntervalsController extends AbstractFormController {
 
 			layerList.add(layerDTO);
 		}
-
 		// combine the new information with the existing one
 		layerList = this.mergeData(sessionInfo.getSelectedLayerList() , layerList);
 
 		// retrieve the categories by layer.
 		layerList = this.setIntervals2Layers(currentSessionId, layerList);
 
+*/
 
 		// assing layerList to the session
 		sessionInfo.setSelectedLayerList(layerList);
@@ -127,7 +125,7 @@ public class IntervalsController extends AbstractFormController {
 		}
 	}
 
-
+/*
 	private List<LayerDTO> mergeData(List<LayerDTO> oldList, List<LayerDTO> newList){
 
 
@@ -141,10 +139,9 @@ public class IntervalsController extends AbstractFormController {
 
 		return oldList;
 	}
-
 	private List<LayerDTO> setIntervals2Layers(Long currentSessionId, List<LayerDTO> layerList){
 
-		List<IntervalDTO> intervals = null;
+		List<CategoryDTO> intervals = null;
 
 		for(LayerDTO layer : layerList){
 
@@ -160,6 +157,9 @@ public class IntervalsController extends AbstractFormController {
 
 		return layerList;
 	}
+ *
+ *
+ */
 
 
 	private void layer2Raster(String layerName, Long currentSessionId, String column){

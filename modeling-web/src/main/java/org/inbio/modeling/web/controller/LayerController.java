@@ -26,6 +26,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.inbio.modeling.core.dto.LayerDTO;
 import org.inbio.modeling.core.manager.LayerManager;
+import org.inbio.modeling.web.forms.GenericForm;
 import org.inbio.modeling.web.session.SessionInfo;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
@@ -49,20 +50,22 @@ public class LayerController extends AbstractFormController {
 
 		// Generates the user id Number.
 		sessionInfo.setCurrentSessionId(Calendar.getInstance().getTimeInMillis());
-//		sessionInfo.setCurrentSessionId( 1271278414030L);
+		sessionInfo.setCurrentSessionId(1271784714875L);
 
+		// Gets the list of available layers
+		List <LayerDTO> layers = layerManager.getLayerList();
+		GenericForm systemInfo = new GenericForm();
+		systemInfo.setLayers(layers);
 
 		// Asing the SessionInfo Object to the session
 		session = request.getSession(true);
 		session.setAttribute("CurrentSessionInfo", sessionInfo);
 
-		// Gets the list of available layers
-		List <LayerDTO> layerList = layerManager.getLayerList();
 
 		// Send the layer list to the JSP
 		model = new ModelAndView();
 		model.setViewName("layers");
-		model.addObject("layers", layerList);
+		model.addObject("systemInfo", systemInfo);
 
         return model;
 	}

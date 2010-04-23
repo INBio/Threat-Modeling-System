@@ -17,14 +17,16 @@
  */
 package org.inbio.modeling.core.dto;
 
+import java.util.List;
+
 /**
  *
  * @author asanabria
  */
-public class IntervalDTO {
+public class CategoryDTO {
 
-	private Double min;
-	private Double max;
+	private boolean interval;
+	private String value;
 	private String description;
 
 	public String getDescription() {
@@ -35,19 +37,19 @@ public class IntervalDTO {
 		this.description = description;
 	}
 
-	public Double getMax() {
-		return max;
+	public boolean isInterval() {
+		return interval;
 	}
 
-	public void setMax(Double max) {
-		this.max = max;
+	public void setInterval(boolean interval) {
+		this.interval = interval;
 	}
 
-	public Double getMin() {
-		return min;
+	public String getValue() {
+		return value;
 	}
 
-	public void setMin(Double min) {
-		this.min = min;
+	public void setValue(String value) {
+		this.value = value;
 	}
 }

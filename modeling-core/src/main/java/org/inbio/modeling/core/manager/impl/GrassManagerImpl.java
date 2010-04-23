@@ -22,7 +22,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.inbio.modeling.core.dao.GrassDAO;
-import org.inbio.modeling.core.dto.IntervalDTO;
+import org.inbio.modeling.core.dto.CategoryDTO;
 import org.inbio.modeling.core.manager.GrassManager;
 
 /**
@@ -63,7 +63,7 @@ public class GrassManagerImpl implements GrassManager {
 	}
 
 	@Override
-	public List<IntervalDTO> getLayerCategories(String layerName, String layerType, Long suffix) throws Exception {
+	public List<CategoryDTO> getLayerCategories(String layerName, String layerType, Long suffix) throws Exception {
 		return this.grassDAOImpl.retrieveCategories(layerName, layerType, suffix);
 	}
 

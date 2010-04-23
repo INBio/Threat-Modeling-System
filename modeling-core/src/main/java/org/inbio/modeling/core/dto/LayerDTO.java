@@ -20,6 +20,7 @@ package org.inbio.modeling.core.dto;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -27,11 +28,12 @@ import java.util.List;
  */
 public class LayerDTO {
 
+	private boolean selected;
 	private long   weight;
 	private String name;
 	private String description;
-	private HashMap<String,String>	dataColumnList;
-	private List<IntervalDTO>		intervals;
+	private Map<String,String>	columns;
+	private List<CategoryDTO>	categories;
 
 	public LayerDTO() { }
 
@@ -46,14 +48,6 @@ public class LayerDTO {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public List<IntervalDTO> getIntervals() {
-		return intervals;
-	}
-
-	public void setIntervals(List<IntervalDTO> intervals) {
-		this.intervals = intervals;
 	}
 
 	public String getName() {
@@ -72,11 +66,27 @@ public class LayerDTO {
 		this.weight = weight;
 	}
 
-	public HashMap<String, String> getDataColumnList() {
-		return dataColumnList;
+	public boolean isSelected() {
+		return selected;
 	}
 
-	public void setDataColumnList(HashMap<String, String> dataColumnList) {
-		this.dataColumnList = dataColumnList;
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
+
+	public List<CategoryDTO> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<CategoryDTO> categories) {
+		this.categories = categories;
+	}
+
+	public Map<String, String> getColumns() {
+		return columns;
+	}
+
+	public void setColumns(Map<String, String> columns) {
+		this.columns = columns;
 	}
 }

@@ -19,7 +19,7 @@ package org.inbio.modeling.core.dao;
 
 import java.util.HashMap;
 import java.util.List;
-import org.inbio.modeling.core.dto.IntervalDTO;
+import org.inbio.modeling.core.dto.CategoryDTO;
 
 public interface GrassDAO extends BaseDAO {
 
@@ -35,7 +35,7 @@ public interface GrassDAO extends BaseDAO {
 
 	public void retrieveMinMaxValues(String layerName, Long suffix) throws Exception;
 
-	public List<IntervalDTO> retrieveCategories(String layerName, String layerType, Long suffix) throws Exception;
+	public List<CategoryDTO> retrieveCategories(String layerName, String layerType, Long suffix) throws Exception;
 
 	public void executeReclassification(String layerName, Long suffix) throws Exception;
 
