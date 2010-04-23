@@ -17,7 +17,6 @@
  */
 package org.inbio.modeling.web.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -46,17 +45,14 @@ public class IntervalsController extends AbstractFormController {
 
 		HashMap<String, String> column = null;
 		GenericForm layersInformation = null;
-		List<LayerDTO> layerList =  null;
 		SessionInfo sessionInfo = null;
 		Long currentSessionId = null;
 		HttpSession session = null;
 		ModelAndView model = null;
-		LayerDTO layerDTO = null;
 
 		List<CategoryDTO> intervals = null;
 		String[] columnElements = null;
 
-		layerList = new ArrayList<LayerDTO>();
 
 		// get the information of the form.
 		layersInformation = (GenericForm)command;
@@ -84,17 +80,20 @@ public class IntervalsController extends AbstractFormController {
 			//convert the layer to a raster format
 			this.layer2Raster(layer.getName(), currentSessionId, columnElements[0]);
 
-			layerList.add(layer);
+			//asign the categories
+			this.asignCategories(layer, currentSessionId);
+
+			System.out.println("");
 		}
 
 		// assing layerList to the session
-		sessionInfo.setSelectedLayerList(layerList);
+		sessionInfo.setSelectedLayerList(layersInformation.getLayers());
 		session.setAttribute("CurrentSessionInfo", sessionInfo);
 
 		// Send the layer list to the JSP
 		model = new ModelAndView();
 		model.setViewName("intervals");
-		model.addObject("layers", layerList);
+		model.addObject("currentInfo", layersInformation);
 
         return model;
 	}
@@ -118,6 +117,21 @@ public class IntervalsController extends AbstractFormController {
 		}
 
 	}
+
+
+	private void asignCategories(LayerDTO layer, Long currentSessionId){
+
+		List<CategoryDTO> categories = null;
+
+		try {
+			// retrieve an asing the layer categories
+			categories = this.grassManagerImpl.getLayerCategories(layer.getName(), "RAST", currentSessionId);
+			layer.setCategories(categories);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
 
 	@Override
 	protected ModelAndView showForm(HttpServletRequest request, HttpServletResponse response, BindException errors) throws Exception {
