@@ -71,7 +71,7 @@ public class IntervalsController extends AbstractFormController {
 		for(LayerDTO layer : layersInformation.getLayers()){
 
 			// split the information that comes from the Form
-			columnElements = layer.getSelectedColumn().split(":");
+			columnElements = layer.getColumns().get("selected").split(":");
 
 			// convert the array to a HashMap
 			column = new HashMap<String,String>();
