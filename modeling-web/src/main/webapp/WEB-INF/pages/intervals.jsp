@@ -89,6 +89,7 @@
 				<div id="intervalsForm">
 					<form:form method="post" action="showResultingMap.html" commandName="currentInfo">
 						<c:forEach items="${currentInfo.layers}" var="layer"  varStatus="current">
+							<form:hidden path="layers[${current.index}].name" />
 							<input name="rbEditing"
 								   type="radio"
 								   id="${layer.name}"
