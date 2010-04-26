@@ -68,6 +68,7 @@ public class FileManagerImpl implements FileManager {
 					out.write(line);
 				}
 			}
+			out.write("* = 0 NULL\n");
 
 			out.close();
 			fstream.close();

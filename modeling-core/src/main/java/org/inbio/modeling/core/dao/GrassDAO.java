@@ -29,7 +29,7 @@ public interface GrassDAO extends BaseDAO {
 
 	public void executeRasterization(String layerName, Long suffix, String column) throws Exception;
 
-	public void executeWeightedSum(String layerName1, Long weight1, String layerName2, Long weight2, Long suffix, String outputName) throws Exception;
+	public void executeWeightedSum(String layerName1, Double weight1, String layerName2, Double weight2, Long suffix, String outputName) throws Exception;
 
 	public void exportAsImage(Long suffix, String outputName) throws Exception;
 

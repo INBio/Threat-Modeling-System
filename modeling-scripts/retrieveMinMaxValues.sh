@@ -10,11 +10,7 @@ MAP=$1
 SUFFIX=$2
 
 # Variables
-<<<<<<< HEAD
-RMAP="R_$(basename $MAP .shp)_$SUFFIX"
-=======
 RMAP=R_"$MAP"_"$SUFFIX"
->>>>>>> next
 
 # Initialization
 export GISRC="/tmp/.grassrc6_$SUFFIX"

@@ -103,11 +103,19 @@
 							<div id="selectionFrame">
 								<c:forEach items="${systemInfo.layers}" var="layer"  varStatus="current">
 									<form:hidden path="layers[${current.index}].name" />
+<<<<<<< HEAD
+									<form:checkbox  path="layers[${current.index}].selected" onclick="setValueToZero(this);" />
+									<c:out value="${layer.name}" />
+									<form:input path="layers[${current.index}].weight" maxlength="2" onkeyup="calculateValues();" />
+								</c:forEach>
+
+=======
 									<form:checkbox id="${layer.name}" path="layers[${current.index}].selected" onclick="setValueToZero(this);" />
 									<c:out value="${layer.name}" />
 									<form:input id="${layer.name}_weight"  path="layers[${current.index}].weight" maxlength="2" onkeyup="calculateValues(this);" />
 									<br />
 								</c:forEach>
+>>>>>>> next
 							</div>
 						</div>
 						<div id="importanceFrame">
@@ -118,7 +126,11 @@
 								%
 						</div>
 						<div id="buttonFrame">
+<<<<<<< HEAD
+							<input id="submitButton" type="button" onclick="calculateValues();send();" value='<fmt:message key="layer.importanceValue"/>' />
+=======
 							<input id="submitButton" type="button" onclick="send();" value='<fmt:message key="layer.importanceValue"/>' />
+>>>>>>> next
 						</div>
 					</div>
 				</form:form>

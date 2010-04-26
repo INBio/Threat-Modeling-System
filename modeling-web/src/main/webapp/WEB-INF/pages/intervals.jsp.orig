@@ -100,7 +100,10 @@
 								<c:out value="${layer.name}" />
 							</label>
 							<fmt:message key="common.weight"/>:&nbsp;<c:out value="${layer.weight}" />
+<<<<<<< HEAD
+=======
 							<form:hidden path="layers[${current.index}].weight" />
+>>>>>>> next
 							<div id="${layer.name}_cats" >
 								<c:forEach items="${layer.categories}" var="category"  varStatus="currentCategory">
 									<div id="category_${currentCategory.index}">
@@ -111,7 +114,10 @@
 									</div>
 								</c:forEach>
 							</div>
+<<<<<<< HEAD
+=======
 								<br />
+>>>>>>> next
 						</c:forEach>
 							<div id="buttons">
 								<input id="submitButton" type="submit" value='<fmt:message key="common.acceptChanges"/>' />

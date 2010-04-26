@@ -54,7 +54,10 @@
 										</form:option>
 									</c:forEach>
 								</form:select>
+<<<<<<< HEAD
+=======
 								<br />
+>>>>>>> next
 							</c:forEach>
 						</form:form>
 					</div>

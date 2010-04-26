@@ -15,8 +15,6 @@ ROMAP=R_"$MAP"_"$SUFFIX"_r
 
 RULES_FILE="/tmp/rules-$SUFFIX.rcl"
 
-echo "Que cosas no? $RULES_FILE"
-
 # Initialization
 export GISRC="/tmp/.grassrc6_$SUFFIX"
 export GISBASE="/usr/lib/grass64"

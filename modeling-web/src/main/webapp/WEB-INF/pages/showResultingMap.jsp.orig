@@ -1,3 +1,9 @@
+<%-- 
+    Document   : showResultingMap
+    Created on : 24/03/2010, 08:59:36 AM
+    Author     : asanabria
+--%>
+
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%@include file="common/taglibs" %>
@@ -9,6 +15,7 @@
 		<%@ include file="common/javascript" %>
 		<script  type="text/javascript">
 			//<!--
+<<<<<<< HEAD
 
 			function edit(radio){
 
@@ -70,6 +77,9 @@
 					}
 				}
 			}
+=======
+			//-->
+>>>>>>> next
 		</script>
 	</head>
 	<body>
@@ -79,48 +89,11 @@
 		</div>
 
 		<div id="contenido">
-			<div id="intervalsTitle">
-				<h1><fmt:message key="title.intervals"/></h1>
-				<font color="red">
-					<b><c:out value="${status.errorMessage}"/></b>
-				</font>
-			</div>
-			<div id="intervalsFrame" >
-				<div id="intervalsForm">
-					<form:form method="post" action="showResultingMap.html" commandName="currentInfo">
-						<c:forEach items="${currentInfo.layers}" var="layer"  varStatus="current">
-							<form:hidden path="layers[${current.index}].name" />
-							<input name="rbEditing"
-								   type="radio"
-								   id="${layer.name}"
-								   onclick="edit(this)"
-								   value="${current.index}" />
-
-							<label id="lbEditing">
-								<c:out value="${layer.name}" />
-							</label>
-							<fmt:message key="common.weight"/>:&nbsp;<c:out value="${layer.weight}" />
-							<form:hidden path="layers[${current.index}].weight" />
-							<div id="${layer.name}_cats" >
-								<c:forEach items="${layer.categories}" var="category"  varStatus="currentCategory">
-									<div id="category_${currentCategory.index}">
-										<input type="checkbox" name="${layer.name}"/>
-										<form:input path="layers[${current.index}].categories[${currentCategory.index}].value" />
-										<form:input path="layers[${current.index}].categories[${currentCategory.index}].description" />
-										<br />
-									</div>
-								</c:forEach>
-							</div>
-								<br />
-						</c:forEach>
-							<div id="buttons">
-								<input id="submitButton" type="submit" value='<fmt:message key="common.acceptChanges"/>' />
-								<input id="joinButton" type="button" onclick="deleteCategory();" value='<fmt:message key="interval.deleteCategory"/>' />
-								<input id="addButton" type="button" onclick="addCategory();" value='<fmt:message key="interval.addCategory"/>' />
-							</div>
-					</form:form>
-				</div>
-			</div>
+<<<<<<< HEAD
+			mapa resultante
+=======
+			<img alt="<fmt:message key='maps.resultingMap' />" width="800" height="600" src="/resmaps/R_Res1_1271784714875.png" />
+>>>>>>> next
 		</div>
 	</body>
 </html>

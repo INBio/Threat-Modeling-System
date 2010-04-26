@@ -26,8 +26,8 @@ WEIGHT_M2=$5
 RESMAP=R_"$6"_"$SUFFIX"
 
 # Raster maps names
-RMAP1=R_"$M1"_"$SUFFIX"
-RMAP2=R_"$M2"_"$SUFFIX"
+RMAP1=R_"$M1"_"$SUFFIX"_r
+RMAP2=R_"$M2"_"$SUFFIX"_r
 
 # Initialization
 export GISRC="/tmp/.grassrc6_$SUFFIX"
@@ -36,6 +36,7 @@ export PATH="$PATH:$GISBASE/bin:$GISBASE/scripts"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$GISBASE/lib"
 
 # Import the map.
-RESULT=$(r.mapcalc "$RESMAP = $RMAP1*$WEIGHT_M1 + $RMAP2*$WEIGHT_M2");
+RESULT=$(r.mapcalc "$RESMAP = if(isnull($RMAP1),0,$RMAP1)*$WEIGHT_M1 + if(isnull($RMAP2),0,$RMAP2)*$WEIGHT_M2");
+RESULT=$(r.null map=$RESMAP setnull=0 --quiet)
 
 exit $RESULT;

@@ -58,9 +58,15 @@ public class ShowMapController extends AbstractFormController {
 		sessionInfo = (SessionInfo)session.getAttribute("CurrentSessionInfo");
 		currentSessionId = sessionInfo.getCurrentSessionId();
 
+<<<<<<< HEAD
+
+		for(LayerDTO layer : selectedLayers.getLayers()){
+			System.out.println("layer: "+layer.getName() + "  W: "+layer.getWeight());
+=======
 		// Reclassification
 		for(LayerDTO layer : selectedLayers.getLayers()){
 			// write the categories file.
+>>>>>>> next
 			this.fileManagerImpl.writeReclasFile(layer, currentSessionId);
 			// trigger the reclassification script.
 			this.grassManagerImpl.advanceReclasification(layer.getName(), currentSessionId);
@@ -74,6 +80,20 @@ public class ShowMapController extends AbstractFormController {
 
 
 		if(selectedLayers.getLayers().size() >= 2){
+<<<<<<< HEAD
+			M1 = selectedLayers.getLayers().get(0);
+			M2 = selectedLayers.getLayers().get(1);
+			R  = new LayerDTO("Res1", 1);
+		}
+
+		for(int i = 2; i<selectedLayers.getLayers().size(); i++){
+
+			this.grassManagerImpl.executeWeightedSum(M1.getName(), M1.getWeight(), M2.getName(), M2.getWeight(), currentSessionId, R.getName());
+			M1 = R;
+			M2 = selectedLayers.getLayers().get(i);
+			R  = new LayerDTO("Res"+i, 1);
+			System.out.println("Testing");
+=======
 			layer1 = selectedLayers.getLayers().get(0);
 			weight1 = layer1.getWeight()/100D;
 			layer2 = selectedLayers.getLayers().get(1);
@@ -93,6 +113,7 @@ public class ShowMapController extends AbstractFormController {
 			layer3  = new LayerDTO("Res"+i, 1);
 
 			this.grassManagerImpl.executeWeightedSum(layer1.getName(), weight1, layer2.getName(), weight2, currentSessionId, layer3.getName());
+>>>>>>> next
 		}
 
 		this.grassManagerImpl.exportLayer2Image(currentSessionId, layer3.getName());
