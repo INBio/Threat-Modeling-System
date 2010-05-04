@@ -8,10 +8,7 @@
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
 	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
-    <bean id="layerManager" class="org.inbio.modeling.core.manager.impl.LayerManagerImpl">
-        <property name="layerDAO" ref="layerDAO" />
-        <property name="layerDTOFactory" ref="layerDTOFactory" />
-	</bean>
+    <bean id="layerManager" class="org.inbio.modeling.core.manager.impl.LayerManagerImpl"/>
 
     <bean id="grassManager" class="org.inbio.modeling.core.manager.impl.GrassManagerImpl">
         <property name="grassDAOImpl" ref="grassDAO" />
@@ -20,6 +17,7 @@
         <property name="tempHome" value="${temp.home}" />
         <property name="fileName" value="${temp.file}" />
         <property name="fileExtension" value="${temp.fileExtension}" />
+		<property name="layerHome" value="${layers.home}" />
 	</bean>
 
 </beans>
