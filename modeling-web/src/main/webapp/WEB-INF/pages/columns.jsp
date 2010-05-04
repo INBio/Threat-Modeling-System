@@ -47,6 +47,7 @@
 								<c:out value="${layer.weight}" />
 								<form:hidden  path="layers[${current.index}].name" />
 								<form:hidden path="layers[${current.index}].weight"/>
+								<form:hidden path="layers[${current.index}].type"/>
 								<form:select path="layers[${current.index}].columns['selected']" multiple="false" >
 									<c:forEach items="${layer.columns}" var="column">
 										<form:option value="${column.key}:${column.value}">

@@ -101,14 +101,26 @@
 							</label>
 							<fmt:message key="common.weight"/>:&nbsp;<c:out value="${layer.weight}" />
 							<form:hidden path="layers[${current.index}].weight" />
+							<form:hidden path="layers[${current.index}].type" />
 							<div id="${layer.name}_cats" >
 								<c:forEach items="${layer.categories}" var="category"  varStatus="currentCategory">
-									<div id="category_${currentCategory.index}">
-										<input type="checkbox" name="${layer.name}"/>
-										<form:input path="layers[${current.index}].categories[${currentCategory.index}].value" />
-										<form:input path="layers[${current.index}].categories[${currentCategory.index}].description" />
-										<br />
-									</div>
+									<c:choose>
+										<c:when test="${layer.type == LayerType.AREA}" >
+											<div id="category_${currentCategory.index}">
+												<input type="checkbox" name="${layer.name}"/>
+												<form:input path="layers[${current.index}].categories[${currentCategory.index}].value" />
+												<form:input path="layers[${current.index}].categories[${currentCategory.index}].description" />
+												<br />
+											</div>
+										</c:when>
+										<c:otherwise> 
+											<div id="category_${currentCategory.index}">
+												<form:input path="layers[${current.index}].categories[${currentCategory.index}].description" />
+												<form:input path="layers[${current.index}].categories[${currentCategory.index}].value" />
+												<br />
+											</div>
+										</c:otherwise>
+									</c:choose>
 								</c:forEach>
 							</div>
 								<br />

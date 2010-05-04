@@ -25,7 +25,7 @@
 		</div>
 
 		<div id="contenido">
-			<img alt="<fmt:message key='maps.resultingMap' />" width="800" height="600" src="/resmaps/R_Res1_1271784714875.png" />
+			<img alt="<fmt:message key='maps.resultingMap' />" src="/resmaps/R_${layer}_${suffix}.png" />
 		</div>
 	</body>
 </html>

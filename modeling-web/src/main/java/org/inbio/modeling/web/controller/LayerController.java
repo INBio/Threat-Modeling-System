@@ -50,7 +50,7 @@ public class LayerController extends AbstractFormController {
 
 		// Generates the user id Number.
 		sessionInfo.setCurrentSessionId(Calendar.getInstance().getTimeInMillis());
-		sessionInfo.setCurrentSessionId(1271784714875L);
+		//sessionInfo.setCurrentSessionId(1271784714875L);
 
 		// Gets the list of available layers
 		List <LayerDTO> layers = layerManager.getLayerList();

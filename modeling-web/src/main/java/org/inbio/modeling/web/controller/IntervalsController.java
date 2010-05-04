@@ -81,7 +81,8 @@ public class IntervalsController extends AbstractFormController {
 			this.layer2Raster(layer.getName(), currentSessionId, columnElements[0]);
 
 			//asign the categories
-			this.asignCategories(layer, currentSessionId);
+			this.asignCategories2Layer(layer, currentSessionId);
+
 
 			System.out.println("");
 		}
@@ -119,7 +120,7 @@ public class IntervalsController extends AbstractFormController {
 	}
 
 
-	private void asignCategories(LayerDTO layer, Long currentSessionId){
+	private void asignCategories2Layer(LayerDTO layer, Long currentSessionId){
 
 		List<CategoryDTO> categories = null;
 

@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.inbio.modeling.core.dto.LayerDTO;
 import org.inbio.modeling.core.manager.GrassManager;
+import org.inbio.modeling.core.maps.LayerType;
 import org.inbio.modeling.web.forms.GenericForm;
 import org.inbio.modeling.web.session.SessionInfo;
 import org.springframework.validation.BindException;
@@ -76,6 +77,10 @@ public class ColumnController extends AbstractFormController {
 			//Import the layers
 			this.importLayers(resolution, currentStatus.getLayers(), currentSessionId);
 
+			// Asign the type to the layer.
+			layersDTO = this.asingType2Layer(currentStatus.getLayers(), currentSessionId);
+			currentStatus.setLayers(layersDTO);
+
 			// retrieve dataColumns
 			currentStatus.setLayers(this.retrieveColumns(currentStatus.getLayers(), currentSessionId));
 
@@ -95,6 +100,25 @@ public class ColumnController extends AbstractFormController {
 		model.addObject("currentStatus", currentStatus);
 
         return model;
+	}
+
+	private List<LayerDTO> asingType2Layer(List<LayerDTO> layers, Long currentSessionId){
+
+		LayerType layerType = null;
+
+		List<LayerDTO> list = new ArrayList<LayerDTO>();
+
+		for(LayerDTO layer : layers){
+			try {
+				layerType = this.grassManagerImpl.retrieveLayerType(layer.getName(), currentSessionId);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+			layer.setType(layerType);
+			list.add(layer);
+		}
+
+		return list;
 	}
 
 	private void setResolution(Double resolution, Long currentSessionId){

@@ -32,6 +32,8 @@
 		<property name="deleteGrassLocation" value="${scripts.deleteGrassLocation}" />
 		<property name="exportSHP" value="${scripts.exportSHP}" />
 		<property name="retrieveType" value="${scripts.retrieveType}" />
+		<property name="asingBuffers" value="${scripts.asingBuffers}" />
+		<property name="rename" value="${scripts.rename}" />
 	</bean>
 
 	<!-- DTOFactories's -->

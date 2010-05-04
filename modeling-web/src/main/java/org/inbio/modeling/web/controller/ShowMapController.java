@@ -21,9 +21,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.inbio.modeling.core.dto.CategoryDTO;
 import org.inbio.modeling.core.dto.LayerDTO;
 import org.inbio.modeling.core.manager.FileManager;
 import org.inbio.modeling.core.manager.GrassManager;
+import org.inbio.modeling.core.maps.LayerType;
 import org.inbio.modeling.web.forms.GenericForm;
 import org.inbio.modeling.web.session.SessionInfo;
 import org.springframework.validation.BindException;
@@ -43,12 +45,15 @@ public class ShowMapController extends AbstractFormController {
 	@Override
 	protected ModelAndView processFormSubmission(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
 
+		List<CategoryDTO> categoryList = null;
 		GenericForm selectedLayers = null;
 		List<LayerDTO> layerList =  null;
 		SessionInfo sessionInfo = null;
+		String distanceString = null;
 		Long currentSessionId = null;
 		HttpSession session = null;
 		ModelAndView model = null;
+		int	listLenght = -1;
 
 		selectedLayers = (GenericForm)command;
 
@@ -60,10 +65,30 @@ public class ShowMapController extends AbstractFormController {
 
 		// Reclassification
 		for(LayerDTO layer : selectedLayers.getLayers()){
-			// write the categories file.
-			this.fileManagerImpl.writeReclasFile(layer, currentSessionId);
-			// trigger the reclassification script.
-			this.grassManagerImpl.advanceReclasification(layer.getName(), currentSessionId);
+
+			if(LayerType.AREA == layer.getType()){
+				// write the categories file.
+				this.fileManagerImpl.writeReclasFile(layer, currentSessionId);
+				// trigger the reclassification script.
+				this.grassManagerImpl.advanceReclasification(layer.getName(), currentSessionId);
+			}else{
+
+				categoryList = layer.getCategories();
+				listLenght = categoryList.size();
+				distanceString = "";
+
+				for(CategoryDTO cat :layer.getCategories()){
+					if(listLenght > 1)
+						distanceString += cat.getValue() + ",";
+					else
+						distanceString += cat.getValue();
+					listLenght--;
+				}
+
+				//distanceString = "\""+distanceString+"\"";
+
+				this.grassManagerImpl.asingBuffers(layer.getName(), distanceString, currentSessionId);
+			}
 		}
 
 		LayerDTO layer1 = null;
@@ -103,7 +128,8 @@ public class ShowMapController extends AbstractFormController {
 		// Send the layer list to the JSP
 		model = new ModelAndView();
 		model.setViewName("showResultingMap");
-		model.addObject("layers", layerList);
+		model.addObject("layer", layer3.getName());
+		model.addObject("suffix", currentSessionId);
 
 		return model;
 	}
