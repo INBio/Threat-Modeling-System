@@ -38,6 +38,7 @@ import org.springframework.web.servlet.mvc.AbstractFormController;
  */
 public class ColumnController extends AbstractFormController {
 
+	/** manager to comunicate with grass gis software */
 	private GrassManager grassManagerImpl;
 
 	@Override
@@ -110,6 +111,12 @@ public class ColumnController extends AbstractFormController {
         return model;
 	}
 
+	/**
+	 * Asign the type (line, area, points) to a layer.
+	 * @param layers
+	 * @param currentSessionId
+	 * @return list of layers with the field layer.type populated.
+	 */
 	private List<LayerDTO> asingType2Layer(List<LayerDTO> layers
 											, Long currentSessionId){
 
@@ -133,15 +140,14 @@ public class ColumnController extends AbstractFormController {
 		return list;
 	}
 
-	private void setResolution(Double resolution, Long currentSessionId){
-		try {
-			this.grassManagerImpl.setResolution(resolution, currentSessionId);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
 
-	}
-
+	/**
+	 * Return the name and the type of the columns of the dbf asociated to the
+	 * layer
+	 * @param layerList
+	 * @param currentSessionId
+	 * @return a list of layers with the columns information populated.
+	 */
 	private List<LayerDTO> retrieveColumns(List<LayerDTO> layerList
 											, Long currentSessionId){
 
@@ -166,6 +172,12 @@ public class ColumnController extends AbstractFormController {
 	}
 
 	//TODO: make this better
+	/**
+	 * Import a layer from a specific file system path to the grass database.
+	 * @param resolution
+	 * @param layerList
+	 * @param currentSessionId
+	 */
 	private void importLayers(Double resolution
 								, List<LayerDTO> layerList
 								, Long currentSessionId){
@@ -197,6 +209,14 @@ public class ColumnController extends AbstractFormController {
 		}
 	}
 
+	/**
+	 * If hit the /columns.html address directly you will be redirected to index
+	 * @param request
+	 * @param response
+	 * @param errors
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	protected ModelAndView showForm(HttpServletRequest request
 									, HttpServletResponse response

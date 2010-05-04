@@ -31,6 +31,9 @@ public class LayerDAOImpl extends BaseDAOImpl implements LayerDAO {
 	}
 
 	@Override
+	/**
+	 * @see org.inbio.modeling.core.dao.LayerDAO#getAvailableLayers();
+	 */
 	public List<String> getAvailableLayers() {
 
 		String dirName = System.getenv("HOME")+"/Layers/";

@@ -21,6 +21,11 @@ import java.util.List;
 
 public interface LayerDAO extends BaseDAO {
 
+	/**
+	 * Return a list of the names (without extension) of the .shp files whitin a
+	 * folder in the file system.
+	 * @return a list with the names of the available layers
+	 */
     public List<String> getAvailableLayers();
 
 }

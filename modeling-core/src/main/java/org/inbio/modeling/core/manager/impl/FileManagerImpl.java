@@ -39,6 +39,9 @@ public class FileManagerImpl implements FileManager {
 	private String fileExtension;
 
 	@Override
+	/**
+	 * @see org.inbio.modeling.core.manager.FileManager#writeReclasFile(LayerDTO layer, Long suffix)
+	 */
 	public void writeReclasFile(LayerDTO layer, Long suffix){
 
 		FileWriter fstream = null;

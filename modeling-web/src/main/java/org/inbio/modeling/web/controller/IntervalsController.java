@@ -32,11 +32,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractFormController;
 
 /**
- *
  * @author asanabria
  */
 public class IntervalsController extends AbstractFormController {
 
+	/** manager to comunicate with the grass gis software */
 	private GrassManager grassManagerImpl;
 
 	@Override
@@ -108,7 +108,12 @@ public class IntervalsController extends AbstractFormController {
         return model;
 	}
 
-
+	/**
+	 * Execute normalization of the values in a vectorial format map.
+	 * @param layerName
+	 * @param column
+	 * @param currentSessionId
+	 */
 	private void vectorialReclassification(String layerName
 											, String column
 											, Long currentSessionId){
@@ -120,7 +125,12 @@ public class IntervalsController extends AbstractFormController {
 		}
 	}
 
-
+	/**
+	 * convert a vectorial layer into a raster one
+	 * @param layerName
+	 * @param currentSessionId
+	 * @param column
+	 */
 	private void layer2Raster(String layerName
 								, Long currentSessionId
 								, String column){
@@ -137,6 +147,12 @@ public class IntervalsController extends AbstractFormController {
 	}
 
 
+	/**
+	 *
+	 * populate category information of the layer
+	 * @param layer
+	 * @param currentSessionId
+	 */
 	private void asignCategories2Layer(LayerDTO layer, Long currentSessionId){
 
 		List<CategoryDTO> categories = null;
@@ -156,6 +172,7 @@ public class IntervalsController extends AbstractFormController {
 	}
 
 
+	/** default behavior for direct access */
 	@Override
 	protected ModelAndView showForm(HttpServletRequest request
 									, HttpServletResponse response

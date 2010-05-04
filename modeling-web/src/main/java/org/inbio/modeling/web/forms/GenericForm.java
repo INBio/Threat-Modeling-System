@@ -24,12 +24,13 @@ import org.apache.commons.collections.list.LazyList;
 import org.inbio.modeling.core.dto.LayerDTO;
 
 /**
- *
+ * Form used to move and retrieve data from the web interface
  * @author asanabria
  */
 public class GenericForm {
 
 	private String			resolution;
+	// this is a LazyList to allow dinamic binding with the web interface.
 	private List<LayerDTO>  layers = LazyList.decorate(
 		new ArrayList(),
 		FactoryUtils.instantiateFactory(LayerDTO.class));

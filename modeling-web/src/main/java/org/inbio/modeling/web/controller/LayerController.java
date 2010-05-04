@@ -73,6 +73,7 @@ public class LayerController extends AbstractFormController {
         return model;
 	}
 
+	/** default behavior for direct access (url) */
 	@Override
 	protected ModelAndView processFormSubmission(HttpServletRequest request
 												, HttpServletResponse response
@@ -83,6 +84,7 @@ public class LayerController extends AbstractFormController {
 		return new ModelAndView("index");
 	}
 
+	/* getters & setters */
 	public LayerManager getLayerManager() {
 		return layerManager;
 	}

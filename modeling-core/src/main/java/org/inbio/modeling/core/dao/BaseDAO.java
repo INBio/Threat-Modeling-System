@@ -18,5 +18,9 @@
 
 package org.inbio.modeling.core.dao;
 
+/**
+ * BaseDAO
+ * @author asanabria
+ */
 public interface BaseDAO { }
 

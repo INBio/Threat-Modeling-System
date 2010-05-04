@@ -22,7 +22,7 @@ import java.util.List;
 
 
 /**
- *
+ * Help in the convertion from DAOs informatin to DTOs information.
  * @author asanabria
  */
 public class LayerDTOFactory {

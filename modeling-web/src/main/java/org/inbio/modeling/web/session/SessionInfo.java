@@ -21,7 +21,7 @@ import java.util.List;
 import org.inbio.modeling.core.dto.LayerDTO;
 
 /**
- *
+ * Store User session iformation
  * @author asanabria
  */
 public class SessionInfo {

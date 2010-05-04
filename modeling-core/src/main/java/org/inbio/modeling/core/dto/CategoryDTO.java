@@ -18,7 +18,7 @@
 package org.inbio.modeling.core.dto;
 
 /**
- *
+ * Category information
  * @author asanabria
  */
 public class CategoryDTO {

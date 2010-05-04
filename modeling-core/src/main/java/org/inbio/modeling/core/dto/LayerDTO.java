@@ -38,10 +38,15 @@ public class LayerDTO {
 	private String name;
 	private LayerType type;
 	private String description;
+
+	//TODO: delete this.
+	// this is to allow dinamic binding with the web interface
 	private Map<String,String>	columns =  
 		LazyMap.decorate( new HashMap<String, String>(),
 						  FactoryUtils.instantiateFactory(String.class));
 
+	//TODO: delete this.
+	// this is to allow dinamic binding with the web interface
 	private List<CategoryDTO>	categories =
 		LazyList.decorate( new ArrayList(),
 						   FactoryUtils.instantiateFactory(CategoryDTO.class));

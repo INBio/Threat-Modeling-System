@@ -32,7 +32,11 @@ public class LayerManagerImpl implements LayerManager {
 	private LayerDAO layerDAO;
 	private LayerDTOFactory layerDTOFactory;
 
+
     @Override
+	/**
+	 * @see org.inbio.modeling.core.manager.LayerManager#getLayerList()
+	 */
     public List<LayerDTO> getLayerList() {
 		return layerDTOFactory.createDTOList(layerDAO.getAvailableLayers());
     }

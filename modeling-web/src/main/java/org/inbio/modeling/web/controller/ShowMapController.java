@@ -148,6 +148,7 @@ public class ShowMapController extends AbstractFormController {
 	}
 
 
+	/** Default behavior on direct access */
 	@Override
 	protected ModelAndView showForm(HttpServletRequest request
 									, HttpServletResponse response
@@ -156,6 +157,7 @@ public class ShowMapController extends AbstractFormController {
 		return new ModelAndView("index");
 	}
 
+	// Getters & Setters
 	public GrassManager getGrassManagerImpl() {
 		return grassManagerImpl;
 	}

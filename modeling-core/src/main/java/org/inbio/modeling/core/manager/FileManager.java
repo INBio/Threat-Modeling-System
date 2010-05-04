@@ -19,8 +19,18 @@ package org.inbio.modeling.core.manager;
 
 import org.inbio.modeling.core.dto.LayerDTO;
 
+/**
+ * Handle FileSystem actions
+ * @author asanabria
+ */
 public interface FileManager{
 
+	/**
+	 * Write a file to be used as rules file by grass gis on the
+	 * reclassification step
+	 * @param layer
+	 * @param suffix
+	 */
 	public void writeReclasFile(LayerDTO layer, Long suffix);
 
 }

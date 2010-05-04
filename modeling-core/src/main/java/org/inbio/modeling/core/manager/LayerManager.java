@@ -22,6 +22,11 @@ import org.inbio.modeling.core.dto.LayerDTO;
 
 public interface LayerManager{
 
+	/**
+	 * Return a list with the basename of the layers available in the specified
+	 * folder (in the properties file).
+	 * @return a list of layers
+	 */
     public List<LayerDTO> getLayerList();
 
 }

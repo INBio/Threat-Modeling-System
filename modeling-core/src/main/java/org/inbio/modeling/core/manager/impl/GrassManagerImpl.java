@@ -38,6 +38,9 @@ public class GrassManagerImpl implements GrassManager {
 
 
 	@Override
+	/**
+	 * @see org.inbio.modeling.core.manager.GrassManager#advanceReclasification(String layerName, Long suffix)
+	 */
 	public void advanceReclasification(String layerName, Long suffix) 
 		throws Exception {
 
@@ -45,6 +48,9 @@ public class GrassManagerImpl implements GrassManager {
 	}
 
 	@Override
+	/**
+	 * @see org.inbio.modeling.core.manager.GrassManager#configureEnvironment(String location, Long suffix)
+	 */
 	public void configureEnvironment(String location, Long suffix)
 		throws Exception {
 
@@ -52,6 +58,9 @@ public class GrassManagerImpl implements GrassManager {
 	}
 
 	@Override
+	/**
+	 * @see org.inbio.modeling.core.manager.GrassManager#convertLayer2Raster(String layerName, Long suffix, String column)
+	 */
 	public void convertLayer2Raster(String layerName
 									, Long suffix
 									, String column)
@@ -62,6 +71,9 @@ public class GrassManagerImpl implements GrassManager {
 
 
 	@Override
+	/**
+	 * @see org.inbio.modeling.core.manager.GrassManager#executeWeightedSum(String layerName1 , Double weight1 , String layerName2 , Double weight2 , Long suffix , String outputName)
+	 */
 	public void executeWeightedSum(String layerName1
 									, Double weight1
 									, String layerName2
@@ -74,6 +86,9 @@ public class GrassManagerImpl implements GrassManager {
 	}
 
 	@Override
+	/**
+	 * @see org.inbio.modeling.core.manager.GrassManager#exportLayer2Image( Long suffix, String layerName)
+	 */
 	public void exportLayer2Image( Long suffix
 									, String layerName)
 		throws Exception {
@@ -82,6 +97,9 @@ public class GrassManagerImpl implements GrassManager {
 	}
 
 	@Override
+	/**
+	 * @see org.inbio.modeling.core.manager.GrassManager#getLayerCategories(String layerName , String layerType , Long suffix)
+	 */
 	public List<CategoryDTO> getLayerCategories(String layerName
 												, String layerType
 												, Long suffix)
@@ -91,6 +109,9 @@ public class GrassManagerImpl implements GrassManager {
 	}
 
 	@Override
+	/**
+	 * @see org.inbio.modeling.core.manager.GrassManager#retrieveLayerType(String layerName, Long suffix)
+	 */
 	public LayerType retrieveLayerType(String layerName, Long suffix) 
 		throws Exception {
 
@@ -98,6 +119,9 @@ public class GrassManagerImpl implements GrassManager {
 	}
 
 	@Override
+	/**
+	 * @see org.inbio.modeling.core.manager.GrassManager#getMinMaxValuesFromLayer(String layerName, Long suffix)
+	 */
 	public void getMinMaxValuesFromLayer(String layerName, Long suffix) 
 		throws Exception {
 
@@ -105,6 +129,9 @@ public class GrassManagerImpl implements GrassManager {
 	}
 
 	@Override
+	/**
+	 * @see org.inbio.modeling.core.manager.GrassManager#importLayer(String layerName, Long suffix)
+	 */
 	public void importLayer(String layerName, Long suffix) 
 		throws Exception {
 
@@ -112,6 +139,9 @@ public class GrassManagerImpl implements GrassManager {
 	}
 
 	@Override
+	/**
+	 * @see org.inbio.modeling.core.manager.GrassManager#setResolution(Double resolution, Long suffix)
+	 */
 	public void setResolution(Double resolution, Long suffix)
 		throws Exception {
 
@@ -119,6 +149,9 @@ public class GrassManagerImpl implements GrassManager {
 	}
 
 	@Override
+	/**
+	 * @see org.inbio.modeling.core.manager.GrassManager#<String,String> retrieveAvailableColumns(String layerName
+	 */
 	public HashMap<String,String> retrieveAvailableColumns(String layerName
 															, Long suffix)
 															throws Exception {
@@ -127,6 +160,9 @@ public class GrassManagerImpl implements GrassManager {
 	}
 
 	@Override
+	/**
+	 * @see org.inbio.modeling.core.manager.GrassManager#executeVectorReclasification(String layerName
+	 */
 	public void executeVectorReclasification(String layerName
 												, String column
 												, Long suffix)
@@ -136,11 +172,17 @@ public class GrassManagerImpl implements GrassManager {
 	}
 
 	@Override
+	/**
+	 * @see org.inbio.modeling.core.manager.GrassManager#deleteGRASSLocation(Long suffix) {
+	 */
 	public void deleteGRASSLocation(Long suffix) {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 	@Override
+	/**
+	 * @see org.inbio.modeling.core.manager.GrassManager#asingBuffers(String layerName, String distances, Long suffix)
+	 */
 	public void asingBuffers(String layerName, String distances, Long suffix)
 		throws Exception{
 
@@ -148,6 +190,9 @@ public class GrassManagerImpl implements GrassManager {
 	}
 
 	@Override
+	/**
+	 * @see org.inbio.modeling.core.manager.GrassManager#renameFile (String layerName, Long suffix)
+	 */
 	public void renameFile (String layerName, Long suffix)
 		throws Exception{
 

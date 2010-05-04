@@ -18,7 +18,7 @@
 package org.inbio.modeling.core.layer;
 
 /**
- *
+ * possible types of a layer (geometry of lines, points or areas).
  * @author asanabria
  */
 public enum LayerType {
