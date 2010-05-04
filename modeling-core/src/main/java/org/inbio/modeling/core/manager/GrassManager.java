@@ -24,33 +24,55 @@ import org.inbio.modeling.core.layer.LayerType;
 
 public interface GrassManager{
 
-	public void configureEnvironment(String location, Long suffix) throws Exception;
+	public void configureEnvironment(String location, Long suffix)
+		throws Exception;
 
-	public void importLayer(String layerName, Long suffix) throws Exception;
+	public void importLayer(String layerName, Long suffix)
+		throws Exception;
 
-	public void convertLayer2Raster(String layerName, Long suffix, String column) throws Exception;
+	public void convertLayer2Raster(String layerName, Long suffix, String column)
+		throws Exception;
 
-	public void executeWeightedSum(String layerName1, Double weight1, String layerName2, Double weight2, Long suffix, String outputName) throws Exception;
+	public void executeWeightedSum(String layerName1
+									, Double weight1
+									, String layerName2
+									, Double weight2
+									, Long suffix
+									, String outputName)
+									throws Exception;
 
-	public void exportLayer2Image(Long suffix, String layerName ) throws Exception;
+	public void exportLayer2Image(Long suffix, String layerName )
+		throws Exception;
 
-	public void getMinMaxValuesFromLayer(String layerName, Long suffix) throws Exception;
+	public void getMinMaxValuesFromLayer(String layerName, Long suffix)
+		throws Exception;
 
-	public LayerType retrieveLayerType(String layerName, Long suffix) throws Exception;
+	public LayerType retrieveLayerType(String layerName, Long suffix)
+		throws Exception;
 
-	public List<CategoryDTO> getLayerCategories(String layerName, String layerType, Long suffix) throws Exception;
+	public List<CategoryDTO> getLayerCategories(String layerName
+		, String layerType
+		, Long suffix)
+		throws Exception;
 
-	public void advanceReclasification(String layerName, Long suffix) throws Exception;
+	public void advanceReclasification(String layerName	, Long suffix)
+		throws Exception;
 
-	public void executeVectorReclasification(String layerName, String column, Long suffix) throws Exception;
+	public void executeVectorReclasification(String layerName
+											, String column
+											, Long suffix)
+											throws Exception;
 
 	public void setResolution(Double resolution, Long suffix) throws Exception;
 
-	public HashMap<String,String> retrieveAvailableColumns(String layerName, Long suffix) throws Exception;
+	public HashMap<String,String> retrieveAvailableColumns(String layerName
+															, Long suffix)
+															throws Exception;
 
 	public void deleteGRASSLocation(Long suffix);
 
-	public void asingBuffers(String layerName, String distances, Long suffix) throws Exception;
+	public void asingBuffers(String layerName, String distances, Long suffix)
+		throws Exception;
 
 	public void renameFile (String layerName, Long suffix) throws Exception;
 }

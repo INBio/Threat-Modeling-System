@@ -39,7 +39,10 @@ public class LayerController extends AbstractFormController {
     private LayerManager layerManager;
 
 	@Override
-	protected ModelAndView showForm(HttpServletRequest request, HttpServletResponse response, BindException errors) throws Exception {
+	protected ModelAndView showForm(HttpServletRequest request
+									, HttpServletResponse response
+									, BindException errors)
+									throws Exception {
 
 		SessionInfo sessionInfo = null;
 		HttpSession session = null;
@@ -71,7 +74,12 @@ public class LayerController extends AbstractFormController {
 	}
 
 	@Override
-	protected ModelAndView processFormSubmission(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
+	protected ModelAndView processFormSubmission(HttpServletRequest request
+												, HttpServletResponse response
+												, Object command
+												, BindException errors)
+												throws Exception {
+
 		return new ModelAndView("index");
 	}
 

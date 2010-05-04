@@ -23,9 +23,9 @@ package org.inbio.modeling.core.layer;
  */
 public enum LayerType {
 
-	AREA("areas"),		// When a layer contains only polygons geometry information
-	LINE("lines"),		// When a layer contains only lines geometry information
-	POINT("points");	// When a layer contains only points geometry iformation
+	AREA("areas"),		// When a layer contains polygons geometry information
+	LINE("lines"),		// When a layer contains lines geometry information
+	POINT("points");	// When a layer contains points geometry iformation
 
 	private String name;
 

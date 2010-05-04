@@ -38,63 +38,100 @@ public class GrassManagerImpl implements GrassManager {
 
 
 	@Override
-	public void advanceReclasification(String layerName, Long suffix) throws Exception {
+	public void advanceReclasification(String layerName, Long suffix) 
+		throws Exception {
+
 		this.grassDAOImpl.executeReclassification(layerName, suffix);
 	}
 
 	@Override
-	public void configureEnvironment(String location, Long suffix) throws Exception {
+	public void configureEnvironment(String location, Long suffix)
+		throws Exception {
+
 		this.grassDAOImpl.configureEnvironment(location, suffix);
 	}
 
 	@Override
-	public void convertLayer2Raster(String layerName, Long suffix, String column) throws Exception {
+	public void convertLayer2Raster(String layerName
+									, Long suffix
+									, String column)
+									throws Exception {
+
 		this.grassDAOImpl.executeRasterization(layerName, suffix, column);
 	}
 
 
 	@Override
-	public void executeWeightedSum(String layerName1, Double weight1, String layerName2, Double weight2, Long suffix, String outputName) throws Exception {
+	public void executeWeightedSum(String layerName1
+									, Double weight1
+									, String layerName2
+									, Double weight2
+									, Long suffix
+									, String outputName)
+									throws Exception {
+
 		this.grassDAOImpl.executeWeightedSum(layerName1, weight1, layerName2, weight2, suffix, outputName);
 	}
 
 	@Override
-	public void exportLayer2Image( Long suffix, String layerName) throws Exception {
+	public void exportLayer2Image( Long suffix
+									, String layerName)
+		throws Exception {
+
 		this.grassDAOImpl.exportAsImage(suffix, layerName);
 	}
 
 	@Override
-	public List<CategoryDTO> getLayerCategories(String layerName, String layerType, Long suffix) throws Exception {
+	public List<CategoryDTO> getLayerCategories(String layerName
+												, String layerType
+												, Long suffix)
+												throws Exception {
+
 		return this.grassDAOImpl.retrieveCategories(layerName, layerType, suffix);
 	}
 
 	@Override
-	public LayerType retrieveLayerType(String layerName, Long suffix) throws Exception {
+	public LayerType retrieveLayerType(String layerName, Long suffix) 
+		throws Exception {
+
 		return this.grassDAOImpl.retrieveLayerType(layerName, suffix);
 	}
 
 	@Override
-	public void getMinMaxValuesFromLayer(String layerName, Long suffix) throws Exception {
+	public void getMinMaxValuesFromLayer(String layerName, Long suffix) 
+		throws Exception {
+
 		this.grassDAOImpl.retrieveMinMaxValues(layerName, suffix);
 	}
 
 	@Override
-	public void importLayer(String layerName, Long suffix) throws Exception {
+	public void importLayer(String layerName, Long suffix) 
+		throws Exception {
+
 		this.grassDAOImpl.importLayer(layerName, suffix);
 	}
 
 	@Override
-	public void setResolution(Double resolution, Long suffix) throws Exception {
+	public void setResolution(Double resolution, Long suffix)
+		throws Exception {
+
 		this.grassDAOImpl.asingResolution(resolution, suffix);
 	}
 
 	@Override
-	public HashMap<String,String> retrieveAvailableColumns(String layerName, Long suffix) throws Exception {
+	public HashMap<String,String> retrieveAvailableColumns(String layerName
+															, Long suffix)
+															throws Exception {
+
 		return this.grassDAOImpl.retrieveColumns(layerName, suffix);
 	}
 
 	@Override
-	public void executeVectorReclasification(String layerName, String column, Long suffix) throws Exception {
+	public void executeVectorReclasification(String layerName
+												, String column
+												, Long suffix)
+												throws Exception {
+
 		this.grassDAOImpl.executeVectorReclasification(layerName, column, suffix);
 	}
 
@@ -104,13 +141,16 @@ public class GrassManagerImpl implements GrassManager {
 	}
 
 	@Override
-	public void asingBuffers(String layerName, String distances, Long suffix) throws Exception{
+	public void asingBuffers(String layerName, String distances, Long suffix)
+		throws Exception{
 
 		this.grassDAOImpl.asingBuffers(layerName, distances, suffix);
 	}
 
 	@Override
-	public void renameFile (String layerName, Long suffix) throws Exception{
+	public void renameFile (String layerName, Long suffix)
+		throws Exception{
+
 		this.grassDAOImpl.rename(layerName, suffix);
 	}
 

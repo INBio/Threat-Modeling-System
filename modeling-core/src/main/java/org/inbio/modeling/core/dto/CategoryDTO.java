@@ -17,8 +17,6 @@
  */
 package org.inbio.modeling.core.dto;
 
-import java.util.List;
-
 /**
  *
  * @author asanabria

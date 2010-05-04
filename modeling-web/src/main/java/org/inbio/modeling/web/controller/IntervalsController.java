@@ -40,7 +40,11 @@ public class IntervalsController extends AbstractFormController {
 	private GrassManager grassManagerImpl;
 
 	@Override
-	protected ModelAndView processFormSubmission(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
+	protected ModelAndView processFormSubmission(HttpServletRequest request
+												, HttpServletResponse response
+												, Object command
+												, BindException errors)
+												throws Exception {
 
 
 		HashMap<String, String> column = null;
@@ -50,7 +54,6 @@ public class IntervalsController extends AbstractFormController {
 		HttpSession session = null;
 		ModelAndView model = null;
 
-		List<CategoryDTO> intervals = null;
 		String[] columnElements = null;
 
 
@@ -76,7 +79,9 @@ public class IntervalsController extends AbstractFormController {
 
 			if(columnElements[1].equals("CHARACTER")){
 				// vectorial reclasification
-				this.vectorialReclassification(layer.getName(), columnElements[0], currentSessionId);
+				this.vectorialReclassification(layer.getName()
+												, columnElements[0]
+												, currentSessionId);
 			}else{
 				this.grassManagerImpl.renameFile(layer.getName(), currentSessionId);
 			}
@@ -104,19 +109,27 @@ public class IntervalsController extends AbstractFormController {
 	}
 
 
-	private void vectorialReclassification(String layerName, String column, Long currentSessionId){
+	private void vectorialReclassification(String layerName
+											, String column
+											, Long currentSessionId){
 		try {
-			this.grassManagerImpl.executeVectorReclasification(layerName, column, currentSessionId);
+			this.grassManagerImpl.
+				executeVectorReclasification(layerName, column, currentSessionId);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
 
 
-	private void layer2Raster(String layerName, Long currentSessionId, String column){
+	private void layer2Raster(String layerName
+								, Long currentSessionId
+								, String column){
+
 		try {
 			// convert the vectorial layer to another in raster format
-			this.grassManagerImpl.convertLayer2Raster(layerName, currentSessionId, column);
+			this.grassManagerImpl.
+				convertLayer2Raster(layerName, currentSessionId, column);
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -130,8 +143,13 @@ public class IntervalsController extends AbstractFormController {
 
 		try {
 			// retrieve an asing the layer categories
-			categories = this.grassManagerImpl.getLayerCategories(layer.getName(), "RAST", currentSessionId);
+			categories = this.grassManagerImpl.
+							getLayerCategories(layer.getName()
+												, "RAST"
+												, currentSessionId);
+
 			layer.setCategories(categories);
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -139,7 +157,11 @@ public class IntervalsController extends AbstractFormController {
 
 
 	@Override
-	protected ModelAndView showForm(HttpServletRequest request, HttpServletResponse response, BindException errors) throws Exception {
+	protected ModelAndView showForm(HttpServletRequest request
+									, HttpServletResponse response
+									, BindException errors)
+									throws Exception {
+
 		return new ModelAndView("index");
 	}
 

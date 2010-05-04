@@ -18,7 +18,6 @@
 package org.inbio.modeling.core.manager.impl;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import org.apache.commons.logging.Log;

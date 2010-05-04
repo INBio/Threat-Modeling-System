@@ -41,7 +41,10 @@ public class ColumnController extends AbstractFormController {
 	private GrassManager grassManagerImpl;
 
 	@Override
-	protected ModelAndView processFormSubmission(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) {
+	protected ModelAndView processFormSubmission(HttpServletRequest request
+												, HttpServletResponse response
+												, Object command
+												, BindException errors) {
 
 		GenericForm currentStatus = null;
 		SessionInfo sessionInfo = null;
@@ -75,14 +78,19 @@ public class ColumnController extends AbstractFormController {
 			currentStatus.setLayers(layersDTO);
 
 			//Import the layers
-			this.importLayers(resolution, currentStatus.getLayers(), currentSessionId);
+			this.importLayers(resolution
+							, currentStatus.getLayers()
+							, currentSessionId);
 
 			// Asign the type to the layer.
-			layersDTO = this.asingType2Layer(currentStatus.getLayers(), currentSessionId);
+			layersDTO = 
+				this.asingType2Layer(currentStatus.getLayers(), currentSessionId);
+
 			currentStatus.setLayers(layersDTO);
 
 			// retrieve dataColumns
-			currentStatus.setLayers(this.retrieveColumns(currentStatus.getLayers(), currentSessionId));
+			currentStatus.setLayers(this.retrieveColumns(currentStatus.getLayers()
+									, currentSessionId));
 
 
 		}catch(Exception e){
@@ -102,7 +110,8 @@ public class ColumnController extends AbstractFormController {
         return model;
 	}
 
-	private List<LayerDTO> asingType2Layer(List<LayerDTO> layers, Long currentSessionId){
+	private List<LayerDTO> asingType2Layer(List<LayerDTO> layers
+											, Long currentSessionId){
 
 		LayerType layerType = null;
 
@@ -110,7 +119,10 @@ public class ColumnController extends AbstractFormController {
 
 		for(LayerDTO layer : layers){
 			try {
-				layerType = this.grassManagerImpl.retrieveLayerType(layer.getName(), currentSessionId);
+				layerType = this.grassManagerImpl.
+									retrieveLayerType(layer.getName()
+									, currentSessionId);
+
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
@@ -130,14 +142,18 @@ public class ColumnController extends AbstractFormController {
 
 	}
 
-	private List<LayerDTO> retrieveColumns(List<LayerDTO> layerList, Long currentSessionId){
+	private List<LayerDTO> retrieveColumns(List<LayerDTO> layerList
+											, Long currentSessionId){
 
 		Map<String,String> columns = null;
 
 		for (LayerDTO layerDTO: layerList){
 			try {
+
 				// Retrive data columns
-				columns = grassManagerImpl.retrieveAvailableColumns(layerDTO.getName(), currentSessionId);
+				columns = grassManagerImpl.
+					retrieveAvailableColumns(layerDTO.getName(), currentSessionId);
+
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
@@ -150,7 +166,9 @@ public class ColumnController extends AbstractFormController {
 	}
 
 	//TODO: make this better
-	private void importLayers(Double resolution, List<LayerDTO> layerList, Long currentSessionId){
+	private void importLayers(Double resolution
+								, List<LayerDTO> layerList
+								, Long currentSessionId){
 
 		int counter = 0;
 
@@ -164,8 +182,11 @@ public class ColumnController extends AbstractFormController {
 
 			for (LayerDTO layerDTO: layerList){
 				if(counter++ == 1){
-					this.grassManagerImpl.configureEnvironment("LOC_"+currentSessionId, currentSessionId);
-					this.grassManagerImpl.setResolution(resolution, currentSessionId);
+					this.grassManagerImpl.
+						configureEnvironment("LOC_"+currentSessionId, currentSessionId);
+
+					this.grassManagerImpl.
+						setResolution(resolution, currentSessionId);
 				}
 
 				this.grassManagerImpl.importLayer(layerDTO.getName(), currentSessionId);
@@ -177,11 +198,12 @@ public class ColumnController extends AbstractFormController {
 	}
 
 	@Override
-	protected ModelAndView showForm(HttpServletRequest request, HttpServletResponse response, BindException errors) throws Exception {
+	protected ModelAndView showForm(HttpServletRequest request
+									, HttpServletResponse response
+									, BindException errors)
+									throws Exception {
 		return new ModelAndView("index");
 	}
-
-
 
 	/* Getters y Setters */
 	public GrassManager getGrassManagerImpl() {

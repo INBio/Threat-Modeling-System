@@ -43,11 +43,14 @@ public class ShowMapController extends AbstractFormController {
 	private FileManager fileManagerImpl;
 
 	@Override
-	protected ModelAndView processFormSubmission(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
+	protected ModelAndView processFormSubmission(HttpServletRequest request
+												, HttpServletResponse response
+												, Object command
+												, BindException errors)
+												throws Exception {
 
 		List<CategoryDTO> categoryList = null;
 		GenericForm selectedLayers = null;
-		List<LayerDTO> layerList =  null;
 		SessionInfo sessionInfo = null;
 		String distanceString = null;
 		Long currentSessionId = null;
@@ -70,7 +73,8 @@ public class ShowMapController extends AbstractFormController {
 				// write the categories file.
 				this.fileManagerImpl.writeReclasFile(layer, currentSessionId);
 				// trigger the reclassification script.
-				this.grassManagerImpl.advanceReclasification(layer.getName(), currentSessionId);
+				this.grassManagerImpl.
+					advanceReclasification(layer.getName() , currentSessionId);
 			}else{
 
 				categoryList = layer.getCategories();
@@ -85,9 +89,8 @@ public class ShowMapController extends AbstractFormController {
 					listLenght--;
 				}
 
-				//distanceString = "\""+distanceString+"\"";
-
-				this.grassManagerImpl.asingBuffers(layer.getName(), distanceString, currentSessionId);
+				this.grassManagerImpl.
+					asingBuffers(layer.getName(), distanceString, currentSessionId);
 			}
 		}
 
@@ -106,7 +109,12 @@ public class ShowMapController extends AbstractFormController {
 
 			layer3  = new LayerDTO("Res1", 1);
 
-			this.grassManagerImpl.executeWeightedSum(layer1.getName(), weight1, layer2.getName(), weight2, currentSessionId, layer3.getName());
+			this.grassManagerImpl.executeWeightedSum(layer1.getName()
+													, weight1
+													, layer2.getName()
+													, weight2
+													, currentSessionId
+													, layer3.getName());
 		}
 
 		for(int i = 2; i<selectedLayers.getLayers().size(); i++){
@@ -117,7 +125,12 @@ public class ShowMapController extends AbstractFormController {
 			weight2 = layer2.getWeight()/100D;
 			layer3  = new LayerDTO("Res"+i, 1);
 
-			this.grassManagerImpl.executeWeightedSum(layer1.getName(), weight1, layer2.getName(), weight2, currentSessionId, layer3.getName());
+			this.grassManagerImpl.executeWeightedSum(layer1.getName()
+													, weight1
+													, layer2.getName()
+													, weight2
+													, currentSessionId
+													, layer3.getName());
 		}
 
 		this.grassManagerImpl.exportLayer2Image(currentSessionId, layer3.getName());
@@ -136,7 +149,10 @@ public class ShowMapController extends AbstractFormController {
 
 
 	@Override
-	protected ModelAndView showForm(HttpServletRequest request, HttpServletResponse response, BindException errors) throws Exception {
+	protected ModelAndView showForm(HttpServletRequest request
+									, HttpServletResponse response
+									, BindException errors)
+									throws Exception {
 		return new ModelAndView("index");
 	}
 

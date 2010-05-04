@@ -129,7 +129,10 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	}
 
 	@Override
-	public void executeRasterization(String layerName, Long suffix, String column) throws Exception{
+	public void executeRasterization(String layerName
+									, Long suffix
+									, String column)
+									throws Exception{
 
 		int result = 0;
 		List<String> commands = null;
@@ -155,7 +158,13 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	}
 
 	@Override
-	public void executeWeightedSum(String layerName1, Double weight1, String layerName2, Double weight2, Long suffix, String outputName) throws Exception{
+	public void executeWeightedSum(String layerName1
+									, Double weight1
+									, String layerName2
+									, Double weight2
+									, Long suffix
+									, String outputName)
+									throws Exception{
 		int result = 0;
 		List<String> commands = null;
 		StringBuilder stdout = null;
@@ -212,7 +221,9 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 
 	@Override
-	public LayerType retrieveLayerType(String layerName, Long suffix) throws Exception{
+	public LayerType retrieveLayerType(String layerName, Long suffix) 
+		throws Exception{
+
 		int result = 0;
 		LayerType mapType = null;
 		List<String> commands = null;
@@ -247,7 +258,9 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	}
 
 	@Override
-	public void retrieveMinMaxValues(String layerName, Long suffix) throws Exception{
+	public void retrieveMinMaxValues(String layerName, Long suffix) 
+		throws Exception{
+
 		int result = 0;
 		List<String> commands = null;
 		StringBuilder stdout = null;
@@ -272,7 +285,10 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	}
 
 	@Override
-	public List<CategoryDTO> retrieveCategories(String layerName, String layerType, Long suffix) throws Exception{
+	public List<CategoryDTO> retrieveCategories(String layerName
+												, String layerType
+												, Long suffix)
+												throws Exception{
 
 		int result = 0;
 		List<String> commands = null;
@@ -324,7 +340,8 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	}
 
 	@Override
-	public void executeReclassification(String layerName, Long suffix) throws Exception{
+	public void executeReclassification(String layerName, Long suffix)
+		throws Exception{
 
 		int result = 0;
 		List<String> commands = null;
@@ -351,7 +368,8 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	}
 
 	@Override
-	public void asingResolution(Double resolution, Long suffix) throws Exception{
+	public void asingResolution(Double resolution, Long suffix)
+		throws Exception{
 
 		int result = 0;
 		List<String> commands = null;
@@ -378,7 +396,8 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	}
 
 	@Override
-	public void asingBuffers(String layerName, String distances, Long suffix) throws Exception{
+	public void asingBuffers(String layerName, String distances, Long suffix)
+		throws Exception{
 
 		int result = 0;
 		List<String> commands = null;
@@ -405,7 +424,8 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	}
 
 	@Override
-	public HashMap<String, String> retrieveColumns(String layerName, Long suffix) throws Exception {
+	public HashMap<String, String> retrieveColumns(String layerName, Long suffix)
+		throws Exception {
 		int result = 0;
 		List<String> commands = null;
 		StringBuilder stdout = null;
@@ -449,7 +469,10 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	}
 
  	@Override
-	public void executeVectorReclasification(String layerName, String column, Long suffix) throws Exception{
+	public void executeVectorReclasification(String layerName
+											, String column
+											, Long suffix)
+											throws Exception{
 
 		int result = 0;
 		List<String> commands = null;
@@ -477,7 +500,10 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	@Override
 	public void deleteGRASSLocation(Long suffix){ }
 
-	private void printThis(int exitCode, StringBuilder stdout, StringBuilder stderr){
+	private void printThis(int exitCode
+							, StringBuilder stdout
+							, StringBuilder stderr){
+
 		System.out.println("Exit code: " + exitCode);
 		System.out.println("stdout: ");
 		System.out.println(stdout);
