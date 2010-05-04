@@ -127,8 +127,7 @@ public class ColumnController extends AbstractFormController {
 		for(LayerDTO layer : layers){
 			try {
 				layerType = this.grassManagerImpl.
-									retrieveLayerType(layer.getName()
-									, currentSessionId);
+									retrieveLayerType(layer, currentSessionId);
 
 			} catch (Exception ex) {
 				ex.printStackTrace();
@@ -158,7 +157,7 @@ public class ColumnController extends AbstractFormController {
 
 				// Retrive data columns
 				columns = grassManagerImpl.
-					retrieveAvailableColumns(layerDTO.getName(), currentSessionId);
+					retrieveAvailableColumns(layerDTO, currentSessionId);
 
 			} catch (Exception ex) {
 				ex.printStackTrace();
@@ -201,7 +200,7 @@ public class ColumnController extends AbstractFormController {
 						setResolution(resolution, currentSessionId);
 				}
 
-				this.grassManagerImpl.importLayer(layerDTO.getName(), currentSessionId);
+				this.grassManagerImpl.importLayer(layerDTO, currentSessionId);
 			}
 
 		} catch (Exception ex) {

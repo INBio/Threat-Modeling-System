@@ -34,8 +34,6 @@ import org.springframework.web.servlet.mvc.AbstractFormController;
 
 public class LayerController extends AbstractFormController {
 
-    protected final Log logger = LogFactory.getLog(getClass());
-
     private LayerManager layerManager;
 
 	@Override

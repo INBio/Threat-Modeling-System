@@ -17,11 +17,9 @@
  */
 package org.inbio.modeling.web.controller;
 
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.inbio.modeling.core.dto.CategoryDTO;
 import org.inbio.modeling.core.dto.LayerDTO;
 import org.inbio.modeling.core.manager.FileManager;
 import org.inbio.modeling.core.manager.GrassManager;
@@ -49,14 +47,11 @@ public class ShowMapController extends AbstractFormController {
 												, BindException errors)
 												throws Exception {
 
-		List<CategoryDTO> categoryList = null;
 		GenericForm selectedLayers = null;
 		SessionInfo sessionInfo = null;
-		String distanceString = null;
 		Long currentSessionId = null;
 		HttpSession session = null;
 		ModelAndView model = null;
-		int	listLenght = -1;
 
 		selectedLayers = (GenericForm)command;
 
@@ -74,23 +69,10 @@ public class ShowMapController extends AbstractFormController {
 				this.fileManagerImpl.writeReclasFile(layer, currentSessionId);
 				// trigger the reclassification script.
 				this.grassManagerImpl.
-					advanceReclasification(layer.getName() , currentSessionId);
+					advanceReclasification(layer, currentSessionId);
 			}else{
 
-				categoryList = layer.getCategories();
-				listLenght = categoryList.size();
-				distanceString = "";
-
-				for(CategoryDTO cat :layer.getCategories()){
-					if(listLenght > 1)
-						distanceString += cat.getValue() + ",";
-					else
-						distanceString += cat.getValue();
-					listLenght--;
-				}
-
-				this.grassManagerImpl.
-					asingBuffers(layer.getName(), distanceString, currentSessionId);
+				this.grassManagerImpl.asingBuffers(layer, currentSessionId);
 			}
 		}
 
@@ -102,38 +84,28 @@ public class ShowMapController extends AbstractFormController {
 
 
 		if(selectedLayers.getLayers().size() >= 2){
-			layer1 = selectedLayers.getLayers().get(0);
-			weight1 = layer1.getWeight()/100D;
-			layer2 = selectedLayers.getLayers().get(1);
-			weight2 = layer2.getWeight()/100D;
 
 			layer3  = new LayerDTO("Res1", 1);
 
-			this.grassManagerImpl.executeWeightedSum(layer1.getName()
-													, weight1
-													, layer2.getName()
-													, weight2
-													, currentSessionId
-													, layer3.getName());
+			this.grassManagerImpl.executeWeightedSum(layer1
+													, layer2
+													, layer3
+													, currentSessionId);
 		}
 
 		for(int i = 2; i<selectedLayers.getLayers().size(); i++){
 
 			layer1 = layer3;
-			weight1 = layer1.getWeight()/100D;
 			layer2 = selectedLayers.getLayers().get(i);
-			weight2 = layer2.getWeight()/100D;
 			layer3  = new LayerDTO("Res"+i, 1);
 
-			this.grassManagerImpl.executeWeightedSum(layer1.getName()
-													, weight1
-													, layer2.getName()
-													, weight2
-													, currentSessionId
-													, layer3.getName());
+			this.grassManagerImpl.executeWeightedSum(layer1
+													, layer2
+													, layer3
+													, currentSessionId);
 		}
 
-		this.grassManagerImpl.exportLayer2Image(currentSessionId, layer3.getName());
+		this.grassManagerImpl.exportLayer2Image(layer3, currentSessionId);
 
 		//save session
 		session.setAttribute("CurrentSessionInfo", sessionInfo);

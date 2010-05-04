@@ -79,15 +79,13 @@ public class IntervalsController extends AbstractFormController {
 
 			if(columnElements[1].equals("CHARACTER")){
 				// vectorial reclasification
-				this.vectorialReclassification(layer.getName()
-												, columnElements[0]
-												, currentSessionId);
+				this.vectorialReclassification(layer, currentSessionId);
 			}else{
-				this.grassManagerImpl.renameFile(layer.getName(), currentSessionId);
+				this.grassManagerImpl.renameFile(layer, currentSessionId);
 			}
 
 			//convert the layer to a raster format
-			this.layer2Raster(layer.getName(), currentSessionId, columnElements[0]);
+			this.layer2Raster(layer, currentSessionId);
 
 			//asign the categories
 			this.asignCategories2Layer(layer, currentSessionId);
@@ -114,12 +112,12 @@ public class IntervalsController extends AbstractFormController {
 	 * @param column
 	 * @param currentSessionId
 	 */
-	private void vectorialReclassification(String layerName
-											, String column
+	private void vectorialReclassification(LayerDTO layer
 											, Long currentSessionId){
 		try {
 			this.grassManagerImpl.
-				executeVectorReclasification(layerName, column, currentSessionId);
+				executeVectorReclasification(layer, currentSessionId);
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -131,14 +129,12 @@ public class IntervalsController extends AbstractFormController {
 	 * @param currentSessionId
 	 * @param column
 	 */
-	private void layer2Raster(String layerName
-								, Long currentSessionId
-								, String column){
+	private void layer2Raster(LayerDTO layer, Long currentSessionId){
 
 		try {
 			// convert the vectorial layer to another in raster format
 			this.grassManagerImpl.
-				convertLayer2Raster(layerName, currentSessionId, column);
+				convertLayer2Raster(layer, currentSessionId);
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -160,9 +156,7 @@ public class IntervalsController extends AbstractFormController {
 		try {
 			// retrieve an asing the layer categories
 			categories = this.grassManagerImpl.
-							getLayerCategories(layer.getName()
-												, "RAST"
-												, currentSessionId);
+							getLayerCategories(layer, currentSessionId);
 
 			layer.setCategories(categories);
 

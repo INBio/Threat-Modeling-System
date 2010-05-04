@@ -20,6 +20,7 @@ package org.inbio.modeling.core.manager;
 import java.util.List;
 import java.util.Map;
 import org.inbio.modeling.core.dto.CategoryDTO;
+import org.inbio.modeling.core.dto.LayerDTO;
 import org.inbio.modeling.core.layer.LayerType;
 
 public interface GrassManager{
@@ -39,7 +40,7 @@ public interface GrassManager{
 	 * @param suffix
 	 * @throws Exception
 	 */
-	public void importLayer(String layerName, Long suffix)
+	public void importLayer(LayerDTO layer, Long suffix)
 		throws Exception;
 
 	/**
@@ -49,8 +50,7 @@ public interface GrassManager{
 	 * @param column
 	 * @throws Exception
 	 */
-	public void convertLayer2Raster(String layerName, Long suffix, String column)
-		throws Exception;
+	public void convertLayer2Raster(LayerDTO layer, Long suffix) throws Exception;
 
 	/**
 	 * Executes a weighted sum with the provided layers and weights
@@ -62,12 +62,10 @@ public interface GrassManager{
 	 * @param outputName
 	 * @throws Exception
 	 */
-	public void executeWeightedSum(String layerName1
-									, Double weight1
-									, String layerName2
-									, Double weight2
-									, Long suffix
-									, String outputName)
+	public void executeWeightedSum(LayerDTO layer1
+									, LayerDTO layer2
+									, LayerDTO outpututName
+									, Long suffix)
 									throws Exception;
 
 	/**
@@ -76,7 +74,7 @@ public interface GrassManager{
 	 * @param layerName
 	 * @throws Exception
 	 */
-	public void exportLayer2Image(Long suffix, String layerName )
+	public void exportLayer2Image(LayerDTO layer, Long suffix)
 		throws Exception;
 
 	/**
@@ -85,7 +83,7 @@ public interface GrassManager{
 	 * @param suffix
 	 * @throws Exception
 	 */
-	public void getMinMaxValuesFromLayer(String layerName, Long suffix)
+	public void getMinMaxValuesFromLayer(LayerDTO layer, Long suffix)
 		throws Exception;
 
 	/**
@@ -95,7 +93,7 @@ public interface GrassManager{
 	 * @return
 	 * @throws Exception
 	 */
-	public LayerType retrieveLayerType(String layerName, Long suffix)
+	public LayerType retrieveLayerType(LayerDTO layer, Long suffix)
 		throws Exception;
 
 	/**
@@ -106,9 +104,7 @@ public interface GrassManager{
 	 * @return
 	 * @throws Exception
 	 */
-	public List<CategoryDTO> getLayerCategories(String layerName
-		, String layerType
-		, Long suffix)
+	public List<CategoryDTO> getLayerCategories(LayerDTO layer, Long suffix)
 		throws Exception;
 
 	/**
@@ -118,7 +114,7 @@ public interface GrassManager{
 	 * @param suffix
 	 * @throws Exception
 	 */
-	public void advanceReclasification(String layerName	, Long suffix)
+	public void advanceReclasification(LayerDTO layer, Long suffix)
 		throws Exception;
 
 	/**
@@ -128,10 +124,8 @@ public interface GrassManager{
 	 * @param suffix
 	 * @throws Exception
 	 */
-	public void executeVectorReclasification(String layerName
-											, String column
-											, Long suffix)
-											throws Exception;
+	public void executeVectorReclasification(LayerDTO layer , Long suffix)
+		throws Exception;
 
 	/**
 	 * Change the resolution of a grass environment.
@@ -141,7 +135,7 @@ public interface GrassManager{
 	 */
 	public void setResolution(Double resolution, Long suffix) throws Exception;
 
-	public Map<String,String> retrieveAvailableColumns(String layerName
+	public Map<String,String> retrieveAvailableColumns(LayerDTO layer
 															, Long suffix)
 															throws Exception;
 
@@ -158,7 +152,7 @@ public interface GrassManager{
 	 * @param suffix
 	 * @throws Exception
 	 */
-	public void asingBuffers(String layerName, String distances, Long suffix)
+	public void asingBuffers(LayerDTO layer, Long suffix)
 		throws Exception;
 
 	/**
@@ -168,5 +162,5 @@ public interface GrassManager{
 	 * @param suffix
 	 * @throws Exception
 	 */
-	public void renameFile (String layerName, Long suffix) throws Exception;
+	public void renameFile (LayerDTO layer, Long suffix) throws Exception;
 }
