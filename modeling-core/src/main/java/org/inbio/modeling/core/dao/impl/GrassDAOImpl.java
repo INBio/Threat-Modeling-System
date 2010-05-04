@@ -310,7 +310,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 		//Takes the output string and split it in a interval/category by Line
 		StringTokenizer st = new StringTokenizer(new String(stdout), "\n");
-
+		values = new ArrayList<String>();
 		while(st.hasMoreTokens()){
 			temp = st.nextToken();
 			values.add(temp);

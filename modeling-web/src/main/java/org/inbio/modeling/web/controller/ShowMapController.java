@@ -79,12 +79,11 @@ public class ShowMapController extends AbstractFormController {
 		LayerDTO layer1 = null;
 		LayerDTO layer2 = null;
 		LayerDTO layer3 = null;
-		Double weight1 = null;
-		Double weight2 = null;
-
 
 		if(selectedLayers.getLayers().size() >= 2){
 
+			layer1 = selectedLayers.getLayers().get(0);
+			layer2 = selectedLayers.getLayers().get(1);
 			layer3  = new LayerDTO("Res1", 1);
 
 			this.grassManagerImpl.executeWeightedSum(layer1

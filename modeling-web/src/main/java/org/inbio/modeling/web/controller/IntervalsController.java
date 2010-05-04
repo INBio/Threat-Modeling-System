@@ -74,7 +74,7 @@ public class IntervalsController extends AbstractFormController {
 
 			// convert the array to a HashMap
 			column = new HashMap<String,String>();
-			column.put(columnElements[0], columnElements[1]);
+			column.put("selected", columnElements[0]);
 			layer.setColumns(column);
 
 			if(columnElements[1].equals("CHARACTER")){

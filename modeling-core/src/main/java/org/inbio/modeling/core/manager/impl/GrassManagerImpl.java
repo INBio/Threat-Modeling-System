@@ -17,6 +17,7 @@
  */
 package org.inbio.modeling.core.manager.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,16 +67,7 @@ public class GrassManagerImpl implements GrassManager {
 	public void convertLayer2Raster(LayerDTO layer , Long suffix)
 		throws Exception {
 
-		String column = null;
-		Object array[] = null;
-		Map<String, String> columns = layer.getColumns();
-
-		if(columns.size() == 1){
-			array = columns.values().toArray();
-			column = (String)array[0];
-		}else{
-			throw new IllegalArgumentException(columns.toString());
-		}
+		String column = layer.getColumns().get("selected");
 
 		this.grassDAOImpl.executeRasterization(layer.getName(), suffix, column);
 	}
@@ -128,6 +120,7 @@ public class GrassManagerImpl implements GrassManager {
 
 		// get the categories of the raster version of the map.
 		categories = this.grassDAOImpl.retrieveCategories(layer.getName(), "RAST", suffix);
+		categoryList = new ArrayList<CategoryDTO>();
 
 		for(String stringCategory : categories ){
 
@@ -221,16 +214,7 @@ public class GrassManagerImpl implements GrassManager {
 	public void executeVectorReclasification(LayerDTO layer, Long suffix)
 		throws Exception {
 
-		String column = null;
-		Object array[] = null;
-		Map<String, String> columns = layer.getColumns();
-
-		if(columns.size() == 1){
-			array = columns.values().toArray();
-			column = (String)array[0];
-		}else{
-			throw new IllegalArgumentException(columns.toString());
-		}
+		String column = layer.getColumns().get("selected");
 
 		this.grassDAOImpl.
 			executeVectorReclasification(layer.getName() , column , suffix);
