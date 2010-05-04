@@ -8,7 +8,9 @@
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
 	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
-    <bean id="layerManager" class="org.inbio.modeling.core.manager.impl.LayerManagerImpl"/>
+    <bean id="layerManager" class="org.inbio.modeling.core.manager.impl.LayerManagerImpl">
+        <property name="fileManagerImpl" ref="fileManager" />
+	</bean>
 
     <bean id="grassManager" class="org.inbio.modeling.core.manager.impl.GrassManagerImpl">
         <property name="grassDAOImpl" ref="grassDAO" />
