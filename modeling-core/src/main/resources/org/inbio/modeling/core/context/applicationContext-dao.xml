@@ -31,6 +31,7 @@
 		<property name="asignResolution" value="${scripts.asignResolution}" />
 		<property name="deleteGrassLocation" value="${scripts.deleteGrassLocation}" />
 		<property name="exportSHP" value="${scripts.exportSHP}" />
+		<property name="retrieveType" value="${scripts.retrieveType}" />
 	</bean>
 
 	<!-- DTOFactories's -->

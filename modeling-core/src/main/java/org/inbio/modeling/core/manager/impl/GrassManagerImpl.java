@@ -24,6 +24,7 @@ import org.apache.commons.logging.LogFactory;
 import org.inbio.modeling.core.dao.GrassDAO;
 import org.inbio.modeling.core.dto.CategoryDTO;
 import org.inbio.modeling.core.manager.GrassManager;
+import org.inbio.modeling.core.maps.LayerType;
 
 /**
  *
@@ -65,6 +66,11 @@ public class GrassManagerImpl implements GrassManager {
 	@Override
 	public List<CategoryDTO> getLayerCategories(String layerName, String layerType, Long suffix) throws Exception {
 		return this.grassDAOImpl.retrieveCategories(layerName, layerType, suffix);
+	}
+
+	@Override
+	public LayerType retrieveLayerType(String layerName, Long suffix) throws Exception {
+		return this.grassDAOImpl.retrieveLayerType(layerName, suffix);
 	}
 
 	@Override

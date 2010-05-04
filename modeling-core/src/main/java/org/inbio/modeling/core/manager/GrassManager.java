@@ -20,6 +20,7 @@ package org.inbio.modeling.core.manager;
 import java.util.HashMap;
 import java.util.List;
 import org.inbio.modeling.core.dto.CategoryDTO;
+import org.inbio.modeling.core.maps.LayerType;
 
 public interface GrassManager{
 
@@ -35,6 +36,7 @@ public interface GrassManager{
 
 	public void getMinMaxValuesFromLayer(String layerName, Long suffix) throws Exception;
 
+	public LayerType retrieveLayerType(String layerName, Long suffix) throws Exception;
 
 	public List<CategoryDTO> getLayerCategories(String layerName, String layerType, Long suffix) throws Exception;
 

@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 import org.inbio.modeling.core.dao.GrassDAO;
 import org.inbio.modeling.core.dto.CategoryDTO;
+import org.inbio.modeling.core.maps.LayerType;
 import org.inbio.system.command.impl.SystemCommandExecutorImpl;
 
 public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
@@ -47,6 +48,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	private String asignResolution;
 	private String deleteGrassLocation;
 	private String exportSHP;
+	private String retrieveType;
 
 
 	@Override
@@ -182,6 +184,41 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		this.printThis(result, stdout, stderr);
 	}
 
+
+	@Override
+	public LayerType retrieveLayerType(String layerName, Long suffix) throws Exception{
+		int result = 0;
+		LayerType mapType = null;
+		List<String> commands = null;
+		StringBuilder stdout = null;
+		StringBuilder stderr = null;
+		commands = new ArrayList<String>();
+
+		// Arguments of the command
+		commands.add(scriptHome+retrieveType);
+		commands.add(layerName);
+		commands.add(suffix.toString());
+
+		logger.debug("Executing command: "+commands.toString());
+		commandExecutor = new SystemCommandExecutorImpl(commands);
+		// executes the command
+		result = commandExecutor.executeCommand();
+		// gets the output of the execution
+		stdout = commandExecutor.getStandardOutput();
+		stderr = commandExecutor.getStandardError();
+		// Prints the output of the command for good or for bad.
+		this.printThis(result, stdout, stderr);
+
+		if(LayerType.AREA.match(layerName))
+			mapType = LayerType.AREA;
+		else if(LayerType.LINE.match(layerName))
+			mapType = LayerType.LINE;
+		else
+			mapType = LayerType.POINT;
+
+		return mapType;
+	}
+
 	@Override
 	public void retrieveMinMaxValues(String layerName, Long suffix) throws Exception{
 		int result = 0;
@@ -273,7 +310,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		commands.add(layerName);
 		commands.add(suffix.toString());
 
-	stdout = commandExecutor.getStandardOutput();
+		stdout = commandExecutor.getStandardOutput();
 		stderr = commandExecutor.getStandardError();
 		logger.debug("Executing command: "+commands.toString());
 		commandExecutor = new SystemCommandExecutorImpl(commands);
@@ -382,8 +419,6 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		// Prints the output of the command for good or for bad.
 		this.printThis(result, stdout, stderr);
 	}
-
-
 
 	@Override
 	public void deleteGRASSLocation(Long suffix){ }
@@ -516,5 +551,13 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 	public void setRetrieveColumns(String retrieveColumns) {
 		this.retrieveColumns = retrieveColumns;
+	}
+
+	public String getRetrieveType() {
+		return retrieveType;
+	}
+
+	public void setRetrieveType(String retrieveType) {
+		this.retrieveType = retrieveType;
 	}
 }

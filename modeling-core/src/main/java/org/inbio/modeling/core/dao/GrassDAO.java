@@ -20,6 +20,7 @@ package org.inbio.modeling.core.dao;
 import java.util.HashMap;
 import java.util.List;
 import org.inbio.modeling.core.dto.CategoryDTO;
+import org.inbio.modeling.core.maps.LayerType;
 
 public interface GrassDAO extends BaseDAO {
 
@@ -32,6 +33,8 @@ public interface GrassDAO extends BaseDAO {
 	public void executeWeightedSum(String layerName1, Double weight1, String layerName2, Double weight2, Long suffix, String outputName) throws Exception;
 
 	public void exportAsImage(Long suffix, String outputName) throws Exception;
+
+	public LayerType retrieveLayerType(String layerName, Long suffix) throws Exception;
 
 	public void retrieveMinMaxValues(String layerName, Long suffix) throws Exception;
 
