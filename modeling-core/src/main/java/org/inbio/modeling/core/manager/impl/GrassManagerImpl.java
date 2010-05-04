@@ -258,6 +258,14 @@ public class GrassManagerImpl implements GrassManager {
 
 	@Override
 	/**
+	 * @see org.inbio.modeling.core.manager.GrassManager#asingColorScale(LayerDTO layer, Long suffix)
+	 */
+	public void asingColorScale(LayerDTO layer , Long suffix) throws Exception{
+		this.grassDAOImpl.asingColorScale(layer.getName(), suffix);
+	}
+
+	@Override
+	/**
 	 * @see org.inbio.modeling.core.manager.GrassManager#renameFile (String layerName, Long suffix)
 	 */
 	public void renameFile (LayerDTO layer, Long suffix)

@@ -163,4 +163,13 @@ public interface GrassManager{
 	 * @throws Exception
 	 */
 	public void renameFile (LayerDTO layer, Long suffix) throws Exception;
+
+	/**
+	 * Asing color scale to the given layer, low values are green higher values
+	 * are red.
+	 * @param layerName
+	 * @param suffix
+	 * @throws Exception
+	 */
+	public void asingColorScale(LayerDTO layer , Long suffix) throws Exception;
 }

@@ -9,7 +9,7 @@ SUFFIX=$1
 
 # Variables
 #RESMAP="RES_$SUFFIX"
-RESMAP=R_"$2"_"$SUFFIX"
+RESMAP=R_"$2"_"$SUFFIX"_r
 DEST="$CATALINA_HOME/webapps/resmaps"
 
 # Initialization

@@ -50,6 +50,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	private String retrieveType;
 	private String asingBuffers;
 	private String rename;
+	private String setColorScale;
 
 
 	@Override
@@ -478,6 +479,34 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	}
 
 	@Override
+	/**
+	 * @see org.inbio.modeling.core.dao.grassDAO#asingColorScale(String layerName , Long suffix)
+	 */
+	public void asingColorScale(String layerName , Long suffix) throws Exception{
+
+		int result = 0;
+		List<String> commands = null;
+		StringBuilder stdout = null;
+		StringBuilder stderr = null;
+		commands = new ArrayList<String>();
+
+		// Arguments of the command
+		commands.add(scriptHome+setColorScale);
+		commands.add(layerName);
+		commands.add(suffix.toString());
+
+		logger.debug("Executing command: "+commands.toString());
+		commandExecutor = new SystemCommandExecutorImpl(commands);
+		// executes the command
+		result = commandExecutor.executeCommand();
+		// gets the output of the execution
+		stdout = commandExecutor.getStandardOutput();
+		stderr = commandExecutor.getStandardError();
+		// Prints the output of the command for good or for bad.
+		this.printThis(result, stdout, stderr);
+	}
+
+	@Override
 	public void deleteGRASSLocation(Long suffix){ }
 
 	private void printThis(int exitCode
@@ -635,5 +664,13 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 	public void setRename(String rename) {
 		this.rename = rename;
+	}
+
+	public String getSetColorScale() {
+		return setColorScale;
+	}
+
+	public void setSetColorScale(String setColorScale) {
+		this.setColorScale = setColorScale;
 	}
 }

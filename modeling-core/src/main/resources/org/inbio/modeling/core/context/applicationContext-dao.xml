@@ -32,5 +32,6 @@
 		<property name="retrieveType" value="${scripts.retrieveType}" />
 		<property name="asingBuffers" value="${scripts.asingBuffers}" />
 		<property name="rename" value="${scripts.rename}" />
+		<property name="setColorScale" value="${scripts.colorScale}" />
 	</bean>
 </beans>

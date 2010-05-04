@@ -145,6 +145,17 @@ public interface GrassDAO extends BaseDAO {
 								throws Exception;
 
 	/**
+	 * Asing color scale to the given layer, low values are green higher values
+	 * are red.
+	 * @param layerName
+	 * @param suffix
+	 * @throws Exception
+	 */
+	public void asingColorScale(String layerName
+								, Long suffix)
+								throws Exception;
+
+	/**
 	 * Delete a location
 	 * @param suffix
 	 */

@@ -84,7 +84,7 @@ public class ShowMapController extends AbstractFormController {
 
 			layer1 = selectedLayers.getLayers().get(0);
 			layer2 = selectedLayers.getLayers().get(1);
-			layer3  = new LayerDTO("Res1", 1);
+			layer3  = new LayerDTO("Res1", 100);
 
 			this.grassManagerImpl.executeWeightedSum(layer1
 													, layer2
@@ -96,7 +96,7 @@ public class ShowMapController extends AbstractFormController {
 
 			layer1 = layer3;
 			layer2 = selectedLayers.getLayers().get(i);
-			layer3  = new LayerDTO("Res"+i, 1);
+			layer3  = new LayerDTO("Res"+i, 100);
 
 			this.grassManagerImpl.executeWeightedSum(layer1
 													, layer2
@@ -104,6 +104,7 @@ public class ShowMapController extends AbstractFormController {
 													, currentSessionId);
 		}
 
+		this.grassManagerImpl.asingColorScale(layer3, currentSessionId);
 		this.grassManagerImpl.exportLayer2Image(layer3, currentSessionId);
 
 		//save session
