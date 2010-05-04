@@ -44,7 +44,7 @@ public class LayerManagerImpl implements LayerManager {
 
 		resultList = new ArrayList<LayerDTO>();
 		for(String layerName : layerNames)
-			resultList.add(new LayerDTO(layerName, -1));
+			resultList.add(new LayerDTO(layerName, 0));
 
 		return resultList;
     }
