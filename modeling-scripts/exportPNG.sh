@@ -22,6 +22,6 @@ export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$GISBASE/lib"
 RESULT=$(r.out.png input=$RESMAP output="$DEST/$RESMAP.png" --quiet);
 
 cp -r "$DEST/$RESMAP.png" "$DEST/$RESMAP"_2.png
-convert "$DEST/$RESMAP".png -resize 800x600 "$DEST/$RESMAP".png
+convert "$DEST/$RESMAP".png -resize 10%  "$DEST/$RESMAP".png
 
 exit $RESULT;
