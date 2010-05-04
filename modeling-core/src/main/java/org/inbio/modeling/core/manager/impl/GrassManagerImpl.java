@@ -103,6 +103,17 @@ public class GrassManagerImpl implements GrassManager {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
+	@Override
+	public void asingBuffers(String layerName, String distances, Long suffix) throws Exception{
+
+		this.grassDAOImpl.asingBuffers(layerName, distances, suffix);
+	}
+
+	@Override
+	public void renameFile (String layerName, Long suffix) throws Exception{
+		this.grassDAOImpl.rename(layerName, suffix);
+	}
+
 	/* getters and setters */
 	public GrassDAO getGrassDAOImpl() {
 		return grassDAOImpl;
@@ -111,4 +122,5 @@ public class GrassManagerImpl implements GrassManager {
 	public void setGrassDAOImpl(GrassDAO grassDAOImpl) {
 		this.grassDAOImpl = grassDAOImpl;
 	}
+
 }

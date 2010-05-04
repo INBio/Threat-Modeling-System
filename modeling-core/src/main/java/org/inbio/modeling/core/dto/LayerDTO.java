@@ -25,6 +25,7 @@ import java.util.Map;
 import org.apache.commons.collections.FactoryUtils;
 import org.apache.commons.collections.list.LazyList;
 import org.apache.commons.collections.map.LazyMap;
+import org.inbio.modeling.core.maps.LayerType;
 
 /**
  *
@@ -35,6 +36,7 @@ public class LayerDTO {
 	private boolean selected;
 	private long   weight;
 	private String name;
+	private LayerType type;
 	private String description;
 	private Map<String,String>	columns =  
 		LazyMap.decorate( new HashMap<String, String>(),
@@ -97,5 +99,13 @@ public class LayerDTO {
 
 	public void setColumns(Map<String, String> columns) {
 		this.columns = columns;
+	}
+
+	public LayerType getType() {
+		return type;
+	}
+
+	public void setType(LayerType type) {
+		this.type = type;
 	}
 }

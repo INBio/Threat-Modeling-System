@@ -49,6 +49,8 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	private String deleteGrassLocation;
 	private String exportSHP;
 	private String retrieveType;
+	private String asingBuffers;
+	private String rename;
 
 
 	@Override
@@ -89,6 +91,30 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		// Arguments of the command
 		commands.add(scriptHome+importPNG);
 		commands.add(layerHome+layerName);
+		commands.add(suffix.toString());
+
+		logger.debug("Executing command: "+commands.toString());
+		commandExecutor = new SystemCommandExecutorImpl(commands);
+		// executes the command
+		result = commandExecutor.executeCommand();
+		// gets the output of the execution
+		stdout = commandExecutor.getStandardOutput();
+		stderr = commandExecutor.getStandardError();
+		// Prints the output of the command for good or for bad.
+		this.printThis(result, stdout, stderr);
+	}
+
+	@Override
+	public void rename(String layerName, Long suffix) throws Exception {
+		int result = 0;
+		List<String> commands = null;
+		StringBuilder stdout = null;
+		StringBuilder stderr = null;
+		commands = new ArrayList<String>();
+
+		// Arguments of the command
+		commands.add(scriptHome+rename);
+		commands.add(layerName);
 		commands.add(suffix.toString());
 
 		logger.debug("Executing command: "+commands.toString());
@@ -208,10 +234,11 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		stderr = commandExecutor.getStandardError();
 		// Prints the output of the command for good or for bad.
 		this.printThis(result, stdout, stderr);
+		stdout.deleteCharAt(stdout.length()-1);
 
-		if(LayerType.AREA.match(layerName))
+		if(LayerType.AREA.match(stdout.toString()))
 			mapType = LayerType.AREA;
-		else if(LayerType.LINE.match(layerName))
+		else if(LayerType.LINE.match(stdout.toString()))
 			mapType = LayerType.LINE;
 		else
 			mapType = LayerType.POINT;
@@ -348,6 +375,33 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		// Prints the output of the command for good or for bad.
 		this.printThis(result, stdout, stderr);
 
+	}
+
+	@Override
+	public void asingBuffers(String layerName, String distances, Long suffix) throws Exception{
+
+		int result = 0;
+		List<String> commands = null;
+		StringBuilder stdout = null;
+		StringBuilder stderr = null;
+		commands = new ArrayList<String>();
+
+		// Arguments of the command
+		commands.add(scriptHome+asingBuffers);
+		commands.add(layerName);
+		commands.add(distances);
+		commands.add(suffix.toString());
+
+
+		logger.debug("Executing command: "+commands.toString());
+		commandExecutor = new SystemCommandExecutorImpl(commands);
+		// executes the command
+		result = commandExecutor.executeCommand();
+		// gets the output of the execution
+		stdout = commandExecutor.getStandardOutput();
+		stderr = commandExecutor.getStandardError();
+		// Prints the output of the command for good or for bad.
+		this.printThis(result, stdout, stderr);
 	}
 
 	@Override
@@ -559,5 +613,21 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 	public void setRetrieveType(String retrieveType) {
 		this.retrieveType = retrieveType;
+	}
+
+	public String getAsingBuffers() {
+		return asingBuffers;
+	}
+
+	public void setAsingBuffers(String asingBuffers) {
+		this.asingBuffers = asingBuffers;
+	}
+
+	public String getRename() {
+		return rename;
+	}
+
+	public void setRename(String rename) {
+		this.rename = rename;
 	}
 }

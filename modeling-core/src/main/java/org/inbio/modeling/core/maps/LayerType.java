@@ -23,15 +23,13 @@ package org.inbio.modeling.core.maps;
  */
 public enum LayerType {
 
-	AREA(1,"areas"),		// When a layer contains only polygons geometry information
-	LINE(2,"lines"),		// When a layer contains only lines geometry information
-	POINT(3,"points");	// When a layer contains only points geometry iformation
+	AREA("areas"),		// When a layer contains only polygons geometry information
+	LINE("lines"),		// When a layer contains only lines geometry information
+	POINT("points");	// When a layer contains only points geometry iformation
 
-	private int	   id;
 	private String name;
 
-	LayerType(int id, String name){
-		this.id = id;
+	LayerType(String name){
 		this.name = name;
 	}
 
@@ -43,10 +41,5 @@ public enum LayerType {
 			result = true;
 
 		return result;
-	}
-
-	@Override
-	public final String toString(){
-		return this.name;
 	}
 }

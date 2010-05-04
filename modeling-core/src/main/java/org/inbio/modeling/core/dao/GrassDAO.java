@@ -49,4 +49,8 @@ public interface GrassDAO extends BaseDAO {
 	public HashMap<String,String> retrieveColumns(String layerName, Long suffix) throws Exception;
 
 	public void executeVectorReclasification(String layerName, String column, Long suffix) throws Exception;
+
+	public void asingBuffers(String layerName, String distances, Long suffix) throws Exception;
+
+	public void rename(String layerName, Long suffix) throws Exception ;
 }

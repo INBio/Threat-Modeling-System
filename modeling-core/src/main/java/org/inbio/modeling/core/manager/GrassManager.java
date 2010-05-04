@@ -49,4 +49,8 @@ public interface GrassManager{
 	public HashMap<String,String> retrieveAvailableColumns(String layerName, Long suffix) throws Exception;
 
 	public void deleteGRASSLocation(Long suffix);
+
+	public void asingBuffers(String layerName, String distances, Long suffix) throws Exception;
+
+	public void renameFile (String layerName, Long suffix) throws Exception;
 }
