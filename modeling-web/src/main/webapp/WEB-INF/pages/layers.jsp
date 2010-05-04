@@ -10,39 +10,39 @@
 		<script  type="text/javascript">
 			//<!--
 
-			function calculateValues(modifiedWeight){
+			function calculateValues(){
 
-				var layerDiv   = document.getElementById("selectionFrame");
+				var layerList   = document.getElementById("selectionFrame").childNodes;
 				var totalLabel = document.getElementById("totalImportanceValue");
+				var submitButtom = document.getElementById("submitButton");
 
-				var selectedValue =  undefined;
 				var totalImportanceValue = 0;
 
-				for each(var selected in selectedElements){
-					if ( selected.checked == true ){
+				var checkbox = undefined;
+				var textfield = undefined;
 
-						selectedValue = document.getElementById("layer_"+selected.value);
+				for each(var layerDiv in layerList){
 
-						if(selected.value != undefined &&
-								selectedValue.value != undefined){
-							totalImportanceValue += (+selectedValue.value);
-						}
+					if(layerDiv.nodeName == "DIV"){
+						checkbox = document.getElementById(layerDiv.className);
+						textfield = document.getElementById(layerDiv.className+"_weight");
+						if(checkbox.checked == true)
+							totalImportanceValue += (+textfield.value);
 					}
 				}
+
+				totalLabel.firstChild.nodeValue = totalImportanceValue;
 
 				if(totalImportanceValue != 100 ){
 					totalLabel.style.color = "red";
 					totalLabel.style.fontSize = "24";
-	//				submitButtom.disabled = true;
+					submitButtom.disabled = true;
 
 				}else{
 					totalLabel.style.color = "black";
 					totalLabel.style.fontSize = "16";
-//					submitButtom.disabled = false;
+					submitButtom.disabled = false;
 				}
-
-
-				totalLabel.firstChild.nodeValue = totalImportanceValue;
 
 				return;
 			}
@@ -51,13 +51,10 @@
 
 				var selectedValue = document.getElementById(selected.id+"_weight");
 
-				if(selected.checked == true){
+				if(selected.checked == true)
 					selectedValue.disabled = false;
-					selectedValue.value = 0;
-				}else{
+				else
 					selectedValue.disabled = true;
-					selectedValue.value = "";
-				}
 
 				calculateValues();
 
@@ -65,7 +62,6 @@
 			}
 
 			function send(){
-
 				document.forms["layersForm"].submit();
 				return true;
 			}
@@ -103,9 +99,11 @@
 							<div id="selectionFrame">
 								<c:forEach items="${systemInfo.layers}" var="layer"  varStatus="current">
 									<form:hidden path="layers[${current.index}].name" />
+									<div class="${layer.name}">
 									<form:checkbox id="${layer.name}" path="layers[${current.index}].selected" onclick="setValueToZero(this);" />
 									<c:out value="${layer.name}" />
-									<form:input id="${layer.name}_weight"  path="layers[${current.index}].weight" maxlength="2" onkeyup="calculateValues(this);" />
+									<form:input  disabled="true" id="${layer.name}_weight"  path="layers[${current.index}].weight" maxlength="2" onkeyup="calculateValues(this);" />
+									</div>
 									<br />
 								</c:forEach>
 							</div>
@@ -118,7 +116,7 @@
 								%
 						</div>
 						<div id="buttonFrame">
-							<input id="submitButton" type="button" onclick="send();" value='<fmt:message key="layer.importanceValue"/>' />
+							<input id="submitButton" disabled="true" type="button" onclick="send();" value='<fmt:message key="layer.importanceValue"/>' />
 						</div>
 					</div>
 				</form:form>

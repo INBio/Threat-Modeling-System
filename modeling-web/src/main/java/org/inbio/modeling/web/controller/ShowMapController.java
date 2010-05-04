@@ -25,7 +25,7 @@ import org.inbio.modeling.core.dto.CategoryDTO;
 import org.inbio.modeling.core.dto.LayerDTO;
 import org.inbio.modeling.core.manager.FileManager;
 import org.inbio.modeling.core.manager.GrassManager;
-import org.inbio.modeling.core.maps.LayerType;
+import org.inbio.modeling.core.layer.LayerType;
 import org.inbio.modeling.web.forms.GenericForm;
 import org.inbio.modeling.web.session.SessionInfo;
 import org.springframework.validation.BindException;

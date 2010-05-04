@@ -19,6 +19,6 @@ export GISBASE="/usr/lib/grass64"
 export PATH="$PATH:$GISBASE/bin:$GISBASE/scripts"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$GISBASE/lib"
 
-RESULT=$(g.rename vect="$VMAP","$ROMAP");
+RESULT=$(g.rename vect="$VMAP","$VOMAP");
 
 exit $RESULT

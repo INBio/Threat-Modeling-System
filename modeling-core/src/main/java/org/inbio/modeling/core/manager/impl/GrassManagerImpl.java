@@ -24,7 +24,7 @@ import org.apache.commons.logging.LogFactory;
 import org.inbio.modeling.core.dao.GrassDAO;
 import org.inbio.modeling.core.dto.CategoryDTO;
 import org.inbio.modeling.core.manager.GrassManager;
-import org.inbio.modeling.core.maps.LayerType;
+import org.inbio.modeling.core.layer.LayerType;
 
 /**
  *

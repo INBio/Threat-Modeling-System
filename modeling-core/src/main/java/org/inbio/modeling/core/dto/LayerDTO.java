@@ -25,7 +25,7 @@ import java.util.Map;
 import org.apache.commons.collections.FactoryUtils;
 import org.apache.commons.collections.list.LazyList;
 import org.apache.commons.collections.map.LazyMap;
-import org.inbio.modeling.core.maps.LayerType;
+import org.inbio.modeling.core.layer.LayerType;
 
 /**
  *

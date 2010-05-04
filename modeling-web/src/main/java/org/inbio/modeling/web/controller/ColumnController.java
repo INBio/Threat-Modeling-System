@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.inbio.modeling.core.dto.LayerDTO;
 import org.inbio.modeling.core.manager.GrassManager;
-import org.inbio.modeling.core.maps.LayerType;
+import org.inbio.modeling.core.layer.LayerType;
 import org.inbio.modeling.web.forms.GenericForm;
 import org.inbio.modeling.web.session.SessionInfo;
 import org.springframework.validation.BindException;

@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 import org.inbio.modeling.core.dao.GrassDAO;
 import org.inbio.modeling.core.dto.CategoryDTO;
-import org.inbio.modeling.core.maps.LayerType;
+import org.inbio.modeling.core.layer.LayerType;
 import org.inbio.system.command.impl.SystemCommandExecutorImpl;
 
 public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {

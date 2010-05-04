@@ -42,10 +42,17 @@
 				currentCategory = categories.childElementCount;
 				currentLayer = radio.value;
 
-				categories.innerHTML = categories.innerHTML+
-					"<div><input type='checkbox' name='"+radio.id+"'/>&nbsp;" +
-					"<input  type='text' name='layers["+currentLayer+"].categories["+currentCategory+"].value' value='0'  style='width: 150px' />&nbsp;"+
-					"<input style='width: 150px' name='layers["+currentLayer+"].categories["+currentCategory+"].description' value='Category "+(currentCategory+1)+"' /><br /></div>";
+				if(categories.className == "AREA"){
+					categories.innerHTML = categories.innerHTML+
+						"<div><input type='checkbox' name='"+radio.id+"'/>&nbsp;" +
+						"<input  type='text' name='layers["+currentLayer+"].categories["+currentCategory+"].value' value='"+(currentCategory+1)+"'  style='width: 150px' />&nbsp;"+
+						"<input style='width: 150px' name='layers["+currentLayer+"].categories["+currentCategory+"].description' value='Category "+(currentCategory+1)+"' /><br /></div>";
+				}else{
+					categories.innerHTML = categories.innerHTML+
+						"<div><input type='checkbox' name='"+radio.id+"'/>&nbsp;" +
+						"<input  type='text' name='layers["+currentLayer+"].categories["+currentCategory+"].value' value='0'  style='width: 150px' />&nbsp;<br /></div>";
+				}
+
 			}
 
 			function deleteCategory(){
@@ -102,11 +109,11 @@
 							<fmt:message key="common.weight"/>:&nbsp;<c:out value="${layer.weight}" />
 							<form:hidden path="layers[${current.index}].weight" />
 							<form:hidden path="layers[${current.index}].type" />
-							<div id="${layer.name}_cats" >
+							<div id="${layer.name}_cats" class="${layer.type}">
 								<c:forEach items="${layer.categories}" var="category"  varStatus="currentCategory">
 									<c:choose>
-										<c:when test="${layer.type == LayerType.AREA}" >
-											<div id="category_${currentCategory.index}">
+										<c:when test="${'AREA' eq layer.type}" >
+											<div id="category_${currentCategory.index}" >
 												<input type="checkbox" name="${layer.name}"/>
 												<form:input path="layers[${current.index}].categories[${currentCategory.index}].value" />
 												<form:input path="layers[${current.index}].categories[${currentCategory.index}].description" />
@@ -115,7 +122,7 @@
 										</c:when>
 										<c:otherwise> 
 											<div id="category_${currentCategory.index}">
-												<form:input path="layers[${current.index}].categories[${currentCategory.index}].description" />
+												<input type="checkbox" name="${layer.name}"/>
 												<form:input path="layers[${current.index}].categories[${currentCategory.index}].value" />
 												<br />
 											</div>

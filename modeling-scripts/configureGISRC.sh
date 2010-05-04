@@ -2,7 +2,7 @@
 #
 # This script is Free Software under the GNU GPL (>= 3.0)
 #
-# Change the configuration of the executed scripts
+# Change the configuration of the GRASS GIS environment
 
 # Arguments
 LOCATION=$1

@@ -32,11 +32,6 @@
         <property name="dataSource" ref="dataSource" />
     </bean>
 
-	<bean class="org.inbio.modeling.core.maps.LayerType" factory-method="valueOf" >
-		<constructor-arg>
-			<value>AREA</value>
-		</constructor-arg>
-	</bean>
 
 
 </beans>

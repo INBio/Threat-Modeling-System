@@ -20,7 +20,7 @@ package org.inbio.modeling.core.dao;
 import java.util.HashMap;
 import java.util.List;
 import org.inbio.modeling.core.dto.CategoryDTO;
-import org.inbio.modeling.core.maps.LayerType;
+import org.inbio.modeling.core.layer.LayerType;
 
 public interface GrassDAO extends BaseDAO {
 

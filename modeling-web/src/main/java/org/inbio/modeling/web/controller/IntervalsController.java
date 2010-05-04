@@ -74,8 +74,12 @@ public class IntervalsController extends AbstractFormController {
 			column.put(columnElements[0], columnElements[1]);
 			layer.setColumns(column);
 
-			// vectorial reclasification
-			this.vectorialReclassification(layer.getName(), columnElements[0], currentSessionId);
+			if(columnElements[1].equals("CHARACTER")){
+				// vectorial reclasification
+				this.vectorialReclassification(layer.getName(), columnElements[0], currentSessionId);
+			}else{
+				this.grassManagerImpl.renameFile(layer.getName(), currentSessionId);
+			}
 
 			//convert the layer to a raster format
 			this.layer2Raster(layer.getName(), currentSessionId, columnElements[0]);
