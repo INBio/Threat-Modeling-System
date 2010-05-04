@@ -17,43 +17,43 @@
  */
 package org.inbio.modeling.core.manager.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.inbio.modeling.core.dao.LayerDAO;
 import org.inbio.modeling.core.dto.LayerDTO;
-import org.inbio.modeling.core.dto.LayerDTOFactory;
+import org.inbio.modeling.core.manager.FileManager;
 import org.inbio.modeling.core.manager.LayerManager;
 
 public class LayerManagerImpl implements LayerManager {
 
     protected final Log logger = LogFactory.getLog(getClass());
 
-	private LayerDAO layerDAO;
-	private LayerDTOFactory layerDTOFactory;
-
+	private FileManager fileManagerImpl;
 
     @Override
 	/**
 	 * @see org.inbio.modeling.core.manager.LayerManager#getLayerList()
 	 */
     public List<LayerDTO> getLayerList() {
-		return layerDTOFactory.createDTOList(layerDAO.getAvailableLayers());
+
+		List<String> layerNames = null;
+		List<LayerDTO> resultList = null;
+
+		layerNames = this.fileManagerImpl.listLayerHomeFolder();
+
+		resultList = new ArrayList<LayerDTO>();
+		for(String layerName : layerNames)
+			resultList.add(new LayerDTO(layerName, -1));
+
+		return resultList;
     }
 
-	public LayerDAO getLayerDAO() {
-		return layerDAO;
+	public FileManager getFileManagerImpl() {
+		return fileManagerImpl;
 	}
 
-	public void setLayerDAO(LayerDAO layerDAO) {
-		this.layerDAO = layerDAO;
-	}
-
-	public LayerDTOFactory getLayerDTOFactory() {
-		return layerDTOFactory;
-	}
-
-	public void setLayerDTOFactory(LayerDTOFactory layerDTOFactory) {
-		this.layerDTOFactory = layerDTOFactory;
+	public void setFileManagerImpl(FileManager fileManagerImpl) {
+		this.fileManagerImpl = fileManagerImpl;
 	}
 }

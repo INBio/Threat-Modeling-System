@@ -17,10 +17,7 @@
  */
 package org.inbio.modeling.core.dao;
 
-import java.util.HashMap;
 import java.util.List;
-import org.inbio.modeling.core.dto.CategoryDTO;
-import org.inbio.modeling.core.layer.LayerType;
 
 /**
  * DAO to comunicate wit GRASS GIS
@@ -97,7 +94,7 @@ public interface GrassDAO extends BaseDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public LayerType retrieveLayerType(String layerName
+	public String retrieveLayerType(String layerName
 										, Long suffix)
 										throws Exception;
 
@@ -121,7 +118,7 @@ public interface GrassDAO extends BaseDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<CategoryDTO> retrieveCategories(String layerName
+	public List<String> retrieveCategories(String layerName
 												, String layerType
 												, Long suffix)
 												throws Exception;
@@ -160,9 +157,9 @@ public interface GrassDAO extends BaseDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public HashMap<String,String> retrieveColumns(String layerName
-												  , Long suffix)
-												  throws Exception;
+	public List<String> retrieveColumns(String layerName
+										  , Long suffix)
+										  throws Exception;
 
 	/**
 	 * Normalize the values of a vector layer and its dbf

@@ -13,8 +13,6 @@
 	</bean>
 
 	<!-- DAO's -->
-    <bean id="layerDAO" class="org.inbio.modeling.core.dao.impl.LayerDAOImpl" parent="baseDAO" />
-
     <bean id="grassDAO" class="org.inbio.modeling.core.dao.impl.GrassDAOImpl" parent="baseDAO" >
 		<property name="scriptHome" value="${scripts.home}" />
 		<property name="layerHome" value="${layers.home}" />
@@ -35,8 +33,4 @@
 		<property name="asingBuffers" value="${scripts.asingBuffers}" />
 		<property name="rename" value="${scripts.rename}" />
 	</bean>
-
-	<!-- DTOFactories's -->
-    <bean id="layerDTOFactory" class="org.inbio.modeling.core.dto.LayerDTOFactory" />
-
 </beans>

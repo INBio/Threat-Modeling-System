@@ -17,8 +17,8 @@
  */
 package org.inbio.modeling.core.manager;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.inbio.modeling.core.dto.CategoryDTO;
 import org.inbio.modeling.core.layer.LayerType;
 
@@ -141,7 +141,7 @@ public interface GrassManager{
 	 */
 	public void setResolution(Double resolution, Long suffix) throws Exception;
 
-	public HashMap<String,String> retrieveAvailableColumns(String layerName
+	public Map<String,String> retrieveAvailableColumns(String layerName
 															, Long suffix)
 															throws Exception;
 

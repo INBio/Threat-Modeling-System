@@ -19,6 +19,7 @@ package org.inbio.modeling.core.manager.impl;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.inbio.modeling.core.dao.GrassDAO;
@@ -105,7 +106,23 @@ public class GrassManagerImpl implements GrassManager {
 												, Long suffix)
 												throws Exception {
 
-		return this.grassDAOImpl.retrieveCategories(layerName, layerType, suffix);
+		String[] tarray = null;
+		CategoryDTO category = null;
+		List<String> categories = null;
+		List<CategoryDTO> categoryList = null;
+
+		categories = this.grassDAOImpl.retrieveCategories(layerName, layerType, suffix);
+
+		for(String stringCategory : categories ){
+
+			tarray = stringCategory.split(":");
+			category = new CategoryDTO();
+			category.setValue(tarray[0]);
+			category.setDescription(tarray[1]);
+			categoryList.add(category);
+		}
+
+		return categoryList;
 	}
 
 	@Override
@@ -115,7 +132,17 @@ public class GrassManagerImpl implements GrassManager {
 	public LayerType retrieveLayerType(String layerName, Long suffix) 
 		throws Exception {
 
-		return this.grassDAOImpl.retrieveLayerType(layerName, suffix);
+		LayerType mapType = null;
+		String type = this.grassDAOImpl.retrieveLayerType(layerName, suffix);
+
+		if(LayerType.AREA.match(type))
+			mapType = LayerType.AREA;
+		else if(LayerType.LINE.match(type))
+			mapType = LayerType.LINE;
+		else
+			mapType = LayerType.POINT;
+
+		return mapType;
 	}
 
 	@Override
@@ -152,11 +179,23 @@ public class GrassManagerImpl implements GrassManager {
 	/**
 	 * @see org.inbio.modeling.core.manager.GrassManager#<String,String> retrieveAvailableColumns(String layerName
 	 */
-	public HashMap<String,String> retrieveAvailableColumns(String layerName
+	public Map<String,String> retrieveAvailableColumns(String layerName
 															, Long suffix)
 															throws Exception {
+		List<String> stringColumns = null;
+		Map<String,String> columns = null;
+		String[] splittedStringColumn = null;
 
-		return this.grassDAOImpl.retrieveColumns(layerName, suffix);
+		stringColumns = this.grassDAOImpl.retrieveColumns(layerName, suffix);
+
+		columns = new HashMap<String, String>();
+
+		for(String stringColumn : stringColumns){
+			splittedStringColumn = stringColumn.split(":");
+			columns.put(splittedStringColumn[0], splittedStringColumn[1]);
+
+		}
+		return columns;
 	}
 
 	@Override

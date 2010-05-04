@@ -18,13 +18,18 @@
 package org.inbio.modeling.core.manager.impl;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.inbio.modeling.core.dto.CategoryDTO;
 import org.inbio.modeling.core.dto.LayerDTO;
 import org.inbio.modeling.core.manager.FileManager;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 /**
  *
@@ -37,12 +42,53 @@ public class FileManagerImpl implements FileManager {
 	private String tempHome;
 	private String fileName;
 	private String fileExtension;
+	private String layerHome;
+
+
+	@Override
+	/**
+	 * @see org.inbio.modeling.core.dao.LayerDAO#listLayerHomeFolder()
+	 */
+	public List<String> listLayerHomeFolder() throws EmptyResultDataAccessException{
+
+
+		String childrenName = null;
+		List<String> names = null;
+
+			File dir = new File(this.layerHome);
+			String[] children = dir.list(filter);
+
+			if (children == null) {
+				throw new EmptyResultDataAccessException(tempHome, 1);
+			} else {
+				names = new ArrayList<String>();
+				for (int i = 0; i < children.length; i++) {
+
+					//deletes the extension.
+					childrenName = children[i];
+					childrenName = childrenName.replace(".shp", "");
+
+					// Add the file name to ArrayList
+					names.add(childrenName);
+				}
+
+			}
+
+		return names;
+	}
+
+	static FilenameFilter filter = new FilenameFilter() {
+		@Override
+		public boolean accept(File dir, String name) {
+			return name.endsWith(".shp");
+		}
+	};
 
 	@Override
 	/**
 	 * @see org.inbio.modeling.core.manager.FileManager#writeReclasFile(LayerDTO layer, Long suffix)
 	 */
-	public void writeReclasFile(LayerDTO layer, Long suffix){
+	public void writeReclasFile(LayerDTO layer, Long suffix) throws IOException{
 
 		FileWriter fstream = null;
 		BufferedWriter out = null;
@@ -75,7 +121,7 @@ public class FileManagerImpl implements FileManager {
 			out.close();
 			fstream.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new IOException(tempHome);
 		}
 	}
 
@@ -125,5 +171,13 @@ public class FileManagerImpl implements FileManager {
 
 	public void setFileExtension(String fileExtension) {
 		this.fileExtension = fileExtension;
+	}
+
+	public String getLayerHome() {
+		return layerHome;
+	}
+
+	public void setLayerHome(String layerHome) {
+		this.layerHome = layerHome;
 	}
 }

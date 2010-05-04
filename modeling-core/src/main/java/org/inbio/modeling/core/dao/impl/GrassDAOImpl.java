@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 import org.inbio.modeling.core.dao.GrassDAO;
-import org.inbio.modeling.core.dto.CategoryDTO;
 import org.inbio.modeling.core.layer.LayerType;
 import org.inbio.system.command.impl.SystemCommandExecutorImpl;
 
@@ -221,7 +220,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 
 	@Override
-	public LayerType retrieveLayerType(String layerName, Long suffix) 
+	public String retrieveLayerType(String layerName, Long suffix)
 		throws Exception{
 
 		int result = 0;
@@ -247,14 +246,8 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		this.printThis(result, stdout, stderr);
 		stdout.deleteCharAt(stdout.length()-1);
 
-		if(LayerType.AREA.match(stdout.toString()))
-			mapType = LayerType.AREA;
-		else if(LayerType.LINE.match(stdout.toString()))
-			mapType = LayerType.LINE;
-		else
-			mapType = LayerType.POINT;
 
-		return mapType;
+		return stdout.toString();
 	}
 
 	@Override
@@ -285,24 +278,18 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	}
 
 	@Override
-	public List<CategoryDTO> retrieveCategories(String layerName
-												, String layerType
-												, Long suffix)
-												throws Exception{
+	public List<String> retrieveCategories(String layerName
+											, String layerType
+											, Long suffix)
+											throws Exception{
 
 		int result = 0;
-		List<String> commands = null;
+		String temp = null;
+		List<String> values = null;
 		StringBuilder stdout = null;
 		StringBuilder stderr = null;
+		List<String> commands = null;
 		commands = new ArrayList<String>();
-
-
-		List<CategoryDTO> intervals = new ArrayList<CategoryDTO>();
-		String temp = null;
-		String[] tarray = null;
-		CategoryDTO category = null;
-		List<String> values = null;
-
 
 		// Arguments of the command
 		commands.add(scriptHome+retrieveCategories);
@@ -315,28 +302,21 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		// executes the command
 		result = commandExecutor.executeCommand();
 		// gets the output of the execution
+		stderr = commandExecutor.getStandardError();
 		stdout = commandExecutor.getStandardOutput();
 
 		// Prints the output of the command for good or for bad.
 		this.printThis(result, stdout, stderr);
 
+		//Takes the output string and split it in a interval/category by Line
 		StringTokenizer st = new StringTokenizer(new String(stdout), "\n");
 
 		while(st.hasMoreTokens()){
-
 			temp = st.nextToken();
-			tarray = temp.split(":");
-
-			category = new CategoryDTO();
-			category.setValue(tarray[0]);
-			category.setDescription(tarray[1]);
-
-			intervals.add(category);
+			values.add(temp);
 		}
 
-		stderr = commandExecutor.getStandardError();
-
-		return intervals;
+		return values;
 	}
 
 	@Override
@@ -424,14 +404,15 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	}
 
 	@Override
-	public HashMap<String, String> retrieveColumns(String layerName, Long suffix)
+	public List<String> retrieveColumns(String layerName, Long suffix)
 		throws Exception {
+
 		int result = 0;
 		List<String> commands = null;
 		StringBuilder stdout = null;
 		StringBuilder stderr = null;
+		List<String> values  = null;
 		String temp = null;
-		String[] data = null;
 
 		commands = new ArrayList<String>();
 		HashMap<String, String> columns;
@@ -446,26 +427,25 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		commandExecutor = new SystemCommandExecutorImpl(commands);
 		// executes the command
 		result = commandExecutor.executeCommand();
+		// Standar error
+		stderr = commandExecutor.getStandardError();
 		// gets the output of the execution
 		stdout = commandExecutor.getStandardOutput();
 
 		//parse the output
-		columns = new HashMap<String, String>();
+		values = new ArrayList<String>();
 
 		StringTokenizer st = new StringTokenizer(stdout.toString(), "\n");
 
 		while(st.hasMoreTokens()){
 			temp = st.nextToken();
-
-			data = temp.split(":");
-			columns.put(data[0], data[1]);
+			values.add(temp);
 		}
 
-		stderr = commandExecutor.getStandardError();
 		// Prints the output of the command for good or for bad.
 		this.printThis(result, stdout, stderr);
 
-		return columns;
+		return values;
 	}
 
  	@Override

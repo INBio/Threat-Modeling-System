@@ -17,7 +17,10 @@
  */
 package org.inbio.modeling.core.manager;
 
+import java.io.IOException;
+import java.util.List;
 import org.inbio.modeling.core.dto.LayerDTO;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 /**
  * Handle FileSystem actions
@@ -26,11 +29,18 @@ import org.inbio.modeling.core.dto.LayerDTO;
 public interface FileManager{
 
 	/**
+	 * Return a list of the names (without extension) of the .shp files whitin a
+	 * folder in the file system.
+	 * @return a list with the names of the available layers
+	 */
+    public List<String> listLayerHomeFolder() throws EmptyResultDataAccessException;
+
+	/**
 	 * Write a file to be used as rules file by grass gis on the
 	 * reclassification step
 	 * @param layer
 	 * @param suffix
 	 */
-	public void writeReclasFile(LayerDTO layer, Long suffix);
+	public void writeReclasFile(LayerDTO layer, Long suffix) throws IOException;
 
 }
