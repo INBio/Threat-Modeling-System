@@ -103,10 +103,10 @@ public interface GrassDAO extends BaseDAO {
 	 * database.
 	 * @param layerName
 	 * @param suffix
-	 * @return
+	 * @return minValue:maxValue
 	 * @throws Exception
 	 */
-	public void retrieveMinMaxValues(String layerName
+	public String retrieveMinMaxValues(String layerName
 									, Long suffix)
 									throws Exception;
 

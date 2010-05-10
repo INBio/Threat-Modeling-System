@@ -252,7 +252,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	}
 
 	@Override
-	public void retrieveMinMaxValues(String layerName, Long suffix) 
+	public String retrieveMinMaxValues(String layerName, Long suffix)
 		throws Exception{
 
 		int result = 0;
@@ -275,6 +275,8 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		stderr = commandExecutor.getStandardError();
 		// Prints the output of the command for good or for bad.
 		this.printThis(result, stdout, stderr);
+
+		return stdout.toString();
 
 	}
 

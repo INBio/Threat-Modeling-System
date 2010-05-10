@@ -104,7 +104,9 @@ public interface GrassManager{
 	 * @return
 	 * @throws Exception
 	 */
-	public List<CategoryDTO> getLayerCategories(LayerDTO layer, Long suffix)
+	public List<CategoryDTO> getLayerCategories(LayerDTO layer
+												, String dataType
+												, Long suffix)
 		throws Exception;
 
 	/**

@@ -110,25 +110,58 @@ public class GrassManagerImpl implements GrassManager {
 	 * @see org.inbio.modeling.core.manager.GrassManager#getLayerCategories(String layerName , String layerType , Long suffix)
 	 */
 	public List<CategoryDTO> getLayerCategories(LayerDTO layer
+												, String dataType
 												, Long suffix)
 												throws Exception {
 
+		String sTemp = null;
 		String[] tarray = null;
 		CategoryDTO category = null;
 		List<String> categories = null;
 		List<CategoryDTO> categoryList = null;
 
-		// get the categories of the raster version of the map.
-		categories = this.grassDAOImpl.retrieveCategories(layer.getName(), "RAST", suffix);
+		double dTemp = 0D;
+		double minValue = 0D;
+		double maxValue = 0D;
+		double intervalSize = 0D;
+
+
 		categoryList = new ArrayList<CategoryDTO>();
+		if(dataType.equals("CHARACTER")){
+			// get the categories of the raster version of the map.
+			categories = this.grassDAOImpl.retrieveCategories(layer.getName(), "RAST", suffix);
 
-		for(String stringCategory : categories ){
+			for(String stringCategory : categories ){
 
-			tarray = stringCategory.split(":");
-			category = new CategoryDTO();
-			category.setValue(tarray[0]);
-			category.setDescription(tarray[1]);
-			categoryList.add(category);
+				tarray = stringCategory.split(":");
+				category = new CategoryDTO();
+				category.setValue(tarray[0]);
+				category.setDescription(tarray[1]);
+				categoryList.add(category);
+			}
+		}else if(layer.getType() == LayerType.AREA){
+			// get the categories of the raster version of the map.
+			sTemp = this.grassDAOImpl.retrieveMinMaxValues(layer.getName(), suffix);
+			tarray = sTemp.split(":");
+			minValue = Double.parseDouble(tarray[0]);
+			maxValue = Double.parseDouble(tarray[1]);
+
+			intervalSize = (maxValue - minValue) / 10D;
+
+			dTemp = minValue;
+			for(int i = 0; dTemp < maxValue; i++){
+				category = new CategoryDTO();
+				category.setValue(String.format("%10.4f", dTemp)+"-"+String.format("%10.4f",(dTemp+intervalSize)));
+				category.setDescription("Interval "+(i+1));
+				categoryList.add(category);
+
+				dTemp = dTemp+intervalSize;
+			}
+		}else{
+	
+			for(int i = 0; i< 5;i++)
+				categoryList.add(new CategoryDTO(String.valueOf((i+1)*500)));
+
 		}
 
 		return categoryList;

@@ -65,6 +65,7 @@ public class ColumnController extends AbstractFormController {
 		
 		try{
 
+
 			layersDTO = new ArrayList<LayerDTO>();
 			layersDTO.addAll(currentStatus.getLayers());
 
@@ -91,7 +92,7 @@ public class ColumnController extends AbstractFormController {
 
 			// retrieve dataColumns
 			currentStatus.setLayers(this.retrieveColumns(currentStatus.getLayers()
-									, currentSessionId));
+															, currentSessionId));
 
 
 		}catch(Exception e){
@@ -153,18 +154,17 @@ public class ColumnController extends AbstractFormController {
 		Map<String,String> columns = null;
 
 		for (LayerDTO layerDTO: layerList){
-			try {
-
-				// Retrive data columns
-				columns = grassManagerImpl.
-					retrieveAvailableColumns(layerDTO, currentSessionId);
-
-			} catch (Exception ex) {
-				ex.printStackTrace();
+			if(layerDTO.getType() == LayerType.AREA){
+				try {
+					// Retrive data columns
+					columns = grassManagerImpl.
+						retrieveAvailableColumns(layerDTO, currentSessionId);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+				columns.remove("cat");
+				layerDTO.setColumns(columns);
 			}
-
-			columns.remove("cat");
-			layerDTO.setColumns(columns);
 		}
 
 		return layerList;

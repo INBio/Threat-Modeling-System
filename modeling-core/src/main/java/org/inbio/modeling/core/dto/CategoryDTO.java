@@ -27,6 +27,13 @@ public class CategoryDTO {
 	private String value;
 	private String description;
 
+	public CategoryDTO() {
+	}
+
+	public CategoryDTO(String value) {
+		this.value = value;
+	}
+
 	public String getDescription() {
 		return description;
 	}

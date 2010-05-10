@@ -48,13 +48,20 @@
 								<form:hidden  path="layers[${current.index}].name" />
 								<form:hidden path="layers[${current.index}].weight"/>
 								<form:hidden path="layers[${current.index}].type"/>
-								<form:select path="layers[${current.index}].columns['selected']" multiple="false" >
-									<c:forEach items="${layer.columns}" var="column">
-										<form:option value="${column.key}:${column.value}">
-											<c:out value="${column.key}" />&nbsp;&rArr;&nbsp;<c:out value="${column.value}" />
-										</form:option>
-									</c:forEach>
-								</form:select>
+								<c:choose>
+									<c:when test="${layer.type eq 'AREA'}">
+										<form:select path="layers[${current.index}].columns['selected']" multiple="false" >
+											<c:forEach items="${layer.columns}" var="column">
+												<form:option value="${column.key}:${column.value}">
+													<c:out value="${column.key}" />&nbsp;&rArr;&nbsp;<c:out value="${column.value}" />
+												</form:option>
+											</c:forEach>
+										</form:select>
+									</c:when>
+									<c:otherwise>
+										<fmt:message key="common.notAreaLayerType" />
+									</c:otherwise>
+								</c:choose>
 								<br />
 							</c:forEach>
 						</form:form>

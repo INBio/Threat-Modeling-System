@@ -133,6 +133,7 @@ public class FileManagerImpl implements FileManager {
 		boolean result = false;
 		String temp[] = null;
 		String value = category.getValue();
+		value = value.replace(" ", "");
 
 		if(value.matches("\\d+")){
 			result = true;
@@ -140,7 +141,7 @@ public class FileManagerImpl implements FileManager {
 			result = true;
 			value = value.replace(",", " ");
 			category.setValue(value);
-		} else if(value.matches("\\d+-\\d")){
+		} else if(value.matches("\\d+\\.?\\d*-\\d+\\.?\\d*")){
 			result = true;
 			category.setInterval(true);
 		}

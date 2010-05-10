@@ -77,7 +77,7 @@ public class IntervalsController extends AbstractFormController {
 			column.put("selected", columnElements[0]);
 			layer.setColumns(column);
 
-			if(columnElements[1].equals("CHARACTER")){
+			if(columnElements.length > 1 && columnElements[1].equals("CHARACTER")){
 				// vectorial reclasification
 				this.vectorialReclassification(layer, currentSessionId);
 			}else{
@@ -87,8 +87,17 @@ public class IntervalsController extends AbstractFormController {
 			//convert the layer to a raster format
 			this.layer2Raster(layer, currentSessionId);
 
-			//asign the categories
-			this.asignCategories2Layer(layer, currentSessionId);
+			if( columnElements.length > 1){
+				//asign the categories
+				this.asignCategories2Layer(layer
+											, columnElements[1]
+											, currentSessionId);
+			}else{
+				//asign the categories
+				this.asignCategories2Layer(layer
+											, "cat"
+											, currentSessionId);
+			}
 
 
 			System.out.println("");
@@ -149,14 +158,16 @@ public class IntervalsController extends AbstractFormController {
 	 * @param layer
 	 * @param currentSessionId
 	 */
-	private void asignCategories2Layer(LayerDTO layer, Long currentSessionId){
+	private void asignCategories2Layer(LayerDTO layer
+										, String dataType
+										, Long currentSessionId){
 
 		List<CategoryDTO> categories = null;
 
 		try {
 			// retrieve an asing the layer categories
 			categories = this.grassManagerImpl.
-							getLayerCategories(layer, currentSessionId);
+							getLayerCategories(layer,dataType,currentSessionId);
 
 			layer.setCategories(categories);
 
