@@ -17,6 +17,7 @@
  */
 package org.inbio.modeling.web.controller;
 
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -24,7 +25,8 @@ import org.inbio.modeling.core.dto.LayerDTO;
 import org.inbio.modeling.core.manager.FileManager;
 import org.inbio.modeling.core.manager.GrassManager;
 import org.inbio.modeling.core.layer.LayerType;
-import org.inbio.modeling.web.forms.GenericForm;
+import org.inbio.modeling.web.form.GenericForm;
+import org.inbio.modeling.web.form.converter.FormDTOConverter;
 import org.inbio.modeling.web.session.SessionInfo;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
@@ -47,14 +49,17 @@ public class ShowMapController extends AbstractFormController {
 												, BindException errors)
 												throws Exception {
 
-		GenericForm selectedLayers = null;
 		SessionInfo sessionInfo = null;
 		Long currentSessionId = null;
 		HttpSession session = null;
 		ModelAndView model = null;
 
-		selectedLayers = (GenericForm)command;
+		GenericForm form = null;
+		form = (GenericForm)command;
 
+
+		List<LayerDTO> selectedLayers = null;
+		selectedLayers = FormDTOConverter.convert(form.getLayers(), LayerDTO.class);
 
 		// retrieve the session Information.
 		session = request.getSession();
@@ -62,7 +67,7 @@ public class ShowMapController extends AbstractFormController {
 		currentSessionId = sessionInfo.getCurrentSessionId();
 
 		// Reclassification
-		for(LayerDTO layer : selectedLayers.getLayers()){
+		for(LayerDTO layer : selectedLayers){
 
 			if(LayerType.AREA == layer.getType()){
 				// write the categories file.
@@ -80,10 +85,10 @@ public class ShowMapController extends AbstractFormController {
 		LayerDTO layer2 = null;
 		LayerDTO layer3 = null;
 
-		if(selectedLayers.getLayers().size() >= 2){
+		if(selectedLayers.size() >= 2){
 
-			layer1 = selectedLayers.getLayers().get(0);
-			layer2 = selectedLayers.getLayers().get(1);
+			layer1 = selectedLayers.get(0);
+			layer2 = selectedLayers.get(1);
 			layer3  = new LayerDTO("Res1", 100);
 
 			this.grassManagerImpl.executeWeightedSum(layer1
@@ -92,10 +97,10 @@ public class ShowMapController extends AbstractFormController {
 													, currentSessionId);
 		}
 
-		for(int i = 2; i<selectedLayers.getLayers().size(); i++){
+		for(int i = 2; i<selectedLayers.size(); i++){
 
 			layer1 = layer3;
-			layer2 = selectedLayers.getLayers().get(i);
+			layer2 = selectedLayers.get(i);
 			layer3  = new LayerDTO("Res"+i, 100);
 
 			this.grassManagerImpl.executeWeightedSum(layer1

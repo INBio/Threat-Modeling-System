@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.util.List;
 import org.inbio.modeling.core.dao.LayerDAO;
 import org.inbio.modeling.core.dto.LayerDTO;
+import org.inbio.modeling.core.model.Layer;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 
 public class LayerDAOImpl extends BaseDAOImpl implements LayerDAO {
@@ -30,7 +31,7 @@ public class LayerDAOImpl extends BaseDAOImpl implements LayerDAO {
 	private String table = "layers";
 
 	@Override
-	public void create(LayerDTO newLayer) {
+	public void create(Layer newLayer) {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
@@ -40,17 +41,19 @@ public class LayerDAOImpl extends BaseDAOImpl implements LayerDAO {
 	}
 
 	@Override
-	public List<String> findAll() {
+	public List<Layer> findAll() {
 		return super.findAllByTableName(this.table, new LayerRowMapper());
 	}
 
-    private static class LayerRowMapper implements ParameterizedRowMapper<String> {
+    private static class LayerRowMapper implements ParameterizedRowMapper<Layer> {
 
         @Override
-        public String mapRow(ResultSet rs, int rowNum) throws SQLException {
-            String s = new String();
-            s = rs.getString("name");
-            return s;
+        public Layer mapRow(ResultSet rs, int rowNum) throws SQLException {
+           Layer layer = new Layer();
+		   layer.setName(rs.getString("name"));
+		   layer.setDescription(rs.getString("description"));
+		   layer.setUri(rs.getString("uri"));
+           return layer;
         }
 	}
 }

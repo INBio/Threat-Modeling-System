@@ -18,13 +18,13 @@
 package org.inbio.modeling.web.controller;
 
 import java.util.Calendar;
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.inbio.modeling.core.dto.LayerDTO;
 import org.inbio.modeling.core.manager.LayerManager;
-import org.inbio.modeling.web.forms.GenericForm;
+import org.inbio.modeling.web.form.GenericForm;
+import org.inbio.modeling.web.form.LayerForm;
+import org.inbio.modeling.web.form.converter.FormDTOConverter;
 import org.inbio.modeling.web.session.SessionInfo;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
@@ -51,10 +51,8 @@ public class LayerController extends AbstractFormController {
 		sessionInfo.setCurrentSessionId(Calendar.getInstance().getTimeInMillis());
 		//sessionInfo.setCurrentSessionId(1271784714875L);
 
-		// Gets the list of available layers
-		List <LayerDTO> layers = layerManager.getLayerList();
 		GenericForm systemInfo = new GenericForm();
-		systemInfo.setLayers(layers);
+		systemInfo.setLayers(FormDTOConverter.convert(layerManager.getLayerList(), LayerForm.class));
 
 		// Asing the SessionInfo Object to the session
 		session = request.getSession(true);

@@ -35,10 +35,10 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	private String scriptHome;
 	private String layerHome;
 	private String configuration;
-	private String importPNG;
+	private String exportPNG;
+	private String exportSHP;
 	private String rasterization;
 	private String mapAlgebra;
-	private String exportPNG;
 	private String getMinMax;
 	private String vectorialReclasification;
 	private String retrieveCategories;
@@ -46,7 +46,8 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	private String rasterReclasification;
 	private String asignResolution;
 	private String deleteGrassLocation;
-	private String exportSHP;
+	private String importSHP;
+	private String importWFS;
 	private String retrieveType;
 	private String asingBuffers;
 	private String rename;
@@ -81,16 +82,30 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	}
 
 	@Override
-	public void importLayer(String layerName, Long suffix) throws Exception {
+	public void importLayer(String shortOutputName, String uri, Long suffix) throws Exception {
 		int result = 0;
 		List<String> commands = null;
 		StringBuilder stdout = null;
 		StringBuilder stderr = null;
 		commands = new ArrayList<String>();
+		String importationScript = null;
+
+		String[] uriComponents = null;
+		String fullUri = null;
+		uriComponents = uri.split(":");
+
+		if(uriComponents[0].equals("http")){
+			importationScript = scriptHome + importWFS;
+			fullUri = uri;
+		}else{ // uriComponents[0].equals("file:")
+			importationScript = scriptHome + importSHP;
+			fullUri = layerHome+uriComponents[1]+".shp";
+		}
 
 		// Arguments of the command
-		commands.add(scriptHome+importPNG);
-		commands.add(layerHome+layerName);
+		commands.add(importationScript);
+		commands.add(fullUri);
+		commands.add(shortOutputName);
 		commands.add(suffix.toString());
 
 		logger.debug("Executing command: "+commands.toString());
@@ -556,38 +571,6 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		this.exportPNG = exportPNG;
 	}
 
-	public String getExportSHP() {
-		return exportSHP;
-	}
-
-	public void setExportSHP(String exportSHP) {
-		this.exportSHP = exportSHP;
-	}
-
-	public String getGetMinMax() {
-		return getMinMax;
-	}
-
-	public void setGetMinMax(String getMinMax) {
-		this.getMinMax = getMinMax;
-	}
-
-	public String getImportPNG() {
-		return importPNG;
-	}
-
-	public void setImportPNG(String importPNG) {
-		this.importPNG = importPNG;
-	}
-
-	public String getLayerHome() {
-		return layerHome;
-	}
-
-	public void setLayerHome(String layerHome) {
-		this.layerHome = layerHome;
-	}
-
 	public String getMapAlgebra() {
 		return mapAlgebra;
 	}
@@ -674,5 +657,45 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 	public void setSetColorScale(String setColorScale) {
 		this.setColorScale = setColorScale;
+	}
+
+	public String getGetMinMax() {
+		return getMinMax;
+	}
+
+	public void setGetMinMax(String getMinMax) {
+		this.getMinMax = getMinMax;
+	}
+
+	public String getImportSHP() {
+		return importSHP;
+	}
+
+	public void setImportSHP(String importSHP) {
+		this.importSHP = importSHP;
+	}
+
+	public String getImportWFS() {
+		return importWFS;
+	}
+
+	public void setImportWFS(String importWFS) {
+		this.importWFS = importWFS;
+	}
+
+	public String getLayerHome() {
+		return layerHome;
+	}
+
+	public void setLayerHome(String layerHome) {
+		this.layerHome = layerHome;
+	}
+
+	public String getExportSHP() {
+		return exportSHP;
+	}
+
+	public void setExportSHP(String exportSHP) {
+		this.exportSHP = exportSHP;
 	}
 }

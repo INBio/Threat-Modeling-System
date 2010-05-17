@@ -7,10 +7,7 @@
 
 
 	<http access-denied-page="/accessDeniedPage.html">
-		<intercept-url pattern="layers*" access="ROLE_USER" />
-		<intercept-url pattern="/columns*" access="ROLE_ADMIN" />
-		<intercept-url pattern="/interval*" access="ROLE_ADMIN" />
-		<intercept-url pattern="/showMap.*" access="ROLE_ADMIN" />
+		<intercept-url pattern="*" access="ROLE_USER" />
 
 		<anonymous username="guest" granted-authority="ROLE_GUEST"/>
 
@@ -25,6 +22,4 @@
 	<authentication-provider user-service-ref="userDetailsManager">
 		<password-encoder hash="md5"/>
 	</authentication-provider>
-
-
 </beans:beans>

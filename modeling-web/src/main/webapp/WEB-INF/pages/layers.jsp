@@ -103,6 +103,7 @@
 									<form:checkbox id="${layer.name}" path="layers[${current.index}].selected" onclick="setValueToZero(this);" />
 									<c:out value="${layer.name}" />
 									<form:input  disabled="true" id="${layer.name}_weight"  path="layers[${current.index}].weight" maxlength="2" onkeyup="calculateValues(this);" />
+									<form:hidden path="layers[${current.index}].uri" />
 									</div>
 									<br />
 								</c:forEach>

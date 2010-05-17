@@ -204,7 +204,13 @@ public class GrassManagerImpl implements GrassManager {
 	public void importLayer(LayerDTO layer, Long suffix)
 		throws Exception {
 
-		this.grassDAOImpl.importLayer(layer.getName(), suffix);
+		String fullUri = layer.getUri();
+
+
+		if(fullUri == null || fullUri.isEmpty())
+			fullUri = "file:"+layer.getName();
+
+		this.grassDAOImpl.importLayer(layer.getName(), fullUri, suffix);
 	}
 
 	@Override

@@ -42,7 +42,8 @@ public interface GrassDAO extends BaseDAO {
 	 * @param suffix
 	 * @throws Exception
 	 */
-	public void importLayer(String layerName
+	public void importLayer(String shortOutputName
+							, String uri
 							, Long suffix)
 							throws Exception;
 

@@ -16,17 +16,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.inbio.modeling.core.dto;
+package org.inbio.modeling.web.form;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.collections.FactoryUtils;
+import org.apache.commons.collections.list.LazyList;
+import org.apache.commons.collections.map.LazyMap;
 import org.inbio.modeling.core.layer.LayerType;
 
 /**
  *
  * @author asanabria
  */
-public class LayerDTO {
+public class LayerForm {
 
 	private boolean selected;
 	private long   weight;
@@ -34,12 +39,22 @@ public class LayerDTO {
 	private String uri;
 	private LayerType type;
 	private String description;
-	private Map<String,String>	columns = null;
-	private List<CategoryDTO>	categories = null;
 
-	public LayerDTO() { }
+	//TODO: delete this.
+	// this is to allow dinamic binding with the web interface
+	private Map<String,String>	columns =  
+		LazyMap.decorate( new HashMap<String, String>(),
+						  FactoryUtils.instantiateFactory(String.class));
 
-	public LayerDTO(String name, long weight ) {
+	//TODO: delete this.
+	// this is to allow dinamic binding with the web interface
+	private List<CategoryForm>	categories =
+		LazyList.decorate( new ArrayList(),
+						   FactoryUtils.instantiateFactory(CategoryForm.class));
+
+	public LayerForm() { }
+
+	public LayerForm(String name, long weight ) {
 		this.weight = weight;
 		this.name = name;
 	}
@@ -76,11 +91,11 @@ public class LayerDTO {
 		this.selected = selected;
 	}
 
-	public List<CategoryDTO> getCategories() {
+	public List<CategoryForm> getCategories() {
 		return categories;
 	}
 
-	public void setCategories(List<CategoryDTO> categories) {
+	public void setCategories(List<CategoryForm> categories) {
 		this.categories = categories;
 	}
 

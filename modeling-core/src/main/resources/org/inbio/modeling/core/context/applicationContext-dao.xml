@@ -17,10 +17,11 @@
 		<property name="scriptHome" value="${scripts.home}" />
 		<property name="layerHome" value="${layers.home}" />
 		<property name="configuration" value="${scripts.configuration}" />
-		<property name="importPNG" value="${scripts.import}" />
+		<property name="exportPNG" value="${scripts.exportPNG}" />
+		<property name="importSHP" value="${scripts.importSHP}" />
+		<property name="importWFS" value="${scripts.importWFS}" />
 		<property name="rasterization" value="${scripts.rasterization}" />
 		<property name="mapAlgebra" value="${scripts.mapAlgebra}" />
-		<property name="exportPNG" value="${scripts.exportPNG}" />
 		<property name="getMinMax" value="${scripts.getMinMax}" />
 		<property name="vectorialReclasification" value="${scripts.vectorialReclasification}" />
 		<property name="retrieveCategories" value="${scripts.retrieveCategories}" />

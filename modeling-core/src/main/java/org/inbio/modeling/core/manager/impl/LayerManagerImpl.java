@@ -25,6 +25,7 @@ import org.inbio.modeling.core.dao.LayerDAO;
 import org.inbio.modeling.core.dto.LayerDTO;
 import org.inbio.modeling.core.manager.FileManager;
 import org.inbio.modeling.core.manager.LayerManager;
+import org.inbio.modeling.core.model.Layer;
 
 public class LayerManagerImpl implements LayerManager {
 
@@ -39,15 +40,28 @@ public class LayerManagerImpl implements LayerManager {
 	 */
     public List<LayerDTO> getLayerList() {
 
-		List<String> layerNames = null;
+		List<String> unregisteredLayers = null;
+		List<Layer> registeredLayers = null;
 		List<LayerDTO> resultList = null;
+		LayerDTO layerDTO = null;
 
-		layerNames = this.fileManagerImpl.listLayerHomeFolder();
-		layerNames.addAll(this.layerDAOImpl.findAll());
+		unregisteredLayers = this.fileManagerImpl.listLayerHomeFolder();
+		registeredLayers = this.layerDAOImpl.findAll();
 
 		resultList = new ArrayList<LayerDTO>();
-		for(String layerName : layerNames)
+
+		// Convert the unregistered layers in layerDTOs
+		for(String layerName : unregisteredLayers)
 			resultList.add(new LayerDTO(layerName, 0));
+
+		// Convert the registered layers in layerDTOs
+		for(Layer layer : registeredLayers){
+			layerDTO = new LayerDTO();
+			layerDTO.setName(layer.getName());
+			layerDTO.setDescription(layer.getDescription());
+			layerDTO.setUri(layer.getUri());
+			resultList.add(layerDTO);
+		}
 
 		return resultList;
     }

@@ -11,12 +11,11 @@
 
 # Arguments
 MAP=$1
-OUTPUT_MAP=$2
-SUFFIX=$3
+OUTPUT_MAP="$2"
+SUFFIX="$3"
 
 # Variables
 VMAP=V_"$OUTPUT_MAP"_"$SUFFIX"
-LOCATION="LOC_$SUFFIX"
 DBASE="$HOME/Projects/sand_box/grass"
 
 # Environment initialization
@@ -26,11 +25,6 @@ export PATH="$PATH:$GISBASE/bin:$GISBASE/scripts"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$GISBASE/lib"
 
 # Import the map.
-if [ -d "$DBASE/LOC_$SUFFIX" ];
-then
-	RESULT=$(v.in.ogr dsn=$MAP output=$VMAP --quiet);
-else
-	RESULT=$(v.in.ogr dsn=$MAP output=$VMAP location=$LOCATION --quiet);
-fi;
+RESULT=$(v.in.wfs wfs=$MAP output=$VMAP --quiet);
 
 exit $RESULT;

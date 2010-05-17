@@ -1,6 +1,6 @@
 /* Modeling - Application to model threats.
  *
- * Copyright (C) 2010  INBio (Instituto Nacional de Biodiversidad)
+ * Copyright (C) 2010  INBio ( Instituto Nacional de Biodiversidad )
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,32 +15,46 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.inbio.modeling.core.dao;
 
-import java.util.List;
-import org.inbio.modeling.core.model.Layer;
+package org.inbio.modeling.core.model;
 
 /**
- * DAO to comunicate wit GRASS GIS
+ *
  * @author asanabria
  */
-public interface LayerDAO extends BaseDAO {
+public class Layer {
 
-	/**
-	 * Returns all the registered layers
-	 * @return
-	 */
-	public List<Layer> findAll();
+	private String name;
+	private String uri;
+	private String description;
 
-	/**
-	 * Delete a already registered layer
-	 * @param id
-	 */
-	public void deleteById(Long id);
+	public Layer() { }
 
-	/**
-	 * Create a new record int the database
-	 * @param newLayer
-	 */
-	public void create(Layer newLayer);
+	public Layer(String name, long weight ) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getUri() {
+		return uri;
+	}
+
+	public void setUri(String uri) {
+		this.uri = uri;
+	}
 }
