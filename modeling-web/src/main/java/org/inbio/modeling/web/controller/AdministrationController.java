@@ -17,20 +17,14 @@
  */
 package org.inbio.modeling.web.controller;
 
-import java.util.Calendar;
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import org.inbio.modeling.core.dto.LayerDTO;
 import org.inbio.modeling.core.manager.LayerManager;
-import org.inbio.modeling.web.forms.GenericForm;
-import org.inbio.modeling.web.session.SessionInfo;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractFormController;
 
-public class LayerController extends AbstractFormController {
+public class AdministrationController extends AbstractFormController {
 
     private LayerManager layerManager;
 
@@ -40,31 +34,11 @@ public class LayerController extends AbstractFormController {
 									, BindException errors)
 									throws Exception {
 
-		SessionInfo sessionInfo = null;
-		HttpSession session = null;
 		ModelAndView model = null;
-
-		// Generates the Session SessionInfo object
-		sessionInfo = new SessionInfo();
-
-		// Generates the user id Number.
-		sessionInfo.setCurrentSessionId(Calendar.getInstance().getTimeInMillis());
-		//sessionInfo.setCurrentSessionId(1271784714875L);
-
-		// Gets the list of available layers
-		List <LayerDTO> layers = layerManager.getLayerList();
-		GenericForm systemInfo = new GenericForm();
-		systemInfo.setLayers(layers);
-
-		// Asing the SessionInfo Object to the session
-		session = request.getSession(true);
-		session.setAttribute("CurrentSessionInfo", sessionInfo);
-
 
 		// Send the layer list to the JSP
 		model = new ModelAndView();
-		model.setViewName("layers");
-		model.addObject("systemInfo", systemInfo);
+		model.setViewName("admin");
 
         return model;
 	}

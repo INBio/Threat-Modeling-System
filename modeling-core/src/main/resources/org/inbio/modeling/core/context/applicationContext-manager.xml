@@ -10,6 +10,7 @@
 
     <bean id="layerManager" class="org.inbio.modeling.core.manager.impl.LayerManagerImpl">
         <property name="fileManagerImpl" ref="fileManager" />
+        <property name="layerDAOImpl" ref="layerDAO" />
 	</bean>
 
     <bean id="grassManager" class="org.inbio.modeling.core.manager.impl.GrassManagerImpl">

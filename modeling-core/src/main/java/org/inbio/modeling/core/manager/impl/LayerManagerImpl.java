@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.inbio.modeling.core.dao.LayerDAO;
 import org.inbio.modeling.core.dto.LayerDTO;
 import org.inbio.modeling.core.manager.FileManager;
 import org.inbio.modeling.core.manager.LayerManager;
@@ -30,6 +31,7 @@ public class LayerManagerImpl implements LayerManager {
     protected final Log logger = LogFactory.getLog(getClass());
 
 	private FileManager fileManagerImpl;
+	private LayerDAO layerDAOImpl;
 
     @Override
 	/**
@@ -41,6 +43,7 @@ public class LayerManagerImpl implements LayerManager {
 		List<LayerDTO> resultList = null;
 
 		layerNames = this.fileManagerImpl.listLayerHomeFolder();
+		layerNames.addAll(this.layerDAOImpl.findAll());
 
 		resultList = new ArrayList<LayerDTO>();
 		for(String layerName : layerNames)
@@ -55,5 +58,13 @@ public class LayerManagerImpl implements LayerManager {
 
 	public void setFileManagerImpl(FileManager fileManagerImpl) {
 		this.fileManagerImpl = fileManagerImpl;
+	}
+
+	public LayerDAO getLayerDAOImpl() {
+		return layerDAOImpl;
+	}
+
+	public void setLayerDAOImpl(LayerDAO layerDAOImpl) {
+		this.layerDAOImpl = layerDAOImpl;
 	}
 }

@@ -15,37 +15,42 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.inbio.modeling.core.dao.impl;
 
-import java.util.ArrayList;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.inbio.modeling.core.dao.BaseDAO;
+import org.inbio.modeling.core.dao.LayerDAO;
+import org.inbio.modeling.core.dto.LayerDTO;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
-import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 
-public class BaseDAOImpl extends SimpleJdbcDaoSupport implements BaseDAO{
+public class LayerDAOImpl extends BaseDAOImpl implements LayerDAO {
 
-	protected final Log logger = LogFactory.getLog(this.getClass());
-
-    public BaseDAOImpl(){
-        super();
-    }
+	private String table = "layers";
 
 	@Override
-	public <T> List<T> findAllByTableName(String tableName, ParameterizedRowMapper<T> mapper) {
+	public void create(LayerDTO newLayer) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 
-        List<T> names = new ArrayList<T>();
-        try{
-            String query = "Select * from "+tableName+" ;";
-            names = getSimpleJdbcTemplate().query(query, mapper);
-        }catch(Exception e){
-			e.printStackTrace();
-		}
+	@Override
+	public void deleteById(Long id) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 
-        return names;
-    }
+	@Override
+	public List<String> findAll() {
+		return super.findAllByTableName(this.table, new LayerRowMapper());
+	}
 
+    private static class LayerRowMapper implements ParameterizedRowMapper<String> {
+
+        @Override
+        public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+            String s = new String();
+            s = rs.getString("name");
+            return s;
+        }
+	}
 }
-

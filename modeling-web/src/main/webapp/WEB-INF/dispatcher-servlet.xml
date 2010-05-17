@@ -24,6 +24,8 @@
                 <prop key="columns.html">columnController</prop>
                 <prop key="intervals.html">intervalsController</prop>
                 <prop key="showResultingMap.html">showMapController</prop>
+
+                <prop key="administration.html">administrationController</prop>
             </props>
         </property>
     </bean>

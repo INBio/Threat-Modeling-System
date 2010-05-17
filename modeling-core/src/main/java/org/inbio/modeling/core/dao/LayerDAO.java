@@ -15,19 +15,32 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package org.inbio.modeling.core.dao;
 
 import java.util.List;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+import org.inbio.modeling.core.dto.LayerDTO;
 
 /**
- * BaseDAO
+ * DAO to comunicate wit GRASS GIS
  * @author asanabria
  */
-public interface BaseDAO {
+public interface LayerDAO extends BaseDAO {
 
-	public <T> List<T> findAllByTableName(String tableName, ParameterizedRowMapper<T> mapper);
+	/**
+	 * Returns all the registered layers
+	 * @return
+	 */
+	public List<String> findAll();
 
+	/**
+	 * Delete a already registered layer
+	 * @param id
+	 */
+	public void deleteById(Long id);
+
+	/**
+	 * Create a new record int the database
+	 * @param newLayer
+	 */
+	public void create(LayerDTO newLayer);
 }
-

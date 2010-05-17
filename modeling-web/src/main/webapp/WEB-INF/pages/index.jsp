@@ -13,7 +13,11 @@
     <body>
         <div id="contenido">
             <h1>Contenidos</h1>
-			<a href="layers.html">Capas</a>
+			<ol>
+				<li><a href="layers.html">Capas</a></li>
+				<li><a href="administration.html">Administración</a></li>
+			</ol>
+
         </div>
     </body>
 </html>

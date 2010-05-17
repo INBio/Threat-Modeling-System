@@ -43,4 +43,9 @@
         <property name="commandClass" value="org.inbio.modeling.web.forms.GenericForm" />
 	</bean>
 
+	<bean name="administrationController" class="org.inbio.modeling.web.controller.AdministrationController" >
+		<property name="commandName" value="intervalsForm" />
+        <property name="commandClass" value="org.inbio.modeling.web.forms.GenericForm" />
+	</bean>
+
 </beans>
