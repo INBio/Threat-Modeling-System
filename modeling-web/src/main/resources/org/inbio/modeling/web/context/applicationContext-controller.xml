@@ -48,4 +48,7 @@
         <property name="commandClass" value="org.inbio.modeling.web.forms.GenericForm" />
 	</bean>
 
+    <bean name="loginController"
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+          p:viewName="login" />
 </beans>

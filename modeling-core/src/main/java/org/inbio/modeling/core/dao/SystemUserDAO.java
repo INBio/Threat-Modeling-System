@@ -17,30 +17,22 @@
  */
 package org.inbio.modeling.core.dao;
 
-import java.util.List;
-import org.inbio.modeling.core.dto.LayerDTO;
+import org.inbio.modeling.core.user.SystemUser;
 
 /**
- * DAO to comunicate wit GRASS GIS
+ * code taken from the m3s application
+ * @author jgutierrez
  * @author asanabria
+ *
  */
-public interface LayerDAO extends BaseDAO {
+public interface SystemUserDAO extends BaseDAO {
+
 
 	/**
-	 * Returns all the registered layers
+	 * Find an user by its username
+	 * @param username
 	 * @return
 	 */
-	public List<String> findAll();
-
-	/**
-	 * Delete a already registered layer
-	 * @param id
-	 */
-	public void deleteById(Long id);
-
-	/**
-	 * Create a new record int the database
-	 * @param newLayer
-	 */
-	public void create(LayerDTO newLayer);
+  public SystemUser findByUsername(String username);
+  
 }
