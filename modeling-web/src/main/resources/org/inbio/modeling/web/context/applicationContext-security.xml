@@ -7,15 +7,13 @@
 
 
 	<http access-denied-page="/accessDeniedPage.html">
-		<intercept-url pattern="*" access="ROLE_USER" />
-
-		<anonymous username="guest" granted-authority="ROLE_GUEST"/>
+		<intercept-url pattern="/layers.html" access="ROLE_ADMIN" />
 
 		<form-login login-page="/login.html" 
 			default-target-url="/index.html"
 			authentication-failure-url="/login.html?error=true" />
-		<logout/>
 
+		<logout/>
 		<concurrent-session-control max-sessions="1" />
 	</http>
 

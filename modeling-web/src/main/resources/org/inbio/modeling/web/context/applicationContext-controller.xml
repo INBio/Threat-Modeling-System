@@ -50,5 +50,9 @@
 
     <bean name="loginController"
           class="org.springframework.web.servlet.mvc.ParameterizableViewController"
-          p:viewName="login" />
+          p:viewName="common/login" />
+
+    <bean name="accessDeniedController"
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+          p:viewName="common/access" />
 </beans>

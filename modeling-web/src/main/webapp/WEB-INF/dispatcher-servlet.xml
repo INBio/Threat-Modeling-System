@@ -19,6 +19,7 @@
         <property name="mappings">
             <props>
                 <prop key="login.html">loginController</prop>
+                <prop key="accessDenied.html">accessDeniedController</prop>
                 <prop key="about.html">aboutController</prop>
                 <prop key="index.html">indexController</prop>
                 <prop key="layers.html">layerController</prop>
