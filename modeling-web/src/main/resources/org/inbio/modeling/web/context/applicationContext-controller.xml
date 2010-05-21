@@ -55,4 +55,46 @@
     <bean name="accessDeniedController"
           class="org.springframework.web.servlet.mvc.ParameterizableViewController"
           p:viewName="common/access" />
+
+    <bean id="newUserController" class="org.inbio.modeling.web.controller.NewUserController">
+        <property name="userManager" ref="userManager" />
+		<property name="commandName" value="userForm" />
+        <property name="commandClass" value="org.inbio.modeling.web.form.UserForm" />
+	</bean>
+    <bean id="editUserController" class="org.inbio.modeling.web.controller.EditUserController">
+        <property name="userManager" ref="userManager" />
+		<property name="commandName" value="userForm" />
+        <property name="commandClass" value="org.inbio.modeling.web.form.UserForm" />
+	</bean>
+    <bean id="listUserController" class="org.inbio.modeling.web.controller.ListUserController">
+        <property name="userManager" ref="userManager" />
+		<property name="commandName" value="userForm" />
+        <property name="commandClass" value="org.inbio.modeling.web.form.UserForm" />
+	</bean>
+    <bean id="updateUserInfoController" class="org.inbio.modeling.web.controller.UpdateUserInfoController">
+        <property name="userManager" ref="userManager" />
+		<property name="commandName" value="userForm" />
+        <property name="commandClass" value="org.inbio.modeling.web.form.UserForm" />
+	</bean>
+
+    <bean id="newLayerController" class="org.inbio.modeling.web.controller.NewLayerController">
+        <property name="layerManager" ref="layerManager" />
+		<property name="commandName" value="layerForm" />
+        <property name="commandClass" value="org.inbio.modeling.core.dto.LayerDTO" />
+	</bean>
+    <bean id="editLayerController" class="org.inbio.modeling.web.controller.EditLayerController">
+        <property name="layerManager" ref="layerManager" />
+		<property name="commandName" value="layerForm" />
+        <property name="commandClass" value="org.inbio.modeling.core.dto.LayerDTO" />
+	</bean>
+    <bean id="listLayerController" class="org.inbio.modeling.web.controller.ListLayerController">
+        <property name="layerManager" ref="layerManager" />
+		<property name="commandName" value="layerForm" />
+        <property name="commandClass" value="org.inbio.modeling.core.dto.LayerDTO" />
+	</bean>
+    <bean id="updateLayerInfoController" class="org.inbio.modeling.web.controller.UpdateLayerInfoController">
+        <property name="layerManager" ref="layerManager" />
+		<property name="commandName" value="layerForm" />
+        <property name="commandClass" value="org.inbio.modeling.core.dto.LayerDTO" />
+	</bean>
 </beans>

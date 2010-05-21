@@ -20,9 +20,10 @@ package org.inbio.modeling.web.form.converter;
 import java.util.ArrayList;
 import java.util.List;
 import org.inbio.modeling.core.dto.CategoryDTO;
+import org.inbio.modeling.core.dto.GrassLayerDTO;
 import org.inbio.modeling.core.dto.LayerDTO;
 import org.inbio.modeling.web.form.CategoryForm;
-import org.inbio.modeling.web.form.LayerForm;
+import org.inbio.modeling.web.form.GrassLayerForm;
 
 /**
  *
@@ -31,13 +32,13 @@ import org.inbio.modeling.web.form.LayerForm;
 public class FormDTOConverter {
 
 	/**
-	 * Convert from LayerForm to LayerDTO
+	 * Convert from GrassLayerForm to GrassLayerDTO
 	 * @param layer
 	 * @return
 	 */
-	public static LayerDTO convert(LayerForm layer){
+	public static GrassLayerDTO convert(GrassLayerForm layer){
 
-		LayerDTO layerDTO = new LayerDTO();
+		GrassLayerDTO layerDTO = new GrassLayerDTO();
 
 		layerDTO.setName(layer.getName());
 		layerDTO.setDescription(layer.getDescription());
@@ -52,13 +53,13 @@ public class FormDTOConverter {
 	}
 
 	/**
-	 * Convert from LayerDTO to LayerForm
+	 * Convert from GrassLayerDTO to GrassLayerForm
 	 * @param layer
 	 * @return
 	 */
-	public static LayerForm convert(LayerDTO layer){
+	public static GrassLayerForm convert(GrassLayerDTO layer){
 
-		LayerForm layerForm = new LayerForm();
+		GrassLayerForm layerForm = new GrassLayerForm();
 
 		layerForm.setName(layer.getName());
 		layerForm.setDescription(layer.getDescription());
@@ -122,10 +123,10 @@ public class FormDTOConverter {
 			return null;
 
 		for(S item : list){
-			if(destTypeClass == LayerForm.class){
-				destList.add(destTypeClass.cast(convert((LayerDTO)item)));
-			}else if(destTypeClass == LayerDTO.class){
-				destList.add(destTypeClass.cast(convert((LayerForm)item)));
+			if(destTypeClass == GrassLayerForm.class){
+				destList.add(destTypeClass.cast(convert((GrassLayerDTO)item)));
+			}else if(destTypeClass == GrassLayerDTO.class){
+				destList.add(destTypeClass.cast(convert((GrassLayerForm)item)));
 			}else if(destTypeClass == CategoryForm.class){
 				destList.add(destTypeClass.cast(convert((CategoryDTO)item)));
 			}else if(destTypeClass == CategoryDTO.class){

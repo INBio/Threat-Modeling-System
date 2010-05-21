@@ -23,11 +23,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.inbio.modeling.core.dto.CategoryDTO;
-import org.inbio.modeling.core.dto.LayerDTO;
+import org.inbio.modeling.core.dto.GrassLayerDTO;
 import org.inbio.modeling.core.manager.GrassManager;
 import org.inbio.modeling.web.form.CategoryForm;
 import org.inbio.modeling.web.form.GenericForm;
-import org.inbio.modeling.web.form.LayerForm;
+import org.inbio.modeling.web.form.GrassLayerForm;
 import org.inbio.modeling.web.form.converter.FormDTOConverter;
 import org.inbio.modeling.web.session.SessionInfo;
 import org.springframework.validation.BindException;
@@ -69,7 +69,7 @@ public class IntervalsController extends AbstractFormController {
 		currentSessionId = sessionInfo.getCurrentSessionId();
 
 		// extract and format the information of the dataColumn to use.
-		for(LayerForm layer : layersInformation.getLayers()){
+		for(GrassLayerForm layer : layersInformation.getLayers()){
 
 			// split the information that comes from the Form
 			columnElements = layer.getColumns().get("selected").split(":");
@@ -109,7 +109,7 @@ public class IntervalsController extends AbstractFormController {
 		// assing layerList to the session
 		sessionInfo.setSelectedLayerList(
 			FormDTOConverter.convert(layersInformation.getLayers()
-									, LayerDTO.class));
+									, GrassLayerDTO.class));
 
 		session.setAttribute("CurrentSessionInfo", sessionInfo);
 
@@ -127,7 +127,7 @@ public class IntervalsController extends AbstractFormController {
 	 * @param column
 	 * @param currentSessionId
 	 */
-	private void vectorialReclassification(LayerForm layer
+	private void vectorialReclassification(GrassLayerForm layer
 											, Long currentSessionId){
 		try {
 			this.grassManagerImpl.
@@ -145,7 +145,7 @@ public class IntervalsController extends AbstractFormController {
 	 * @param currentSessionId
 	 * @param column
 	 */
-	private void layer2Raster(LayerForm layer, Long currentSessionId){
+	private void layer2Raster(GrassLayerForm layer, Long currentSessionId){
 
 		try {
 			// convert the vectorial layer to another in raster format
@@ -166,7 +166,7 @@ public class IntervalsController extends AbstractFormController {
 	 * @param layer
 	 * @param currentSessionId
 	 */
-	private void asignCategories2Layer(LayerForm layer
+	private void asignCategories2Layer(GrassLayerForm layer
 										, String dataType
 										, Long currentSessionId){
 

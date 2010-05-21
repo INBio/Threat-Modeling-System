@@ -22,6 +22,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.inbio.modeling.core.dao.LayerDAO;
+import org.inbio.modeling.core.dto.GrassLayerDTO;
 import org.inbio.modeling.core.dto.LayerDTO;
 import org.inbio.modeling.core.manager.FileManager;
 import org.inbio.modeling.core.manager.LayerManager;
@@ -38,25 +39,25 @@ public class LayerManagerImpl implements LayerManager {
 	/**
 	 * @see org.inbio.modeling.core.manager.LayerManager#getLayerList()
 	 */
-    public List<LayerDTO> getLayerList() {
+    public List<GrassLayerDTO> getLayerList() {
 
 		List<String> unregisteredLayers = null;
 		List<Layer> registeredLayers = null;
-		List<LayerDTO> resultList = null;
-		LayerDTO layerDTO = null;
+		List<GrassLayerDTO> resultList = null;
+		GrassLayerDTO layerDTO = null;
 
 		unregisteredLayers = this.fileManagerImpl.listLayerHomeFolder();
 		registeredLayers = this.layerDAOImpl.findAll();
 
-		resultList = new ArrayList<LayerDTO>();
+		resultList = new ArrayList<GrassLayerDTO>();
 
 		// Convert the unregistered layers in layerDTOs
 		for(String layerName : unregisteredLayers)
-			resultList.add(new LayerDTO(layerName, 0));
+			resultList.add(new GrassLayerDTO(layerName, 0));
 
 		// Convert the registered layers in layerDTOs
 		for(Layer layer : registeredLayers){
-			layerDTO = new LayerDTO();
+			layerDTO = new GrassLayerDTO();
 			layerDTO.setName(layer.getName());
 			layerDTO.setDescription(layer.getDescription());
 			layerDTO.setUri(layer.getUri());
@@ -65,6 +66,89 @@ public class LayerManagerImpl implements LayerManager {
 
 		return resultList;
     }
+
+    @Override
+	/**
+	 * @see org.inbio.modeling.core.manager.LayerManager#getRegisteredLayers()
+	 */
+    public List<LayerDTO> getRegisteredLayers() {
+
+		List<Layer> registeredLayers = null;
+		List<LayerDTO> resultList = null;
+		LayerDTO layerDTO = null;
+
+		registeredLayers = this.layerDAOImpl.findAll();
+
+		resultList = new ArrayList<LayerDTO>();
+
+		// Convert the registered layers in layerDTOs
+		for(Layer layer : registeredLayers){
+			layerDTO = new LayerDTO();
+			layerDTO.setId(layer.getId());
+			layerDTO.setName(layer.getName());
+			layerDTO.setDescription(layer.getDescription());
+			layerDTO.setUri(layer.getUri());
+			layerDTO.setYear(layer.getYear());
+			layerDTO.setScale(layer.getScale());
+			resultList.add(layerDTO);
+		}
+
+		return resultList;
+    }
+
+
+	@Override
+	public void createLayer(LayerDTO newLayer){
+
+		Layer layer = new Layer();
+
+		layer.setName(newLayer.getName());
+		layer.setDescription(newLayer.getDescription());
+		layer.setScale(newLayer.getScale());
+		layer.setUri(newLayer.getUri());
+		layer.setYear(newLayer.getYear());
+
+		this.layerDAOImpl.create(layer);
+	}
+
+	@Override
+	public void updateLayer(LayerDTO newLayer){
+
+		Layer layer = layerDAOImpl.findById(newLayer.getId());
+
+		layer.setName(newLayer.getName());
+		layer.setDescription(newLayer.getDescription());
+		layer.setScale(newLayer.getScale());
+		layer.setUri(newLayer.getUri());
+		layer.setYear(layer.getYear());
+
+		this.layerDAOImpl.update(layer);
+	}
+
+	@Override
+	public LayerDTO getLayerById(Long id){
+
+		LayerDTO resultLayer = null;
+		Layer layer = null;
+
+		layer = this.layerDAOImpl.findById(id);
+
+		resultLayer = new LayerDTO();
+
+		resultLayer.setId(layer.getId());
+		resultLayer.setName(layer.getName());
+		resultLayer.setDescription(layer.getDescription());
+		resultLayer.setScale(layer.getScale());
+		resultLayer.setUri(layer.getUri());
+		resultLayer.setYear(layer.getYear());
+
+		return resultLayer;
+	}
+
+	@Override
+	public void deleteLayer(Long layerId){
+		this.layerDAOImpl.deleteById(layerId);
+	}
 
 	public FileManager getFileManagerImpl() {
 		return fileManagerImpl;

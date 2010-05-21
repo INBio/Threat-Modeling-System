@@ -38,7 +38,7 @@ public class SystemUser implements UserDetails {
 	private String password;
 	private boolean enabled;
 	private String roles;
-	private String ROLE_DELIMITER = ",";
+	public static String ROLE_DELIMITER = ",";
 
 	/**
 	 * 

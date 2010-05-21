@@ -19,8 +19,10 @@ package org.inbio.modeling.core.dao.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import org.inbio.modeling.core.dao.SystemUserDAO;
 import org.inbio.modeling.core.user.SystemUser;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 
 /**
@@ -29,23 +31,120 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
  */
 public class SystemUserDAOImpl extends BaseDAOImpl implements SystemUserDAO {
 
+	private final String table  = "users";
+
 	/* (non-Javadoc)
 	 * @see org.inbio.modeling.core.dao.SystemUserDAO#findByUsername(String)
 	 */
 	@Override
 	public SystemUser findByUsername(final String username) {
 
+		String sqlStatement = null;
+		MapSqlParameterSource args = null;
 		SystemUser systemUser = null;
-        try{
-            String query = 
-				"Select * from users where username = '" + username +"'";
 
-            systemUser = getSimpleJdbcTemplate().queryForObject(query, new SystemUserRowMapper());
+        try{
+            sqlStatement =
+				"Select * from "+this.table+" where username = :username";
+
+			args = new MapSqlParameterSource();
+			args.addValue("username", username);
+
+            systemUser = 
+				getSimpleJdbcTemplate()
+					.queryForObject(sqlStatement, new SystemUserRowMapper(), args);
+
         }catch(Exception e){
 			e.printStackTrace();
 		}
 
 		return systemUser;
+	}
+
+	@Override
+	public void createUser(SystemUser newUser) {
+		String createStatement = null;
+		MapSqlParameterSource args = null;
+
+        try{
+            createStatement = "INSERT INTO "+this.table+
+				" ( fullname, username, \"password\", enabled, roles)" +
+		    "VALUES (:fullname, :username, :passwd, :enabled, :roles) ";
+
+			args = new MapSqlParameterSource();
+			args.addValue("fullname", newUser.getFullname());
+			args.addValue("username", newUser.getUsername());
+			args.addValue("passwd", newUser.getPassword());
+			args.addValue("enabled", newUser.isEnabled());
+			args.addValue("roles", newUser.getRoles());
+
+            getSimpleJdbcTemplate().update(createStatement, args);
+
+        }catch(Exception e){
+			e.printStackTrace();
+		}
+    }
+
+	@Override
+	public void deleteUserByUsername(String userName) {
+		String sqlStatement = null;
+		MapSqlParameterSource args = null;
+
+        try{
+            sqlStatement = "DELETE FROM "+this.table+" WHERE username = :username ";
+
+			args = new MapSqlParameterSource();
+			args.addValue("username", userName);
+
+            getSimpleJdbcTemplate().update(sqlStatement, args);
+
+        }catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void updateUser(SystemUser user) {
+		String sqlStatement = null;
+		MapSqlParameterSource args = null;
+
+        try{
+            sqlStatement = "UPDATE "+this.table+
+				"SET fullname = :fullname "+
+				"SET password = :passwd " +
+				"SET enabled = :enabled " +
+				"SET roles = :roles "+
+				" WHERE username = :username ";
+
+
+			args = new MapSqlParameterSource();
+			args.addValue("username", user.getUsername());
+			args.addValue("fullname", user.getFullname());
+			args.addValue("passwd", user.getPassword());
+			args.addValue("enabled", user.isEnabled());
+			args.addValue("roles", user.getRoles());
+
+            getSimpleJdbcTemplate().update(sqlStatement, args);
+
+        }catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public List<SystemUser> findAll() {
+
+		List<SystemUser> systemUsers = null;
+
+        try{
+			systemUsers = this.findAllByTableName(this.table, new SystemUserRowMapper());
+        }catch(Exception e){
+			e.printStackTrace();
+		}
+
+
+
+		return systemUsers;
 	}
 
 	private static class SystemUserRowMapper implements ParameterizedRowMapper<SystemUser> {

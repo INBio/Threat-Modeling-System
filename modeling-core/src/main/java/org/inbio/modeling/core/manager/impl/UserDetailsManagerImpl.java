@@ -17,18 +17,21 @@
  */
 package org.inbio.modeling.core.manager.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.inbio.modeling.core.dao.SystemUserDAO;
+import org.inbio.modeling.core.manager.UserManager;
 import org.inbio.modeling.core.user.SystemUser;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.userdetails.UserDetails;
-import org.springframework.security.userdetails.UserDetailsManager;
 import org.springframework.security.userdetails.UsernameNotFoundException;
 
 /**
  * @author jgutierrez
+ * @author asanabria
  *
  */
-public class UserDetailsManagerImpl implements UserDetailsManager {
+public class UserDetailsManagerImpl implements UserManager {
 	
 	private SystemUserDAO systemUserDAO;
 
@@ -46,7 +49,7 @@ public class UserDetailsManagerImpl implements UserDetailsManager {
 	 */
 	@Override
 	public void createUser(UserDetails user) {
-		// TODO Auto-generated method stub
+		this.systemUserDAO.createUser((SystemUser)user);
 
 	}
 
@@ -55,8 +58,7 @@ public class UserDetailsManagerImpl implements UserDetailsManager {
 	 */
 	@Override
 	public void deleteUser(String username) {
-		// TODO Auto-generated method stub
-
+		this.systemUserDAO.deleteUserByUsername(username);
 	}
 
 	/* (non-Javadoc)
@@ -64,7 +66,7 @@ public class UserDetailsManagerImpl implements UserDetailsManager {
 	 */
 	@Override
 	public void updateUser(UserDetails user) {
-		// TODO Auto-generated method stub
+		this.systemUserDAO.updateUser((SystemUser)user);
 
 	}
 
@@ -92,6 +94,21 @@ public class UserDetailsManagerImpl implements UserDetailsManager {
 		
 		return su;
 
+	}
+
+	@Override
+	public List<UserDetails> findAll() {
+
+		List<UserDetails> userDetails = null;
+		List<SystemUser> systemUsers = null;
+		
+		
+		systemUsers = this.systemUserDAO.findAll();
+
+		userDetails = new ArrayList<UserDetails>();
+		userDetails.addAll(systemUsers);
+
+		return userDetails;
 	}
 
 	/**

@@ -19,7 +19,7 @@ package org.inbio.modeling.core.manager;
 
 import java.io.IOException;
 import java.util.List;
-import org.inbio.modeling.core.dto.LayerDTO;
+import org.inbio.modeling.core.dto.GrassLayerDTO;
 import org.springframework.dao.EmptyResultDataAccessException;
 
 /**
@@ -41,6 +41,6 @@ public interface FileManager{
 	 * @param layer
 	 * @param suffix
 	 */
-	public void writeReclasFile(LayerDTO layer, Long suffix) throws IOException;
+	public void writeReclasFile(GrassLayerDTO layer, Long suffix) throws IOException;
 
 }

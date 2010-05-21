@@ -18,6 +18,7 @@
 package org.inbio.modeling.core.manager;
 
 import java.util.List;
+import org.inbio.modeling.core.dto.GrassLayerDTO;
 import org.inbio.modeling.core.dto.LayerDTO;
 
 public interface LayerManager{
@@ -27,6 +28,36 @@ public interface LayerManager{
 	 * folder (in the properties file).
 	 * @return a list of layers
 	 */
-    public List<LayerDTO> getLayerList();
+    public List<GrassLayerDTO> getLayerList();
 
+	/**
+	 * find all the database stored layers
+	 * @return
+	 */
+    public List<LayerDTO> getRegisteredLayers();
+
+	/**
+	 * create a new layer in the database
+	 * @param newLayer
+	 */
+	public void createLayer(LayerDTO newLayer);
+
+	/**
+	 * update a layer in the database
+	 * @param newLayer
+	 */
+	public void updateLayer(LayerDTO newLayer);
+
+	/**
+	 * Delete a layer by its id;
+	 * @param layerId
+	 */
+	public void deleteLayer(Long layerId);
+
+	/**
+	 * return a layer identified by its id.
+	 * @param id
+	 * @return
+	 */
+	public LayerDTO getLayerById(Long id);
 }

@@ -30,19 +30,19 @@ public class GenericForm {
 
 	private String			resolution;
 	// this is a LazyList to allow dinamic binding with the web interface.
-	private List<LayerForm>  layers = LazyList.decorate(
+	private List<GrassLayerForm>  layers = LazyList.decorate(
 		new ArrayList(),
-		FactoryUtils.instantiateFactory(LayerForm.class));
+		FactoryUtils.instantiateFactory(GrassLayerForm.class));
 
 
 	public GenericForm() {
 	}
 
-	public List<LayerForm> getLayers() {
+	public List<GrassLayerForm> getLayers() {
 		return layers;
 	}
 
-	public void setLayers(List<LayerForm> layers) {
+	public void setLayers(List<GrassLayerForm> layers) {
 		this.layers = layers;
 	}
 

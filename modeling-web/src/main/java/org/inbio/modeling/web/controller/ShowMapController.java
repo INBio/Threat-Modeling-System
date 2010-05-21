@@ -21,7 +21,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.inbio.modeling.core.dto.LayerDTO;
+import org.inbio.modeling.core.dto.GrassLayerDTO;
 import org.inbio.modeling.core.manager.FileManager;
 import org.inbio.modeling.core.manager.GrassManager;
 import org.inbio.modeling.core.layer.LayerType;
@@ -58,8 +58,8 @@ public class ShowMapController extends AbstractFormController {
 		form = (GenericForm)command;
 
 
-		List<LayerDTO> selectedLayers = null;
-		selectedLayers = FormDTOConverter.convert(form.getLayers(), LayerDTO.class);
+		List<GrassLayerDTO> selectedLayers = null;
+		selectedLayers = FormDTOConverter.convert(form.getLayers(), GrassLayerDTO.class);
 
 		// retrieve the session Information.
 		session = request.getSession();
@@ -67,7 +67,7 @@ public class ShowMapController extends AbstractFormController {
 		currentSessionId = sessionInfo.getCurrentSessionId();
 
 		// Reclassification
-		for(LayerDTO layer : selectedLayers){
+		for(GrassLayerDTO layer : selectedLayers){
 
 			if(LayerType.AREA == layer.getType()){
 				// write the categories file.
@@ -81,15 +81,15 @@ public class ShowMapController extends AbstractFormController {
 			}
 		}
 
-		LayerDTO layer1 = null;
-		LayerDTO layer2 = null;
-		LayerDTO layer3 = null;
+		GrassLayerDTO layer1 = null;
+		GrassLayerDTO layer2 = null;
+		GrassLayerDTO layer3 = null;
 
 		if(selectedLayers.size() >= 2){
 
 			layer1 = selectedLayers.get(0);
 			layer2 = selectedLayers.get(1);
-			layer3  = new LayerDTO("Res1", 100);
+			layer3  = new GrassLayerDTO("Res1", 100);
 
 			this.grassManagerImpl.executeWeightedSum(layer1
 													, layer2
@@ -101,7 +101,7 @@ public class ShowMapController extends AbstractFormController {
 
 			layer1 = layer3;
 			layer2 = selectedLayers.get(i);
-			layer3  = new LayerDTO("Res"+i, 100);
+			layer3  = new GrassLayerDTO("Res"+i, 100);
 
 			this.grassManagerImpl.executeWeightedSum(layer1
 													, layer2

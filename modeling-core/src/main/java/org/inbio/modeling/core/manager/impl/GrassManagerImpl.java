@@ -25,7 +25,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.inbio.modeling.core.dao.GrassDAO;
 import org.inbio.modeling.core.dto.CategoryDTO;
-import org.inbio.modeling.core.dto.LayerDTO;
+import org.inbio.modeling.core.dto.GrassLayerDTO;
 import org.inbio.modeling.core.manager.GrassManager;
 import org.inbio.modeling.core.layer.LayerType;
 
@@ -44,7 +44,7 @@ public class GrassManagerImpl implements GrassManager {
 	/**
 	 * @see org.inbio.modeling.core.manager.GrassManager#advanceReclasification(String layerName, Long suffix)
 	 */
-	public void advanceReclasification(LayerDTO layer, Long suffix)
+	public void advanceReclasification(GrassLayerDTO layer, Long suffix)
 		throws Exception {
 
 		this.grassDAOImpl.executeReclassification(layer.getName() , suffix);
@@ -64,7 +64,7 @@ public class GrassManagerImpl implements GrassManager {
 	/**
 	 * @see org.inbio.modeling.core.manager.GrassManager#convertLayer2Raster(String layerName, Long suffix, String column)
 	 */
-	public void convertLayer2Raster(LayerDTO layer , Long suffix)
+	public void convertLayer2Raster(GrassLayerDTO layer , Long suffix)
 		throws Exception {
 
 		String column = layer.getColumns().get("selected");
@@ -77,9 +77,9 @@ public class GrassManagerImpl implements GrassManager {
 	/**
 	 * @see org.inbio.modeling.core.manager.GrassManager#executeWeightedSum(String layerName1 , Double weight1 , String layerName2 , Double weight2 , Long suffix , String outputName)
 	 */
-	public void executeWeightedSum(LayerDTO layer1
-									, LayerDTO layer2
-									, LayerDTO output
+	public void executeWeightedSum(GrassLayerDTO layer1
+									, GrassLayerDTO layer2
+									, GrassLayerDTO output
 									, Long suffix)
 									throws Exception {
 
@@ -99,7 +99,7 @@ public class GrassManagerImpl implements GrassManager {
 	/**
 	 * @see org.inbio.modeling.core.manager.GrassManager#exportLayer2Image( Long suffix, String layerName)
 	 */
-	public void exportLayer2Image( LayerDTO layer, Long suffix)
+	public void exportLayer2Image( GrassLayerDTO layer, Long suffix)
 		throws Exception {
 
 		this.grassDAOImpl.exportAsImage(suffix, layer.getName());
@@ -109,7 +109,7 @@ public class GrassManagerImpl implements GrassManager {
 	/**
 	 * @see org.inbio.modeling.core.manager.GrassManager#getLayerCategories(String layerName , String layerType , Long suffix)
 	 */
-	public List<CategoryDTO> getLayerCategories(LayerDTO layer
+	public List<CategoryDTO> getLayerCategories(GrassLayerDTO layer
 												, String dataType
 												, Long suffix)
 												throws Exception {
@@ -171,7 +171,7 @@ public class GrassManagerImpl implements GrassManager {
 	/**
 	 * @see org.inbio.modeling.core.manager.GrassManager#retrieveLayerType(String layerName, Long suffix)
 	 */
-	public LayerType retrieveLayerType(LayerDTO layer, Long suffix)
+	public LayerType retrieveLayerType(GrassLayerDTO layer, Long suffix)
 		throws Exception {
 
 		LayerType mapType = null;
@@ -191,7 +191,7 @@ public class GrassManagerImpl implements GrassManager {
 	/**
 	 * @see org.inbio.modeling.core.manager.GrassManager#getMinMaxValuesFromLayer(String layerName, Long suffix)
 	 */
-	public void getMinMaxValuesFromLayer(LayerDTO layer, Long suffix)
+	public void getMinMaxValuesFromLayer(GrassLayerDTO layer, Long suffix)
 		throws Exception {
 
 		this.grassDAOImpl.retrieveMinMaxValues(layer.getName(), suffix);
@@ -201,7 +201,7 @@ public class GrassManagerImpl implements GrassManager {
 	/**
 	 * @see org.inbio.modeling.core.manager.GrassManager#importLayer(String layerName, Long suffix)
 	 */
-	public void importLayer(LayerDTO layer, Long suffix)
+	public void importLayer(GrassLayerDTO layer, Long suffix)
 		throws Exception {
 
 		String fullUri = layer.getUri();
@@ -227,7 +227,7 @@ public class GrassManagerImpl implements GrassManager {
 	/**
 	 * @see org.inbio.modeling.core.manager.GrassManager#<String,String> retrieveAvailableColumns(String layerName
 	 */
-	public Map<String,String> retrieveAvailableColumns(LayerDTO layer
+	public Map<String,String> retrieveAvailableColumns(GrassLayerDTO layer
 														, Long suffix)
 														throws Exception {
 		List<String> stringColumns = null;
@@ -250,7 +250,7 @@ public class GrassManagerImpl implements GrassManager {
 	/**
 	 * @see org.inbio.modeling.core.manager.GrassManager#executeVectorReclasification(String layerName
 	 */
-	public void executeVectorReclasification(LayerDTO layer, Long suffix)
+	public void executeVectorReclasification(GrassLayerDTO layer, Long suffix)
 		throws Exception {
 
 		String column = layer.getColumns().get("selected");
@@ -271,7 +271,7 @@ public class GrassManagerImpl implements GrassManager {
 	/**
 	 * @see org.inbio.modeling.core.manager.GrassManager#asingBuffers(String layerName, String distances, Long suffix)
 	 */
-	public void asingBuffers(LayerDTO layer, Long suffix)
+	public void asingBuffers(GrassLayerDTO layer, Long suffix)
 		throws Exception{
 
 		List<CategoryDTO> categoryList = null;
@@ -297,9 +297,9 @@ public class GrassManagerImpl implements GrassManager {
 
 	@Override
 	/**
-	 * @see org.inbio.modeling.core.manager.GrassManager#asingColorScale(LayerDTO layer, Long suffix)
+	 * @see org.inbio.modeling.core.manager.GrassManager#asingColorScale(GrassLayerDTO layer, Long suffix)
 	 */
-	public void asingColorScale(LayerDTO layer , Long suffix) throws Exception{
+	public void asingColorScale(GrassLayerDTO layer , Long suffix) throws Exception{
 		this.grassDAOImpl.asingColorScale(layer.getName(), suffix);
 	}
 
@@ -307,7 +307,7 @@ public class GrassManagerImpl implements GrassManager {
 	/**
 	 * @see org.inbio.modeling.core.manager.GrassManager#renameFile (String layerName, Long suffix)
 	 */
-	public void renameFile (LayerDTO layer, Long suffix)
+	public void renameFile (GrassLayerDTO layer, Long suffix)
 		throws Exception{
 
 		this.grassDAOImpl.rename(layer.getName(), suffix);

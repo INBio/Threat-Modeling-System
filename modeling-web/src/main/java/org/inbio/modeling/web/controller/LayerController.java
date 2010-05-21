@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.inbio.modeling.core.manager.LayerManager;
 import org.inbio.modeling.web.form.GenericForm;
-import org.inbio.modeling.web.form.LayerForm;
+import org.inbio.modeling.web.form.GrassLayerForm;
 import org.inbio.modeling.web.form.converter.FormDTOConverter;
 import org.inbio.modeling.web.session.SessionInfo;
 import org.springframework.validation.BindException;
@@ -52,7 +52,7 @@ public class LayerController extends AbstractFormController {
 		//sessionInfo.setCurrentSessionId(1271784714875L);
 
 		GenericForm systemInfo = new GenericForm();
-		systemInfo.setLayers(FormDTOConverter.convert(layerManager.getLayerList(), LayerForm.class));
+		systemInfo.setLayers(FormDTOConverter.convert(layerManager.getLayerList(), GrassLayerForm.class));
 
 		// Asing the SessionInfo Object to the session
 		session = request.getSession(true);

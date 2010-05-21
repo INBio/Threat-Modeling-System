@@ -17,6 +17,7 @@
  */
 package org.inbio.modeling.core.dao;
 
+import java.util.List;
 import org.inbio.modeling.core.user.SystemUser;
 
 /**
@@ -29,10 +30,34 @@ public interface SystemUserDAO extends BaseDAO {
 
 
 	/**
+	 * create a new user in the database
+	 * @param newUser
+	 */
+	public void createUser(SystemUser newUser);
+
+	/**
+	 * delete an user that is in the database
+	 * @param id
+	 */
+	public void deleteUserByUsername(String userName);
+
+	/**
+	 * Updates the information of a user
+	 * @param user
+	 */
+	public void updateUser(SystemUser user);
+
+	/**
 	 * Find an user by its username
 	 * @param username
 	 * @return
 	 */
-  public SystemUser findByUsername(String username);
-  
+	public SystemUser findByUsername(String username);
+
+	/**
+	 * Return all the users in the database
+	 * @return
+	 */
+	public List<SystemUser> findAll();
+
 }

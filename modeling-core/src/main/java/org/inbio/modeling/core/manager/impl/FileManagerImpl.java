@@ -27,7 +27,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.inbio.modeling.core.dto.CategoryDTO;
-import org.inbio.modeling.core.dto.LayerDTO;
+import org.inbio.modeling.core.dto.GrassLayerDTO;
 import org.inbio.modeling.core.manager.FileManager;
 import org.springframework.dao.EmptyResultDataAccessException;
 
@@ -86,9 +86,9 @@ public class FileManagerImpl implements FileManager {
 
 	@Override
 	/**
-	 * @see org.inbio.modeling.core.manager.FileManager#writeReclasFile(LayerDTO layer, Long suffix)
+	 * @see org.inbio.modeling.core.manager.FileManager#writeReclasFile(GrassLayerDTO layer, Long suffix)
 	 */
-	public void writeReclasFile(LayerDTO layer, Long suffix) throws IOException{
+	public void writeReclasFile(GrassLayerDTO layer, Long suffix) throws IOException{
 
 		FileWriter fstream = null;
 		BufferedWriter out = null;

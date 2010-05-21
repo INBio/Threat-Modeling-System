@@ -23,7 +23,7 @@
 		<property name="layerHome" value="${layers.home}" />
 	</bean>
 
-	<bean id="userDetailsManager" class="org.inbio.modeling.core.manager.impl.UserDetailsManagerImpl" >
+	<bean id="userManager" class="org.inbio.modeling.core.manager.impl.UserDetailsManagerImpl" >
 		<property name="systemUserDAO" ref="systemUserDAO"/>
 	</bean>
 

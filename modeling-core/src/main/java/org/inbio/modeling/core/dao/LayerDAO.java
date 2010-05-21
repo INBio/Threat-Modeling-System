@@ -33,6 +33,13 @@ public interface LayerDAO extends BaseDAO {
 	public List<Layer> findAll();
 
 	/**
+	 * return a layer according to a given id
+	 * @param id
+	 * @return
+	 */
+	public Layer findById(Long id);
+
+	/**
 	 * Delete a already registered layer
 	 * @param id
 	 */
@@ -43,4 +50,10 @@ public interface LayerDAO extends BaseDAO {
 	 * @param newLayer
 	 */
 	public void create(Layer newLayer);
+
+	/**
+	 * updates the filed of a layer
+	 * @param updatedLayer
+	 */
+	public void update(Layer updatedLayer);
 }

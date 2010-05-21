@@ -24,8 +24,11 @@ package org.inbio.modeling.core.model;
  */
 public class Layer {
 
+	private Long id;
 	private String name;
 	private String uri;
+	private String year;
+	private String scale;
 	private String description;
 
 	public Layer() { }
@@ -56,5 +59,29 @@ public class Layer {
 
 	public void setUri(String uri) {
 		this.uri = uri;
+	}
+
+	public String getScale() {
+		return scale;
+	}
+
+	public void setScale(String scale) {
+		this.scale = scale;
+	}
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

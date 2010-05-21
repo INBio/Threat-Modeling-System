@@ -3,9 +3,7 @@
     Created on : 12/01/2010, 03:51:55 PM
     Author     : esmata
 --%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@include file="taglibs" %>
 
 <div style="-rave-layout: grid">
 	<form:form>
@@ -20,6 +18,7 @@
 					<a class="link_home" href="index.html" style="height: 24px; width: 46px"><fmt:message key="common.home"/></a>
 					<a class="link_about" href="about.html" style="height: 24px; width: 46px"><fmt:message key="common.about"/></a>
 				</div>
+				<%@include file="userInfo.jsp" %>
 			</div>
 		</div>
 	</form:form>

@@ -1,4 +1,4 @@
-<%@ include file="common/taglibs" %>
+<%@ include file="taglibs" %>
 <body onload="document.getElementById('userNameInput').focus();"/>
 
 <h2><fmt:message key="title.login"/></h2>

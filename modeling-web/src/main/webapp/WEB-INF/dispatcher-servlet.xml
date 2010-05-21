@@ -19,7 +19,7 @@
         <property name="mappings">
             <props>
                 <prop key="login.html">loginController</prop>
-                <prop key="accessDenied.html">accessDeniedController</prop>
+                <prop key="accessDeniedPage.html">accessDeniedController</prop>
                 <prop key="about.html">aboutController</prop>
                 <prop key="index.html">indexController</prop>
                 <prop key="layers.html">layerController</prop>
@@ -27,6 +27,18 @@
                 <prop key="intervals.html">intervalsController</prop>
                 <prop key="showResultingMap.html">showMapController</prop>
                 <prop key="administration.html">administrationController</prop>
+
+                <prop key="listUsers.html">listUserController</prop>
+                <prop key="newUser.html">newUserController</prop>
+                <prop key="editUser.html">editUserController</prop>
+                <prop key="updateUser.html">updateUserInfoController</prop>
+                <prop key="deleteUser.html">updateUserInfoController</prop>
+
+                <prop key="listLayers.html">listLayerController</prop>
+                <prop key="newLayer.html">newLayerController</prop>
+                <prop key="editLayer.html">editLayerController</prop>
+                <prop key="updateLayer.html">updateLayerInfoController</prop>
+                <prop key="deleteLayer.html">updateLayerInfoController</prop>
             </props>
         </property>
     </bean>

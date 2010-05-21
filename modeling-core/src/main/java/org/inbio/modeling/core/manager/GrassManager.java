@@ -20,7 +20,7 @@ package org.inbio.modeling.core.manager;
 import java.util.List;
 import java.util.Map;
 import org.inbio.modeling.core.dto.CategoryDTO;
-import org.inbio.modeling.core.dto.LayerDTO;
+import org.inbio.modeling.core.dto.GrassLayerDTO;
 import org.inbio.modeling.core.layer.LayerType;
 
 public interface GrassManager{
@@ -40,7 +40,7 @@ public interface GrassManager{
 	 * @param suffix
 	 * @throws Exception
 	 */
-	public void importLayer(LayerDTO layer, Long suffix)
+	public void importLayer(GrassLayerDTO layer, Long suffix)
 		throws Exception;
 
 	/**
@@ -50,7 +50,7 @@ public interface GrassManager{
 	 * @param column
 	 * @throws Exception
 	 */
-	public void convertLayer2Raster(LayerDTO layer, Long suffix) throws Exception;
+	public void convertLayer2Raster(GrassLayerDTO layer, Long suffix) throws Exception;
 
 	/**
 	 * Executes a weighted sum with the provided layers and weights
@@ -62,9 +62,9 @@ public interface GrassManager{
 	 * @param outputName
 	 * @throws Exception
 	 */
-	public void executeWeightedSum(LayerDTO layer1
-									, LayerDTO layer2
-									, LayerDTO outpututName
+	public void executeWeightedSum(GrassLayerDTO layer1
+									, GrassLayerDTO layer2
+									, GrassLayerDTO outpututName
 									, Long suffix)
 									throws Exception;
 
@@ -74,7 +74,7 @@ public interface GrassManager{
 	 * @param layerName
 	 * @throws Exception
 	 */
-	public void exportLayer2Image(LayerDTO layer, Long suffix)
+	public void exportLayer2Image(GrassLayerDTO layer, Long suffix)
 		throws Exception;
 
 	/**
@@ -83,7 +83,7 @@ public interface GrassManager{
 	 * @param suffix
 	 * @throws Exception
 	 */
-	public void getMinMaxValuesFromLayer(LayerDTO layer, Long suffix)
+	public void getMinMaxValuesFromLayer(GrassLayerDTO layer, Long suffix)
 		throws Exception;
 
 	/**
@@ -93,7 +93,7 @@ public interface GrassManager{
 	 * @return
 	 * @throws Exception
 	 */
-	public LayerType retrieveLayerType(LayerDTO layer, Long suffix)
+	public LayerType retrieveLayerType(GrassLayerDTO layer, Long suffix)
 		throws Exception;
 
 	/**
@@ -104,7 +104,7 @@ public interface GrassManager{
 	 * @return
 	 * @throws Exception
 	 */
-	public List<CategoryDTO> getLayerCategories(LayerDTO layer
+	public List<CategoryDTO> getLayerCategories(GrassLayerDTO layer
 												, String dataType
 												, Long suffix)
 		throws Exception;
@@ -116,7 +116,7 @@ public interface GrassManager{
 	 * @param suffix
 	 * @throws Exception
 	 */
-	public void advanceReclasification(LayerDTO layer, Long suffix)
+	public void advanceReclasification(GrassLayerDTO layer, Long suffix)
 		throws Exception;
 
 	/**
@@ -126,7 +126,7 @@ public interface GrassManager{
 	 * @param suffix
 	 * @throws Exception
 	 */
-	public void executeVectorReclasification(LayerDTO layer , Long suffix)
+	public void executeVectorReclasification(GrassLayerDTO layer , Long suffix)
 		throws Exception;
 
 	/**
@@ -137,7 +137,7 @@ public interface GrassManager{
 	 */
 	public void setResolution(Double resolution, Long suffix) throws Exception;
 
-	public Map<String,String> retrieveAvailableColumns(LayerDTO layer
+	public Map<String,String> retrieveAvailableColumns(GrassLayerDTO layer
 															, Long suffix)
 															throws Exception;
 
@@ -154,7 +154,7 @@ public interface GrassManager{
 	 * @param suffix
 	 * @throws Exception
 	 */
-	public void asingBuffers(LayerDTO layer, Long suffix)
+	public void asingBuffers(GrassLayerDTO layer, Long suffix)
 		throws Exception;
 
 	/**
@@ -164,7 +164,7 @@ public interface GrassManager{
 	 * @param suffix
 	 * @throws Exception
 	 */
-	public void renameFile (LayerDTO layer, Long suffix) throws Exception;
+	public void renameFile (GrassLayerDTO layer, Long suffix) throws Exception;
 
 	/**
 	 * Asing color scale to the given layer, low values are green higher values
@@ -173,5 +173,5 @@ public interface GrassManager{
 	 * @param suffix
 	 * @throws Exception
 	 */
-	public void asingColorScale(LayerDTO layer , Long suffix) throws Exception;
+	public void asingColorScale(GrassLayerDTO layer , Long suffix) throws Exception;
 }

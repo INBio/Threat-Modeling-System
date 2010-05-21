@@ -17,7 +17,7 @@
 		<concurrent-session-control max-sessions="1" />
 	</http>
 
-	<authentication-provider user-service-ref="userDetailsManager">
+	<authentication-provider user-service-ref="userManager">
 		<password-encoder hash="md5"/>
 	</authentication-provider>
 </beans:beans>

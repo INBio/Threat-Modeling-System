@@ -18,7 +18,7 @@
 package org.inbio.modeling.web.session;
 
 import java.util.List;
-import org.inbio.modeling.core.dto.LayerDTO;
+import org.inbio.modeling.core.dto.GrassLayerDTO;
 
 /**
  * Store User session iformation
@@ -27,13 +27,13 @@ import org.inbio.modeling.core.dto.LayerDTO;
 public class SessionInfo {
 
 	private Long currentSessionId;
-	private List<LayerDTO> selectedLayerList;
+	private List<GrassLayerDTO> selectedLayerList;
 
-	public List<LayerDTO> getSelectedLayerList() {
+	public List<GrassLayerDTO> getSelectedLayerList() {
 		return selectedLayerList;
 	}
 
-	public void setSelectedLayerList(List<LayerDTO> selectedLayerList) {
+	public void setSelectedLayerList(List<GrassLayerDTO> selectedLayerList) {
 		this.selectedLayerList = selectedLayerList;
 	}
 

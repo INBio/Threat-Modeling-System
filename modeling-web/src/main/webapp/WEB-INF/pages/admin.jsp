@@ -23,8 +23,8 @@
 		<div id="contenido">
 			<h1><fmt:message key="title.admin"/></h1>
 			<ol>
-				<li><a href="users.html">Capas</a></li>
-				<li><a href="layers.html">Administración</a></li>
+				<li><a href="listUsers.html">Usuarios</a></li>
+				<li><a href="listLayers.html">Capas</a></li>
 			</ol>
 		</div>
 	</body>
