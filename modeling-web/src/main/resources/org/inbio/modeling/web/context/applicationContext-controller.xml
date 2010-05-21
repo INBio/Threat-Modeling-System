@@ -11,7 +11,7 @@
     <!-- The index controller -->
     <bean name="aboutController"
           class="org.springframework.web.servlet.mvc.ParameterizableViewController"
-		  p:viewName="common/about" />
+		  p:viewName="about" />
 
     <!-- The index controller -->
     <bean name="indexController"
@@ -50,11 +50,11 @@
 
     <bean name="loginController"
           class="org.springframework.web.servlet.mvc.ParameterizableViewController"
-          p:viewName="common/login" />
+          p:viewName="admin/login" />
 
     <bean name="accessDeniedController"
           class="org.springframework.web.servlet.mvc.ParameterizableViewController"
-          p:viewName="common/access" />
+          p:viewName="admin/access" />
 
     <bean id="newUserController" class="org.inbio.modeling.web.controller.NewUserController">
         <property name="userManager" ref="userManager" />

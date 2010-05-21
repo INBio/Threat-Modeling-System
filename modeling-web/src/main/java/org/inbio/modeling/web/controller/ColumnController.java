@@ -63,6 +63,7 @@ public class ColumnController extends AbstractFormController {
 		session = request.getSession();
 		sessionInfo = (SessionInfo)session.getAttribute("CurrentSessionInfo");
 		currentSessionId = sessionInfo.getCurrentSessionId();
+
 		resolution = Double.parseDouble(currentStatus.getResolution());
 		
 		try{

@@ -15,7 +15,7 @@
             <h1>Contenidos</h1>
 			<ol>
 				<li><a href="layers.html">Capas</a></li>
-				<li><a href="administration.html">Administración</a></li>
+				<li><a href="admin/administration.html">Administración</a></li>
 			</ol>
 
         </div>

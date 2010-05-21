@@ -1,75 +1,72 @@
-<%@ page contentType="text/html" pageEncoding="UTF-8"%>
+<%--
+    Document   : columns
+    Created on : 24/03/2010, 08:59:36 AM
+    Author     : asanabria
+--%>
 
-<%@include file="common/taglibs" %>
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ include file="/common/taglibs" %>
 
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<%@ include file="common/theme" %>
-		<%@ include file="common/javascript" %>
-		<script  type="text/javascript">
-			//<!--
-
-			function send(formName){
-
-				document.forms[formName].submit();
-				return true;
-			}
-			//-->
-		</script>
-
+		<%@ include file="/common/theme" %>
+		<%@ include file="/common/javascript" %>
 	</head>
 	<body>
 		<div id="Header">
-			<!-- Header -->
-			<jsp:include page="common/header.jsp"/>
+			<jsp:include page="/common/header.jsp"/>
 		</div>
 
 		<div id="contenido">
-			<h1><fmt:message key="title.columns"/></h1>
+			<h2><fmt:message key="title.columns"/></h2>
 			<font color="red">
 				<b><c:out value="${status.errorMessage}"/></b>
 			</font>
-			<div id="contenido" >
-				<div id="title">
-
-				</div>
-				<div id="columnsFrame">
-					<div id="columnsTitle" >
-						<fmt:message key="common.layers"/>
-						<fmt:message key="common.weight"/>
-						<fmt:message key="interval.column"/>
-					</div>
-					<div id="columnsList">
-						<form:form action="intervals.html" id="columnsForm" commandName="currentStatus">
-							<c:forEach items="${currentStatus.layers}" var="layer"  varStatus="current">
-								<c:out value="${layer.name}" />
-								<c:out value="${layer.weight}" />
-								<form:hidden  path="layers[${current.index}].name" />
-								<form:hidden path="layers[${current.index}].weight"/>
-								<form:hidden path="layers[${current.index}].type"/>
-								<c:choose>
-									<c:when test="${layer.type eq 'AREA'}">
-										<form:select path="layers[${current.index}].columns['selected']" multiple="false" >
-											<c:forEach items="${layer.columns}" var="column">
-												<form:option value="${column.key}:${column.value}">
-													<c:out value="${column.key}" />&nbsp;&rArr;&nbsp;<c:out value="${column.value}" />
-												</form:option>
-											</c:forEach>
-										</form:select>
-									</c:when>
-									<c:otherwise>
-										<fmt:message key="common.notAreaLayerType" />
-									</c:otherwise>
-								</c:choose>
-								<br />
-							</c:forEach>
-						</form:form>
-					</div>
-					<div id="buttons">
-						<input id="submitButton" type="button" onclick="send('columnsForm');" value='<fmt:message key="common.acceptChanges"/>' />
-					</div>
-				</div>
+			<div id="columns">
+				<form:form action="intervals.html" id="columnsForm" commandName="currentStatus">
+					<table>
+						<thead>
+							<tr>
+								<td> <fmt:message key="common.layers"/> </td>
+								<td> <fmt:message key="common.weight"/> </td>
+								<td> <fmt:message key="interval.column"/> </td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<c:forEach items="${currentStatus.layers}" var="layer"  varStatus="current">
+								<tr>
+									<td>
+										<c:out value="${layer.name}" />
+									</td>
+									<td>
+										<c:out value="${layer.weight}" />
+									</td>
+									<form:hidden  path="layers[${current.index}].name" />
+									<form:hidden path="layers[${current.index}].weight"/>
+									<form:hidden path="layers[${current.index}].type"/>
+									<td>
+										<c:choose>
+											<c:when test="${layer.type eq 'AREA'}">
+												<form:select path="layers[${current.index}].columns['selected']" multiple="false" >
+													<c:forEach items="${layer.columns}" var="column">
+														<form:option value="${column.key}:${column.value}">
+															<c:out value="${column.key}" />
+														</form:option>
+													</c:forEach>
+												</form:select>
+											</c:when>
+											<c:otherwise>
+												<fmt:message key="common.notAreaLayerType" />
+											</c:otherwise>
+										</c:choose>
+									</td>
+								</c:forEach>
+							</tr>
+						</tbody>
+					</table>
+					<input id="submitButton" type="submit" class="modeling_btn" value='<fmt:message key="common.acceptChanges"/>' />
+				</form:form>
 			</div>
 		</div>
 	</body>

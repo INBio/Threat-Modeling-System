@@ -48,7 +48,7 @@ public class ListUserController extends AbstractFormController {
 		model = new ModelAndView();
 		model.addObject("users", userDetails);
 		model.addObject("userForm", new UserForm());
-		model.setViewName("listUsers");
+		model.setViewName("admin/listUsers");
 
         return model;
 	}

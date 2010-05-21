@@ -7,7 +7,7 @@
 
 
 	<http access-denied-page="/accessDeniedPage.html">
-		<intercept-url pattern="/layers.html" access="ROLE_ADMIN" />
+		<intercept-url pattern="/admin/*" access="ROLE_ADMIN" />
 
 		<form-login login-page="/login.html" 
 			default-target-url="/index.html"

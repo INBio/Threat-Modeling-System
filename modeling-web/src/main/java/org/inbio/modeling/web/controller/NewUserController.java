@@ -42,7 +42,7 @@ public class NewUserController extends AbstractFormController {
 
 		// Send the layer list to the JSP
 		model = new ModelAndView();
-		model.setViewName("userDetails");
+		model.setViewName("admin/userDetails");
 		model.addObject("userForm", new UserForm());
 
         return model;

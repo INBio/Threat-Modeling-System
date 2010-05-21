@@ -38,7 +38,7 @@ public class AdministrationController extends AbstractFormController {
 
 		// Send the layer list to the JSP
 		model = new ModelAndView();
-		model.setViewName("admin");
+		model.setViewName("admin/admin");
 
         return model;
 	}

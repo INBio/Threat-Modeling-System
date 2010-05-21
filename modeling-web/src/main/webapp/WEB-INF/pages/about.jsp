@@ -1,9 +1,3 @@
-<%-- 
-    Document   : showResultingMap
-    Created on : 24/03/2010, 08:59:36 AM
-    Author     : asanabria
---%>
-
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%@include file="/common/taglibs" %>
@@ -19,7 +13,8 @@
 			<jsp:include page="/common/header.jsp"/>
 		</div>
 		<div id="contenido">
-			<img alt="<fmt:message key='maps.resultingMap' />" src="/resmaps/R_${layer}_${suffix}_r.png" />
+			<h2><fmt:message key="common.about"/></h2>
+			<p><fmt:message key="common.aboutContent"/></p>
 		</div>
 	</body>
 </html>

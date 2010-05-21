@@ -90,7 +90,8 @@ public class IntervalsController extends AbstractFormController {
 			//convert the layer to a raster format
 			this.layer2Raster(layer, currentSessionId);
 
-			if( columnElements.length > 1){
+			if( columnElements.length > 1 ){
+
 				//asign the categories
 				this.asignCategories2Layer(layer
 											, columnElements[1]
@@ -105,13 +106,6 @@ public class IntervalsController extends AbstractFormController {
 
 			System.out.println("");
 		}
-
-		// assing layerList to the session
-		sessionInfo.setSelectedLayerList(
-			FormDTOConverter.convert(layersInformation.getLayers()
-									, GrassLayerDTO.class));
-
-		session.setAttribute("CurrentSessionInfo", sessionInfo);
 
 		// Send the layer list to the JSP
 		model = new ModelAndView();

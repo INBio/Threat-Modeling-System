@@ -55,7 +55,7 @@ public class ListLayerController extends AbstractFormController {
 		model = new ModelAndView();
 		model.addObject("layers", layers);
 		model.addObject("layerForm", new LayerDTO());
-		model.setViewName("listLayers");
+		model.setViewName("admin/listLayers");
 
         return model;
 	}

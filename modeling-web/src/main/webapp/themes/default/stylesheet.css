@@ -66,51 +66,21 @@ body {
     padding: 5px 0 5px 0;
 }
 
-/* The map and the location bar */
-#map {
-    position: relative;
-    width: 100%;
-    height: 440px;
-    border: 1px solid silver;
-    border-style:dashed;
-}
-
-#wrapper {
-    width: 100%;
-}
-
-#location {
-    float: right;
-}
-
-#queryPanel {
-    width:202px;
-    text-align:justify;
-    padding:10px;
-    border:double;
-    margin:5px;
-}
-
-/*____________________________________________________________________________*/
-#querysPanel {
-    width: 240px;
-    float:left;
-}
-#mapPanel {
-    margin: 0 0 0 250px;
-}
-#resultsPanel {
-    clear:both;
-}
 /*____________________________________________________________________________*/
 
-.componentSize {
-    width:202px;
-    text-align:justify;
+.interval_txt{
+	width: 200px;
 }
 
-.my_Button{
-   background: url(images/add.png);
+.interval_tbl{
+	width: 500px;
+}
+
+select {
+	width: 200px;
+	}
+
+.modeling_btn{
    background-repeat:no-repeat;
    background-position: 30px 4px;
    display:block;
@@ -132,7 +102,7 @@ body {
    -webkit-border-radius: 2px;
 }
 
-.main_Button{
+.main_Btn{
     margin:0 5px 0 5px;
     width:228px;
 }

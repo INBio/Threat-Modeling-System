@@ -42,7 +42,7 @@ public class NewLayerController extends AbstractFormController {
 
 		// Send the layer list to the JSP
 		model = new ModelAndView();
-		model.setViewName("layerDetails");
+		model.setViewName("admin/layerDetails");
 		model.addObject("layerForm", new LayerDTO());
 
         return model;
