@@ -46,7 +46,11 @@
 
 										</td>
 										<td>
-											<fmt:message key="common.weight"/>:&nbsp;<c:out value="${layer.weight}" />
+											<c:if test="${'AREA' ne layer.type}" >
+												<form:checkbox path="layers[${current.index}].reverted" />
+												<fmt:message key="common.reverted" />
+											</c:if>
+											&nbsp;
 										</td>
 									</tr>
 									<tr>

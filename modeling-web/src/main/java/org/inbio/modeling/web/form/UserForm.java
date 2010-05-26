@@ -12,10 +12,11 @@ package org.inbio.modeling.web.form;
 public class UserForm {
 
 	private Integer userId;
-	private String username;
-	private String fullname;
-	private String password1;
-	private String password2;
+	private String	username;
+	private String	fullname;
+	private String	password1;
+	private String	password2;
+	private String	password3;
 	private boolean enabled;
 	private boolean admin;
 	private boolean user;
@@ -82,5 +83,13 @@ public class UserForm {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public String getPassword3() {
+		return password3;
+	}
+
+	public void setPassword3(String password3) {
+		this.password3 = password3;
 	}
 }

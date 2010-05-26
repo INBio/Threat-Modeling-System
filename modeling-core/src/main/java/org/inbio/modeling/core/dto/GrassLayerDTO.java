@@ -29,6 +29,7 @@ import org.inbio.modeling.core.layer.LayerType;
 public class GrassLayerDTO {
 
 	private boolean selected;
+	private boolean reverted;
 	private long   weight;
 	private String name;
 	private String uri;
@@ -106,5 +107,13 @@ public class GrassLayerDTO {
 
 	public void setUri(String uri) {
 		this.uri = uri;
+	}
+
+	public boolean isReverted() {
+		return reverted;
+	}
+
+	public void setReverted(boolean reverted) {
+		this.reverted = reverted;
 	}
 }
