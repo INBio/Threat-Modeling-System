@@ -26,8 +26,8 @@
 			</div>
 			<div id="intervalsFrame" >
 				<div id="intervalsForm">
-					<form:form method="post" action="showResultingMap.html" commandName="currentInfo">
-						<c:forEach items="${currentInfo.layers}" var="layer"  varStatus="current">
+					<form:form method="post" action="showResultingMap.html" commandName="intervalsInfo">
+						<c:forEach items="${intervalsInfo.layers}" var="layer"  varStatus="current">
 							<form:hidden path="layers[${current.index}].name" />
 							<form:hidden path="layers[${current.index}].weight" />
 							<form:hidden path="layers[${current.index}].type" />

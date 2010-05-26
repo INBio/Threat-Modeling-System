@@ -23,13 +23,13 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.inbio.modeling.core.dto.GrassLayerDTO;
 import org.inbio.modeling.core.manager.GrassManager;
 import org.inbio.modeling.core.layer.LayerType;
-import org.inbio.modeling.web.form.GenericForm;
-import org.inbio.modeling.web.form.GrassLayerForm;
+import org.inbio.modeling.web.form.ChooseColumnForm;
+import org.inbio.modeling.web.form.ListLayerForm;
+import org.inbio.modeling.web.form.util.Layer;
 import org.inbio.modeling.web.form.converter.FormDTOConverter;
-import org.inbio.modeling.web.session.SessionInfo;
+import org.inbio.modeling.web.session.CurrentInstanceData;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractFormController;
@@ -49,57 +49,65 @@ public class ColumnController extends AbstractFormController {
 												, Object command
 												, BindException errors) {
 
-		List<GrassLayerForm> layersForm = null;
-		GenericForm currentStatus = null;
-		SessionInfo sessionInfo = null;
+		List<Layer> layers = null;
+		ChooseColumnForm cForm = null;
 		Long currentSessionId = null;
 		HttpSession session = null;
 		ModelAndView model = null;
 		Double resolution = null;
 
-		currentStatus = (GenericForm)command;
+
+		CurrentInstanceData currentInstanceData = null;
+		ListLayerForm layerListForm = null;
+
+		layerListForm = (ListLayerForm)command;
 		
 		// retrieve the session Information.
 		session = request.getSession();
-		sessionInfo = (SessionInfo)session.getAttribute("CurrentSessionInfo");
-		currentSessionId = sessionInfo.getCurrentSessionId();
+		currentInstanceData =
+			(CurrentInstanceData)session.getAttribute("CurrentSessionInfo");
 
-		resolution = Double.parseDouble(currentStatus.getResolution());
-		
-		try{
+		currentSessionId = currentInstanceData.getUserSessionId();
 
+		// retrieve the resolution.
+		resolution = layerListForm.getResolution();
+		currentInstanceData.setResolution(resolution);
 
-			layersForm = new ArrayList<GrassLayerForm>();
-			layersForm.addAll(currentStatus.getLayers());
+		layers = new ArrayList<Layer>();
+		layers.addAll(layerListForm.getLayerList());
 
-			// Gets the layers and its weights
-			for(GrassLayerForm layer : currentStatus.getLayers()){
-				if(layer.isSelected() == false){
-					layersForm.remove(layer);
-				}
+		// Gets the layers and its weights
+		for(Layer layer : layerListForm.getLayerList()){
+			if(layer.isSelected() == false){
+				layers.remove(layer);
 			}
-
-
-			//Import the layers
-			this.importLayers(resolution, layersForm, currentSessionId);
-
-			// Asign the type to the layer.
-			layersForm = this.asingType2Layer(layersForm, currentSessionId);
-
-			// retrieve dataColumns
-			layersForm = this.retrieveColumns(layersForm , currentSessionId);
-
-
-		}catch(Exception e){
-			e.printStackTrace();
 		}
 
-		currentStatus.setLayers(layersForm);
+
+		//Import the layers
+		this.importLayers(resolution, layers, currentSessionId);
+
+		//TODO
+		// Asign the type to the layer.
+		layers = this.asingType2Layer(layers, currentSessionId);
+
+		//TODO
+		// retrieve dataColumns
+		layers = this.retrieveColumns(layers , currentSessionId);
+
+		// Set the new information to the session info // selected layers and its weights
+		currentInstanceData.setLayerList(layers);
+		session.setAttribute("CurrentSessionInfo", currentInstanceData);
+
+		// asing the columns to the jsp.
+		cForm = new ChooseColumnForm();
+		cForm.setLayers(layers);
+
 
 		// Send the layer list to the JSP
 		model = new ModelAndView();
 		model.setViewName("columns");
-		model.addObject("currentStatus", currentStatus);
+		model.addObject("columnsForm", cForm);
 
         return model;
 	}
@@ -110,14 +118,14 @@ public class ColumnController extends AbstractFormController {
 	 * @param currentSessionId
 	 * @return list of layers with the field layer.type populated.
 	 */
-	private List<GrassLayerForm> asingType2Layer(List<GrassLayerForm> layers
+	private List<Layer> asingType2Layer(List<Layer> layers
 											, Long currentSessionId){
 
 		LayerType layerType = null;
 
-		List<GrassLayerForm> list = new ArrayList<GrassLayerForm>();
+		List<Layer> list = new ArrayList<Layer>();
 
-		for(GrassLayerForm layer : layers){
+		for(Layer layer : layers){
 			try {
 				layerType = this.grassManagerImpl.
 									retrieveLayerType(FormDTOConverter.convert(layer), currentSessionId);
@@ -140,12 +148,12 @@ public class ColumnController extends AbstractFormController {
 	 * @param currentSessionId
 	 * @return a list of layers with the columns information populated.
 	 */
-	private List<GrassLayerForm> retrieveColumns(List<GrassLayerForm> layerList
+	private List<Layer> retrieveColumns(List<Layer> layerList
 											, Long currentSessionId){
 
 		Map<String,String> columns = null;
 
-		for (GrassLayerForm layerForm: layerList){
+		for (Layer layerForm: layerList){
 			if(layerForm.getType() == LayerType.AREA){
 				try {
 					// Retrive data columns
@@ -170,7 +178,7 @@ public class ColumnController extends AbstractFormController {
 	 * @param currentSessionId
 	 */
 	private void importLayers(Double resolution
-								, List<GrassLayerForm> layerList
+								, List<Layer> layerList
 								, Long currentSessionId){
 
 		int counter = 0;
@@ -183,7 +191,7 @@ public class ColumnController extends AbstractFormController {
 			// configure grass to the default location.
 			this.grassManagerImpl.configureEnvironment("Default", currentSessionId);
 
-			for (GrassLayerForm layer: layerList){
+			for (Layer layer: layerList){
 				if(counter++ == 1){
 					this.grassManagerImpl.
 						configureEnvironment("LOC_"+currentSessionId, currentSessionId);

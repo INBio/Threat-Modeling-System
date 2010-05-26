@@ -16,7 +16,7 @@
 				<b><c:out value="${status.errorMessage}"/></b>
 			</font>
 			<div id="formXD">
-				<form:form id="layersForm" commandName="systemInfo" method="post" action="columns.html" >
+				<form:form id="layersForm" commandName="layersForm" method="post" action="columns.html" >
 					<div id="layerListTitle">
 					</div>
 					<div id="layerFrame">
@@ -34,16 +34,18 @@
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${systemInfo.layers}" var="layer"  varStatus="current">
-										<form:hidden path="layers[${current.index}].name" />
-										<form:hidden path="layers[${current.index}].uri" />
+									<c:forEach items="${layersForm.layerList}" var="layer"  varStatus="current">
+										<form:hidden path="layerList[${current.index}].name" />
+										<form:hidden path="layerList[${current.index}].uri" />
 										<tr>
 											<div class="${layer.name}">
 												<td>
-													<form:checkbox id="${layer.name}" path="layers[${current.index}].selected" onclick="setValueToZero(this);" />
+													<form:checkbox id="${layer.name}" path="layerList[${current.index}].selected" onclick="setValueToZero(this);" />
 													<c:out value="${layer.name}" />
 												</td>
-												<td> <form:input cssStyle="align: left;" disabled="true" id="${layer.name}_weight"  path="layers[${current.index}].weight" maxlength="2" onkeyup="calculateValues(this);" /> </td>
+												<td>
+													<form:input cssStyle="align: left;" disabled="true" id="${layer.name}_weight"  path="layerList[${current.index}].weight" maxlength="2" onkeyup="calculateValues(this);" />
+												</td>
 											</div>
 										</tr>
 								</c:forEach>

@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.inbio.modeling.web.form;
+package org.inbio.modeling.web.form.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,14 +31,16 @@ import org.inbio.modeling.core.layer.LayerType;
  *
  * @author asanabria
  */
-public class GrassLayerForm {
+public class Layer {
 
-	private boolean selected;
-	private long   weight;
-	private String name;
-	private String uri;
+	private boolean	selected;
+	private boolean	reverted;
+	private long	weight;
+	private String	uri;
+	private String	name;
+	private String	description;
+
 	private LayerType type;
-	private String description;
 
 	//TODO: delete this.
 	// this is to allow dinamic binding with the web interface
@@ -48,13 +50,13 @@ public class GrassLayerForm {
 
 	//TODO: delete this.
 	// this is to allow dinamic binding with the web interface
-	private List<CategoryForm>	categories =
+	private List<Category>	categories =
 		LazyList.decorate( new ArrayList(),
-						   FactoryUtils.instantiateFactory(CategoryForm.class));
+						   FactoryUtils.instantiateFactory(Category.class));
 
-	public GrassLayerForm() { }
+	public Layer() { }
 
-	public GrassLayerForm(String name, long weight ) {
+	public Layer(String name, long weight ) {
 		this.weight = weight;
 		this.name = name;
 	}
@@ -91,11 +93,11 @@ public class GrassLayerForm {
 		this.selected = selected;
 	}
 
-	public List<CategoryForm> getCategories() {
+	public List<Category> getCategories() {
 		return categories;
 	}
 
-	public void setCategories(List<CategoryForm> categories) {
+	public void setCategories(List<Category> categories) {
 		this.categories = categories;
 	}
 
@@ -121,5 +123,13 @@ public class GrassLayerForm {
 
 	public void setUri(String uri) {
 		this.uri = uri;
+	}
+
+	public boolean isReverted() {
+		return reverted;
+	}
+
+	public void setReverted(boolean reverted) {
+		this.reverted = reverted;
 	}
 }

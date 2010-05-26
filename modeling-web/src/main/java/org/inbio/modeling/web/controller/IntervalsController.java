@@ -23,13 +23,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.inbio.modeling.core.dto.CategoryDTO;
-import org.inbio.modeling.core.dto.GrassLayerDTO;
 import org.inbio.modeling.core.manager.GrassManager;
-import org.inbio.modeling.web.form.CategoryForm;
-import org.inbio.modeling.web.form.GenericForm;
-import org.inbio.modeling.web.form.GrassLayerForm;
+import org.inbio.modeling.web.form.ChooseColumnForm;
+import org.inbio.modeling.web.form.EditIntervalForm;
+import org.inbio.modeling.web.form.util.Category;
+import org.inbio.modeling.web.form.util.Layer;
 import org.inbio.modeling.web.form.converter.FormDTOConverter;
-import org.inbio.modeling.web.session.SessionInfo;
+import org.inbio.modeling.web.session.CurrentInstanceData;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractFormController;
@@ -49,27 +49,28 @@ public class IntervalsController extends AbstractFormController {
 												, BindException errors)
 												throws Exception {
 
-
+		CurrentInstanceData currentInstanceData = null;
 		HashMap<String, String> column = null;
-		GenericForm layersInformation = null;
-		SessionInfo sessionInfo = null;
+		String[] columnElements = null;
+		ChooseColumnForm cForm = null;
 		Long currentSessionId = null;
 		HttpSession session = null;
 		ModelAndView model = null;
 
-		String[] columnElements = null;
-
 
 		// get the information of the form.
-		layersInformation = (GenericForm)command;
+		cForm = (ChooseColumnForm)command;
 
 		// retrieve the session Information.
 		session = request.getSession();
-		sessionInfo = (SessionInfo)session.getAttribute("CurrentSessionInfo");
-		currentSessionId = sessionInfo.getCurrentSessionId();
+		currentInstanceData =
+			(CurrentInstanceData)session.getAttribute("CurrentSessionInfo");
+
+		currentSessionId = currentInstanceData.getUserSessionId();
+
 
 		// extract and format the information of the dataColumn to use.
-		for(GrassLayerForm layer : layersInformation.getLayers()){
+		for(Layer layer : cForm.getLayers()){
 
 			// split the information that comes from the Form
 			columnElements = layer.getColumns().get("selected").split(":");
@@ -103,14 +104,21 @@ public class IntervalsController extends AbstractFormController {
 											, currentSessionId);
 			}
 
-
 			System.out.println("");
 		}
+
+
+		// Set the new information to the session info // selected layers and its weights
+		currentInstanceData.setLayerList(cForm.getLayers());
+		session.setAttribute("CurrentSessionInfo", currentInstanceData);
+
+		EditIntervalForm iForm = new EditIntervalForm();
+		iForm.setLayers(cForm.getLayers());
 
 		// Send the layer list to the JSP
 		model = new ModelAndView();
 		model.setViewName("intervals");
-		model.addObject("currentInfo", layersInformation);
+		model.addObject("intervalsInfo", iForm);
 
         return model;
 	}
@@ -121,7 +129,7 @@ public class IntervalsController extends AbstractFormController {
 	 * @param column
 	 * @param currentSessionId
 	 */
-	private void vectorialReclassification(GrassLayerForm layer
+	private void vectorialReclassification(Layer layer
 											, Long currentSessionId){
 		try {
 			this.grassManagerImpl.
@@ -139,7 +147,7 @@ public class IntervalsController extends AbstractFormController {
 	 * @param currentSessionId
 	 * @param column
 	 */
-	private void layer2Raster(GrassLayerForm layer, Long currentSessionId){
+	private void layer2Raster(Layer layer, Long currentSessionId){
 
 		try {
 			// convert the vectorial layer to another in raster format
@@ -160,7 +168,7 @@ public class IntervalsController extends AbstractFormController {
 	 * @param layer
 	 * @param currentSessionId
 	 */
-	private void asignCategories2Layer(GrassLayerForm layer
+	private void asignCategories2Layer(Layer layer
 										, String dataType
 										, Long currentSessionId){
 
@@ -175,7 +183,7 @@ public class IntervalsController extends AbstractFormController {
 										,currentSessionId);
 
 			layer.setCategories(
-				FormDTOConverter.convert(categories, CategoryForm.class));
+				FormDTOConverter.convert(categories, Category.class));
 
 		} catch (Exception ex) {
 			ex.printStackTrace();

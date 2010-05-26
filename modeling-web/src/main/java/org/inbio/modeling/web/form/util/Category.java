@@ -15,42 +15,46 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.inbio.modeling.web.form;
-
-import java.util.ArrayList;
-import java.util.List;
-import org.apache.commons.collections.FactoryUtils;
-import org.apache.commons.collections.list.LazyList;
+package org.inbio.modeling.web.form.util;
 
 /**
- * Form used to move and retrieve data from the web interface
+ * Category information
  * @author asanabria
  */
-public class GenericForm {
+public class Category {
 
-	private String			resolution;
-	// this is a LazyList to allow dinamic binding with the web interface.
-	private List<GrassLayerForm>  layers = LazyList.decorate(
-		new ArrayList(),
-		FactoryUtils.instantiateFactory(GrassLayerForm.class));
+	private boolean interval;
+	private String value;
+	private String description;
 
-
-	public GenericForm() {
+	public Category() {
 	}
 
-	public List<GrassLayerForm> getLayers() {
-		return layers;
+	public Category(String value) {
+		this.value = value;
 	}
 
-	public void setLayers(List<GrassLayerForm> layers) {
-		this.layers = layers;
+	public String getDescription() {
+		return description;
 	}
 
-	public String getResolution() {
-		return resolution;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public void setResolution(String resolution) {
-		this.resolution = resolution;
+	public boolean isInterval() {
+		return interval;
+	}
+
+	public void setInterval(boolean interval) {
+		this.interval = interval;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
 	}
 }

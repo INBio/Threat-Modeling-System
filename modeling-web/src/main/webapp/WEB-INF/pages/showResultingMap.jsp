@@ -19,7 +19,46 @@
 			<jsp:include page="/common/header.jsp"/>
 		</div>
 		<div id="contenido">
-			<img alt="<fmt:message key='maps.resultingMap' />" src="/resmaps/R_${layer}_${suffix}_r.png" />
+			<div id="map">
+				<img alt="<fmt:message key='maps.resultingMap' />" src="/resmaps/R_${layer}_${suffix}_r.png" />
+			</div>
+			<div id="generalInfo">
+				<table>
+					<tbody>
+						<!-- resolution
+							 projection
+							 layers:
+									Categorías.
+						  -->
+						<tr>
+							<td><fmt:message key="showMap.resolution" /></td>
+							<td><c:out value="${fullSessionInfo.resolution}" /></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div id="categoryInfo">
+				<table>
+					<tbody>
+
+						<c:forEach items="${fullSessionInfo.layerList}" var="layer" >
+							<tr>
+								<td><c:out value="${layer.name}" /><fmt:message key="showMap.categories" /></td>
+							</tr>
+							<tr>
+								<td>valor</td>
+								<td>Description</td>
+							</tr>
+							<c:forEach items="${layer.categories}" var="category">
+								<tr>
+									<td><c:out value="${category.value}" /></td>
+									<td><c:out value="${category.description}" /></td>
+								</tr>
+							</c:forEach>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</body>
 </html>

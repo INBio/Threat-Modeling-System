@@ -17,13 +17,13 @@
  */
 package org.inbio.modeling.web.form.converter;
 
+import org.inbio.modeling.web.form.util.Layer;
 import java.util.ArrayList;
 import java.util.List;
 import org.inbio.modeling.core.dto.CategoryDTO;
 import org.inbio.modeling.core.dto.GrassLayerDTO;
 import org.inbio.modeling.core.dto.LayerDTO;
-import org.inbio.modeling.web.form.CategoryForm;
-import org.inbio.modeling.web.form.GrassLayerForm;
+import org.inbio.modeling.web.form.util.Category;
 
 /**
  *
@@ -32,11 +32,14 @@ import org.inbio.modeling.web.form.GrassLayerForm;
 public class FormDTOConverter {
 
 	/**
-	 * Convert from GrassLayerForm to GrassLayerDTO
+	 * Convert from Layer to GrassLayerDTO
 	 * @param layer
 	 * @return
 	 */
-	public static GrassLayerDTO convert(GrassLayerForm layer){
+	public static GrassLayerDTO convert(Layer layer){
+
+		if(layer == null)
+			return null;
 
 		GrassLayerDTO layerDTO = new GrassLayerDTO();
 
@@ -53,13 +56,16 @@ public class FormDTOConverter {
 	}
 
 	/**
-	 * Convert from GrassLayerDTO to GrassLayerForm
+	 * Convert from GrassLayerDTO to Layer
 	 * @param layer
 	 * @return
 	 */
-	public static GrassLayerForm convert(GrassLayerDTO layer){
+	public static Layer convert(GrassLayerDTO layer){
 
-		GrassLayerForm layerForm = new GrassLayerForm();
+		if(layer == null)
+			return null;
+
+		Layer layerForm = new Layer();
 
 		layerForm.setName(layer.getName());
 		layerForm.setDescription(layer.getDescription());
@@ -69,20 +75,23 @@ public class FormDTOConverter {
 		layerForm.setType(layer.getType());
 
 		layerForm.setCategories(
-			convert(layer.getCategories(), CategoryForm.class));
+			convert(layer.getCategories(), Category.class));
 
 		return layerForm;
 
 	}
 
 	/**
-	 * convert from CategoryDTO to CategoryForm
+	 * convert from CategoryDTO to Category
 	 * @param category
 	 * @return
 	 */
-	public static CategoryForm convert(CategoryDTO category){
+	public static Category convert(CategoryDTO category){
 
-		CategoryForm categoryForm = new CategoryForm();
+		if(category == null)
+			return null;
+
+		Category categoryForm = new Category();
 
 		categoryForm.setInterval(category.isInterval());
 		categoryForm.setValue(category.getValue());
@@ -91,17 +100,21 @@ public class FormDTOConverter {
 	}
 
 	/**
-	 * Convert from CategoryForm to Cateogry DTO
+	 * Convert from Category to Cateogry DTO
 	 * @param category
 	 * @return
 	 */
-	public static CategoryDTO convert(CategoryForm category){
+	public static CategoryDTO convert(Category category){
+
+		if(category == null)
+			return null;
 
 		CategoryDTO categoryDTO = new CategoryDTO();
 
 		categoryDTO.setInterval(category.isInterval());
 		categoryDTO.setValue(category.getValue());
 		categoryDTO.setDescription(category.getDescription());
+
 		return categoryDTO;
 	}
 
@@ -123,14 +136,14 @@ public class FormDTOConverter {
 			return null;
 
 		for(S item : list){
-			if(destTypeClass == GrassLayerForm.class){
+			if(destTypeClass == Layer.class){
 				destList.add(destTypeClass.cast(convert((GrassLayerDTO)item)));
 			}else if(destTypeClass == GrassLayerDTO.class){
-				destList.add(destTypeClass.cast(convert((GrassLayerForm)item)));
-			}else if(destTypeClass == CategoryForm.class){
+				destList.add(destTypeClass.cast(convert((Layer)item)));
+			}else if(destTypeClass == Category.class){
 				destList.add(destTypeClass.cast(convert((CategoryDTO)item)));
 			}else if(destTypeClass == CategoryDTO.class){
-				destList.add(destTypeClass.cast(convert((CategoryForm)item)));
+				destList.add(destTypeClass.cast(convert((Category)item)));
 			}
 		}
 

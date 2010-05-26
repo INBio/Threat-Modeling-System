@@ -22,12 +22,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.inbio.modeling.core.dto.GrassLayerDTO;
+import org.inbio.modeling.core.layer.LayerType;
 import org.inbio.modeling.core.manager.FileManager;
 import org.inbio.modeling.core.manager.GrassManager;
-import org.inbio.modeling.core.layer.LayerType;
-import org.inbio.modeling.web.form.GenericForm;
+import org.inbio.modeling.web.form.EditIntervalForm;
 import org.inbio.modeling.web.form.converter.FormDTOConverter;
-import org.inbio.modeling.web.session.SessionInfo;
+import org.inbio.modeling.web.session.CurrentInstanceData;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractFormController;
@@ -48,23 +48,27 @@ public class ShowMapController extends AbstractFormController {
 												, Object command
 												, BindException errors)
 												throws Exception {
-
-		SessionInfo sessionInfo = null;
 		Long currentSessionId = null;
 		HttpSession session = null;
 		ModelAndView model = null;
 
-		GenericForm form = null;
-		form = (GenericForm)command;
+		EditIntervalForm form = (EditIntervalForm)command;
 
 
 		List<GrassLayerDTO> selectedLayers = null;
 		selectedLayers = FormDTOConverter.convert(form.getLayers(), GrassLayerDTO.class);
 
 		// retrieve the session Information.
+		CurrentInstanceData currentInstanceData = null;
+
+
+		// retrieve the session Information.
 		session = request.getSession();
-		sessionInfo = (SessionInfo)session.getAttribute("CurrentSessionInfo");
-		currentSessionId = sessionInfo.getCurrentSessionId();
+		currentInstanceData =
+			(CurrentInstanceData)session.getAttribute("CurrentSessionInfo");
+
+		currentSessionId = currentInstanceData.getUserSessionId();
+
 
 		// Reclassification
 		for(GrassLayerDTO layer : selectedLayers){
@@ -113,13 +117,15 @@ public class ShowMapController extends AbstractFormController {
 		this.grassManagerImpl.exportLayer2Image(layer3, currentSessionId);
 
 		//save session
-		session.setAttribute("CurrentSessionInfo", sessionInfo);
+		currentInstanceData.setLayerList(form.getLayers());
+		session.setAttribute("CurrentSessionInfo", currentInstanceData);
 
 		// Send the layer list to the JSP
 		model = new ModelAndView();
 		model.setViewName("showResultingMap");
 		model.addObject("layer", layer3.getName());
 		model.addObject("suffix", currentSessionId);
+		model.addObject("fullSessionInfo", currentInstanceData);
 
 		return model;
 	}

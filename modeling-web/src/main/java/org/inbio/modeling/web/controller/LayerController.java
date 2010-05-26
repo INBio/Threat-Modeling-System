@@ -22,10 +22,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.inbio.modeling.core.manager.LayerManager;
-import org.inbio.modeling.web.form.GenericForm;
-import org.inbio.modeling.web.form.GrassLayerForm;
+import org.inbio.modeling.web.form.ListLayerForm;
+import org.inbio.modeling.web.session.CurrentInstanceData;
+import org.inbio.modeling.web.form.util.Layer;
 import org.inbio.modeling.web.form.converter.FormDTOConverter;
-import org.inbio.modeling.web.session.SessionInfo;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractFormController;
@@ -40,29 +40,27 @@ public class LayerController extends AbstractFormController {
 									, BindException errors)
 									throws Exception {
 
-		SessionInfo sessionInfo = null;
+		CurrentInstanceData currentInstanceData = null;
+		ListLayerForm layerListForm = null;
 		HttpSession session = null;
 		ModelAndView model = null;
 
-		// Generates the Session SessionInfo object
-		sessionInfo = new SessionInfo();
-
-		// Generates the user id Number.
-		sessionInfo.setCurrentSessionId(Calendar.getInstance().getTimeInMillis());
-		//sessionInfo.setCurrentSessionId(1271784714875L);
-
-		GenericForm systemInfo = new GenericForm();
-		systemInfo.setLayers(FormDTOConverter.convert(layerManager.getLayerList(), GrassLayerForm.class));
+		// Create the object that will retain all the user information trought the process.
+		currentInstanceData = new CurrentInstanceData();
+		currentInstanceData.setUserSessionId(Calendar.getInstance().getTimeInMillis());
 
 		// Asing the SessionInfo Object to the session
 		session = request.getSession(true);
-		session.setAttribute("CurrentSessionInfo", sessionInfo);
+		session.setAttribute("CurrentSessionInfo", currentInstanceData);
 
+		//creates the form to the page and upload it.
+		layerListForm = new ListLayerForm();
+		layerListForm.setLayerList(FormDTOConverter.convert(layerManager.getLayerList(), Layer.class));
 
 		// Send the layer list to the JSP
 		model = new ModelAndView();
 		model.setViewName("layers");
-		model.addObject("systemInfo", systemInfo);
+		model.addObject("layersForm", layerListForm);
 
         return model;
 	}

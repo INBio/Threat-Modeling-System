@@ -23,7 +23,7 @@
 				<b><c:out value="${status.errorMessage}"/></b>
 			</font>
 			<div id="columns">
-				<form:form action="intervals.html" id="columnsForm" commandName="currentStatus">
+				<form:form action="intervals.html" id="columnsForm" commandName="columnsForm">
 					<table>
 						<thead>
 							<tr>
@@ -34,7 +34,7 @@
 						</thead>
 						<tbody>
 							<tr>
-								<c:forEach items="${currentStatus.layers}" var="layer"  varStatus="current">
+								<c:forEach items="${columnsForm.layers}" var="layer"  varStatus="current">
 								<tr>
 									<td>
 										<c:out value="${layer.name}" />
