@@ -44,6 +44,13 @@ public class ColumnController extends AbstractFormController {
 	private GrassManager grassManagerImpl;
 
 	@Override
+	protected ModelAndView handleInvalidSubmit(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		return super.handleInvalidSubmit(request, response);
+	}
+
+
+
+	@Override
 	protected ModelAndView processFormSubmission(HttpServletRequest request
 												, HttpServletResponse response
 												, Object command

@@ -33,7 +33,7 @@ import org.inbio.modeling.core.layer.LayerType;
  */
 public class Layer {
 
-	private boolean	selected;
+	private boolean	selected = false;
 	private boolean	reverted;
 	private long	weight;
 	private String	uri;

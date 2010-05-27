@@ -9,6 +9,10 @@
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
     
 
+    <bean	id="messageSource"
+			class="org.springframework.context.support.ResourceBundleMessageSource"
+			p:basename="org.inbio.modeling.web.i18n.messages" />
+
     <!-- Resolves the views in the request/responce flow  -->
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver"
@@ -25,7 +29,6 @@
                 <prop key="columns.html">columnController</prop>
                 <prop key="intervals.html">intervalsController</prop>
                 <prop key="showResultingMap.html">showMapController</prop>
-
                 <prop key="login.html">loginController</prop>
                 <prop key="accessDeniedPage.html">accessDeniedController</prop>
 

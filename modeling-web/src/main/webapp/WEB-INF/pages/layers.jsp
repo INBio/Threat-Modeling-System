@@ -6,23 +6,22 @@
 		<%@ include file="/common/theme" %>
 		<%@ include file="/common/javascript" %>
 	</head>
-	<body>
+	<body onload="calculateValues()">
 		<div id="Header">
 			<jsp:include page="/common/header.jsp"/>
 		</div>
 		<div id="contenido">
 			<h2><fmt:message key="title.layer"/></h2>
-			<font color="red">
-				<b><c:out value="${status.errorMessage}"/></b>
-			</font>
+
+
 			<div id="formXD">
-				<form:form id="layersForm" commandName="layersForm" method="post" action="columns.html" >
-					<div id="layerListTitle">
-					</div>
+				<form:form id="layersForm" commandName="layersForm" method="post" action="layers.html" >
+
 					<div id="layerFrame">
 						<div id="resolution">
 							<fmt:message key="common.resolution"/>
 							<form:input title="" path="resolution" />
+							<form:errors path="resolution" />
 							<fmt:message key="layer.resolutionDecimalDegrees" />
 						</div>
 						<div id="layers" >
@@ -44,7 +43,26 @@
 													<c:out value="${layer.name}" />
 												</td>
 												<td>
-													<form:input cssStyle="align: left;" disabled="true" id="${layer.name}_weight"  path="layerList[${current.index}].weight" maxlength="2" onkeyup="calculateValues(this);" />
+													<c:choose>
+														<c:when test="${layer.selected == false}">
+															<form:input cssStyle="align: left;"
+																		id="${layer.name}_weight"
+																		disabled="true"
+																		path="layerList[${current.index}].weight"
+																		maxlength="2"
+																		onkeyup="calculateValues(this);${layer.selected}" />
+														</c:when>
+														<c:otherwise>
+
+															<form:input cssStyle="align: left;"
+																		id="${layer.name}_weight"
+																		path="layerList[${current.index}].weight"
+																		maxlength="2"
+																		onkeyup="calculateValues(this);${layer.selected}" />
+														</c:otherwise>
+
+
+													</c:choose>
 												</td>
 											</div>
 										</tr>

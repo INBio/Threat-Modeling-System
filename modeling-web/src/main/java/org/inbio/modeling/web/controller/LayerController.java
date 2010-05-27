@@ -59,6 +59,9 @@ public class LayerController extends AbstractFormController {
 
 		// Send the layer list to the JSP
 		model = new ModelAndView();
+		if(errors != null && errors.hasErrors())
+			model.addAllObjects(errors.getModel());
+
 		model.setViewName("layers");
 		model.addObject("layersForm", layerListForm);
 
@@ -73,7 +76,12 @@ public class LayerController extends AbstractFormController {
 												, BindException errors)
 												throws Exception {
 
-		return new ModelAndView("index");
+
+		if(errors.hasErrors())
+			return showForm(request, response, errors);
+		else
+			return new ModelAndView("forward:columns.html");
+
 	}
 
 	/* getters & setters */

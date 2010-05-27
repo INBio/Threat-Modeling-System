@@ -19,9 +19,8 @@
 
 		<div id="contenido">
 			<h2><fmt:message key="title.columns"/></h2>
-			<font color="red">
-				<b><c:out value="${status.errorMessage}"/></b>
-			</font>
+
+
 			<div id="columns">
 				<form:form action="intervals.html" id="columnsForm" commandName="columnsForm">
 					<table>
