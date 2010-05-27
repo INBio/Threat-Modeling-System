@@ -77,12 +77,26 @@ body {
 }
 
 select {
-	width: 200px;
-	}
+   display:block;
+   width:202px;
+   height:22px;
+   background-color:#dff4ff;
+   border:1px solid #456C84;
+   font-family:sans-serif;
+   font-size:100%;
+   line-height:130%;
+   text-align:left;
+   font-weight:normal;
+   color:#334563;
+   cursor:pointer;
+   padding:1px;
+   margin-top:3px;
+   margin-bottom:3px;
+   -moz-border-radius: 2px;
+   -webkit-border-radius: 2px;
+}
 
 .modeling_btn{
-   background-repeat:no-repeat;
-   background-position: 30px 4px;
    display:block;
    width:202px;
    height:22px;

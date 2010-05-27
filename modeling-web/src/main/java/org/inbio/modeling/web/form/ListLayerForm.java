@@ -33,7 +33,18 @@ public class ListLayerForm implements Validator{
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "resolution", "errors.empty");
+
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "resolution", "errors.empty.resolution");
+
+		int total = 0;
+		ListLayerForm form = (ListLayerForm)target;
+
+		for(Layer aLayer : form.getLayerList())
+			total += aLayer.getWeight();
+
+		if(total != 100)
+			errors.reject("errors.weightSumNot100");
+
 	}
 
 	/** getters & setters */
