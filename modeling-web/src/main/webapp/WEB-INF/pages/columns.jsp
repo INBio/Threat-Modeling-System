@@ -22,7 +22,7 @@
 
 
 			<div id="columns">
-				<form:form action="intervals.html" id="columnsForm" commandName="columnsForm">
+				<form:form action="columns.html" id="columnsForm" commandName="columnsForm">
 					<table>
 						<thead>
 							<tr>

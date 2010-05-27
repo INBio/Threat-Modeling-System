@@ -17,7 +17,9 @@
  */
 package org.inbio.modeling.web.controller;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -68,20 +70,60 @@ public class LayerController extends AbstractFormController {
         return model;
 	}
 
-	/** default behavior for direct access (url) */
+
 	@Override
 	protected ModelAndView processFormSubmission(HttpServletRequest request
 												, HttpServletResponse response
 												, Object command
-												, BindException errors)
-												throws Exception {
-
+												, BindException errors) {
+		List<Layer> layers = null;
+		Long currentSessionId = null;
+		HttpSession session = null;
+		ModelAndView model = null;
+		Double resolution = null;
 
 		if(errors.hasErrors())
-			return showForm(request, response, errors);
-		else
-			return new ModelAndView("forward:columns.html");
+			try{
+				return showForm(request, response, errors);
+			}catch(Exception ex){
+				ex.printStackTrace();
+			}
 
+		CurrentInstanceData currentInstanceData = null;
+		ListLayerForm layerListForm = null;
+
+		layerListForm = (ListLayerForm)command;
+
+		// retrieve the session Information.
+		session = request.getSession();
+		currentInstanceData =
+			(CurrentInstanceData)session.getAttribute("CurrentSessionInfo");
+
+		currentSessionId = currentInstanceData.getUserSessionId();
+
+		// retrieve the resolution.
+		resolution = layerListForm.getResolution();
+		currentInstanceData.setResolution(resolution);
+
+		layers = new ArrayList<Layer>();
+		layers.addAll(layerListForm.getLayerList());
+
+		// Gets the layers and its weights
+		for(Layer layer : layerListForm.getLayerList()){
+			if(layer.isSelected() == false){
+				layers.remove(layer);
+			}
+		}
+
+		// Set the new information to the session info // selected layers and its weights
+		currentInstanceData.setLayerList(layers);
+		session.setAttribute("CurrentSessionInfo", currentInstanceData);
+
+		// Send the layer list to the JSP
+		model = new ModelAndView();
+		model.setViewName("redirect:columns.html");
+
+        return model;
 	}
 
 	/* getters & setters */

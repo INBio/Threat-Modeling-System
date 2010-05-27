@@ -16,12 +16,12 @@
 
 			<div id="formXD">
 				<form:form id="layersForm" commandName="layersForm" method="post" action="layers.html" >
+					<form:errors path="*" />
 
 					<div id="layerFrame">
 						<div id="resolution">
 							<fmt:message key="common.resolution"/>
 							<form:input title="" path="resolution" />
-							<form:errors path="resolution" />
 							<fmt:message key="layer.resolutionDecimalDegrees" />
 						</div>
 						<div id="layers" >

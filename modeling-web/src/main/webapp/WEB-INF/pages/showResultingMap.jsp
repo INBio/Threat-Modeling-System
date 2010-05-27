@@ -19,8 +19,11 @@
 			<jsp:include page="/common/header.jsp"/>
 		</div>
 		<div id="contenido">
+
+			<form:errors path="*" />
+
 			<div id="map">
-				<img alt="<fmt:message key='maps.resultingMap' />" src="/resmaps/R_${layer}_${suffix}_r.png" />
+				<img alt="<fmt:message key='maps.resultingMap' />" src="/resmaps/R_${fullSessionInfo.imageName}_${fullSessionInfo.userSessionId}_r.png" />
 			</div>
 			<div id="generalInfo">
 				<table>

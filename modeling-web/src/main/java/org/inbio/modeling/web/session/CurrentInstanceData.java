@@ -29,6 +29,7 @@ public class CurrentInstanceData{
 	private Long userSessionId;
 	private Double resolution;
 	private String projection;
+	private String imageName;
 
 	private List<Layer>  layerList;
 
@@ -62,5 +63,13 @@ public class CurrentInstanceData{
 
 	public void setUserSessionId(Long userSessionId) {
 		this.userSessionId = userSessionId;
+	}
+
+	public String getImageName() {
+		return imageName;
+	}
+
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
 	}
 }

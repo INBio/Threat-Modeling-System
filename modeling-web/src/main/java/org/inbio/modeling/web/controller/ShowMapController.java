@@ -135,9 +135,29 @@ public class ShowMapController extends AbstractFormController {
 	@Override
 	protected ModelAndView showForm(HttpServletRequest request
 									, HttpServletResponse response
-									, BindException errors)
-									throws Exception {
-		return new ModelAndView("index");
+									, BindException errors){
+
+		HttpSession session = null;
+		ModelAndView model = null;
+
+		// retrieve the session Information.
+		CurrentInstanceData currentInstanceData = null;
+
+
+		// retrieve the session Information.
+		session = request.getSession();
+		currentInstanceData =
+			(CurrentInstanceData)session.getAttribute("CurrentSessionInfo");
+
+		// Send the layer list to the JSP
+		model = new ModelAndView();
+		model.setViewName("showResultingMap");
+		model.addObject("fullSessionInfo", currentInstanceData);
+
+		if(errors != null && errors.hasErrors())
+			model.addAllObjects(errors.getModel());
+
+		return model;
 	}
 
 	// Getters & Setters
