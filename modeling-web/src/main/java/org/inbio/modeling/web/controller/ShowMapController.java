@@ -44,98 +44,19 @@ public class ShowMapController extends AbstractFormController {
 
 	@Override
 	protected ModelAndView processFormSubmission(HttpServletRequest request
-												, HttpServletResponse response
-												, Object command
-												, BindException errors)
-												throws Exception {
-		Long currentSessionId = null;
-		HttpSession session = null;
-		ModelAndView model = null;
+		, HttpServletResponse response
+		, Object command
+		, BindException errors) throws Exception{
 
-		EditIntervalForm form = (EditIntervalForm)command;
-
-
-		List<GrassLayerDTO> selectedLayers = null;
-		selectedLayers = FormDTOConverter.convert(form.getLayers(), GrassLayerDTO.class);
-
-		// retrieve the session Information.
-		CurrentInstanceData currentInstanceData = null;
-
-
-		// retrieve the session Information.
-		session = request.getSession();
-		currentInstanceData =
-			(CurrentInstanceData)session.getAttribute("CurrentSessionInfo");
-
-		currentSessionId = currentInstanceData.getUserSessionId();
-
-
-		// Reclassification
-		for(GrassLayerDTO layer : selectedLayers){
-
-			if(LayerType.AREA == layer.getType()){
-				// write the categories file.
-				this.fileManagerImpl.writeReclasFile(layer, currentSessionId);
-				// trigger the reclassification script.
-				this.grassManagerImpl.
-					advanceReclasification(layer, currentSessionId);
-			}else{
-
-				this.grassManagerImpl.asingBuffers(layer, currentSessionId);
-			}
-		}
-
-		GrassLayerDTO layer1 = null;
-		GrassLayerDTO layer2 = null;
-		GrassLayerDTO layer3 = null;
-
-		if(selectedLayers.size() >= 2){
-
-			layer1 = selectedLayers.get(0);
-			layer2 = selectedLayers.get(1);
-			layer3  = new GrassLayerDTO("Res1", 100);
-
-			this.grassManagerImpl.executeWeightedSum(layer1
-													, layer2
-													, layer3
-													, currentSessionId);
-		}
-
-		for(int i = 2; i<selectedLayers.size(); i++){
-
-			layer1 = layer3;
-			layer2 = selectedLayers.get(i);
-			layer3  = new GrassLayerDTO("Res"+i, 100);
-
-			this.grassManagerImpl.executeWeightedSum(layer1
-													, layer2
-													, layer3
-													, currentSessionId);
-		}
-
-		this.grassManagerImpl.asingColorScale(layer3, currentSessionId);
-		this.grassManagerImpl.exportLayer2Image(layer3, currentSessionId);
-
-		//save session
-		currentInstanceData.setLayerList(form.getLayers());
-		session.setAttribute("CurrentSessionInfo", currentInstanceData);
-
-		// Send the layer list to the JSP
-		model = new ModelAndView();
-		model.setViewName("showResultingMap");
-		model.addObject("layer", layer3.getName());
-		model.addObject("suffix", currentSessionId);
-		model.addObject("fullSessionInfo", currentInstanceData);
-
-		return model;
+		return null;
 	}
 
 
 	/** Default behavior on direct access */
 	@Override
 	protected ModelAndView showForm(HttpServletRequest request
-									, HttpServletResponse response
-									, BindException errors){
+		, HttpServletResponse response
+		, BindException errors){
 
 		HttpSession session = null;
 		ModelAndView model = null;

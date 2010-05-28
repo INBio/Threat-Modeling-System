@@ -37,55 +37,45 @@ public class LayerDAOImpl extends BaseDAOImpl implements LayerDAO {
 		String createStatement = null;
 		MapSqlParameterSource args = null;
 
-        try{
-            createStatement = "INSERT INTO "+this.table+"(" +
-            "\"name\", description, uri,  scale, \"year\", last_update)"+
-		    "VALUES (:name, :description, :uri, :scale, :year, :last_update);";
+		createStatement = "INSERT INTO "+this.table+"(" +
+			"\"name\", description, uri,  scale, \"year\", last_update)"+
+			"VALUES (:name, :description, :uri, :scale, :year, :last_update);";
 
-			args = new MapSqlParameterSource();
-			args.addValue("name", newLayer.getName());
-			args.addValue("description", newLayer.getDescription());
-			args.addValue("uri", newLayer.getUri());
-			args.addValue("scale", newLayer.getScale());
-			args.addValue("year", newLayer.getYear());
-			args.addValue("last_update", Calendar.getInstance().getTime());
+		args = new MapSqlParameterSource();
+		args.addValue("name", newLayer.getName());
+		args.addValue("description", newLayer.getDescription());
+		args.addValue("uri", newLayer.getUri());
+		args.addValue("scale", newLayer.getScale());
+		args.addValue("year", newLayer.getYear());
+		args.addValue("last_update", Calendar.getInstance().getTime());
 
-            getSimpleJdbcTemplate().update(createStatement, args);
-
-        }catch(Exception e){
-			e.printStackTrace();
-		}
-    }
+		getSimpleJdbcTemplate().update(createStatement, args);
+	}
 
 	@Override
 	public void update(Layer updatedLayer) {
 		String createStatement = null;
 		MapSqlParameterSource args = null;
 
-        try{
-            createStatement = "UPDATE "+this.table+" " +
-				" SET name = :name, " +
-				" description = :description, " +
-				" uri = :uri, " +
-				" scale = :scale, " +
-				" year = :year, " +
-				" last_update = :last_update " +
-				" WHERE id = :layer_id" ;
+		createStatement = "UPDATE "+this.table+" " +
+			" SET name = :name, " +
+			" description = :description, " +
+			" uri = :uri, " +
+			" scale = :scale, " +
+			" year = :year, " +
+			" last_update = :last_update " +
+			" WHERE id = :layer_id" ;
 
-			args = new MapSqlParameterSource();
-			args.addValue("name", updatedLayer.getName());
-			args.addValue("description", updatedLayer.getDescription());
-			args.addValue("uri", updatedLayer.getUri());
-			args.addValue("scale", updatedLayer.getScale());
-			args.addValue("year", updatedLayer.getYear());
-			args.addValue("last_update", Calendar.getInstance().getTime());
-			args.addValue("layer_id", updatedLayer.getId());
+		args = new MapSqlParameterSource();
+		args.addValue("name", updatedLayer.getName());
+		args.addValue("description", updatedLayer.getDescription());
+		args.addValue("uri", updatedLayer.getUri());
+		args.addValue("scale", updatedLayer.getScale());
+		args.addValue("year", updatedLayer.getYear());
+		args.addValue("last_update", Calendar.getInstance().getTime());
+		args.addValue("layer_id", updatedLayer.getId());
 
-            getSimpleJdbcTemplate().update(createStatement, args);
-
-        }catch(Exception e){
-			e.printStackTrace();
-		}
+		getSimpleJdbcTemplate().update(createStatement, args);
 
 	}
 
@@ -96,18 +86,14 @@ public class LayerDAOImpl extends BaseDAOImpl implements LayerDAO {
 		String deleteStatement = null;
 		MapSqlParameterSource args = null;
 
-        try{
-            deleteStatement = "DELETE FROM "+this.table+
-				" WHERE id = :identification ";
+		deleteStatement = "DELETE FROM "+this.table+
+			" WHERE id = :identification ";
 
-			args = new MapSqlParameterSource();
-			args.addValue("identification", id);
+		args = new MapSqlParameterSource();
+		args.addValue("identification", id);
 
-            getSimpleJdbcTemplate().update(deleteStatement, args);
+		getSimpleJdbcTemplate().update(deleteStatement, args);
 
-        }catch(Exception e){
-			e.printStackTrace();
-		}
 	}
 
 	@Override
@@ -116,19 +102,15 @@ public class LayerDAOImpl extends BaseDAOImpl implements LayerDAO {
 		MapSqlParameterSource args = null;
 		Layer layer = null;
 
-        try{
-            sqlStatement = "SELECT * FROM "+this.table+" " +
-				" WHERE id = :layer_id" ;
+		sqlStatement = "SELECT * FROM "+this.table+" " +
+			" WHERE id = :layer_id" ;
 
-			args = new MapSqlParameterSource();
-			args.addValue("layer_id", id);
+		args = new MapSqlParameterSource();
+		args.addValue("layer_id", id);
 
-            layer = getSimpleJdbcTemplate().
-						queryForObject(sqlStatement, new LayerRowMapper(), args);
+		layer = getSimpleJdbcTemplate().
+			queryForObject(sqlStatement, new LayerRowMapper(), args);
 
-        }catch(Exception e){
-			e.printStackTrace();
-		}
 
 		return layer;
 	}
@@ -138,18 +120,18 @@ public class LayerDAOImpl extends BaseDAOImpl implements LayerDAO {
 		return super.findAllByTableName(this.table, new LayerRowMapper());
 	}
 
-    private static class LayerRowMapper implements ParameterizedRowMapper<Layer> {
+	private static class LayerRowMapper implements ParameterizedRowMapper<Layer> {
 
-        @Override
-        public Layer mapRow(ResultSet rs, int rowNum) throws SQLException {
-           Layer layer = new Layer();
-		   layer.setId(rs.getLong("id"));
-		   layer.setName(rs.getString("name"));
-		   layer.setDescription(rs.getString("description"));
-		   layer.setUri(rs.getString("uri"));
-		   layer.setScale(rs.getString("scale"));
-		   layer.setYear(rs.getString("year"));
-           return layer;
-        }
+		@Override
+		public Layer mapRow(ResultSet rs, int rowNum) throws SQLException {
+			Layer layer = new Layer();
+			layer.setId(rs.getLong("id"));
+			layer.setName(rs.getString("name"));
+			layer.setDescription(rs.getString("description"));
+			layer.setUri(rs.getString("uri"));
+			layer.setScale(rs.getString("scale"));
+			layer.setYear(rs.getString("year"));
+			return layer;
+		}
 	}
 }

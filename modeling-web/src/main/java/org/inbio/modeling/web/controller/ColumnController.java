@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -64,10 +66,8 @@ public class ColumnController extends AbstractFormController {
 	 */
 	@Override
 	protected ModelAndView showForm(HttpServletRequest request
-									, HttpServletResponse response
-									, BindException errors)
-									throws Exception {
-
+		, HttpServletResponse response
+		, BindException errors) {
 		CurrentInstanceData currentInstanceData = null;
 		ChooseColumnForm cForm = null;
 		Long currentSessionId = null;
@@ -76,42 +76,41 @@ public class ColumnController extends AbstractFormController {
 		ModelAndView model = null;
 		Double resolution = null;
 
-
-
 		// retrieve the session Information.
 		session = request.getSession();
-		currentInstanceData =
-			(CurrentInstanceData)session.getAttribute("CurrentSessionInfo");
+		currentInstanceData = (CurrentInstanceData) session.getAttribute("CurrentSessionInfo");
 
 		currentSessionId = currentInstanceData.getUserSessionId();
 		resolution = currentInstanceData.getResolution();
 		layers = currentInstanceData.getLayerList();
 
-		//Import the layers
-		this.importLayers(resolution, layers, currentSessionId);
+		try {
 
-		//TODO
-		// Asign the type to the layer.
-		layers = this.asingType2Layer(layers, currentSessionId);
+			//Import the layers
+			this.importLayers(resolution, layers, currentSessionId);
 
-		//TODO
-		// retrieve dataColumns
-		layers = this.retrieveColumns(layers , currentSessionId);
+			// Asign the type to the layer.
+			layers = this.asingType2Layer(layers, currentSessionId);
+
+			// retrieve dataColumns
+			layers = this.retrieveColumns(layers, currentSessionId);
+
+		} catch (Exception ex) {
+			Logger.getLogger(ColumnController.class.getName()).log(Level.SEVERE, null, ex);
+			errors.reject(ex.getMessage());
+		}
 
 		// asing the columns to the jsp.
 		cForm = new ChooseColumnForm();
 		cForm.setLayers(layers);
-
-
 		// Send the layer list to the JSP
 		model = new ModelAndView();
 		model.setViewName("columns");
 		model.addObject("columnsForm", cForm);
-
-		if(errors != null && errors.hasErrors())
+		if (errors != null && errors.hasErrors()) {
 			model.addAllObjects(errors.getModel());
-
-        return model;
+		}
+		return model;
 	}
 
 
@@ -119,10 +118,9 @@ public class ColumnController extends AbstractFormController {
 
 	@Override
 	protected ModelAndView processFormSubmission(HttpServletRequest request
-												, HttpServletResponse response
-												, Object command
-												, BindException errors)
-												throws Exception {
+		, HttpServletResponse response
+		, Object command
+		, BindException errors) {
 
 		CurrentInstanceData currentInstanceData = null;
 		HashMap<String, String> column = null;
@@ -134,11 +132,7 @@ public class ColumnController extends AbstractFormController {
 
 
 		if(errors.hasErrors())
-			try{
-				return showForm(request, response, errors);
-			}catch(Exception ex){
-				ex.printStackTrace();
-			}
+			return showForm(request, response, errors);
 
 		// get the information of the form.
 		cForm = (ChooseColumnForm)command;
@@ -150,45 +144,48 @@ public class ColumnController extends AbstractFormController {
 
 		currentSessionId = currentInstanceData.getUserSessionId();
 
+		try {
 
-		// extract and format the information of the dataColumn to use.
-		for(Layer layer : cForm.getLayers()){
+			// extract and format the information of the dataColumn to use.
+			for(Layer layer : cForm.getLayers()){
 
-			// split the information that comes from the Form
-			columnElements = layer.getColumns().get("selected").split(":");
+				// split the information that comes from the Form
+				columnElements = layer.getColumns().get("selected").split(":");
 
-			// convert the array to a HashMap
-			column = new HashMap<String,String>();
-			column.put("selected", columnElements[0]);
-			layer.setColumns(column);
+				// convert the array to a HashMap
+				column = new HashMap<String,String>();
+				column.put("selected", columnElements[0]);
+				layer.setColumns(column);
 
-			if(columnElements.length > 1 && columnElements[1].equals("CHARACTER")){
-				// vectorial reclasification
-				this.vectorialReclassification(layer, currentSessionId);
-			}else{
-				this.grassManagerImpl.renameFile(FormDTOConverter.convert(layer)
-												, currentSessionId);
+				if(columnElements.length > 1 && columnElements[1].equals("CHARACTER")){
+					// vectorial reclasification
+					this.vectorialReclassification(layer, currentSessionId);
+				}else{
+					this.renameFile(layer, currentSessionId);
+				}
+
+				//convert the layer to a raster format
+				this.layer2Raster(layer, currentSessionId);
+
+				if( columnElements.length > 2 ){
+
+					//asign the categories
+					this.asignCategories2Layer(layer
+						, columnElements[1]
+						, currentSessionId);
+				}else{
+					//asign the categories
+					this.asignCategories2Layer(layer
+						, "cat"
+						, currentSessionId);
+				}
 			}
 
-			//convert the layer to a raster format
-			this.layer2Raster(layer, currentSessionId);
-
-			if( columnElements.length > 1 ){
-
-				//asign the categories
-				this.asignCategories2Layer(layer
-											, columnElements[1]
-											, currentSessionId);
-			}else{
-				//asign the categories
-				this.asignCategories2Layer(layer
-											, "cat"
-											, currentSessionId);
-			}
-
-			System.out.println("");
+		} catch (Exception ex) {
+			Logger.getLogger(ColumnController.class.getName()).log(Level.SEVERE, null, ex);
+			errors.reject(ex.getMessage());
+			return showForm(request, response, errors);
 		}
-
 
 		// Set the new information to the session info // selected layers and its weights
 		currentInstanceData.setLayerList(cForm.getLayers());
@@ -198,7 +195,17 @@ public class ColumnController extends AbstractFormController {
 		model = new ModelAndView();
 		model.setViewName("redirect:intervals.html");
 
-        return model;
+		return model;
+	}
+
+
+	private void renameFile(Layer layer, Long currentSessionId) throws Exception{
+		try {
+			this.grassManagerImpl.renameFile(FormDTOConverter.convert(layer), currentSessionId);
+		} catch (Exception ex) {
+			throw new Exception("errors.cantRenameFile", ex);
+		}
+
 	}
 
 	/**
@@ -207,15 +214,11 @@ public class ColumnController extends AbstractFormController {
 	 * @param column
 	 * @param currentSessionId
 	 */
-	private void vectorialReclassification(Layer layer
-											, Long currentSessionId){
+	private void vectorialReclassification(Layer layer, Long currentSessionId) throws Exception{
 		try {
-			this.grassManagerImpl.
-				executeVectorReclasification(FormDTOConverter.convert(layer)
-											, currentSessionId);
-
+			this.grassManagerImpl.executeVectorReclasification(FormDTOConverter.convert(layer), currentSessionId);
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			throw new Exception("errors.cantExecuteVectorReclass", ex);
 		}
 	}
 
@@ -225,16 +228,12 @@ public class ColumnController extends AbstractFormController {
 	 * @param currentSessionId
 	 * @param column
 	 */
-	private void layer2Raster(Layer layer, Long currentSessionId){
-
+	private void layer2Raster(Layer layer, Long currentSessionId) throws Exception{
 		try {
 			// convert the vectorial layer to another in raster format
-			this.grassManagerImpl.
-				convertLayer2Raster(FormDTOConverter.convert(layer)
-									, currentSessionId);
-
+			this.grassManagerImpl.convertLayer2Raster(FormDTOConverter.convert(layer), currentSessionId);
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			throw new Exception("errors.cantConvert2Raster", ex);
 		}
 
 	}
@@ -246,26 +245,18 @@ public class ColumnController extends AbstractFormController {
 	 * @param layer
 	 * @param currentSessionId
 	 */
-	private void asignCategories2Layer(Layer layer
-										, String dataType
-										, Long currentSessionId){
+	private void asignCategories2Layer(Layer layer, String dataType, Long currentSessionId) throws Exception{
 
 		List<CategoryDTO> categories = null;
-
 		try {
 			// retrieve an asing the layer categories
-			categories =
-				this.grassManagerImpl.
-					getLayerCategories(FormDTOConverter.convert(layer)
-										,dataType
-										,currentSessionId);
-
-			layer.setCategories(
-				FormDTOConverter.convert(categories, Category.class));
-
+			categories = this.grassManagerImpl.getLayerCategories(FormDTOConverter.convert(layer), dataType, currentSessionId);
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			throw new Exception("errors.cantRetrieveCategories", ex);
 		}
+
+		layer.setCategories(
+			FormDTOConverter.convert(categories, Category.class));
 	}
 
 
@@ -277,7 +268,7 @@ public class ColumnController extends AbstractFormController {
 	 * @return list of layers with the field layer.type populated.
 	 */
 	private List<Layer> asingType2Layer(List<Layer> layers
-											, Long currentSessionId){
+		, Long currentSessionId) throws Exception{
 
 		LayerType layerType = null;
 
@@ -285,12 +276,11 @@ public class ColumnController extends AbstractFormController {
 
 		for(Layer layer : layers){
 			try {
-				layerType = this.grassManagerImpl.
-									retrieveLayerType(FormDTOConverter.convert(layer), currentSessionId);
-
+				layerType = this.grassManagerImpl.retrieveLayerType(FormDTOConverter.convert(layer), currentSessionId);
 			} catch (Exception ex) {
-				ex.printStackTrace();
+				throw new Exception("errors.cantRetrieveLayerType",ex);
 			}
+
 			layer.setType(layerType);
 			list.add(layer);
 		}
@@ -307,7 +297,7 @@ public class ColumnController extends AbstractFormController {
 	 * @return a list of layers with the columns information populated.
 	 */
 	private List<Layer> retrieveColumns(List<Layer> layerList
-											, Long currentSessionId){
+		, Long currentSessionId) throws Exception{
 
 		Map<String,String> columns = null;
 
@@ -315,10 +305,9 @@ public class ColumnController extends AbstractFormController {
 			if(layerForm.getType() == LayerType.AREA){
 				try {
 					// Retrive data columns
-					columns = grassManagerImpl.
-						retrieveAvailableColumns(FormDTOConverter.convert(layerForm), currentSessionId);
+					columns = grassManagerImpl.retrieveAvailableColumns(FormDTOConverter.convert(layerForm), currentSessionId);
 				} catch (Exception ex) {
-					ex.printStackTrace();
+					throw new Exception("errors.cantRetrieveColumns",ex);
 				}
 				columns.remove("cat");
 				layerForm.setColumns(columns);
@@ -336,33 +325,47 @@ public class ColumnController extends AbstractFormController {
 	 * @param currentSessionId
 	 */
 	private void importLayers(Double resolution
-								, List<Layer> layerList
-								, Long currentSessionId){
+		, List<Layer> layerList
+		, Long currentSessionId) throws Exception{
 
 		int counter = 0;
-
 		try {
-
 			// change the resolution
 			this.grassManagerImpl.setResolution(resolution, currentSessionId);
+		} catch (Exception ex) {
+			throw new Exception("errors.cantSetResolution",ex);
+		}
 
-			// configure grass to the default location.
+
+		try {
+			// configure the location of grass
 			this.grassManagerImpl.configureEnvironment("Default", currentSessionId);
+		} catch (Exception ex) {
+			throw new Exception("errors.cantConfigureGrass", ex);
+		}
 
-			for (Layer layer: layerList){
-				if(counter++ == 1){
-					this.grassManagerImpl.
-						configureEnvironment("LOC_"+currentSessionId, currentSessionId);
-
-					this.grassManagerImpl.
-						setResolution(resolution, currentSessionId);
+		for (Layer layer: layerList){
+			if(counter++ == 1){
+				try {
+					// configure the location of grass
+					this.grassManagerImpl.configureEnvironment("LOC_" + currentSessionId, currentSessionId);
+				} catch (Exception ex) {
+					throw new Exception("errors.cantConfigureGrass", ex);
 				}
 
-				this.grassManagerImpl.importLayer(FormDTOConverter.convert(layer), currentSessionId);
-			}
 
-		} catch (Exception ex) {
-			ex.printStackTrace();
+				try {
+					// change the resolution
+					this.grassManagerImpl.setResolution(resolution, currentSessionId);
+				} catch (Exception ex) {
+					throw new Exception("errors.cantSetResolution", ex);
+				}
+			}
+			try {
+				this.grassManagerImpl.importLayer(FormDTOConverter.convert(layer), currentSessionId);
+			} catch (Exception ex) {
+				throw new Exception("errors.cantImportLayer", ex);
+			}
 		}
 	}
 

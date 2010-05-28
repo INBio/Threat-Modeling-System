@@ -39,8 +39,7 @@ public class LayerController extends AbstractFormController {
 	@Override
 	protected ModelAndView showForm(HttpServletRequest request
 									, HttpServletResponse response
-									, BindException errors)
-									throws Exception {
+									, BindException errors) {
 
 		CurrentInstanceData currentInstanceData = null;
 		ListLayerForm layerListForm = null;
@@ -77,17 +76,12 @@ public class LayerController extends AbstractFormController {
 												, Object command
 												, BindException errors) {
 		List<Layer> layers = null;
-		Long currentSessionId = null;
 		HttpSession session = null;
 		ModelAndView model = null;
 		Double resolution = null;
 
 		if(errors.hasErrors())
-			try{
-				return showForm(request, response, errors);
-			}catch(Exception ex){
-				ex.printStackTrace();
-			}
+			return showForm(request, response, errors);
 
 		CurrentInstanceData currentInstanceData = null;
 		ListLayerForm layerListForm = null;
@@ -98,8 +92,6 @@ public class LayerController extends AbstractFormController {
 		session = request.getSession();
 		currentInstanceData =
 			(CurrentInstanceData)session.getAttribute("CurrentSessionInfo");
-
-		currentSessionId = currentInstanceData.getUserSessionId();
 
 		// retrieve the resolution.
 		resolution = layerListForm.getResolution();

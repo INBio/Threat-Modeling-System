@@ -37,12 +37,8 @@ public class BaseDAOImpl extends SimpleJdbcDaoSupport implements BaseDAO{
 	public <T> List<T> findAllByTableName(String tableName, ParameterizedRowMapper<T> mapper) {
 
         List<T> names = new ArrayList<T>();
-        try{
             String query = "Select * from "+tableName+" ;";
             names = getSimpleJdbcTemplate().query(query, mapper);
-        }catch(Exception e){
-			e.printStackTrace();
-		}
 
         return names;
     }

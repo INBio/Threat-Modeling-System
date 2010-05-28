@@ -173,3 +173,18 @@ select {
 	font-style: normal;
 	line-height: normal;
 	}
+
+.errors{
+
+	margin: 35px;
+	padding: 15px;
+	vertical-align: middle;
+	background-color: #cccccc;
+   -moz-border-radius: 15px;
+   -webkit-border-radius: 15px;
+
+	text-align: left;
+	text-indent: 30px;
+    color: #e60f0f;
+    font-weight: bold;
+}

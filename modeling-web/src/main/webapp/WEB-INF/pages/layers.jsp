@@ -13,11 +13,19 @@
 		<div id="contenido">
 			<h2><fmt:message key="title.layer"/></h2>
 
+			<spring:hasBindErrors name="layersForm">
+				<div class="errors">
+					<h3><fmt:message key="errors.title"/></h3>
+					<p>
+						<c:forEach items="${errors.allErrors}" var="error">
+							<fmt:message key="${error.code}" />
+						</c:forEach>
+					</p>
+				</div>
+			</spring:hasBindErrors>
 
 			<div id="formXD">
 				<form:form id="layersForm" commandName="layersForm" method="post" action="layers.html" >
-					<form:errors path="*" />
-
 					<div id="layerFrame">
 						<div id="resolution">
 							<fmt:message key="common.resolution"/>
@@ -37,35 +45,35 @@
 										<form:hidden path="layerList[${current.index}].name" />
 										<form:hidden path="layerList[${current.index}].uri" />
 										<tr>
-											<div class="${layer.name}">
-												<td>
-													<form:checkbox id="${layer.name}" path="layerList[${current.index}].selected" onclick="setValueToZero(this);" />
-													<c:out value="${layer.name}" />
-												</td>
-												<td>
-													<c:choose>
-														<c:when test="${layer.selected == false}">
-															<form:input cssStyle="align: left;"
-																		id="${layer.name}_weight"
-																		disabled="true"
-																		path="layerList[${current.index}].weight"
-																		maxlength="2"
-																		onkeyup="calculateValues(this);${layer.selected}" />
-														</c:when>
-														<c:otherwise>
+									<div class="${layer.name}">
+										<td>
+											<form:checkbox id="${layer.name}" path="layerList[${current.index}].selected" onclick="setValueToZero(this);" />
+											<c:out value="${layer.name}" />
+										</td>
+										<td>
+											<c:choose>
+												<c:when test="${layer.selected == false}">
+													<form:input cssStyle="align: left;"
+																id="${layer.name}_weight"
+																disabled="true"
+																path="layerList[${current.index}].weight"
+																maxlength="2"
+																onkeyup="calculateValues(this);${layer.selected}" />
+												</c:when>
+												<c:otherwise>
 
-															<form:input cssStyle="align: left;"
-																		id="${layer.name}_weight"
-																		path="layerList[${current.index}].weight"
-																		maxlength="2"
-																		onkeyup="calculateValues(this);${layer.selected}" />
-														</c:otherwise>
+													<form:input cssStyle="align: left;"
+																id="${layer.name}_weight"
+																path="layerList[${current.index}].weight"
+																maxlength="2"
+																onkeyup="calculateValues(this);${layer.selected}" />
+												</c:otherwise>
 
 
-													</c:choose>
-												</td>
-											</div>
-										</tr>
+											</c:choose>
+										</td>
+									</div>
+									</tr>
 								</c:forEach>
 								</tbody>
 							</table>

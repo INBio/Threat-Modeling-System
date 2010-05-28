@@ -20,7 +20,16 @@
 		</div>
 		<div id="contenido">
 
-			<form:errors path="*" />
+			<spring:hasBindErrors name="intervalsForm">
+				<div class="errors">
+					<h3><fmt:message key="errors.title"/></h3>
+					<p>
+						<c:forEach items="${errors.allErrors}" var="error">
+							<fmt:message key="${error.code}" />
+						</c:forEach>
+					</p>
+				</div>
+			</spring:hasBindErrors>
 
 			<div id="map">
 				<img alt="<fmt:message key='maps.resultingMap' />" src="/resmaps/R_${fullSessionInfo.imageName}_${fullSessionInfo.userSessionId}_r.png" />
@@ -28,11 +37,6 @@
 			<div id="generalInfo">
 				<table>
 					<tbody>
-						<!-- resolution
-							 projection
-							 layers:
-									Categorías.
-						  -->
 						<tr>
 							<td><fmt:message key="showMap.resolution" /></td>
 							<td><c:out value="${fullSessionInfo.resolution}" /></td>

@@ -18,6 +18,8 @@
 package org.inbio.modeling.web.controller;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -43,20 +45,17 @@ public class IntervalsController extends AbstractFormController {
 
 	@Override
 	protected ModelAndView processFormSubmission(HttpServletRequest request
-												, HttpServletResponse response
-												, Object command
-												, BindException errors)
-												throws Exception {
+		, HttpServletResponse response
+		, Object command
+		, BindException errors) {
+
+		GrassLayerDTO resultLayer = null;
 		Long currentSessionId = null;
 		HttpSession session = null;
 		ModelAndView model = null;
 
 		if(errors.hasErrors())
-			try{
-				return showForm(request, response, errors);
-			}catch(Exception ex){
-				ex.printStackTrace();
-			}
+			return showForm(request, response, errors);
 
 
 		EditIntervalForm form = (EditIntervalForm)command;
@@ -75,57 +74,37 @@ public class IntervalsController extends AbstractFormController {
 
 		currentSessionId = currentInstanceData.getUserSessionId();
 
+		try {
 
-		// Reclassification
-		for(GrassLayerDTO layer : selectedLayers){
+			// Reclassification
+			for(GrassLayerDTO layer : selectedLayers){
 
-			if(LayerType.AREA == layer.getType()){
-				// write the categories file.
-				this.fileManagerImpl.writeReclasFile(layer, currentSessionId);
-				// trigger the reclassification script.
-				this.grassManagerImpl.
-					advanceReclasification(layer, currentSessionId);
-			}else{
+				if(LayerType.AREA == layer.getType()){
+					this.writeFile(layer, currentSessionId);
+					// trigger the reclassification script.
+					this.reclass(layer, currentSessionId);
+				}else{
 
-				this.grassManagerImpl.asingBuffers(layer, currentSessionId);
+					this.createBuffers(layer, currentSessionId);
+				}
 			}
+
+			resultLayer = this.weightedSum(selectedLayers, currentSessionId);
+
+			this.setColorScale(resultLayer, currentSessionId);
+			this.createImage(resultLayer, currentSessionId);
+
+		} catch (Exception ex) {
+			Logger.getLogger(IntervalsController.class.getName()).log(Level.SEVERE, null, ex);
+			errors.reject(ex.getMessage());
+
+			return showForm(request, response, errors);
 		}
-
-		GrassLayerDTO layer1 = null;
-		GrassLayerDTO layer2 = null;
-		GrassLayerDTO layer3 = null;
-
-		if(selectedLayers.size() >= 2){
-
-			layer1 = selectedLayers.get(0);
-			layer2 = selectedLayers.get(1);
-			layer3  = new GrassLayerDTO("Res1", 100);
-
-			this.grassManagerImpl.executeWeightedSum(layer1
-													, layer2
-													, layer3
-													, currentSessionId);
-		}
-
-		for(int i = 2; i<selectedLayers.size(); i++){
-
-			layer1 = layer3;
-			layer2 = selectedLayers.get(i);
-			layer3  = new GrassLayerDTO("Res"+i, 100);
-
-			this.grassManagerImpl.executeWeightedSum(layer1
-													, layer2
-													, layer3
-													, currentSessionId);
-		}
-
-		this.grassManagerImpl.asingColorScale(layer3, currentSessionId);
-		this.grassManagerImpl.exportLayer2Image(layer3, currentSessionId);
-
 		//save session
-		currentInstanceData.setImageName(layer3.getName());
+		currentInstanceData.setImageName(resultLayer.getName());
 		currentInstanceData.setLayerList(form.getLayers());
 		session.setAttribute("CurrentSessionInfo", currentInstanceData);
+
 
 		// Send the layer list to the JSP
 		model = new ModelAndView();
@@ -140,9 +119,8 @@ public class IntervalsController extends AbstractFormController {
 	/** default behavior for direct access */
 	@Override
 	protected ModelAndView showForm(HttpServletRequest request
-									, HttpServletResponse response
-									, BindException errors)
-									throws Exception {
+		, HttpServletResponse response
+		, BindException errors){
 
 		CurrentInstanceData currentInstanceData = null;
 		EditIntervalForm iForm = null;
@@ -165,8 +143,90 @@ public class IntervalsController extends AbstractFormController {
 		if(errors != null && errors.hasErrors())
 			model.addAllObjects(errors.getModel());
 
-        return model;
+		return model;
 	}
+
+
+
+	private void writeFile(GrassLayerDTO layer, Long currentSessionId) throws Exception{
+		try {
+			// write the categories file.
+			this.fileManagerImpl.writeReclasFile(layer, currentSessionId);
+		} catch (Exception ex) {
+			throw new Exception("errors.cantWriteFile", ex);
+		}
+
+	}
+
+	private void reclass(GrassLayerDTO layer, Long currentSessionId) throws Exception{
+		try {
+			this.grassManagerImpl.advanceReclasification(layer, currentSessionId);
+		} catch (Exception ex) {
+			throw new Exception("errors.cantExecuteReclass", ex);
+		}
+
+	}
+
+	private void createBuffers(GrassLayerDTO layer, Long currentSessionId) throws Exception{
+		try {
+			this.grassManagerImpl.asingBuffers(layer, currentSessionId);
+		} catch (Exception ex) {
+			throw new Exception("errors.cantCreateBuffers", ex);
+		}
+
+	}
+
+
+	private GrassLayerDTO weightedSum(List<GrassLayerDTO> selectedLayers, Long currentSessionId) throws Exception{
+
+		GrassLayerDTO layer1 = null;
+		GrassLayerDTO layer2 = null;
+		GrassLayerDTO layer3 = null;
+		try {
+
+			if(selectedLayers.size() >= 2){
+				layer1 = selectedLayers.get(0);
+				layer2 = selectedLayers.get(1);
+				layer3 = new GrassLayerDTO("Res1", 100);
+				this.grassManagerImpl.executeWeightedSum(layer1, layer2, layer3, currentSessionId);
+			}
+
+			for(int i = 2; i<selectedLayers.size(); i++){
+
+				layer1 = layer3;
+				layer2 = selectedLayers.get(i);
+				layer3  = new GrassLayerDTO("Res"+i, 100);
+
+				this.grassManagerImpl.executeWeightedSum(layer1
+					, layer2
+					, layer3
+					, currentSessionId);
+			}
+
+		} catch (Exception ex) {
+			throw new Exception("errors.cantExecuteWeightedSum", ex);
+		}
+		return layer3;
+	}
+
+	private void setColorScale(GrassLayerDTO layer, Long currentSessionId) throws Exception{
+		try {
+			this.grassManagerImpl.asingColorScale(layer, currentSessionId);
+		} catch (Exception ex) {
+			throw new Exception("errors.cantSetColorScale", ex);
+		}
+
+	}
+
+	private void createImage(GrassLayerDTO layer, Long currentSessionId) throws Exception{
+		try {
+			this.grassManagerImpl.exportLayer2Image(layer, currentSessionId);
+		} catch (Exception ex) {
+			throw new Exception("errors.cantCreateImage", ex);
+		}
+	}
+
+
 
 	/* Getters and Setters */
 	public GrassManager getGrassManagerImpl() {

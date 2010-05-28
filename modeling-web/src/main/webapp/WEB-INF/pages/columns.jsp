@@ -20,6 +20,16 @@
 		<div id="contenido">
 			<h2><fmt:message key="title.columns"/></h2>
 
+			<spring:hasBindErrors name="columnsForm">
+				<div class="errors">
+					<h3><fmt:message key="errors.title"/></h3>
+					<p>
+						<c:forEach items="${errors.allErrors}" var="error">
+							<fmt:message key="${error.code}" />
+						</c:forEach>
+					</p>
+				</div>
+			</spring:hasBindErrors>
 
 			<div id="columns">
 				<form:form action="columns.html" id="columnsForm" commandName="columnsForm">
