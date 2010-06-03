@@ -106,7 +106,7 @@
 						</c:forEach>
 							<tr class="celda01">
 							<td>
-								<input id="submitButton" type="submit" class="modeling_btn" value='<fmt:message key="common.acceptChanges"/>' />
+								<input id="submitButton" type="submit" class="modeling_btn" value='<fmt:message key="layer.finalStep"/>' />
 							</td>
 							<td>
 								<input id="joinButton" type="button" class="modeling_btn" onclick="deleteCategory();" value='<fmt:message key="interval.deleteCategory"/>' />

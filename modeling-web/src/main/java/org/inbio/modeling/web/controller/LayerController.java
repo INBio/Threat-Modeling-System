@@ -20,6 +20,8 @@ package org.inbio.modeling.web.controller;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -28,6 +30,7 @@ import org.inbio.modeling.web.form.ListLayerForm;
 import org.inbio.modeling.web.session.CurrentInstanceData;
 import org.inbio.modeling.web.form.util.Layer;
 import org.inbio.modeling.web.form.converter.FormDTOConverter;
+import org.inbio.modeling.web.session.SessionUtils;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractFormController;
@@ -52,6 +55,13 @@ public class LayerController extends AbstractFormController {
 
 		// Asing the SessionInfo Object to the session
 		session = request.getSession(true);
+
+		//validate the new Session
+		if( !session.isNew() ){
+			session.invalidate();
+			session = request.getSession(true);
+		}
+
 		session.setAttribute("CurrentSessionInfo", currentInstanceData);
 
 		//creates the form to the page and upload it.
@@ -90,8 +100,9 @@ public class LayerController extends AbstractFormController {
 
 		// retrieve the session Information.
 		session = request.getSession();
-		currentInstanceData =
-			(CurrentInstanceData)session.getAttribute("CurrentSessionInfo");
+		currentInstanceData = SessionUtils.isSessionAlive(session);
+
+		if(currentInstanceData != null){
 
 		// retrieve the resolution.
 		resolution = layerListForm.getResolution();
@@ -110,6 +121,13 @@ public class LayerController extends AbstractFormController {
 		// Set the new information to the session info // selected layers and its weights
 		currentInstanceData.setLayerList(layers);
 		session.setAttribute("CurrentSessionInfo", currentInstanceData);
+
+		}else{
+			Exception ex = new Exception("errors.noSession");
+			Logger.getLogger(ColumnController.class.getName()).log(Level.SEVERE, null, ex);
+			errors.reject(ex.getMessage());
+			return showForm(request, response, errors);
+		}
 
 		// Send the layer list to the JSP
 		model = new ModelAndView();

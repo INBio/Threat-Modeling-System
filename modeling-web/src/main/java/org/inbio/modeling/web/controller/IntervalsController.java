@@ -30,6 +30,7 @@ import org.inbio.modeling.core.manager.GrassManager;
 import org.inbio.modeling.web.form.EditIntervalForm;
 import org.inbio.modeling.web.form.converter.FormDTOConverter;
 import org.inbio.modeling.web.session.CurrentInstanceData;
+import org.inbio.modeling.web.session.SessionUtils;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractFormController;
@@ -72,30 +73,42 @@ public class IntervalsController extends AbstractFormController {
 		currentInstanceData =
 			(CurrentInstanceData)session.getAttribute("CurrentSessionInfo");
 
-		currentSessionId = currentInstanceData.getUserSessionId();
+		currentInstanceData = SessionUtils.isSessionAlive(session);
 
-		try {
+		if(currentInstanceData != null){
 
-			// Reclassification
-			for(GrassLayerDTO layer : selectedLayers){
+			currentSessionId = currentInstanceData.getUserSessionId();
 
-				if(LayerType.AREA == layer.getType()){
-					this.writeFile(layer, currentSessionId);
-					// trigger the reclassification script.
-					this.reclass(layer, currentSessionId);
-				}else{
-					// create the buffers.
-					this.createBuffers(layer, currentSessionId);
+			try {
+
+				// Reclassification
+				for(GrassLayerDTO layer : selectedLayers){
+
+					if(LayerType.AREA == layer.getType()){
+						this.writeFile(layer, currentSessionId);
+						// trigger the reclassification script.
+						this.reclass(layer, currentSessionId);
+					}else{
+						// create the buffers.
+						this.createBuffers(layer, currentSessionId);
+					}
 				}
+
+				resultLayer = this.weightedSum(selectedLayers, currentSessionId);
+
+				this.setColorScale(resultLayer, currentSessionId);
+				this.createImage(resultLayer, currentSessionId);
+
+			} catch (Exception ex) {
+				Logger.getLogger(IntervalsController.class.getName()).log(Level.SEVERE, null, ex);
+				errors.reject(ex.getMessage());
+
+				return showForm(request, response, errors);
 			}
+		}else{
 
-			resultLayer = this.weightedSum(selectedLayers, currentSessionId);
-
-			this.setColorScale(resultLayer, currentSessionId);
-			this.createImage(resultLayer, currentSessionId);
-
-		} catch (Exception ex) {
-			Logger.getLogger(IntervalsController.class.getName()).log(Level.SEVERE, null, ex);
+			Exception ex = new Exception("errors.noSession");
+			Logger.getLogger(ColumnController.class.getName()).log(Level.SEVERE, null, ex);
 			errors.reject(ex.getMessage());
 
 			return showForm(request, response, errors);
@@ -129,13 +142,18 @@ public class IntervalsController extends AbstractFormController {
 
 		// retrieve the session Information.
 		session = request.getSession();
-		currentInstanceData =
-			(CurrentInstanceData)session.getAttribute("CurrentSessionInfo");
+		currentInstanceData = SessionUtils.isSessionAlive(session);
 
-		iForm = new EditIntervalForm();
-		iForm.setLayers(currentInstanceData.getLayerList());
+		if(currentInstanceData != null){
+			iForm = new EditIntervalForm();
+			iForm.setLayers(currentInstanceData.getLayerList());
+		}else{
+			Exception ex = new Exception("errors.noSession");
+			Logger.getLogger(ColumnController.class.getName()).log(Level.SEVERE, null, ex);
+			errors.reject(ex.getMessage());
+		}
 
-		// Send the layer list to the JSP
+
 		model = new ModelAndView();
 		model.setViewName("intervals");
 		model.addObject("intervalsForm", iForm);

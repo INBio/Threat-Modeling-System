@@ -7,10 +7,11 @@
 		<%@ include file="/common/javascript" %>
 	</head>
 	<body onload="calculateValues()">
-		<div id="Header">
+		<div id="header-contenedor">
 			<jsp:include page="/common/header.jsp"/>
 		</div>
 		<div id="contenido">
+
 			<p class="titulo-principal"><fmt:message key="title.layer"/></p>
 
 			<spring:hasBindErrors name="layersForm">

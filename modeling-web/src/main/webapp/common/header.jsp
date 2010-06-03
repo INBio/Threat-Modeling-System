@@ -6,19 +6,12 @@
 <%@include file="taglibs" %>
 
 <div style="-rave-layout: grid">
-	<form:form>
 		<div id="lang">
-			<a class="link_home" href="${pageContext.request.contextPath}/index.html" style="height: 24px; width: 46px"><fmt:message key="common.home"/></a>
+			<a class="link_home" href="${pageContext.request.contextPath}/layers.html" style="height: 24px; width: 46px"><fmt:message key="common.home"/></a>
 			<a class="link_about" href="${pageContext.request.contextPath}/about.html" style="height: 24px; width: 46px"><fmt:message key="common.about"/></a>
-			<div id="title">
-				<h1>
-					<fmt:message key="common.applicationName"/>
-				</h1>
-			</div>
+			<div id="title"><fmt:message key="common.applicationName"/></div>
 		</div>
 		<div id="banner-contenedor">
-			<div id="banner">
-			</div>
+			<div id="banner" />
 		</div>
-	</form:form>
 </div>

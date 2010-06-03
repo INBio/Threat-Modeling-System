@@ -17,17 +17,15 @@
  */
 package org.inbio.modeling.web.controller;
 
-import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.inbio.modeling.core.dto.GrassLayerDTO;
-import org.inbio.modeling.core.layer.LayerType;
 import org.inbio.modeling.core.manager.FileManager;
 import org.inbio.modeling.core.manager.GrassManager;
-import org.inbio.modeling.web.form.EditIntervalForm;
-import org.inbio.modeling.web.form.converter.FormDTOConverter;
 import org.inbio.modeling.web.session.CurrentInstanceData;
+import org.inbio.modeling.web.session.SessionUtils;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractFormController;
@@ -67,8 +65,13 @@ public class ShowMapController extends AbstractFormController {
 
 		// retrieve the session Information.
 		session = request.getSession();
-		currentInstanceData =
-			(CurrentInstanceData)session.getAttribute("CurrentSessionInfo");
+		currentInstanceData = SessionUtils.isSessionAlive(session);
+
+		if(currentInstanceData == null){
+			Exception ex = new Exception("errors.noSession");
+			Logger.getLogger(ColumnController.class.getName()).log(Level.SEVERE, null, ex);
+			errors.reject(ex.getMessage());
+		}
 
 		// Send the layer list to the JSP
 		model = new ModelAndView();

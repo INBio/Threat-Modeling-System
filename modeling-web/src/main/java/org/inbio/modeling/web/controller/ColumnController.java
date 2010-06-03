@@ -30,16 +30,14 @@ import org.inbio.modeling.core.dto.CategoryDTO;
 import org.inbio.modeling.core.layer.LayerType;
 import org.inbio.modeling.core.manager.GrassManager;
 import org.inbio.modeling.web.form.ChooseColumnForm;
-import org.inbio.modeling.web.form.EditIntervalForm;
 import org.inbio.modeling.web.form.converter.FormDTOConverter;
 import org.inbio.modeling.web.form.util.Category;
 import org.inbio.modeling.web.form.util.Layer;
 import org.inbio.modeling.web.session.CurrentInstanceData;
+import org.inbio.modeling.web.session.SessionUtils;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractFormController;
-
-
 
 
 /**
@@ -78,28 +76,33 @@ public class ColumnController extends AbstractFormController {
 
 		// retrieve the session Information.
 		session = request.getSession();
-		currentInstanceData = (CurrentInstanceData) session.getAttribute("CurrentSessionInfo");
 
-		currentSessionId = currentInstanceData.getUserSessionId();
-		resolution = currentInstanceData.getResolution();
-		layers = currentInstanceData.getLayerList();
 
-		try {
+		currentInstanceData = SessionUtils.isSessionAlive(session);
 
-			//Import the layers
-			this.importLayers(resolution, layers, currentSessionId);
+		if(currentInstanceData != null && errors != null && !errors.hasErrors()){
 
-			// Asign the type to the layer.
-			layers = this.asingType2Layer(layers, currentSessionId);
+			currentSessionId = currentInstanceData.getUserSessionId();
+			resolution = currentInstanceData.getResolution();
+			layers = currentInstanceData.getLayerList();
 
-			// retrieve dataColumns
-			layers = this.retrieveColumns(layers, currentSessionId);
+			try {
 
-		} catch (Exception ex) {
-			Logger.getLogger(ColumnController.class.getName()).log(Level.SEVERE, null, ex);
-			errors.reject(ex.getMessage());
+				//Import the layers
+				this.importLayers(resolution, layers, currentSessionId);
+
+				// Asign the type to the layer.
+				layers = this.asingType2Layer(layers, currentSessionId);
+
+				// retrieve dataColumns
+				layers = this.retrieveColumns(layers, currentSessionId);
+
+			} catch (Exception ex) {
+				Logger.getLogger(ColumnController.class.getName()).log(Level.SEVERE, null, ex);
+				errors.reject(ex.getMessage());
+			}
+
 		}
-
 		// asing the columns to the jsp.
 		cForm = new ChooseColumnForm();
 		cForm.setLayers(layers);
@@ -139,49 +142,58 @@ public class ColumnController extends AbstractFormController {
 
 		// retrieve the session Information.
 		session = request.getSession();
-		currentInstanceData =
-			(CurrentInstanceData)session.getAttribute("CurrentSessionInfo");
 
-		currentSessionId = currentInstanceData.getUserSessionId();
+		currentInstanceData = SessionUtils.isSessionAlive(session);
 
-		try {
+		if(currentInstanceData != null){
 
-			// extract and format the information of the dataColumn to use.
-			for(Layer layer : cForm.getLayers()){
+			currentSessionId = currentInstanceData.getUserSessionId();
 
-				// split the information that comes from the Form
-				columnElements = layer.getColumns().get("selected").split(":");
+			try {
 
-				// convert the array to a HashMap
-				column = new HashMap<String,String>();
-				column.put("selected", columnElements[0]);
-				layer.setColumns(column);
+				// extract and format the information of the dataColumn to use.
+				for(Layer layer : cForm.getLayers()){
 
-				if(columnElements.length > 1 && columnElements[1].equals("CHARACTER")){
-					// vectorial reclasification
-					this.vectorialReclassification(layer, currentSessionId);
-				}else{
-					this.renameFile(layer, currentSessionId);
+					// split the information that comes from the Form
+					columnElements = layer.getColumns().get("selected").split(":");
+
+					// convert the array to a HashMap
+					column = new HashMap<String,String>();
+					column.put("selected", columnElements[0]);
+					layer.setColumns(column);
+
+					if(columnElements.length > 1 && columnElements[1].equals("CHARACTER")){
+						// vectorial reclasification
+						this.vectorialReclassification(layer, currentSessionId);
+					}else{
+						this.renameFile(layer, currentSessionId);
+					}
+
+					//convert the layer to a raster format
+					this.layer2Raster(layer, currentSessionId);
+
+					if( columnElements.length > 1 && layer.getType() == LayerType.AREA ){
+
+						//asign the categories
+						this.asignCategories2Layer(layer
+							, columnElements[1]
+							, currentSessionId);
+					}else{
+						//asign the categories
+						this.asignCategories2Layer(layer
+							, "cat"
+							, currentSessionId);
+					}
 				}
 
-				//convert the layer to a raster format
-				this.layer2Raster(layer, currentSessionId);
-
-				if( columnElements.length > 1 && layer.getType() == LayerType.AREA ){
-
-					//asign the categories
-					this.asignCategories2Layer(layer
-												, columnElements[1]
-												, currentSessionId);
-				}else{
-					//asign the categories
-					this.asignCategories2Layer(layer
-												, "cat"
-												, currentSessionId);
-				}
+			} catch (Exception ex) {
+				Logger.getLogger(ColumnController.class.getName()).log(Level.SEVERE, null, ex);
+				errors.reject(ex.getMessage());
+				return showForm(request, response, errors);
 			}
+		}else{
 
-		} catch (Exception ex) {
+			Exception ex = new Exception("errors.noSession");
 			Logger.getLogger(ColumnController.class.getName()).log(Level.SEVERE, null, ex);
 			errors.reject(ex.getMessage());
 			return showForm(request, response, errors);
