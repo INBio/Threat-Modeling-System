@@ -394,7 +394,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	}
 
 	@Override
-	public void asingBuffers(String layerName, String distances, Long suffix)
+	public void asingBuffers(String layerName, String distances, int magicNumber, boolean reverted, Long suffix)
 		throws Exception{
 
 		int result = 0;
@@ -407,6 +407,8 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		commands.add(scriptHome+asingBuffers);
 		commands.add(layerName);
 		commands.add(distances);
+		commands.add(magicNumber+"");
+		commands.add(reverted+"");
 		commands.add(suffix.toString());
 
 

@@ -84,7 +84,7 @@ public class IntervalsController extends AbstractFormController {
 					// trigger the reclassification script.
 					this.reclass(layer, currentSessionId);
 				}else{
-
+					// create the buffers.
 					this.createBuffers(layer, currentSessionId);
 				}
 			}
@@ -146,8 +146,12 @@ public class IntervalsController extends AbstractFormController {
 		return model;
 	}
 
-
-
+	/**
+	 * Create a rules file to reclassificate a raster map. (change the cateogires).
+	 * @param layer
+	 * @param currentSessionId
+	 * @throws Exception
+	 */
 	private void writeFile(GrassLayerDTO layer, Long currentSessionId) throws Exception{
 		try {
 			// write the categories file.
@@ -158,6 +162,12 @@ public class IntervalsController extends AbstractFormController {
 
 	}
 
+	/**
+	 * Change the clasification of a vector map.
+	 * @param layer
+	 * @param currentSessionId
+	 * @throws Exception
+	 */
 	private void reclass(GrassLayerDTO layer, Long currentSessionId) throws Exception{
 		try {
 			this.grassManagerImpl.advanceReclasification(layer, currentSessionId);
@@ -167,6 +177,12 @@ public class IntervalsController extends AbstractFormController {
 
 	}
 
+	/**
+	 * Create buffers in a line type vector file
+	 * @param layer
+	 * @param currentSessionId
+	 * @throws Exception
+	 */
 	private void createBuffers(GrassLayerDTO layer, Long currentSessionId) throws Exception{
 		try {
 			this.grassManagerImpl.asingBuffers(layer, currentSessionId);
@@ -176,7 +192,13 @@ public class IntervalsController extends AbstractFormController {
 
 	}
 
-
+	/**
+	 * executes a weighted Sum in a list of layers
+	 * @param selectedLayers
+	 * @param currentSessionId
+	 * @return
+	 * @throws Exception
+	 */
 	private GrassLayerDTO weightedSum(List<GrassLayerDTO> selectedLayers, Long currentSessionId) throws Exception{
 
 		GrassLayerDTO layer1 = null;
@@ -209,6 +231,13 @@ public class IntervalsController extends AbstractFormController {
 		return layer3;
 	}
 
+
+	/**
+	 * Set the color scale of the map, the default color scale is gyr.
+	 * @param layer
+	 * @param currentSessionId
+	 * @throws Exception
+	 */
 	private void setColorScale(GrassLayerDTO layer, Long currentSessionId) throws Exception{
 		try {
 			this.grassManagerImpl.asingColorScale(layer, currentSessionId);
@@ -218,6 +247,12 @@ public class IntervalsController extends AbstractFormController {
 
 	}
 
+	/**
+	 * Create an image file from the specified layer.
+	 * @param layer
+	 * @param currentSessionId
+	 * @throws Exception
+	 */
 	private void createImage(GrassLayerDTO layer, Long currentSessionId) throws Exception{
 		try {
 			this.grassManagerImpl.exportLayer2Image(layer, currentSessionId);
@@ -225,7 +260,6 @@ public class IntervalsController extends AbstractFormController {
 			throw new Exception("errors.cantCreateImage", ex);
 		}
 	}
-
 
 
 	/* Getters and Setters */

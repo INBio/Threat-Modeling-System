@@ -8,10 +8,13 @@
 # Arguments
 MAP=$1
 DISTANCES=$2
-SUFFIX=$3
+MAGIC_NUMBER=$3
+REVERTED=$4
+SUFFIX=$5
 
 # Variables
 RMAP=R_"$MAP"_"$SUFFIX"
+TEMP=Temp_"$SUFFIX"
 ROMAP=R_"$MAP"_"$SUFFIX"_r 
 
 # Initialization
@@ -20,6 +23,13 @@ export GISBASE="/usr/lib/grass64"
 export PATH="$PATH:$GISBASE/bin:$GISBASE/scripts"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$GISBASE/lib"
 
-RESULT=$(r.buffer input="$RMAP" output="$ROMAP" distances="$DISTANCES" units=meters --quiet --overwrite);
+r.buffer input="$RMAP" output="$TEMP" distances="$DISTANCES" units=meters --quiet --overwrite;
+
+if [ "true" == "$REVERTED" ];
+then
+	r.mapcalc "$ROMAP = $MAGIC_NUMBER - $TEMP ";
+else
+	g.rename rast="$TEMP","$ROMAP";
+fi;
 
 exit $RESULT

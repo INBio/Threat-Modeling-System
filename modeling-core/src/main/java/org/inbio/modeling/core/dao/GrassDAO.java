@@ -194,6 +194,8 @@ public interface GrassDAO extends BaseDAO {
 	 */
 	public void asingBuffers(String layerName
 							, String distances
+							, int magicNumber
+							, boolean reverted
 							, Long suffix)
 							throws Exception;
 

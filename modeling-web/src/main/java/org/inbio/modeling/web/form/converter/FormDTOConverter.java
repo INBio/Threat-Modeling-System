@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.inbio.modeling.core.dto.CategoryDTO;
 import org.inbio.modeling.core.dto.GrassLayerDTO;
-import org.inbio.modeling.core.dto.LayerDTO;
 import org.inbio.modeling.web.form.util.Category;
 
 /**
@@ -50,6 +49,7 @@ public class FormDTOConverter {
 		layerDTO.setWeight(layer.getWeight());
 		layerDTO.setType(layer.getType());
 		layerDTO.setCategories(convert(layer.getCategories(), CategoryDTO.class));
+		layerDTO.setReverted(layer.isReverted());
 
 		return layerDTO;
 
@@ -73,6 +73,7 @@ public class FormDTOConverter {
 		layerForm.setColumns(layer.getColumns());
 		layerForm.setWeight(layer.getWeight());
 		layerForm.setType(layer.getType());
+		layerForm.setReverted(layer.isReverted());
 
 		layerForm.setCategories(
 			convert(layer.getCategories(), Category.class));

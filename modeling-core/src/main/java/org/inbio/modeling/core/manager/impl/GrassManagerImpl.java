@@ -269,7 +269,7 @@ public class GrassManagerImpl implements GrassManager {
 
 	@Override
 	/**
-	 * @see org.inbio.modeling.core.manager.GrassManager#asingBuffers(String layerName, String distances, Long suffix)
+	 * @see org.inbio.modeling.core.manager.GrassManager#asingBuffers(Layer layerName,  Long suffix)
 	 */
 	public void asingBuffers(GrassLayerDTO layer, Long suffix)
 		throws Exception{
@@ -278,21 +278,26 @@ public class GrassManagerImpl implements GrassManager {
 		String distances = null;
 		int	listLenght = -1;
 
+		categoryList = layer.getCategories();
+		listLenght = categoryList.size();
+		distances = "";
 
-				categoryList = layer.getCategories();
-				listLenght = categoryList.size();
-				distances = "";
-
-				for(CategoryDTO cat :layer.getCategories()){
-					if(listLenght > 1)
-						distances += cat.getValue() + ",";
-					else
-						distances += cat.getValue();
-					listLenght--;
-				}
+		for(CategoryDTO cat :layer.getCategories()){
+			if(listLenght > 1)
+				distances += cat.getValue() + ",";
+			else
+				distances += cat.getValue();
+			listLenght--;
+		}
 
 
-		this.grassDAOImpl.asingBuffers(layer.getName(), distances, suffix);
+
+		// asing the buffers to the grass database
+		this.grassDAOImpl.asingBuffers(layer.getName()
+										, distances
+										, 1+categoryList.size()	 // the min value plus the max value
+										, layer.isReverted()
+										, suffix);
 	}
 
 	@Override

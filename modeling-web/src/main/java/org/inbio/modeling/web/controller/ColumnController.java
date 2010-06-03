@@ -171,13 +171,13 @@ public class ColumnController extends AbstractFormController {
 
 					//asign the categories
 					this.asignCategories2Layer(layer
-						, columnElements[1]
-						, currentSessionId);
+												, columnElements[1]
+												, currentSessionId);
 				}else{
 					//asign the categories
 					this.asignCategories2Layer(layer
-						, "cat"
-						, currentSessionId);
+												, "cat"
+												, currentSessionId);
 				}
 			}
 
@@ -199,6 +199,12 @@ public class ColumnController extends AbstractFormController {
 	}
 
 
+	/**
+	 * change the name of a vector map.
+	 * @param layer
+	 * @param currentSessionId
+	 * @throws Exception
+	 */
 	private void renameFile(Layer layer, Long currentSessionId) throws Exception{
 		try {
 			this.grassManagerImpl.renameFile(FormDTOConverter.convert(layer), currentSessionId);
