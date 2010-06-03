@@ -91,6 +91,10 @@ function edit(radio){
 	var categoryDiv =  undefined;
 
 	for(var item in radios){
+
+		if(item == "item")
+			break;
+
 		rad = radios[item];
 		displayStyle = document.getElementById(rad.id+"_cats").style.display;
 		categoryDiv = document.getElementById(rad.id+"_cats");

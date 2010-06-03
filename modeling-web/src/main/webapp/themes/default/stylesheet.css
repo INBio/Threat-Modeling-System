@@ -6,185 +6,234 @@
         CSS to customize the gui of this application
 */
 
-html {height:100%}
+
 body {
-    height: 100%;
-    width:100%;
-    margin: 0 0 50px 0;
-    font-size:0.8em;    
-    }
-#command {margin:0}
+	height: 100%;
+	width:100%;
+	margin: 0 0 0 0;
 
-/* Banner title */
-#title h1 {
-    float: left;
-    position:absolute;
-    font-family:arial, helvetica, sans-serif;
-    font-size:30px;
-    font-weight:bold;
-    margin:0;
-    width:800px;
-    padding: 42px 0 0 110px;
-    height:50px;
-    color:white;
-    background: url(images/banner-icon.png);
-    background-repeat:no-repeat;
-    background-position: 10px 15px;
-}
-
-/* Banner style */
-#banner {
-    background: url(images/banner.jpg) no-repeat 0 0;
-    height: 120px;
-}
-#banner-rep {
-    background: url(images/banner-rep.jpg) repeat-x 960px 0;
-    height: 120px;
 }
 
 /* Style for the language links */
 #lang {
-    width: 250px;
-    height:20px;
-    padding: 100px 0 0 0;
-    float:right;
-    z-index:999
+	width: 100%;
+	height:18px;
+	z-index:auto;
+	padding-top: 15px;
+	padding-right: 0;
+	padding-bottom: 0;
+	padding-left: 0;
+	background-color:#043780;
+	vertical-align: middle;
+
 }
 
-/* Para el ccontenido de cada .jsp */
-#contenido {
-    text-align:justify;
-    padding: 0 15% 0 15%;
-    background: url(images/bk-conten.png)  repeat-x  top center;
-    margin: 0;
-    height:100%;
+
+/* Banner title */
+#title h1 {
+	font-family:arial, helvetica, sans-serif;
+	text-align:center;
+	font-size: 18px;
+	font-weight:bold;
+	margin:0;
+	width:100%;
+	color:white;
+	position: absolute;
+	padding-top: 0px;
+	padding-right: 0;
+	padding-bottom: 0;
+	padding-left: 0px;
+	vertical-align: middle;
+	top: 8px;
 }
 
-#contenido h2{
-    margin:0;
-    text-align:center;
-    padding: 5px 0 5px 0;
+
+/* Banner style */
+#banner {
+	width:100%;
+	height: 80px;
+	background-image: url(images/bannerGis.jpg);
+	background-repeat: repeat-x;
+	background-position: center top;
+
+}
+#banner-contenedor {
+	height:80px;
+	width:100%;
+	background-color: #043780;
+	background-position: 0;
+	background-repeat: repeat-x;
 }
 
 /*____________________________________________________________________________*/
 
-.interval_txt{
-	width: 200px;
+/* Para divs contenido  Leila */
+
+#contenido {
+	width:100%;
+	vertical-align: top;
+	background-color: #FFFFDE;
+	float: none;
+	padding: 4px;
+
 }
 
-.interval_tbl{
-	width: 500px;
+
+.titulo-principal{
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 14px;
+	color: #C00;
+	vertical-align: top;
+	font-weight: bold;
+	text-align: center;
 }
 
-select {
-   display:block;
-   width:202px;
-   height:22px;
-   background-color:#dff4ff;
-   border:1px solid #456C84;
-   font-family:sans-serif;
-   font-size:100%;
-   line-height:130%;
-   text-align:left;
-   font-weight:normal;
-   color:#334563;
-   cursor:pointer;
-   padding:1px;
-   margin-top:3px;
-   margin-bottom:3px;
-   -moz-border-radius: 2px;
-   -webkit-border-radius: 2px;
+
+.texto-principal{
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 14px;
+	color: #C00;
+	vertical-align: top;
+	text-align: left;
 }
 
-.modeling_btn{
-   display:block;
-   width:202px;
-   height:22px;
-   background-color:#dff4ff;
-   border:1px solid #456C84;
-   font-family:sans-serif;
-   font-size:100%;
-   line-height:130%;
-   text-align:center;
-   font-weight:normal;
-   color:#334563;
-   cursor:pointer;
-   padding:1px;
-   margin-top:3px;
-   margin-bottom:3px;
-   -moz-border-radius: 2px;
-   -webkit-border-radius: 2px;
+/* tabla contenidos */
+
+.tabla-contenido {
+	background-color: #039;
+
 }
 
-.main_Btn{
-    margin:0 5px 0 5px;
-    width:228px;
+.celda01 {
+	background-color: #e3fcbc;
+	padding: 1px;
+	vertical-align: middle;
+
 }
 
-/* Para div de links del menu */
-#menu_links{
-    font-size:16px;
-    width:100%;
+.celda02 {
+	background-color: #BADD58;
+	padding: 10px;
+	vertical-align: middle;
+	text-align:center;
 }
+
+.link-celda02 {
+	background-color: #6ca513;
+	padding: 2px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+	color: #ffffff;
+	vertical-align:middle;
+}
+
+
+a.link-celda02:link {
+	color: #ffffff;
+}
+
+a.link-celda02:hover {
+	color: #F90;
+	text-decoration: underline;
+}
+
+a.link-celda02:visited {
+	color: #03C;
+	text-decoration: underline;
+	text-align: center;
+}
+
+/*____________________________________________________________________________*/
+
+
 /* Para los links del menu */
 .link{
     padding: 3px 0 0 35px;
-    background: url(images/tabs.png);
+    background: url(web/images/tabs.png);
     background-repeat:no-repeat;
     background-position: 10px 3px;
 }
 
 .link_back{
     padding: 3px 0 0 35px;
-    background: url(images/back.png);
+    background: url(web/images/back.png);
     background-repeat:no-repeat;
     background-position: 10px 3px;
 }
 
-/* Para el link de home */
+/* Para el link de home modificado Leila */
 .link_home{
-    padding: 12px 0 0 40px;
-    background: url(images/home.png);
-    background-repeat:no-repeat;
-    background-position: 10px 10px;
+	background: url(images/home.png);
+	background-repeat:no-repeat;
+	background-position: 143px 10px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 10px;
+	color: #FC0;
+	padding-top: 20px;
+	padding-right: 0;
+	padding-bottom: 0;
+	padding-left: 175px;
 }
 
-/* Para el link de about */
+/* Para el link de about modificado Leila*/
 .link_about{
-    padding: 12px 0 0 40px;
-    background: url(images/about.png);
-    background-repeat:no-repeat;
-    background-position: 10px 10px;
+	background-repeat:no-repeat;
+	background-position: 30px 10px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 10px;
+	color: #FC0;
+	padding-left: 60px;
+	padding-top: 20px;
+	padding-right: 0;
+	padding-bottom: 0px;
+	background-image: url(images/about.png);
 }
 
-.titles {
-	font-size:24px;
-	font-family:"Times New Roman", Times, serif;
-	font-weight:bold;
-	color: #C82B0F;
-	}
 
-.texts {
+.textos {
 	font-size:12px;
-	color:#2E2E2E;
+	color:black;
 	font-family: Arial, Helvetica, sans-serif;
-	text-align: justify;
-	margin: 12px 35px 12px 35px;
 	font-style: normal;
 	line-height: normal;
-	}
+}
 
-.errors{
 
-	margin: 35px;
-	padding: 15px;
+.textosnegrita {
+	font-size:12px;
+	color: black;
+	font-family: Arial, Helvetica, sans-serif;
+	font-style: normal;
+	line-height: normal;
+	font-weight: bold;
+}
+
+
+/*____________________________________________________________________________*/
+
+/* Pie p�gina Leila */
+
+#piepagina {
+	width: 100%;
+	height:12px;
+	z-index:auto;
+	background-color:#FFA652;
 	vertical-align: middle;
-	background-color: #cccccc;
-   -moz-border-radius: 15px;
-   -webkit-border-radius: 15px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 10px;
+	font-weight: normal;
+	text-align: center;
+	padding: 4px;
+}
 
-	text-align: left;
-	text-indent: 30px;
-    color: #e60f0f;
-    font-weight: bold;
+#map {
+}
+
+#scale {
+	background-image: url(images/scale.jpg);
+	background-repeat:no-repeat;
+	padding-top: 194px;
+	padding-right: 0;
+	padding-bottom: 0px;
 }

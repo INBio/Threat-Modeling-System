@@ -31,40 +31,50 @@
 				</div>
 			</spring:hasBindErrors>
 
-			<div id="map">
-				<img alt="<fmt:message key='maps.resultingMap' />" src="/resmaps/R_${fullSessionInfo.imageName}_${fullSessionInfo.userSessionId}_r.png" />
-			</div>
-			<div id="generalInfo">
-				<table>
-					<tbody>
-						<tr>
-							<td><fmt:message key="showMap.resolution" /></td>
-							<td><c:out value="${fullSessionInfo.resolution}" /></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<div id="categoryInfo">
-				<table>
-					<tbody>
+			<table width="100%" border="0">
+				<tr>
+					<td style="vertical-align: bottom; text-align:  right">
+						up
+						<br />
+						<div id="scale" />
+						down
+					</td>
+					<td style="text-align: left; width: 50%">
+						<div id="map" >
+							<img alt="<fmt:message key='maps.resultingMap' />" src="/resmaps/R_${fullSessionInfo.imageName}_${fullSessionInfo.userSessionId}_r.png" />
+						</div>
 
-						<c:forEach items="${fullSessionInfo.layerList}" var="layer" >
-							<tr>
-								<td><c:out value="${layer.name}" /><fmt:message key="showMap.categories" /></td>
-							</tr>
-							<tr>
-								<td>valor</td>
-								<td>Description</td>
-							</tr>
-							<c:forEach items="${layer.categories}" var="category">
-								<tr>
-									<td><c:out value="${category.value}" /></td>
-									<td><c:out value="${category.description}" /></td>
+					</td>
+					<td colspan="1" >
+						<div id="categoryInfo">
+							<table class="tabla-contenido">
+								<tr class="celda02"  >
+									<td colspan="2"><span class="textosnegrita"><fmt:message key="showMap.leyend" /></span></td>
 								</tr>
-							</c:forEach>
-						</c:forEach>
-					</tbody>
-				</table>
+								<tr class="celda01" align="right"  >
+									<td width="50%"><span class="textosnegrita"><fmt:message key="showMap.resolution" /></span></td>
+									<td><span class="textos"><c:out value="${fullSessionInfo.resolution}" /></span></td>
+								</tr>
+								<c:forEach items="${fullSessionInfo.layerList}" var="layer" >
+									<tr class="celda02">
+									<span class="textosnegrita">
+										<td colspan="2"><c:out value="${layer.name}" /><fmt:message key="showMap.categories" /></td>
+									</span>
+									</tr>
+									<c:forEach items="${layer.categories}" var="category">
+										<tr class="celda01">
+											<td><span class="textos"><c:out value="${category.value}" /></span></td>
+											<td><span class="textos"><c:out value="${category.description}" /></span></td>
+										</tr>
+									</c:forEach>
+								</c:forEach>
+							</table>
+						</div>
+					</td>
+				</tr>
+			</table>
+			<div id="footer">
+				<jsp:include page="/common/footer.jsp"/>
 			</div>
 		</div>
 	</body>
