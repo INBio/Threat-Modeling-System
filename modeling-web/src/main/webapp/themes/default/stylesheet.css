@@ -161,14 +161,14 @@ a.link-celda02:visited {
 .link_home{
 	background: url(images/home.png);
 	background-repeat:no-repeat;
-	background-position: 143px 10px;
+	background-position: 30px 10px;
 	font-family: Verdana, Geneva, sans-serif;
 	font-size: 10px;
 	color: #FC0;
+	padding-left: 60px;
 	padding-top: 20px;
 	padding-right: 0;
-	padding-bottom: 0;
-	padding-left: 175px;
+	padding-bottom: 0px;
 }
 
 /* Para el link de about modificado Leila*/

@@ -13,10 +13,15 @@
 		</div>
 		<div id="contenido">
 			<h2><fmt:message key="title.admin"/></h2>
-			<ol>
-				<li><a href="listUsers.html">Usuarios</a></li>
-				<li><a href="listLayers.html">Capas</a></li>
-			</ol>
+			<div style="padding-left: 40%; text-align: left">
+				<ol>
+					<li><a href="listUsers.html">Usuarios</a></li>
+					<li><a href="listLayers.html">Capas</a></li>
+				</ol>
+			</div>
+		</div>
+		<div id="footer">
+			<jsp:include page="/common/footer.jsp"/>
 		</div>
 	</body>
 </html>
