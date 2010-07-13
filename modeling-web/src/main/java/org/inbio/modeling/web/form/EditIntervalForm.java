@@ -24,12 +24,12 @@ public class EditIntervalForm implements Validator {
 		LazyList.decorate( new ArrayList(),
 						   FactoryUtils.instantiateFactory(Layer.class));
 
-	@Override
+
 	public boolean supports(Class clazz) {
 		return EditIntervalForm.class.equals(clazz);
 	}
 
-	@Override
+
 	public void validate(Object target, Errors errors) {
 
 		EditIntervalForm  form = (EditIntervalForm) target;

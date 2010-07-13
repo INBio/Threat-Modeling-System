@@ -23,15 +23,15 @@ public class ListLayerForm implements Validator{
 	private Double resolution;
 	private String projection;
 	private List<Layer> layerList =
-		LazyList.decorate( new ArrayList(),
+		LazyList.decorate( new ArrayList<Object>(),
 						   FactoryUtils.instantiateFactory(Layer.class));
 
-	@Override
+
 	public boolean supports(Class clazz) {
 		return ListLayerForm.class.equals(clazz);
 	}
 
-	@Override
+
 	public void validate(Object target, Errors errors) {
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "resolution", "errors.empty.resolution");
