@@ -24,7 +24,7 @@
 					<font color="red">${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</font>
 				</c:if>
 
-					<div align="center" >
+				<div align="center" >
 					<table  class="tabla-contenido" cellspacing="0">
 						<tr class="celda01">
 							<td>
@@ -49,7 +49,7 @@
 							</td>
 						</tr>
 					</table>
-							</div>
+				</div>
 
 			</form>
 		</div>
