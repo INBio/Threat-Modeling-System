@@ -20,47 +20,60 @@
 
 <!-- main workflow stuff -->
 
+<!-- Form validators -->
 <bean id="layerFormValidator" class="org.inbio.modeling.web.form.ListLayerForm" />
 <bean id="editIntervalValidator" class="org.inbio.modeling.web.form.EditIntervalForm" />
 
+<!-- Workflow controllers -->
     <bean id="layerController" class="org.inbio.modeling.web.controller.LayerController">
 		<property name="commandName" value="layersForm" />
         <property name="commandClass" value="org.inbio.modeling.web.form.ListLayerForm" />
+
 		<property name="layerManager" ref="layerManager" />
+        <property name="columnController" ref="columnController" />
+
 		<property name="validator" ref="layerFormValidator" />
 	</bean>
 
-	<bean name="columnController" class="org.inbio.modeling.web.controller.ColumnController">
+	<bean id="columnController" class="org.inbio.modeling.web.controller.ColumnController">
 		<property name="commandName" value="columnsForm" />
         <property name="commandClass" value="org.inbio.modeling.web.form.ChooseColumnForm" />
+
         <property name="grassManagerImpl" ref="grassManager" />
+        <property name="intervalsController" ref="intervalsController" />
 	</bean>
-	<bean name="intervalsController" class="org.inbio.modeling.web.controller.IntervalsController" >
+
+	<bean id="intervalsController" class="org.inbio.modeling.web.controller.IntervalsController" >
 		<property name="commandName" value="intervalsForm" />
         <property name="commandClass" value="org.inbio.modeling.web.form.EditIntervalForm" />
+
         <property name="fileManagerImpl" ref="fileManager" />
+        <property name="grassManagerImpl" ref="grassManager" />
+        <property name="showMapController" ref="showMapController" />
+
 		<property name="validator" ref="editIntervalValidator" />
-        <property name="grassManagerImpl" ref="grassManager" />
 	</bean>
-	<bean name="showMapController" class="org.inbio.modeling.web.controller.ShowMapController" >
-        <property name="grassManagerImpl" ref="grassManager" />
-		<property name="commandName" value="intervalsForm" />
-        <property name="fileManagerImpl" ref="fileManager" />
+	<bean id="showMapController" class="org.inbio.modeling.web.controller.ShowMapController" >
         <property name="commandClass" value="org.inbio.modeling.web.form.EditIntervalForm" />
+		<property name="commandName" value="intervalsForm" />
+
+        <property name="grassManagerImpl" ref="grassManager" />
+        <property name="fileManagerImpl" ref="fileManager" />
+
 		<property name="validator" ref="editIntervalValidator" />
 	</bean>
 
 <!-- administrative stuff -->
-	<bean name="administrationController" class="org.inbio.modeling.web.controller.AdministrationController" >
+	<bean id="administrationController" class="org.inbio.modeling.web.controller.AdministrationController" >
 		<property name="commandName" value="intervalsForm" />
         <property name="commandClass" value="org.inbio.modeling.web.form.ListLayerForm" />
 	</bean>
 
-    <bean name="loginController"
+    <bean id="loginController"
           class="org.springframework.web.servlet.mvc.ParameterizableViewController"
           p:viewName="admin/login" />
 
-    <bean name="accessDeniedController"
+    <bean id="accessDeniedController"
           class="org.springframework.web.servlet.mvc.ParameterizableViewController"
           p:viewName="admin/access" />
 

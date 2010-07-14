@@ -38,6 +38,7 @@ import org.springframework.web.servlet.mvc.AbstractFormController;
 public class LayerController extends AbstractFormController {
 
     private LayerManager layerManager;
+    private ColumnController columnController;
 
 	@Override
 	protected ModelAndView showForm(HttpServletRequest request
@@ -129,11 +130,15 @@ public class LayerController extends AbstractFormController {
 			return showForm(request, response, errors);
 		}
 
+
+        return columnController.showForm(request, response, errors);
+        /*
 		// Send the layer list to the JSP
 		model = new ModelAndView();
 		model.setViewName("redirect:columns.html");
 
         return model;
+        */
 	}
 
 	/* getters & setters */
@@ -144,4 +149,12 @@ public class LayerController extends AbstractFormController {
 	public void setLayerManager(LayerManager layerManager) {
 		this.layerManager = layerManager;
 	}
+
+    public ColumnController getColumnController() {
+        return columnController;
+    }
+
+    public void setColumnController(ColumnController columnController) {
+        this.columnController = columnController;
+    }
 }

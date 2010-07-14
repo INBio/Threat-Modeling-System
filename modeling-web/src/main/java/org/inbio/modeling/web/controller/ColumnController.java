@@ -48,6 +48,7 @@ public class ColumnController extends AbstractFormController {
 
 	/** manager to comunicate with grass gis software */
 	private GrassManager grassManagerImpl;
+    private IntervalsController intervalsController;
 
 	@Override
 	protected ModelAndView handleInvalidSubmit(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -203,11 +204,14 @@ public class ColumnController extends AbstractFormController {
 		currentInstanceData.setLayerList(cForm.getLayers());
 		session.setAttribute("CurrentSessionInfo", currentInstanceData);
 
+        return intervalsController.showForm(request, response, errors);
+        /*
 		// Send the layer list to the JSP
 		model = new ModelAndView();
 		model.setViewName("redirect:intervals.html");
 
 		return model;
+        */
 	}
 
 
@@ -396,4 +400,12 @@ public class ColumnController extends AbstractFormController {
 	public void setGrassManagerImpl(GrassManager grassManagerImpl) {
 		this.grassManagerImpl = grassManagerImpl;
 	}
+
+    public IntervalsController getIntervalsController() {
+        return intervalsController;
+    }
+
+    public void setIntervalsController(IntervalsController intervalsController) {
+        this.intervalsController = intervalsController;
+    }
 }

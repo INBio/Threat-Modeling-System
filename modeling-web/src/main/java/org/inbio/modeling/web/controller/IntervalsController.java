@@ -40,9 +40,12 @@ import org.springframework.web.servlet.mvc.AbstractFormController;
  */
 public class IntervalsController extends AbstractFormController {
 
-	/** manager to comunicate with the grass gis software */
+	// manager to comunicate with the grass gis software
 	private GrassManager grassManagerImpl;
+    // manager to read or write to the File System
 	private FileManager fileManagerImpl;
+    // Show the final map and the information related  to it
+    private ShowMapController showMapController;
 
 	@Override
 	protected ModelAndView processFormSubmission(HttpServletRequest request
@@ -118,12 +121,17 @@ public class IntervalsController extends AbstractFormController {
 		currentInstanceData.setLayerList(form.getLayers());
 		session.setAttribute("CurrentSessionInfo", currentInstanceData);
 
+        return showMapController.showForm(request, response, errors);
+
+        /**
 
 		// Send the layer list to the JSP
 		model = new ModelAndView();
 		model.setViewName("redirect:showResultingMap.html");
 
 		return model;
+         *
+         */
 
 	}
 
@@ -296,4 +304,12 @@ public class IntervalsController extends AbstractFormController {
 	public void setFileManagerImpl(FileManager fileManagerImpl) {
 		this.fileManagerImpl = fileManagerImpl;
 	}
+
+    public ShowMapController getShowMapController() {
+        return showMapController;
+    }
+
+    public void setShowMapController(ShowMapController showMapController) {
+        this.showMapController = showMapController;
+    }
 }

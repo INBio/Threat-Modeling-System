@@ -44,7 +44,7 @@ public class ShowMapController extends AbstractFormController {
 	protected ModelAndView processFormSubmission(HttpServletRequest request
 		, HttpServletResponse response
 		, Object command
-		, BindException errors) throws Exception{
+		, BindException errors){
 
 		return null;
 	}
