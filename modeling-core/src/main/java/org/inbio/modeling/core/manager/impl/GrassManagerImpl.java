@@ -44,7 +44,10 @@ public class GrassManagerImpl implements GrassManager {
         this.grassDAOImpl.createNewLocation(newLocationName);
     }
 
-
+    @Override
+    public void setRegion(String limitLayerName, Long suffix) throws Exception{
+        this.grassDAOImpl.setRegion(limitLayerName, suffix);
+    }
 
 	@Override
 	/**

@@ -30,9 +30,18 @@
         <property name="commandClass" value="org.inbio.modeling.web.form.ListLayerForm" />
 
 		<property name="layerManager" ref="layerManager" />
-        <property name="columnController" ref="columnController" />
+        <property name="limitController" ref="limitController" />
 
 		<property name="validator" ref="layerFormValidator" />
+	</bean>
+
+    <bean id="limitController" class="org.inbio.modeling.web.controller.LimitController">
+		<property name="commandName" value="limitForm" />
+        <property name="commandClass" value="org.inbio.modeling.web.form.ChooseLimitLayerForm" />
+
+        <property name="grassManagerImpl" ref="grassManager" />
+        <property name="columnController" ref="columnController" />
+
 	</bean>
 
 	<bean id="columnController" class="org.inbio.modeling.web.controller.ColumnController">

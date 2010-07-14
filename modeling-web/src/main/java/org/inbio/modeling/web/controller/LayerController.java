@@ -38,7 +38,7 @@ import org.springframework.web.servlet.mvc.AbstractFormController;
 public class LayerController extends AbstractFormController {
 
     private LayerManager layerManager;
-    private ColumnController columnController;
+    private LimitController limitController;
 
     @Override
     protected ModelAndView showForm(HttpServletRequest request
@@ -130,7 +130,7 @@ public class LayerController extends AbstractFormController {
         }
 
 
-        return columnController.showForm(request, response, errors);
+        return limitController.showForm(request, response, errors);
     }
 
     /* getters & setters */
@@ -142,11 +142,11 @@ public class LayerController extends AbstractFormController {
         this.layerManager = layerManager;
     }
 
-    public ColumnController getColumnController() {
-        return columnController;
+    public LimitController getLimitController() {
+        return limitController;
     }
 
-    public void setColumnController(ColumnController columnController) {
-        this.columnController = columnController;
+    public void setLimitController(LimitController limitController) {
+        this.limitController = limitController;
     }
 }

@@ -216,4 +216,11 @@ public interface GrassDAO extends BaseDAO {
      */
     public void createNewLocation(String name) throws Exception;
 
+    /**
+     * Configure the general region according to a specific layer.
+     * @param limitLayerName
+     * @param suffix
+     * @throws Exception
+     */
+    public void setRegion(String limitLayerName, Long suffix) throws Exception;
 }

@@ -73,7 +73,6 @@ public class ColumnController extends AbstractFormController {
 		HttpSession session = null;
 		List<Layer> layers = null;
 		ModelAndView model = null;
-		Double resolution = null;
 
 		// retrieve the session Information.
 		session = request.getSession();
@@ -84,13 +83,9 @@ public class ColumnController extends AbstractFormController {
 		if(currentInstanceData != null && errors != null && !errors.hasErrors()){
 
 			currentSessionId = currentInstanceData.getUserSessionId();
-			resolution = currentInstanceData.getResolution();
 			layers = currentInstanceData.getLayerList();
 
 			try {
-
-				//Import the layers
-				this.importLayers(resolution, layers, currentSessionId);
 
 				// Asign the type to the layer.
 				layers = this.asingType2Layer(layers, currentSessionId);
@@ -332,71 +327,6 @@ public class ColumnController extends AbstractFormController {
 		return layerList;
 	}
 
-	//TODO: make this better
-	/**
-	 * Import a layer from a specific file system path to the grass database.
-	 * @param resolution
-	 * @param layerList
-	 * @param currentSessionId
-	 */
-	private void importLayers(Double resolution , List<Layer> layerList , Long currentSessionId) throws Exception{
-
-        String newLocationName = "LOC_" + currentSessionId;
-
-        // 1. Crear la nueva Locacion copiando la default a un nuevo lugar.
-        // 2. Configurar Grass.
-        // 3. Asignar la resolucion.
-        // 4. Recorrer e iniciar importaciones.
-        //      3.1 Importar WFS
-        //      3.2 Importar SHP
-
-        this.grassManagerImpl.createNewLocation(newLocationName);
-        this.grassManagerImpl.configureEnvironment(newLocationName, currentSessionId);
-        this.grassManagerImpl.setResolution(resolution, currentSessionId);
-		for (Layer layer: layerList){
-			this.grassManagerImpl.importLayer(FormDTOConverter.convert(layer), currentSessionId);
-        }
-
-        /*
-		int counter = 0;
-		try {
-			// change the resolution
-			this.grassManagerImpl.setResolution(resolution, currentSessionId);
-		} catch (Exception ex) {
-			throw new Exception("errors.cantSetResolution",ex);
-		}
-
-
-		try {
-			// configure the location of grass
-		} catch (Exception ex) {
-			throw new Exception("errors.cantConfigureGrass", ex);
-		}
-
-		for (Layer layer: layerList){
-			if(counter++ == 1){
-				try {
-					// configure the location of grass
-					this.grassManagerImpl.configureEnvironment("LOC_" + currentSessionId, currentSessionId);
-				} catch (Exception ex) {
-					throw new Exception("errors.cantConfigureGrass", ex);
-				}
-
-
-				try {
-					// change the resolution
-					this.grassManagerImpl.setResolution(resolution, currentSessionId);
-				} catch (Exception ex) {
-					throw new Exception("errors.cantSetResolution", ex);
-				}
-			}
-			try {
-			} catch (Exception ex) {
-				throw new Exception("errors.cantImportLayer", ex);
-			}
-		}
-         */
-	}
 
 
 	/* Getters y Setters */

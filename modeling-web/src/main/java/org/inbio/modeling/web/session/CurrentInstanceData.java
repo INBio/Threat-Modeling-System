@@ -30,6 +30,7 @@ public class CurrentInstanceData{
 	private Double resolution;
 	private String projection;
 	private String imageName;
+    private String limitLayerName;
 
 	private List<Layer>  layerList;
 
@@ -72,4 +73,12 @@ public class CurrentInstanceData{
 	public void setImageName(String imageName) {
 		this.imageName = imageName;
 	}
+
+    public String getLimitLayerName() {
+        return limitLayerName;
+    }
+
+    public void setLimitLayerName(String limitLayerName) {
+        this.limitLayerName = limitLayerName;
+    }
 }

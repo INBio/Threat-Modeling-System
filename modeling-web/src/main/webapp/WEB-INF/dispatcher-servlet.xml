@@ -26,6 +26,7 @@
 
                 <prop key="index.html">indexController</prop>
                 <prop key="layers.html">layerController</prop>
+                <prop key="limit.html">limitController</prop>
                 <prop key="columns.html">columnController</prop>
                 <prop key="intervals.html">intervalsController</prop>
                 <prop key="showResultingMap.html">showMapController</prop>

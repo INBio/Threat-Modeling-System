@@ -35,6 +35,7 @@
 		<property name="rename" value="${scripts.rename}" />
 		<property name="setColorScale" value="${scripts.colorScale}" />
 		<property name="newLocation" value="${scripts.newLocation}" />
+		<property name="asingRegion" value="${scripts.asingRegion}" />
 	</bean>
 
     <bean id="layerDAO" class="org.inbio.modeling.core.dao.impl.LayerDAOImpl" parent="baseDAO" >

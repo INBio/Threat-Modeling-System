@@ -181,4 +181,12 @@ public interface GrassManager{
      * @throws Exception
      */
     public void createNewLocation(String newLocationName) throws Exception;
+
+
+    /**
+     * Sets a region in a grass location.
+     * @param limitLayerName
+     * @param suffix
+     */
+    public void setRegion(String limitLayerName, Long suffix) throws Exception;
 }

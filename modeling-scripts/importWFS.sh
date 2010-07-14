@@ -26,5 +26,6 @@ export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$GISBASE/lib"
 
 # Import the map.
 RESULT=$(v.in.wfs wfs=$MAP output=$VMAP --quiet);
+g.region vect="$VMAP"
 
 exit $RESULT;
