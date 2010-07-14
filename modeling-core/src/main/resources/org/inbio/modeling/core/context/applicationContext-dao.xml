@@ -34,6 +34,7 @@
 		<property name="asingBuffers" value="${scripts.asingBuffers}" />
 		<property name="rename" value="${scripts.rename}" />
 		<property name="setColorScale" value="${scripts.colorScale}" />
+		<property name="newLocation" value="${scripts.newLocation}" />
 	</bean>
 
     <bean id="layerDAO" class="org.inbio.modeling.core.dao.impl.LayerDAOImpl" parent="baseDAO" >

@@ -53,6 +53,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	private String asingBuffers;
 	private String rename;
 	private String setColorScale;
+    private String newLocation;
 
 
 	@Override
@@ -81,6 +82,30 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		this.printThis(result, stdout, stderr);
 
 	}
+
+    @Override
+    public void createNewLocation(String name) throws Exception{
+        int result = 0;
+		List<String> commands = null;
+		StringBuilder stdout = null;
+		StringBuilder stderr = null;
+		commands = new ArrayList<String>();
+
+		// Arguments of the command
+		commands.add(scriptHome+newLocation);
+		commands.add(name);
+
+		logger.debug("Executing command: "+commands.toString());
+
+		commandExecutor = new OSCommandSingleImpl();
+		// executes the command
+		result = commandExecutor.run(commands);
+		// gets the output of the execution
+		stdout = commandExecutor.getStandardOutput();
+		stderr = commandExecutor.getStandardError();
+		// Prints the output of the command for good or for bad.
+		this.printThis(result, stdout, stderr);
+    }
 
 	@Override
 	public void importLayer(String shortOutputName, String uri, Long suffix) throws Exception {
@@ -701,4 +726,12 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	public void setExportSHP(String exportSHP) {
 		this.exportSHP = exportSHP;
 	}
+
+    public String getNewLocation() {
+        return newLocation;
+    }
+
+    public void setNewLocation(String newLocation) {
+        this.newLocation = newLocation;
+    }
 }

@@ -122,17 +122,6 @@ public class IntervalsController extends AbstractFormController {
 		session.setAttribute("CurrentSessionInfo", currentInstanceData);
 
         return showMapController.showForm(request, response, errors);
-
-        /**
-
-		// Send the layer list to the JSP
-		model = new ModelAndView();
-		model.setViewName("redirect:showResultingMap.html");
-
-		return model;
-         *
-         */
-
 	}
 
 

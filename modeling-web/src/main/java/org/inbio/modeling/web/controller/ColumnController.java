@@ -205,13 +205,6 @@ public class ColumnController extends AbstractFormController {
 		session.setAttribute("CurrentSessionInfo", currentInstanceData);
 
         return intervalsController.showForm(request, response, errors);
-        /*
-		// Send the layer list to the JSP
-		model = new ModelAndView();
-		model.setViewName("redirect:intervals.html");
-
-		return model;
-        */
 	}
 
 
@@ -346,10 +339,25 @@ public class ColumnController extends AbstractFormController {
 	 * @param layerList
 	 * @param currentSessionId
 	 */
-	private void importLayers(Double resolution
-		, List<Layer> layerList
-		, Long currentSessionId) throws Exception{
+	private void importLayers(Double resolution , List<Layer> layerList , Long currentSessionId) throws Exception{
 
+        String newLocationName = "LOC_" + currentSessionId;
+
+        // 1. Crear la nueva Locacion copiando la default a un nuevo lugar.
+        // 2. Configurar Grass.
+        // 3. Asignar la resolucion.
+        // 4. Recorrer e iniciar importaciones.
+        //      3.1 Importar WFS
+        //      3.2 Importar SHP
+
+        this.grassManagerImpl.createNewLocation(newLocationName);
+        this.grassManagerImpl.configureEnvironment(newLocationName, currentSessionId);
+        this.grassManagerImpl.setResolution(resolution, currentSessionId);
+		for (Layer layer: layerList){
+			this.grassManagerImpl.importLayer(FormDTOConverter.convert(layer), currentSessionId);
+        }
+
+        /*
 		int counter = 0;
 		try {
 			// change the resolution
@@ -361,7 +369,6 @@ public class ColumnController extends AbstractFormController {
 
 		try {
 			// configure the location of grass
-			this.grassManagerImpl.configureEnvironment("Default", currentSessionId);
 		} catch (Exception ex) {
 			throw new Exception("errors.cantConfigureGrass", ex);
 		}
@@ -384,11 +391,11 @@ public class ColumnController extends AbstractFormController {
 				}
 			}
 			try {
-				this.grassManagerImpl.importLayer(FormDTOConverter.convert(layer), currentSessionId);
 			} catch (Exception ex) {
 				throw new Exception("errors.cantImportLayer", ex);
 			}
 		}
+         */
 	}
 
 

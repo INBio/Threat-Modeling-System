@@ -39,6 +39,12 @@ public class GrassManagerImpl implements GrassManager {
 
 	private GrassDAO grassDAOImpl;
 
+    @Override
+    public void createNewLocation(String newLocationName) throws Exception{
+        this.grassDAOImpl.createNewLocation(newLocationName);
+    }
+
+
 
 	@Override
 	/**
@@ -283,11 +289,13 @@ public class GrassManagerImpl implements GrassManager {
 		distances = "";
 
 		for(CategoryDTO cat :layer.getCategories()){
-			if(listLenght > 1)
-				distances += cat.getValue() + ",";
-			else
-				distances += cat.getValue();
-			listLenght--;
+            if(cat != null){
+                if(listLenght > 1)
+                    distances += cat.getValue() + ",";
+                else
+                    distances += cat.getValue();
+                listLenght--;
+            }
 		}
 
 

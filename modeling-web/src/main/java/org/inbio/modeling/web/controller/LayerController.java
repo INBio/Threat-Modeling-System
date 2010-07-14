@@ -40,115 +40,107 @@ public class LayerController extends AbstractFormController {
     private LayerManager layerManager;
     private ColumnController columnController;
 
-	@Override
-	protected ModelAndView showForm(HttpServletRequest request
-									, HttpServletResponse response
-									, BindException errors) {
+    @Override
+    protected ModelAndView showForm(HttpServletRequest request
+            , HttpServletResponse response
+            , BindException errors) {
 
-		CurrentInstanceData currentInstanceData = null;
-		ListLayerForm layerListForm = null;
-		HttpSession session = null;
-		ModelAndView model = null;
+        CurrentInstanceData currentInstanceData = null;
+        ListLayerForm layerListForm = null;
+        HttpSession session = null;
+        ModelAndView model = null;
 
-		// Create the object that will retain all the user information trought the process.
-		currentInstanceData = new CurrentInstanceData();
-		currentInstanceData.setUserSessionId(Calendar.getInstance().getTimeInMillis());
+        // Create the object that will retain all the user information trought the process.
+        currentInstanceData = new CurrentInstanceData();
+        currentInstanceData.setUserSessionId(Calendar.getInstance().getTimeInMillis());
 
-		// Asing the SessionInfo Object to the session
-		session = request.getSession(true);
+        // Asing the SessionInfo Object to the session
+        session = request.getSession(true);
 
-		//validate the new Session
-		if( !session.isNew() ){
-			session.invalidate();
-			session = request.getSession(true);
-		}
+        //validate the new Session
+        if( !session.isNew() ){
+            session.invalidate();
+            session = request.getSession(true);
+        }
 
-		session.setAttribute("CurrentSessionInfo", currentInstanceData);
+        session.setAttribute("CurrentSessionInfo", currentInstanceData);
 
-		//creates the form to the page and upload it.
-		layerListForm = new ListLayerForm();
-		layerListForm.setLayerList(FormDTOConverter.convert(layerManager.getLayerList(), Layer.class));
+        //creates the form to the page and upload it.
+        layerListForm = new ListLayerForm();
+        layerListForm.setLayerList(FormDTOConverter.convert(layerManager.getLayerList(), Layer.class));
 
-		// Send the layer list to the JSP
-		model = new ModelAndView();
-		if(errors != null && errors.hasErrors())
-			model.addAllObjects(errors.getModel());
+        // Send the layer list to the JSP
+        model = new ModelAndView();
+        if(errors != null && errors.hasErrors())
+            model.addAllObjects(errors.getModel());
 
-		model.setViewName("layers");
-		model.addObject("layersForm", layerListForm);
+        model.setViewName("layers");
+        model.addObject("layersForm", layerListForm);
 
         return model;
-	}
+    }
 
 
-	@Override
-	protected ModelAndView processFormSubmission(HttpServletRequest request
-												, HttpServletResponse response
-												, Object command
-												, BindException errors) {
-		List<Layer> layers = null;
-		HttpSession session = null;
-		ModelAndView model = null;
-		Double resolution = null;
+    @Override
+    protected ModelAndView processFormSubmission(HttpServletRequest request
+            , HttpServletResponse response
+            , Object command
+            , BindException errors) {
+        List<Layer> layers = null;
+        HttpSession session = null;
+        Double resolution = null;
 
-		if(errors.hasErrors())
-			return showForm(request, response, errors);
+        if(errors.hasErrors())
+            return showForm(request, response, errors);
 
-		CurrentInstanceData currentInstanceData = null;
-		ListLayerForm layerListForm = null;
+        CurrentInstanceData currentInstanceData = null;
+        ListLayerForm layerListForm = null;
 
-		layerListForm = (ListLayerForm)command;
+        layerListForm = (ListLayerForm)command;
 
-		// retrieve the session Information.
-		session = request.getSession();
-		currentInstanceData = SessionUtils.isSessionAlive(session);
+        // retrieve the session Information.
+        session = request.getSession();
+        currentInstanceData = SessionUtils.isSessionAlive(session);
 
-		if(currentInstanceData != null){
+        if(currentInstanceData != null){
 
-		// retrieve the resolution.
-		resolution = layerListForm.getResolution();
-		currentInstanceData.setResolution(resolution);
+            // retrieve the resolution.
+            resolution = layerListForm.getResolution();
+            currentInstanceData.setResolution(resolution);
 
-		layers = new ArrayList<Layer>();
-		layers.addAll(layerListForm.getLayerList());
+            layers = new ArrayList<Layer>();
+            layers.addAll(layerListForm.getLayerList());
 
-		// Gets the layers and its weights
-		for(Layer layer : layerListForm.getLayerList()){
-			if(layer.isSelected() == false){
-				layers.remove(layer);
-			}
-		}
+            // Gets the layers and its weights
+            for(Layer layer : layerListForm.getLayerList()){
+                if(layer.isSelected() == false){
+                    layers.remove(layer);
+                }
+            }
 
-		// Set the new information to the session info // selected layers and its weights
-		currentInstanceData.setLayerList(layers);
-		session.setAttribute("CurrentSessionInfo", currentInstanceData);
+            // Set the new information to the session info // selected layers and its weights
+            currentInstanceData.setLayerList(layers);
+            session.setAttribute("CurrentSessionInfo", currentInstanceData);
 
-		}else{
-			Exception ex = new Exception("errors.noSession");
-			Logger.getLogger(ColumnController.class.getName()).log(Level.SEVERE, null, ex);
-			errors.reject(ex.getMessage());
-			return showForm(request, response, errors);
-		}
+        }else{
+            Exception ex = new Exception("errors.noSession");
+            Logger.getLogger(ColumnController.class.getName()).log(Level.SEVERE, null, ex);
+            errors.reject(ex.getMessage());
+            return showForm(request, response, errors);
+        }
 
 
         return columnController.showForm(request, response, errors);
-        /*
-		// Send the layer list to the JSP
-		model = new ModelAndView();
-		model.setViewName("redirect:columns.html");
+    }
 
-        return model;
-        */
-	}
+    /* getters & setters */
+    public LayerManager getLayerManager() {
+        return layerManager;
+    }
 
-	/* getters & setters */
-	public LayerManager getLayerManager() {
-		return layerManager;
-	}
-
-	public void setLayerManager(LayerManager layerManager) {
-		this.layerManager = layerManager;
-	}
+    public void setLayerManager(LayerManager layerManager) {
+        this.layerManager = layerManager;
+    }
 
     public ColumnController getColumnController() {
         return columnController;

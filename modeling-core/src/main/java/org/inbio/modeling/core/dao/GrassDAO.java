@@ -208,4 +208,12 @@ public interface GrassDAO extends BaseDAO {
 	public void rename(String layerName
 						, Long suffix)
 						throws Exception ;
+
+    /**
+     * Create a new Location within the grass database.
+     * @param name
+     * @throws Exception
+     */
+    public void createNewLocation(String name) throws Exception;
+
 }

@@ -174,4 +174,11 @@ public interface GrassManager{
 	 * @throws Exception
 	 */
 	public void asingColorScale(GrassLayerDTO layer , Long suffix) throws Exception;
+
+    /**
+     * Create a new location within the grass database.
+     * @param newLocationName
+     * @throws Exception
+     */
+    public void createNewLocation(String newLocationName) throws Exception;
 }
