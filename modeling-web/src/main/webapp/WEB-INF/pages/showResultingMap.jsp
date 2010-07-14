@@ -37,7 +37,7 @@
 					<td style="vertical-align: bottom; text-align:  right">
 						<fmt:message key="showMap.highThreat" />
 						<br />
-						<div id="scale" />
+						<div id="scale_image" />
 						<fmt:message key="showMap.lowThreat" />
 					</td>
 					<td style="text-align: left; width: 50%">

@@ -225,7 +225,7 @@ a.link-celda02:visited {
 #map {
 }
 
-#scale {
+#scale_image {
 	background-image: url(images/scale.jpg);
 	background-repeat:no-repeat;
 	padding-top: 194px;

@@ -29,5 +29,8 @@
 				<input type="submit" value="<fmt:message key='common.save' />" />
 			</form:form>
 		</div>
+		<div id="footer">
+			<jsp:include page="/common/footer.jsp"/>
+		</div>
 	</body>
 </html>

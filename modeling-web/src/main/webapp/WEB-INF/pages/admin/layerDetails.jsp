@@ -8,26 +8,73 @@
 <%@ include file="/common/taglibs" %>
 
 <html>
-	<head>
-		<%@ include file="/common/theme" %>
-		<%@ include file="/common/javascript" %>
-	</head>
-	<body>
-		<div id="Header">
-			<jsp:include page="/common/header.jsp"/>
-		</div>
+    <head>
+        <%@ include file="/common/theme" %>
+        <%@ include file="/common/javascript" %>
+    </head>
+    <body>
+        <div id="Header">
+            <jsp:include page="/common/header.jsp"/>
+        </div>
 
-		<div id="contenido">
-			<form:form  id="layerForm" commandName="layerForm" action="updateLayer.html">
-				<form:hidden path="id" />
-				<form:input path="name" />
-				<form:input path="uri" />
-				<form:input size="4" path="year" />
-				<form:input path="scale" />
-				<form:textarea path="description" />
-				<br />
-				<input type="submit" value="<fmt:message key='common.save' />" />
-			</form:form>
+        <div id="contenido">
+            <div align="center">
+                <h2><fmt:message key="layer.layerData" /></h2>
+            <form:form  id="layerForm" commandName="layerForm" action="updateLayer.html">
+                <form:hidden path="id" />
+                <table width="60%">
+                    <tr>
+                        <td>
+                            <fmt:message key="layer.name" />
+                        </td>
+                        <td>
+                            <form:input path="name" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <fmt:message key="layer.uri" />
+                        </td>
+                        <td>
+                            <form:input path="uri" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <fmt:message key="layer.year" />
+                        </td>
+                        <td>
+                            <form:input size="4" path="year" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <fmt:message key="layer.scale" />
+                        </td>
+                        <td>
+                            <form:input path="scale" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <fmt:message key="layer.description" />
+                        </td>
+                        <td>
+                            <form:textarea path="description" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <input type="submit" value="<fmt:message key='common.save' />" />
+
+                        </td>
+                    </tr>
+                </table>
+            </form:form>
+            </div>
+        </div>
+		<div id="footer">
+			<jsp:include page="/common/footer.jsp"/>
 		</div>
-	</body>
+    </body>
 </html>
