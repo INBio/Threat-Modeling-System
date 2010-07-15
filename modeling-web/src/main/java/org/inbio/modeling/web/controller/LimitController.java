@@ -129,6 +129,7 @@ public class LimitController extends AbstractFormController {
 			} catch (Exception ex) {
 				Logger.getLogger(ColumnController.class.getName()).log(Level.SEVERE, null, ex);
 				errors.reject(ex.getMessage());
+                return showForm(request, response, errors);
 			}
 		
             try {
@@ -168,58 +169,35 @@ public class LimitController extends AbstractFormController {
         String newLocationName = "LOC_" + currentSessionId;
 
         // 1. Crear la nueva Locacion copiando la default a un nuevo lugar.
-        // 2. Configurar Grass.
-        // 3. Asignar la resolucion.
-        // 4. Recorrer e iniciar importaciones.
-        //      3.1 Importar WFS
-        //      3.2 Importar SHP
-
-        this.grassManagerImpl.createNewLocation(newLocationName);
-        this.grassManagerImpl.configureEnvironment(newLocationName, currentSessionId);
-        this.grassManagerImpl.setResolution(resolution, currentSessionId);
-		for (Layer layer: layerList){
-			this.grassManagerImpl.importLayer(FormDTOConverter.convert(layer), currentSessionId);
-        }
-
-        /*
-		int counter = 0;
 		try {
-			// change the resolution
+			// configure the location of grass
+            this.grassManagerImpl.createNewLocation(newLocationName);
+		} catch (Exception ex) {
+			throw new Exception("errors.cantCreateLocation", ex);
+		}
+        // 2. Configurar Grass.
+		try {
+			// configure the location of grass
+            this.grassManagerImpl.configureEnvironment(newLocationName, currentSessionId);
+		} catch (Exception ex) {
+			throw new Exception("errors.cantConfigureGrass", ex);
+		}
+
+		try {
+            // 3. Asignar la resolucion.
 			this.grassManagerImpl.setResolution(resolution, currentSessionId);
 		} catch (Exception ex) {
 			throw new Exception("errors.cantSetResolution",ex);
 		}
 
-
-		try {
-			// configure the location of grass
-		} catch (Exception ex) {
-			throw new Exception("errors.cantConfigureGrass", ex);
-		}
-
+        // 4. Recorrer e iniciar importaciones.
 		for (Layer layer: layerList){
-			if(counter++ == 1){
-				try {
-					// configure the location of grass
-					this.grassManagerImpl.configureEnvironment("LOC_" + currentSessionId, currentSessionId);
-				} catch (Exception ex) {
-					throw new Exception("errors.cantConfigureGrass", ex);
-				}
-
-
-				try {
-					// change the resolution
-					this.grassManagerImpl.setResolution(resolution, currentSessionId);
-				} catch (Exception ex) {
-					throw new Exception("errors.cantSetResolution", ex);
-				}
-			}
 			try {
+                this.grassManagerImpl.importLayer(FormDTOConverter.convert(layer), currentSessionId);
 			} catch (Exception ex) {
-				throw new Exception("errors.cantImportLayer", ex);
+                throw new Exception("errors.cantImportLayer",ex);
 			}
-		}
-         */
+        }
 	}
 
 

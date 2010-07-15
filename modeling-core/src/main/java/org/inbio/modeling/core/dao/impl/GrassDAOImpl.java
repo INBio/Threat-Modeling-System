@@ -25,7 +25,7 @@ import java.util.StringTokenizer;
 import org.inbio.modeling.core.dao.GrassDAO;
 import org.inbio.modeling.core.layer.LayerType;
 import org.inbio.system.command.OSCommand;
-import org.inbio.system.command.impl.OSCommandSingleImpl;
+import org.inbio.system.command.impl.OSCommandThreadImpl;
 
 public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
@@ -73,7 +73,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		commands.add(suffix.toString());
 
 		logger.debug("Executing command: "+commands.toString());
-		commandExecutor = new OSCommandSingleImpl();
+		commandExecutor = new OSCommandThreadImpl();
 		// executes the command
 		result = commandExecutor.run(commands);
 		// gets the output of the execution
@@ -100,7 +100,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 		logger.debug("Executing command: "+commands.toString());
 
-		commandExecutor = new OSCommandSingleImpl();
+		commandExecutor = new OSCommandThreadImpl();
 		// executes the command
 		result = commandExecutor.run(commands);
 		// gets the output of the execution
@@ -124,7 +124,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 		logger.debug("Executing command: "+commands.toString());
 
-		commandExecutor = new OSCommandSingleImpl();
+		commandExecutor = new OSCommandThreadImpl();
 		// executes the command
 		result = commandExecutor.run(commands);
 		// gets the output of the execution
@@ -162,7 +162,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		commands.add(suffix.toString());
 
 		logger.debug("Executing command: "+commands.toString());
-		commandExecutor = new OSCommandSingleImpl();
+		commandExecutor = new OSCommandThreadImpl();
 		// executes the command
 		result = commandExecutor.run(commands);
 		// gets the output of the execution
@@ -186,7 +186,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		commands.add(suffix.toString());
 
 		logger.debug("Executing command: "+commands.toString());
-		commandExecutor = new OSCommandSingleImpl();
+		commandExecutor = new OSCommandThreadImpl();
 		// executes the command
 		result = commandExecutor.run(commands);
 		// gets the output of the execution
@@ -215,7 +215,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		commands.add(column);
 
 		logger.debug("Executing command: "+commands.toString());
-		commandExecutor = new OSCommandSingleImpl();
+		commandExecutor = new OSCommandThreadImpl();
 		// executes the command
 		result = commandExecutor.run(commands);
 		// gets the output of the execution
@@ -251,7 +251,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		commands.add(outputName);
 
 		logger.debug("Executing command: "+commands.toString());
-		commandExecutor = new OSCommandSingleImpl();
+		commandExecutor = new OSCommandThreadImpl();
 		// executes the command
 		result = commandExecutor.run(commands);
 		// gets the output of the execution
@@ -277,7 +277,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		commands.add(outputName);
 
 		logger.debug("Executing command: "+commands.toString());
-		commandExecutor = new OSCommandSingleImpl();
+		commandExecutor = new OSCommandThreadImpl();
 		// executes the command
 		result = commandExecutor.run(commands);
 		// gets the output of the execution
@@ -305,7 +305,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		commands.add(suffix.toString());
 
 		logger.debug("Executing command: "+commands.toString());
-		commandExecutor = new OSCommandSingleImpl();
+		commandExecutor = new OSCommandThreadImpl();
 		// executes the command
 		result = commandExecutor.run(commands);
 		// gets the output of the execution
@@ -335,7 +335,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		commands.add(suffix.toString());
 
 		logger.debug("Executing command: "+commands.toString());
-		commandExecutor = new OSCommandSingleImpl();
+		commandExecutor = new OSCommandThreadImpl();
 		// executes the command
 		result = commandExecutor.run(commands);
 		// gets the output of the execution
@@ -369,7 +369,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		commands.add(layerType);
 
 		logger.debug("Executing command: "+commands.toString());
-		commandExecutor = new OSCommandSingleImpl();
+		commandExecutor = new OSCommandThreadImpl();
 		// executes the command
 		result = commandExecutor.run(commands);
 		// gets the output of the execution
@@ -408,7 +408,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		stdout = commandExecutor.getStandardOutput();
 		stderr = commandExecutor.getStandardError();
 		logger.debug("Executing command: "+commands.toString());
-		commandExecutor = new OSCommandSingleImpl();
+		commandExecutor = new OSCommandThreadImpl();
 		// executes the command
 		result = commandExecutor.run(commands);
 		// gets the output of the execution
@@ -435,7 +435,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 
 		logger.debug("Executing command: "+commands.toString());
-		commandExecutor = new OSCommandSingleImpl();
+		commandExecutor = new OSCommandThreadImpl();
 		// executes the command
 		result = commandExecutor.run(commands);
 		// gets the output of the execution
@@ -466,7 +466,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 
 		logger.debug("Executing command: "+commands.toString());
-		commandExecutor = new OSCommandSingleImpl();
+		commandExecutor = new OSCommandThreadImpl();
 		// executes the command
 		result = commandExecutor.run(commands);
 		// gets the output of the execution
@@ -497,7 +497,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 
 		logger.debug("Executing command: "+commands.toString());
-		commandExecutor = new OSCommandSingleImpl();
+		commandExecutor = new OSCommandThreadImpl();
 		// executes the command
 		result = commandExecutor.run(commands);
 		// Standar error
@@ -540,7 +540,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		commands.add(suffix.toString());
 
 		logger.debug("Executing command: "+commands.toString());
-		commandExecutor = new OSCommandSingleImpl();
+		commandExecutor = new OSCommandThreadImpl();
 		// executes the command
 		result = commandExecutor.run(commands);
 		// gets the output of the execution
@@ -568,7 +568,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		commands.add(suffix.toString());
 
 		logger.debug("Executing command: "+commands.toString());
-		commandExecutor = new OSCommandSingleImpl();
+		commandExecutor = new OSCommandThreadImpl();
 		// executes the command
 		result = commandExecutor.run(commands);
 		// gets the output of the execution
