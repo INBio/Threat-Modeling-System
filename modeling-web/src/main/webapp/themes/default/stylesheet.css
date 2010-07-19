@@ -328,3 +328,10 @@ a.link-celda02:visited {
     width: 640px;
     height:480px;
 }
+
+.threat_image_text{
+    vertical-align: bottom;
+    text-align:  center;
+    font-size:11px;
+    font-style:italic;
+}
