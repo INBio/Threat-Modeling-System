@@ -302,3 +302,29 @@ a.link-celda02:visited {
    text-align:center;
    padding:1px;
 }
+
+#categoryInfo{
+    text-align:left;
+    float:left;
+    max-height:490px;
+    width:250px;
+    overflow:auto;
+    margin: 0 10px 0 10px;
+}
+
+#mapResults{
+    height:490px;
+    margin: 0 10px 0 10px;
+}
+
+#results{
+    height:490px;
+    width:1070px;
+    margin:0 auto 0 auto;
+}
+
+.mapTable{
+    text-align: center;
+    width: 640px;
+    height:480px;
+}
