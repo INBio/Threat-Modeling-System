@@ -268,8 +268,10 @@ function topPriorityCategorys(){
         var tagsNews;
         var valuesIdPrevious;
         var valuesDescriptionPrevious;
+        var readOnlyPrevoius;
         var valuesIdNew;
         var valuesDescriptionNew;
+        var readOnlyNew;
 	//for(var ckb = categories.length-1; ckb >= 0; ckb--){
         for(var ckb = 0; ckb <= categories.length-1; ckb++){
             check = categories[ckb];
@@ -281,19 +283,25 @@ function topPriorityCategorys(){
                     tagsNews = check.parentNode.getElementsByTagName("input");
                     valuesIdNew = tagsNews[1].value;
                     valuesDescriptionNew = tagsNews[2].value;
+                    readOnlyNew = tagsNews[1].readOnly;
 
                     tagsPrevoius = categories[ckb - 1].parentNode.getElementsByTagName("input");
                     valuesIdPrevious = tagsPrevoius[1].value;
                     valuesDescriptionPrevious = tagsPrevoius[2].value;
-
+                    readOnlyPrevoius = tagsPrevoius[1].readOnly;
 
                     //set the values
                     categories[ckb - 1].checked = true;
                     categories[ckb].checked = false;
                     tagsNews[1].value = valuesIdPrevious;
                     tagsNews[2].value = valuesDescriptionPrevious;
+                    tagsNews[1].readOnly = readOnlyPrevoius;
+                    tagsNews[2].readOnly = readOnlyPrevoius;
+                    
                     tagsPrevoius[1].value = valuesIdNew;
                     tagsPrevoius[2].value = valuesDescriptionNew;
+                    tagsPrevoius[1].readOnly = readOnlyNew;
+                    tagsPrevoius[2].readOnly = readOnlyNew;
                 }
             }
 	}
@@ -318,8 +326,10 @@ function lowPriorityCategorys(){
         var tagsNews;
         var valuesIdPrevious;
         var valuesDescriptionPrevious;
+        var readOnlyPrevoius;
         var valuesIdNew;
         var valuesDescriptionNew;
+        var readOnlyNew;
 	//for(var ckb = categories.length-1; ckb >= 0; ckb--){
         for(var ckb = categories.length-1; ckb >= 0; ckb--){
             check = categories[ckb];
@@ -331,10 +341,12 @@ function lowPriorityCategorys(){
                     tagsNews = check.parentNode.getElementsByTagName("input");
                     valuesIdNew = tagsNews[1].value;
                     valuesDescriptionNew = tagsNews[2].value;
+                    readOnlyNew = tagsNews[1].readOnly;
 
                     tagsPrevoius = categories[ckb + 1].parentNode.getElementsByTagName("input");
                     valuesIdPrevious = tagsPrevoius[1].value;
                     valuesDescriptionPrevious = tagsPrevoius[2].value;
+                    readOnlyPrevoius = tagsPrevoius[1].readOnly;
 
 
                     //set the values
@@ -342,8 +354,13 @@ function lowPriorityCategorys(){
                     categories[ckb].checked = false;
                     tagsNews[1].value = valuesIdPrevious;
                     tagsNews[2].value = valuesDescriptionPrevious;
+                    tagsNews[1].readOnly = readOnlyPrevoius;
+                    tagsNews[2].readOnly = readOnlyPrevoius;
+                    
                     tagsPrevoius[1].value = valuesIdNew;
                     tagsPrevoius[2].value = valuesDescriptionNew;
+                    tagsPrevoius[1].readOnly = readOnlyNew;
+                    tagsPrevoius[2].readOnly = readOnlyNew;
 
                 }
             }
