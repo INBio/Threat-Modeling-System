@@ -232,3 +232,66 @@ a.link-celda02:visited {
 	padding-right: 0;
 	padding-bottom: 0px;
 }
+
+.clear {
+    clear:both;
+}
+
+.layer_names{
+    padding: 5px 3px 5px 3px;
+    width:120px;
+    float:left;
+    text-align:center;
+}
+
+.content_div{
+    float:left;
+    margin:5px;
+    -moz-border-radius: 10px;/*buscar las opciones para otros navegadores*/
+}
+
+.content_div_categorys{
+    height:250px;
+    width:450px;
+    overflow:auto;
+}
+
+.buttons{
+    text-align:left;
+    margin:5px;
+    padding: 5px 5px 5px 5px
+}
+
+#layers_content{
+    overflow: auto;
+    max-height: 250px;
+    width: 270px;
+}
+
+#layer_names{
+    background-color:#BADD58;
+    padding: 0 2px 0 2px;
+}
+
+.my_Button{
+   width:65px;
+   height:24px;
+   text-align:center;
+   padding:1px;
+}
+
+.my_Button_up{
+   background:url("images/up.png") no-repeat;
+   width:20px;
+   height:24px;
+   text-align:center;
+   padding:1px;
+}
+
+.my_Button_down{
+   background:url("images/down.png") no-repeat;
+   width:20px;
+   height:24px;
+   text-align:center;
+   padding:1px;
+}
