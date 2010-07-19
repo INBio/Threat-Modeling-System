@@ -244,6 +244,13 @@ a.link-celda02:visited {
     text-align:center;
 }
 
+.layer_names2{
+    padding: 5px 3px 5px 3px;
+    width:120px;
+    float:left;
+    text-align:left;
+}
+
 .content_div{
     float:left;
     margin:5px;
