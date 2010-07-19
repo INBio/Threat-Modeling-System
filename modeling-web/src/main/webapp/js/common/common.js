@@ -160,6 +160,195 @@ function deleteCategory(){
 	}
 }
 
+/*Inverse the order of the cathegorys*/
+function inverseValues(layerId){
+
+	var categories = undefined;
+        categories = document.getElementsByName(layerId);
+
+        var newHTML = "";
+        var count = 0;
+	for(var ckb = categories.length-1; ckb >= 0; ckb--){
+            check = categories[ckb];
+
+            newHTML += "<div id=\"category_" + count + "\">" +
+                check.parentNode.innerHTML + "</div>";
+            count++;
+	}
+        document.getElementById(layerId + "_cats").innerHTML = newHTML;
+}
+
+function activateButtons(){
+    document.getElementById("groupButton").disabled = false;
+    document.getElementById("topPriority").disabled = false;
+    document.getElementById("lowPriority").disabled = false;
+}
+
+function deActivateButtons(){
+    document.getElementById("groupButton").disabled = true;
+    document.getElementById("topPriority").disabled = true;
+    document.getElementById("lowPriority").disabled = true;
+
+}
+
+function groupCategorys()
+{
+
+	var radio = undefined;
+	var categories = undefined;
+
+	var radios = document.getElementsByName("rbEditing");
+
+	for(var item in radios)
+	{
+		radio = radios[item];
+		if(radio.checked == true)
+			break;
+	4}
+
+	categories = document.getElementsByName(radio.id);
+
+	var firstId;
+
+        var tags;
+	var valuesId;
+	var descriptionsId;
+        var firstCheck;
+	var values = "";
+	var descriptions = "";
+        //for #1. Selecciona el id de la primera categoria y los ids de los text fields en esta
+        for(var ckb = 0; ckb <= categories.length -1; ckb++){
+		check = categories[ckb];
+		if(check.checked == true){
+                    tags = check.parentNode.getElementsByTagName("input");
+                    firstCheck = tags[0];
+                    valuesId = tags[1].id;
+                    descriptionsId = tags[2].id;
+                    //values = tags[1].value;
+                    //descriptions = tags[2].value;
+                    firstId = check.parentNode.id;
+                    break;
+		}
+	}
+
+	//for # 2. Elimina todas las categorias seleccionadas a agrupar menos la inicial (la seleccionada en el for anterior)
+        for(var i = categories.length-1; i >= 0; i--){
+
+		check = categories[i];
+		if(check.checked == true && firstId != check.parentNode.id)
+		{
+                    tags = check.parentNode.getElementsByTagName("input");
+                    values = ","+tags[1].value + values;
+                    descriptions = ","+tags[2].value + descriptions;
+                    check.parentNode.parentNode.removeChild(check.parentNode);
+
+		}
+	}
+        //llena el text field encontrados en el for #1 y quita el check
+        document.getElementById(valuesId).value = document.getElementById(valuesId).value + values;
+        document.getElementById(descriptionsId).value = document.getElementById(descriptionsId).value + descriptions;
+        firstCheck.checked = false;
+}
+
+function topPriorityCategorys(){
+	var radio = undefined;
+	var categories = undefined;
+
+	var radios = document.getElementsByName("rbEditing");
+
+	for(var item in radios){
+            radio = radios[item];
+            if(radio.checked == true)
+                    break;
+	}
+
+	categories = document.getElementsByName(radio.id);
+
+        var tagsPrevoius;
+        var tagsNews;
+        var valuesIdPrevious;
+        var valuesDescriptionPrevious;
+        var valuesIdNew;
+        var valuesDescriptionNew;
+	//for(var ckb = categories.length-1; ckb >= 0; ckb--){
+        for(var ckb = 0; ckb <= categories.length-1; ckb++){
+            check = categories[ckb];
+            if(check.checked == true && (ckb -1) >= 0)
+            {
+                if(categories[ckb - 1].checked != true)
+                {
+                    //get the values
+                    tagsNews = check.parentNode.getElementsByTagName("input");
+                    valuesIdNew = tagsNews[1].value;
+                    valuesDescriptionNew = tagsNews[2].value;
+
+                    tagsPrevoius = categories[ckb - 1].parentNode.getElementsByTagName("input");
+                    valuesIdPrevious = tagsPrevoius[1].value;
+                    valuesDescriptionPrevious = tagsPrevoius[2].value;
+
+
+                    //set the values
+                    categories[ckb - 1].checked = true;
+                    categories[ckb].checked = false;
+                    tagsNews[1].value = valuesIdPrevious;
+                    tagsNews[2].value = valuesDescriptionPrevious;
+                    tagsPrevoius[1].value = valuesIdNew;
+                    tagsPrevoius[2].value = valuesDescriptionNew;
+                }
+            }
+	}
+}
+
+/**NEW* se debe agregar un boton para subir y para bajar*/
+function lowPriorityCategorys(){
+	var radio = undefined;
+	var categories = undefined;
+
+	var radios = document.getElementsByName("rbEditing");
+
+	for(var item in radios){
+            radio = radios[item];
+            if(radio.checked == true)
+                    break;
+	}
+
+	categories = document.getElementsByName(radio.id);
+
+        var tagsPrevoius;
+        var tagsNews;
+        var valuesIdPrevious;
+        var valuesDescriptionPrevious;
+        var valuesIdNew;
+        var valuesDescriptionNew;
+	//for(var ckb = categories.length-1; ckb >= 0; ckb--){
+        for(var ckb = categories.length-1; ckb >= 0; ckb--){
+            check = categories[ckb];
+            if(check.checked == true && (ckb +1) <= categories.length-1)
+            {
+                if(categories[ckb + 1].checked != true)
+                {
+                    //get the values
+                    tagsNews = check.parentNode.getElementsByTagName("input");
+                    valuesIdNew = tagsNews[1].value;
+                    valuesDescriptionNew = tagsNews[2].value;
+
+                    tagsPrevoius = categories[ckb + 1].parentNode.getElementsByTagName("input");
+                    valuesIdPrevious = tagsPrevoius[1].value;
+                    valuesDescriptionPrevious = tagsPrevoius[2].value;
+
+
+                    //set the values
+                    categories[ckb + 1].checked = true;
+                    categories[ckb].checked = false;
+                    tagsNews[1].value = valuesIdPrevious;
+                    tagsNews[2].value = valuesDescriptionPrevious;
+                    tagsPrevoius[1].value = valuesIdNew;
+                    tagsPrevoius[2].value = valuesDescriptionNew;
+
+                }
+            }
+	}
+}
 /**
  * listUsers.jsp
  */
