@@ -58,7 +58,7 @@
                                                     <form:hidden path="layers[${current.index}].name" />
                                                     <form:hidden path="layers[${current.index}].weight" />
                                                     <form:hidden path="layers[${current.index}].type" />
-                                                    <div class="layer_names">
+                                                    <div class="layer_names2">
                                                         <span class="textos" style="text-align:  left">
                                                             <c:choose>
                                                                 <c:when test="${'AREA' eq layer.type}" >
@@ -102,9 +102,9 @@
                                 </div><br />
                                 <div id="categorys_layer" class="content_div_categorys">
                                     <c:forEach items="${intervalsForm.layers}" var="layer"  varStatus="current">
-                                        <span class="textos">
+                                       
                                             <div id="${layer.name}_cats" style="display: none" class="${layer.type}">
-                                                <span class="textosnegrita">
+                                                
                                                     <c:forEach items="${layer.categories}" var="category"  varStatus="currentCategory">
                                                         <c:choose>
                                                             <c:when test="${'AREA' eq layer.type}" >
@@ -125,23 +125,25 @@
                                                         </c:choose>
                                                     </c:forEach>
                                             </div>
-                                        </span>
+                                        
                                     </c:forEach>
                                 </div>
                             </div>
                         
                             <div id="buttons" class="buttons">
 
+                                <input id="topPriority" class="my_Button_up" onclick="topPriorityCategorys();"  type="button"><br />
+                                <input id="lowPriority" class="my_Button_down" onclick="lowPriorityCategorys();"  type="button"><br /><br />
+
+
                                 <input id="addButton" type="button" class="my_Button" onclick="addCategory();" value='<fmt:message key="interval.addCategory"/>' /><br />
 
-                                <input id="groupButton" class="my_Button" onclick="groupCategorys();" value="Agrupar categoría(s)" type="button"><br />
+                                <input id="groupButton" class="my_Button" onclick="groupCategorys();" value="<fmt:message key="interval.groupCategory"/>" type="button"><br />
 
                                 <input id="joinButton" type="button" class="my_Button" onclick="deleteCategory();" value='<fmt:message key="interval.deleteCategory"/>' /><br />
 
-                                <input id="topPriority" class="my_Button_up" onclick="topPriorityCategorys();"  type="button"><br />
-                                <input id="lowPriority" class="my_Button_down" onclick="lowPriorityCategorys();"  type="button"><br />
-
-                                <input id="submitButton" type="submit" class="modeling_btn" value='<fmt:message key="layer.finalStep"/>' /><br />
+                                <br /><br /><br /><br /><br /><br /><br />
+                                <input id="submitButton" type="submit" class="my_Button" value='<fmt:message key="layer.finalStep"/>' /><br />
                                 
                                 
 
