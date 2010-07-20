@@ -103,9 +103,7 @@
                                                     <br />
                                                     <div id="scale_image" ></div>
                                                     <fmt:message key="showMap.lowThreat" />
-                                            </td>
-
-
+                                            </td> 
                                     </tr>
                             </table>
                        </div>
