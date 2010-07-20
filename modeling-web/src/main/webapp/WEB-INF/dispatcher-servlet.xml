@@ -30,6 +30,7 @@
                 <prop key="columns.html">columnController</prop>
                 <prop key="intervals.html">intervalsController</prop>
                 <prop key="showResultingMap.html">showMapController</prop>
+                <prop key="chooseSpeciesMap.html">speciesDistributionController</prop>
                 <prop key="login.html">loginController</prop>
                 <prop key="accessDeniedPage.html">accessDeniedController</prop>
 

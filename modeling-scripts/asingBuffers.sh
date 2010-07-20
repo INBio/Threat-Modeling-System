@@ -24,12 +24,15 @@ export PATH="$PATH:$GISBASE/bin:$GISBASE/scripts"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$GISBASE/lib"
 
 r.buffer input="$RMAP" output="$TEMP" distances="$DISTANCES" units=meters --quiet --overwrite;
+echo r.buffer input="$RMAP" output="$TEMP" distances="$DISTANCES" units=meters --quiet --overwrite;
 
 if [ "true" == "$REVERTED" ];
 then
+	echo "mapcalc"
 	r.mapcalc "$ROMAP = $MAGIC_NUMBER - $TEMP ";
 else
-	g.rename rast="$TEMP","$ROMAP";
+	echo "rename"
+	g.rename rast="$TEMP","$ROMAP" --overwrite;
 fi;
 
 exit $RESULT

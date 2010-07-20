@@ -116,6 +116,23 @@ public class LayerDAOImpl extends BaseDAOImpl implements LayerDAO {
 	}
 
 	@Override
+	public List<Layer> findAllSpeciesLayers() {
+		String sqlStatement = null;
+		MapSqlParameterSource args = null;
+		List<Layer> layers = null;
+
+		sqlStatement = "SELECT * FROM "+this.table+" " +
+			" WHERE is_species = :isSpecies" ;
+
+		args = new MapSqlParameterSource();
+		args.addValue("isSpecies", true);
+
+		layers = getSimpleJdbcTemplate().query(sqlStatement, new LayerRowMapper(), args);
+
+		return layers;
+	}
+
+	@Override
 	public List<Layer> findAll() {
 		return super.findAllByTableName(this.table, new LayerRowMapper());
 	}

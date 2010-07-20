@@ -223,4 +223,14 @@ public interface GrassDAO extends BaseDAO {
      * @throws Exception
      */
     public void setRegion(String limitLayerName, Long suffix) throws Exception;
+
+    /**
+     * Species map - Threats map.
+     * @param resmap
+     * @param speciesMapName
+     * @param suffix
+     * @throws Exception
+     */
+    public void mixSpeciesDistributionLayer(String resmap, String speciesMapName, Long suffix) throws Exception;
+
 }

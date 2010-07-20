@@ -56,4 +56,10 @@ public interface LayerDAO extends BaseDAO {
 	 * @param updatedLayer
 	 */
 	public void update(Layer updatedLayer);
+
+    /**
+     * retrieve all the layers identified like a species distribution map
+     * @return
+     */
+	public List<Layer> findAllSpeciesLayers() ;
 }

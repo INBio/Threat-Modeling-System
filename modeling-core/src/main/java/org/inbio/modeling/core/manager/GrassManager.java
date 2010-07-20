@@ -189,4 +189,12 @@ public interface GrassManager{
      * @param suffix
      */
     public void setRegion(String limitLayerName, Long suffix) throws Exception;
+
+    /**
+     * Species Map - Threats map
+     * @param resMap
+     * @param layerURI
+     * @param suffix
+     */
+    public void mixSpeciesDistributionLayer(String resMap, String layerURI , Long suffix) throws Exception;
 }

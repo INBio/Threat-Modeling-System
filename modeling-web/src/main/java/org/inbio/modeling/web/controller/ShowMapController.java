@@ -39,6 +39,7 @@ public class ShowMapController extends AbstractFormController {
 
 	private GrassManager grassManagerImpl;
 	private FileManager fileManagerImpl;
+    private SpeciesDistributionController speciesDistributionControllerImpl;
 
 	@Override
 	protected ModelAndView processFormSubmission(HttpServletRequest request
@@ -46,7 +47,7 @@ public class ShowMapController extends AbstractFormController {
 		, Object command
 		, BindException errors){
 
-		return null;
+        return speciesDistributionControllerImpl.showForm(request, response, errors);
 	}
 
 
@@ -100,4 +101,12 @@ public class ShowMapController extends AbstractFormController {
 	public void setFileManagerImpl(FileManager fileManagerImpl) {
 		this.fileManagerImpl = fileManagerImpl;
 	}
+
+    public SpeciesDistributionController getSpeciesDistributionControllerImpl() {
+        return speciesDistributionControllerImpl;
+    }
+
+    public void setSpeciesDistributionControllerImpl(SpeciesDistributionController speciesDistributionControllerImpl) {
+        this.speciesDistributionControllerImpl = speciesDistributionControllerImpl;
+    }
 }

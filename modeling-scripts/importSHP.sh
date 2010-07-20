@@ -26,6 +26,5 @@ export PATH="$PATH:$GISBASE/bin:$GISBASE/scripts"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$GISBASE/lib"
 
 RESULT=$(v.in.ogr -o dsn=$MAP output=$VMAP --quiet);
-g.region vect="$VMAP"
 
 exit $RESULT;

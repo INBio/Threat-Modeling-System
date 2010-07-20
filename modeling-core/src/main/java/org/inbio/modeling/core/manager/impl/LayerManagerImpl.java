@@ -39,6 +39,33 @@ public class LayerManagerImpl implements LayerManager {
 	/**
 	 * @see org.inbio.modeling.core.manager.LayerManager#getLayerList()
 	 */
+    public List<GrassLayerDTO> getSpeciesDistributionLayerList() {
+
+		List<Layer> registeredLayers = null;
+		List<GrassLayerDTO> resultList = null;
+		GrassLayerDTO layerDTO = null;
+
+		registeredLayers = this.layerDAOImpl.findAllSpeciesLayers();
+
+		resultList = new ArrayList<GrassLayerDTO>();
+
+		// Convert the registered layers in layerDTOs
+		for(Layer layer : registeredLayers){
+			layerDTO = new GrassLayerDTO();
+			layerDTO.setName(layer.getName());
+			layerDTO.setDescription(layer.getDescription());
+			layerDTO.setUri(layer.getUri());
+			resultList.add(layerDTO);
+		}
+
+		return resultList;
+    }
+
+
+    @Override
+	/**
+	 * @see org.inbio.modeling.core.manager.LayerManager#getLayerList()
+	 */
     public List<GrassLayerDTO> getLayerList() {
 
 		List<String> unregisteredLayers = null;

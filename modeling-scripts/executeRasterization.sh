@@ -21,7 +21,11 @@ export PATH="$PATH:$GISBASE/bin:$GISBASE/scripts"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$GISBASE/lib"
 
 # Import the map.
-RESULT=$(v.to.rast input="$VMAP"_r output="$RMAP" use=attr column=cat labelcolumn="$COLUMN" --overwrite --quiet);
-#RESULT=$(r.null map=$RMAP null=0 --quiet);
+if [ "" == "$COLUMN" ] || [ "cat" == "$COLUMN" ];
+then
+	v.to.rast input="$VMAP"_r output="$RMAP"_r use=cat --overwrite; #--quiet;
+else
+	v.to.rast input="$VMAP"_r output="$RMAP" use=attr column=cat labelcolumn="$COLUMN" --overwrite; #--quiet;
+fi
 
 exit $RESULT;

@@ -42,7 +42,6 @@
                                                 <td align="center"><span class="textos"><c:out value="${fullSessionInfo.resolution}" /></span></td>
                                         </tr>
                                  </table>
-
                                         <c:forEach items="${fullSessionInfo.layerList}" var="layer" >
                                             <br />
                                             <table border="5" class="tabla-contenido">

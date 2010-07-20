@@ -60,4 +60,11 @@ public interface LayerManager{
 	 * @return
 	 */
 	public LayerDTO getLayerById(Long id);
+
+    /**
+     * retrieve a list of the layers identified to be species distribution
+     * maps.
+     * @return
+     */
+    public List<GrassLayerDTO> getSpeciesDistributionLayerList() ;
 }
