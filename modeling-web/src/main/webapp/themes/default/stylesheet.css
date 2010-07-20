@@ -308,6 +308,7 @@ a.link-celda02:visited {
 }
 
 #categoryInfo{
+    border-right: 1px solid #e3fcbc;
     text-align:left;
     float:left;
     max-height:490px;
