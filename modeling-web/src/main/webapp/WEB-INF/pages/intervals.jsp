@@ -31,7 +31,7 @@
 					</p>
 				</div>
 			</spring:hasBindErrors>
-                        <div id="interaction" style="text-align:center; width:950px; margin:0 auto 0 auto">
+                        <div id="interaction" style="text-align:center; width:1000px; margin:0 auto 0 auto">
                         <form:form method="post" action="intervals.html" commandName="intervalsForm">
                             <div id="intervalsForm" class="content_div">
 
@@ -39,7 +39,7 @@
                                         <div id="layer_names" class="content_div">
 
                                             <div id="headers">
-                                                <div id="name" class="layer_names">
+                                                <div id="name" class="layer_names2">
                                                     <span class="textosnegrita">
                                                         <fmt:message key="layer.layerName" />
                                                     </span>
@@ -51,7 +51,9 @@
                                                 </div>
                                             </div>
 
-                                            <div class="clear"></div>
+                                            <br />
+
+                                            
 
                                             <div id="layers_content" >
                                                 <c:forEach items="${intervalsForm.layers}" var="layer"  varStatus="current">
@@ -76,7 +78,9 @@
                                                                            value="${current.index}" />
                                                                 </c:otherwise>
                                                             </c:choose>
-                                                            <c:out value="${layer.name}" />
+
+                                                            <label><c:out value="${layer.name}" /></label>
+
                                                         </span>
                                                     </div>
 
@@ -118,7 +122,7 @@
                                                             <c:otherwise>
                                                                 <div id="category_${currentCategory.index}">
                                                                     <input type="checkbox" name="${layer.name}"/>
-                                                                    <form:input readonly="true" cssClass="intervals_txt" path="layers[${current.index}].categories[${currentCategory.index}].value" />
+                                                                    <form:input cssClass="intervals_txt" path="layers[${current.index}].categories[${currentCategory.index}].value" />
                                                                     <br />
                                                                 </div>
                                                             </c:otherwise>

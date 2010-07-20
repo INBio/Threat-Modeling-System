@@ -246,10 +246,14 @@ a.link-celda02:visited {
 
 .layer_names2{
     padding: 5px 3px 5px 3px;
-    width:120px;
+    width:250px;
     float:left;
     text-align:left;
 }
+
+.layer_names2 label {float:left; width:220px; overflow:hidden; display:block;}
+.layer_names2 input {float:left; width:20px; display:block;}
+
 
 .content_div{
     float:left;
@@ -272,7 +276,7 @@ a.link-celda02:visited {
 #layers_content{
     overflow: auto;
     max-height: 250px;
-    width: 270px;
+    width: 400px;
 }
 
 #layer_names{
@@ -334,4 +338,8 @@ a.link-celda02:visited {
     text-align:  center;
     font-size:11px;
     font-style:italic;
+}
+
+.content_div br {
+    clear:both;
 }

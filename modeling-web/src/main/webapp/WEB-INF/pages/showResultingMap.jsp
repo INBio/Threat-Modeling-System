@@ -62,19 +62,23 @@
                                                 </span>
                                                 </tr>
                                                 <c:forEach items="${layer.categories}" var="category">
+                                                    <c:if test="${category ne null}">
                                                         <c:choose>
-                                                                <c:when test="${'AREA' eq layer.type}" >
-                                                                        <tr class="celda01">
-                                                                                <td><span class="textos"><c:out value="${category.value}" /></span></td>
-                                                                                <td><span class="textos"><c:out value="${category.description}" /></span></td>
-                                                                        </tr>
-                                                                </c:when>
-                                                                <c:otherwise>
-                                                                        <tr class="celda01" style="text-align:center;">
-                                                                                <td colspan="2"><span class="textos" ><c:out value="${category.value}" /></span></td>
-                                                                        </tr>
-                                                                </c:otherwise>
+                                                              
+                                                                    <c:when test="${'AREA' eq layer.type}" >
+                                                                            <tr class="celda01">
+                                                                                    <td><span class="textos"><c:out value="${category.value}" /></span></td>
+                                                                                    <td><span class="textos"><c:out value="${category.description}" /></span></td>
+                                                                            </tr>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                            <tr class="celda01" style="text-align:center;">
+                                                                                    <td colspan="2"><span class="textos" ><c:out value="${category.value}" /></span></td>
+                                                                            </tr>
+                                                                    </c:otherwise>
+                                                               
                                                         </c:choose>
+                                                   </c:if>
                                                 </c:forEach>
                                              </table>
                                         </c:forEach>
