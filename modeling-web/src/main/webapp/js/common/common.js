@@ -238,8 +238,8 @@ function groupCategorys()
 		if(check.checked == true && firstId != check.parentNode.id)
 		{
                     tags = check.parentNode.getElementsByTagName("input");
-                    values = ","+tags[1].value + values;
-                    descriptions = ","+tags[2].value + descriptions;
+                    values = ", "+tags[1].value + values;
+                    descriptions = ", "+tags[2].value + descriptions;
                     check.parentNode.parentNode.removeChild(check.parentNode);
 
 		}

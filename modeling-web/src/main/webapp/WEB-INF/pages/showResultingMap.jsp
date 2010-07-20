@@ -46,10 +46,12 @@
                                         <c:forEach items="${fullSessionInfo.layerList}" var="layer" >
                                             <br />
                                             <table border="5" class="tabla-contenido">
-                                                <tr class="celda02" ><td colspan="2" style="font-weight:bold"><c:out value="${layer.name}" /></td></tr>
+                                                <tr class="celda02">
+                                                    <td colspan="2" style="font-weight:bold;max-width: 350px; overflow: hidden;"><c:out value="${layer.name}" /></td>
+                                                </tr>
                                                 <tr class="celda02">
                                                 <span class="textosnegrita">
-                                                    <td class="textos" colspan="2" style="font-style:italic">
+                                                    <td class="textos" colspan="2" style="font-style:italic;">
                                                         <c:choose>
                                                                 <c:when test="${'AREA' eq layer.type}" >
                                                                         <fmt:message key="showMap.categories" />
@@ -67,13 +69,19 @@
                                                               
                                                                     <c:when test="${'AREA' eq layer.type}" >
                                                                             <tr class="celda01">
-                                                                                    <td><span class="textos"><c:out value="${category.value}" /></span></td>
-                                                                                    <td><span class="textos"><c:out value="${category.description}" /></span></td>
+                                                                                    <td style="max-width: 170px; overflow:hidden">
+                                                                                        <span class="textos"><c:out value="${category.value}" /></span>
+                                                                                    </td>
+                                                                                    <td style="max-width: 170px; overflow:hidden">
+                                                                                        <span class="textos"><c:out value="${category.description}" /></span>
+                                                                                    </td>
                                                                             </tr>
                                                                     </c:when>
                                                                     <c:otherwise>
                                                                             <tr class="celda01" style="text-align:center;">
-                                                                                    <td colspan="2"><span class="textos" ><c:out value="${category.value}" /></span></td>
+                                                                                    <td style="max-width: 170px; overflow:hidden" colspan="2">
+                                                                                        <span class="textos" ><c:out value="${category.value}" /></span>
+                                                                                    </td>
                                                                             </tr>
                                                                     </c:otherwise>
                                                                
