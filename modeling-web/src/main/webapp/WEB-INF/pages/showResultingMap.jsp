@@ -35,7 +35,7 @@
                         <div id="categoryInfo">
                                 <table border="2" class="tabla-contenido">
                                         <tr class="celda02"  >
-                                                <td colspan="2"><span class="textosnegrita"><fmt:message key="showMap.leyend" /></span></td>
+                                                <td style="width:350px" colspan="2"><span class="textosnegrita"><fmt:message key="showMap.leyend" /></span></td>
                                         </tr>
                                         <tr class="celda01"  >
                                                 <td width="50%" align="left"><span class="textosnegrita"><fmt:message key="showMap.resolution" /></span></td>
@@ -46,7 +46,7 @@
                                             <br />
                                             <table border="5" class="tabla-contenido">
                                                 <tr class="celda02">
-                                                    <td colspan="2" style="font-weight:bold;max-width: 350px; overflow: hidden;"><c:out value="${layer.name}" /></td>
+                                                    <td colspan="2" style="width:350px; font-weight:bold;max-width: 350px; overflow: hidden;"><c:out value="${layer.name}" /></td>
                                                 </tr>
                                                 <tr class="celda02">
                                                 <span class="textosnegrita">
