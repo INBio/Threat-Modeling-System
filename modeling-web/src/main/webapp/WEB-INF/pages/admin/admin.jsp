@@ -15,7 +15,7 @@
 			<h2><fmt:message key="title.admin"/></h2>
 			<div style="padding-left: 40%; text-align: left">
 				<ol>
-					<li><a href="listUsers.html">Usuarios</a></li>
+					<!--li><a href="listUsers.html">Usuarios</a></li-->
 					<li><a href="listLayers.html">Capas</a></li>
 				</ol>
 			</div>

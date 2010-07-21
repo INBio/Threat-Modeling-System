@@ -19,13 +19,13 @@
         <div id="contenido">
             <div align="center">
                 <form:form  id="layerForm" commandName="layerForm" action="/listLayers.html">
-                    <table width="60%" >
-                            <tr >
+                    <table width="60%" style="border: 1px">
+                            <tr style="font-weight: bold">
                                 <td width="5%">
                                     &nbsp;
                                 </td>
                                 <td width="40%">
-                                    <fmt:message key="layer.name" />
+                                    <fmt:message key="layer.layerName" />
                                 </td>
                                 <td width="5%">
                                     <fmt:message key="layer.year" />
@@ -38,21 +38,21 @@
                                 </td>
                             </tr>
                         <c:forEach items="${layers}" var="layer">
-                            <tr >
+                            <tr  >
                                 <td>
-                                    <form:radiobutton value="${layer.id}" path="id" />
+                                    <form:radiobutton value="${layer.id}" path="id" /> &nbsp;
                                 </td>
                                 <td>
-                                    <c:out value="${layer.name}" />
+                                    <c:out value="${layer.name}" />&nbsp;
                                 </td>
                                 <td>
-                                    <c:out value="${layer.year}" />
+                                    <c:out value="${layer.year}" />&nbsp;
                                 </td>
                                 <td>
-                                    <c:out value="${layer.scale}" />
+                                    <c:out value="${layer.scale}" />&nbsp;
                                 </td>
                                 <td>
-                                    <c:out value="${layer.description}" />
+                                    <c:out value="${layer.description}" />&nbsp;
                                 </td>
                             </tr>
                         </c:forEach>

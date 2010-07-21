@@ -22,10 +22,10 @@
                 <h2><fmt:message key="layer.layerData" /></h2>
             <form:form  id="layerForm" commandName="layerForm" action="updateLayer.html">
                 <form:hidden path="id" />
-                <table width="60%">
-                    <tr>
+                <table width="80%" >
+                    <tr >
                         <td>
-                            <fmt:message key="layer.name" />
+                            <fmt:message key="layer.layerName" />
                         </td>
                         <td>
                             <form:input path="name" />

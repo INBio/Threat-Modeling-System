@@ -44,8 +44,8 @@
 						</tr>
 						<tr class="celda01">
 							<td colspan="2" align="center">
+                                <br />
 								<input type="submit" value="<fmt:message key="common.accept"/>" />
-								<input type="reset" name="reset"  value="<fmt:message key='common.reset'/>" />
 							</td>
 						</tr>
 					</table>
