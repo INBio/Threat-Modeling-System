@@ -51,7 +51,7 @@
 									</span>
 								</td>
 								<td class="textos"><div align="center">
-										<c:out value="${layer.weight}" />
+										<c:out value="${layer.weight}" />%
 									</div>
 								</td>
 								<td class="textos">

@@ -16,5 +16,8 @@
 			<h2><fmt:message key="common.about"/></h2>
 			<p><fmt:message key="common.aboutContent"/></p>
 		</div>
+		<div id="footer">
+			<jsp:include page="/common/footer.jsp"/>
+		</div>
 	</body>
 </html>

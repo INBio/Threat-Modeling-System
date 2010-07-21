@@ -28,22 +28,25 @@
 			<div id="formXD">
 				<form:form id="layersForm" commandName="layersForm" method="post" action="layers.html" >
 					<div id="layers">
-						<table class="tabla-contenido" width="35%" border="0" align="center" cellpadding="4" cellspacing="1" >
+						<table class="tabla-contenido" width="42%" border="0" align="center" cellpadding="4" cellspacing="1" >
 
+							<tr class="celda02">
+                                <td colspan="2"><span class="textosnegrita"><fmt:message key="layer.generalConfiguration"/></span></td>
+							</tr>
 							<tr class="celda01">
 
-								<td width="54%">
+								<td width="60%">
 									<span class="textos">
-										<fmt:message key="common.resolution"/>
+										<fmt:message key="common.resolution"/><br />
 										<fmt:message key="layer.resolutionDecimalDegrees" />
 									</span>
 								</td>
-								<td width="46%">
-									<form:input title="" path="resolution" />
+								<td width="40%">
+                                    <form:input title="" path="resolution" />&nbsp;&deg;
 								</td>
 							</tr>
 							<tr class="celda02">
-								<td><span class="textosnegrita"><fmt:message key="layer.layerName"/></span></td>
+								<td><span class="textosnegrita"><fmt:message key="layer.availableLayers"/></span></td>
 								<td><span class="textosnegrita"><fmt:message key="layer.importanceValue"/></span></td>
 							</tr>
 							<c:forEach items="${layersForm.layerList}" var="layer"  varStatus="current">
@@ -66,7 +69,7 @@
 																disabled="true"
 																path="layerList[${current.index}].weight"
 																maxlength="2"
-																onkeyup="calculateValues(this);${layer.selected}" />
+                                                                onkeyup="calculateValues(this);${layer.selected}" />&nbsp;%
 												</c:when>
 												<c:otherwise>
 
@@ -74,7 +77,7 @@
 																id="${layer.name}_weight"
 																path="layerList[${current.index}].weight"
 																maxlength="2"
-																onkeyup="calculateValues(this);${layer.selected}" />
+																onkeyup="calculateValues(this);${layer.selected}" />&nbsp;%
 												</c:otherwise>
 
 

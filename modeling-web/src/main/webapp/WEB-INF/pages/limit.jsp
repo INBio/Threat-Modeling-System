@@ -38,7 +38,7 @@
                         <tr class="celda02">
                             <td>
                                 <span class="textosnegrita">
-                                    <fmt:message key="layer.layerName" />
+                                    <fmt:message key="layer.layer" />
                                 </span>
                             </td>
                             <td>
