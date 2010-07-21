@@ -107,6 +107,9 @@
                             </table>
                        </div>
                      </div>
+                <form:form method="post" action="showResultingMap.html" commandName="chooseSpecies">
+                    <input id="submit_button" class="modeling_btn" type="submit" value="<fmt:message key='addSpeciesDistMap' />"/>
+                </form:form>
 			<div id="footer">
 				<jsp:include page="/common/footer.jsp"/>
 			</div>
