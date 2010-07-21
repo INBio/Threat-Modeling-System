@@ -188,33 +188,13 @@ public interface GrassManager{
      * @param limitLayerName
      * @param currentSessionId
      */
-<<<<<<< HEAD
-<<<<<<< HEAD
     public void setRegion(String limitLayerName, Long currentSessionId) throws Exception;
-=======
-    public void setRegion(String limitLayerName, Long suffix) throws Exception;
->>>>>>> Add support to substract a layer to the final result
-=======
-    public void setRegion(String limitLayerName, Long currentSessionId) throws Exception;
->>>>>>> next
 
     /**
      * Species Map - Threats map
      * @param resMap
      * @param layerURI
-<<<<<<< HEAD
-<<<<<<< HEAD
      * @param currentSessionId
      */
     public void mixSpeciesDistributionLayer(String resMap, String layerURI , Long currentSessionId) throws Exception;
-=======
-     * @param suffix
-     */
-    public void mixSpeciesDistributionLayer(String resMap, String layerURI , Long suffix) throws Exception;
->>>>>>> Add support to substract a layer to the final result
-=======
-     * @param currentSessionId
-     */
-    public void mixSpeciesDistributionLayer(String resMap, String layerURI , Long currentSessionId) throws Exception;
->>>>>>> next
 }

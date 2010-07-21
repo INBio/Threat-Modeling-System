@@ -56,33 +56,6 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
     private String newLocation;
     private String asingRegion;
     private String mixSpeciesDistribution;
-<<<<<<< HEAD
-
-    @Override
-<<<<<<< HEAD
-    public void mixSpeciesDistributionLayer(String resmap, String speciesMapName, Long currentSessionId) throws Exception{
-=======
-    public void mixSpeciesDistributionLayer(String resmap, String speciesMapName, Long suffix) throws Exception{
->>>>>>> Add support to substract a layer to the final result
-         int result = 0;
-		List<String> commands = null;
-		StringBuilder stdout = null;
-		StringBuilder stderr = null;
-		commands = new ArrayList<String>();
-
-		// Arguments of the command
-		commands.add(scriptHome+mixSpeciesDistribution);
-		commands.add(resmap);
-		commands.add(speciesMapName);
-<<<<<<< HEAD
-		commands.add(String.valueOf(currentSessionId));
-=======
-		commands.add(String.valueOf(suffix));
->>>>>>> Add support to substract a layer to the final result
-
-		logger.debug("Executing command: "+commands.toString());
-
-=======
 
     @Override
     public void mixSpeciesDistributionLayer(String resmap, String speciesMapName, Long currentSessionId) throws Exception{
@@ -100,7 +73,6 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 		logger.debug("Executing command: "+commands.toString());
 
->>>>>>> next
 		commandExecutor = new OSCommandThreadImpl();
 		// executes the command
 		result = commandExecutor.run(commands);

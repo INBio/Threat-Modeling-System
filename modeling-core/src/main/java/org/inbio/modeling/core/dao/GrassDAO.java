@@ -221,36 +221,15 @@ public interface GrassDAO extends BaseDAO {
      * @param currentSessionId
      * @throws Exception
      */
-<<<<<<< HEAD
-<<<<<<< HEAD
     public void setRegion(String limitLayerName, Long currentSessionId) throws Exception;
-=======
-    public void setRegion(String limitLayerName, Long suffix) throws Exception;
->>>>>>> Add support to substract a layer to the final result
-=======
-    public void setRegion(String limitLayerName, Long currentSessionId) throws Exception;
->>>>>>> next
 
     /**
      * Species map - Threats map.
      * @param resmap
      * @param speciesMapName
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> next
      * @param currentSessionId
      * @throws Exception
      */
     public void mixSpeciesDistributionLayer(String resmap, String speciesMapName, Long currentSessionId) throws Exception;
-<<<<<<< HEAD
-=======
-     * @param suffix
-     * @throws Exception
-     */
-    public void mixSpeciesDistributionLayer(String resmap, String speciesMapName, Long suffix) throws Exception;
->>>>>>> Add support to substract a layer to the final result
-=======
->>>>>>> next
 
 }

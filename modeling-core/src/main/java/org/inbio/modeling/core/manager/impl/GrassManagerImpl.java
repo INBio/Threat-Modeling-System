@@ -40,10 +40,6 @@ public class GrassManagerImpl implements GrassManager {
 	private GrassDAO grassDAOImpl;
 
     @Override
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> next
     public void mixSpeciesDistributionLayer(String resMap, String layerURI , Long currentSessionId) throws Exception{
 
         this.grassDAOImpl.importLayer("speciesMap", layerURI, currentSessionId);
@@ -52,24 +48,6 @@ public class GrassManagerImpl implements GrassManager {
         this.grassDAOImpl.mixSpeciesDistributionLayer(resMap, "speciesMap", currentSessionId);
         this.grassDAOImpl.asingColorScale("Final", currentSessionId);
         this.exportLayer2Image(new GrassLayerDTO("Final", 1), currentSessionId);
-<<<<<<< HEAD
-=======
-    public void mixSpeciesDistributionLayer(String resMap, String layerURI , Long suffix) throws Exception{
-
-        this.grassDAOImpl.importLayer("speciesMap", layerURI, suffix);
-        this.grassDAOImpl.executeVectorReclasification("speciesMap", "cat", suffix);
-        this.grassDAOImpl.executeRasterization("speciesMap",suffix, "cat");
-        this.grassDAOImpl.mixSpeciesDistributionLayer(resMap, "speciesMap", suffix);
-        this.grassDAOImpl.asingColorScale("Final", suffix);
-        this.exportLayer2Image(new GrassLayerDTO("Final", 1), suffix);
-    }
-
-    @Override
-    public void createNewLocation(String newLocationName) throws Exception{
-        this.grassDAOImpl.createNewLocation(newLocationName);
->>>>>>> Add support to substract a layer to the final result
-=======
->>>>>>> next
     }
 
     @Override
