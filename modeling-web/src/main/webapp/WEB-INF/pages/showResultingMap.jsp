@@ -30,7 +30,6 @@
 					</p>
 				</div>
 			</spring:hasBindErrors>
-
                     <div id="results" >
                         <div id="categoryInfo">
                                 <table border="2" class="tabla-contenido">
@@ -95,7 +94,7 @@
                                     <tr>
                                             <td class="mapTable">
                                                     <div id="map" >
-                                                            <img alt="<fmt:message key='maps.resultingMap' />" src="/resmaps/R_${fullSessionInfo.imageName}_${fullSessionInfo.userSessionId}_r.png" />
+                                                            <img alt="<fmt:message key='maps.resultingMap' />" src="/resmaps/${fullSessionInfo.imageName}_R_${fullSessionInfo.userSessionId}.png" />
                                                     </div>
                                             </td>
                                             <td class="threat_image_text">
