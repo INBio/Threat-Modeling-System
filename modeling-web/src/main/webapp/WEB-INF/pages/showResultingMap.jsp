@@ -94,7 +94,7 @@
                                     <tr>
                                             <td class="mapTable">
                                                     <div id="map" >
-                                                            <img alt="<fmt:message key='maps.resultingMap' />" src="/resmaps/${fullSessionInfo.imageName}_R_${fullSessionInfo.userSessionId}.png" />
+                                                            <img alt="<fmt:message key='maps.resultingMap' />" src="/resmaps/${fullSessionInfo.imageName}_T_${fullSessionInfo.userSessionId}.png" />
                                                     </div>
                                             </td>
                                             <td class="threat_image_text">

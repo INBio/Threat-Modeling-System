@@ -1,38 +1,34 @@
 #!/bin/sh
-
+#
 # This script is Free Software under the GNU GPL (>= 3.0)
 #
-# Sets the new categories to a map.
+# Description: Sets the new categories to a map.
 #
 
 # Arguments
-MAP=$1
+LAYER=$1
 DISTANCES=$2
 MAGIC_NUMBER=$3
 REVERTED=$4
 SUFFIX=$5
 
 # Variables
-RMAP=R_"$MAP"_"$SUFFIX"
 TEMP=Temp_"$SUFFIX"
+
+RMAP=R_"$MAP"_"$SUFFIX"
 ROMAP=R_"$MAP"_"$SUFFIX"_r 
 
-# Initialization
-export GISRC="/tmp/.grassrc6_$SUFFIX"
-export GISBASE="/usr/lib/grass64"
-export PATH="$PATH:$GISBASE/bin:$GISBASE/scripts"
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$GISBASE/lib"
+# configure environment
+SCRIPTS_DIR=`dirname $0`
+. $SCRIPTS_DIR/set_grass_variables.sh $SUFFIX
 
-r.buffer input="$RMAP" output="$TEMP" distances="$DISTANCES" units=meters --quiet --overwrite;
-echo r.buffer input="$RMAP" output="$TEMP" distances="$DISTANCES" units=meters --quiet --overwrite;
+r.buffer input=$LAYER$RMAP output=$TEMP distances="$DISTANCES" units=meters --quiet --overwrite;
 
 if [ "true" == "$REVERTED" ];
 then
-	echo "mapcalc"
-	r.mapcalc "$ROMAP = $MAGIC_NUMBER - $TEMP ";
+	r.mapcalc "$LAYER$RRMAP = $MAGIC_NUMBER - $TEMP ";
 else
-	echo "rename"
-	g.rename rast="$TEMP","$ROMAP" --overwrite;
+	g.rename rast="$TEMP","$LAYER$RRMAP" --overwrite;
 fi;
 
 exit $RESULT

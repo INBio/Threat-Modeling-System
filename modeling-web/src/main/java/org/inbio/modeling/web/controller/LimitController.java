@@ -166,19 +166,17 @@ public class LimitController extends AbstractFormController {
 	 */
 	private void importLayers(Double resolution , List<Layer> layerList , Long currentSessionId) throws Exception{
 
-        String newLocationName = "LOC_" + currentSessionId;
-
         // 1. Crear la nueva Locacion copiando la default a un nuevo lugar.
 		try {
 			// configure the location of grass
-            this.grassManagerImpl.createNewLocation(newLocationName);
+            this.grassManagerImpl.createNewLocation(currentSessionId);
 		} catch (Exception ex) {
 			throw new Exception("errors.cantCreateLocation", ex);
 		}
         // 2. Configurar Grass.
 		try {
 			// configure the location of grass
-            this.grassManagerImpl.configureEnvironment(newLocationName, currentSessionId);
+            this.grassManagerImpl.configureEnvironment(currentSessionId);
 		} catch (Exception ex) {
 			throw new Exception("errors.cantConfigureGrass", ex);
 		}

@@ -1,28 +1,24 @@
 #!/bin/sh
-
+#
 # This script is Free Software under the GNU GPL (>= 3.0)
 #
-# Returns a list of the differents categories of a raster map.
-#
+# Description: Return a list of Categories.
 
 # Arguments
-MAP=$1
-SUFFIX=$2
-TYPE=$3
+LAYER=$1
+TYPE=$2
+SUFFIX=$3
 
-# Variables
-VMAP=V_"$MAP"_"$SUFFIX"
-RMAP=R_"$MAP"_"$SUFFIX"
+# configure environment
+SCRIPTS_DIR=`dirname $0`
+. $SCRIPTS_DIR/set_grass_variables.sh $SUFFIX
 
-# Initialization
-export GISRC="/tmp/.grassrc6_$SUFFIX"
-export GISBASE="/usr/lib/grass64"
-export PATH="$PATH:$GISBASE/bin:$GISBASE/scripts"
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$GISBASE/lib"
 
 if [ "$TYPE" == "VECT" ];
 then
-	v.category map=$VMAP fs=:;
+	v.category map=$LAYER$VMAP fs=:;
 else
-	r.category map=$RMAP fs=: 
+	r.category map=$LAYER$RMAP fs=: 
 fi;
+
+exit 0;

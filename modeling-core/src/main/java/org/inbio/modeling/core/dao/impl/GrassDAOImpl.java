@@ -58,7 +58,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
     private String mixSpeciesDistribution;
 
     @Override
-    public void mixSpeciesDistributionLayer(String resmap, String speciesMapName, Long suffix) throws Exception{
+    public void mixSpeciesDistributionLayer(String resmap, String speciesMapName, Long currentSessionId) throws Exception{
          int result = 0;
 		List<String> commands = null;
 		StringBuilder stdout = null;
@@ -69,7 +69,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		commands.add(scriptHome+mixSpeciesDistribution);
 		commands.add(resmap);
 		commands.add(speciesMapName);
-		commands.add(String.valueOf(suffix));
+		commands.add(String.valueOf(currentSessionId));
 
 		logger.debug("Executing command: "+commands.toString());
 
@@ -85,7 +85,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
     }
 
 	@Override
-	public void configureEnvironment(String location, Long suffix) throws Exception   {
+	public void configureEnvironment(Long currentSessionId) throws Exception   {
 
 		int result = 0;
 		List<String> commands = null;
@@ -96,8 +96,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 		// Arguments of the command
 		commands.add(scriptHome+configuration);
-		commands.add(location);
-		commands.add(suffix.toString());
+		commands.add(currentSessionId.toString());
 
 		logger.debug("Executing command: "+commands.toString());
 		commandExecutor = new OSCommandThreadImpl();
@@ -113,7 +112,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 
     @Override
-    public void setRegion(String limitLayerName, Long suffix) throws Exception{
+    public void setRegion(String limitLayerName, Long currentSessionId) throws Exception{
         int result = 0;
 		List<String> commands = null;
 		StringBuilder stdout = null;
@@ -123,7 +122,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		// Arguments of the command
 		commands.add(scriptHome+asingRegion);
 		commands.add(limitLayerName);
-		commands.add(String.valueOf(suffix));
+		commands.add(String.valueOf(currentSessionId));
 
 		logger.debug("Executing command: "+commands.toString());
 
@@ -162,7 +161,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
     }
 
 	@Override
-	public void importLayer(String shortOutputName, String uri, Long suffix) throws Exception {
+	public void importLayer(String shortOutputName, String uri, Long currentSessionId) throws Exception {
 		int result = 0;
 		List<String> commands = null;
 		StringBuilder stdout = null;
@@ -186,7 +185,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		commands.add(importationScript);
 		commands.add(fullUri);
 		commands.add(shortOutputName);
-		commands.add(suffix.toString());
+		commands.add(currentSessionId.toString());
 
 		logger.debug("Executing command: "+commands.toString());
 		commandExecutor = new OSCommandThreadImpl();
@@ -200,7 +199,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	}
 
 	@Override
-	public void rename(String layerName, Long suffix) throws Exception {
+	public void rename(String layerName, Long currentSessionId) throws Exception {
 		int result = 0;
 		List<String> commands = null;
 		StringBuilder stdout = null;
@@ -210,7 +209,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		// Arguments of the command
 		commands.add(scriptHome+rename);
 		commands.add(layerName);
-		commands.add(suffix.toString());
+		commands.add(currentSessionId.toString());
 
 		logger.debug("Executing command: "+commands.toString());
 		commandExecutor = new OSCommandThreadImpl();
@@ -225,7 +224,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 	@Override
 	public void executeRasterization(String layerName
-									, Long suffix
+									, Long currentSessionId
 									, String column)
 									throws Exception{
 
@@ -238,8 +237,8 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		// Arguments of the command
 		commands.add(scriptHome+rasterization);
 		commands.add(layerName);
-		commands.add(suffix.toString());
 		commands.add(column);
+		commands.add(currentSessionId.toString());
 
 		logger.debug("Executing command: "+commands.toString());
 		commandExecutor = new OSCommandThreadImpl();
@@ -257,7 +256,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 									, Double weight1
 									, String layerName2
 									, Double weight2
-									, Long suffix
+									, Long currentSessionId
 									, String outputName)
 									throws Exception{
 		int result = 0;
@@ -270,12 +269,12 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 		// Arguments of the command
 		commands.add(scriptHome+mapAlgebra);
-		commands.add(suffix.toString());
 		commands.add(layerName1);
 		commands.add(weight1.toString());
 		commands.add(layerName2);
 		commands.add(weight2.toString());
 		commands.add(outputName);
+		commands.add(currentSessionId.toString());
 
 		logger.debug("Executing command: "+commands.toString());
 		commandExecutor = new OSCommandThreadImpl();
@@ -289,7 +288,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	}
 
 	@Override
-	public void exportAsImage(Long suffix, String outputName) throws Exception{
+	public void exportAsImage(Long currentSessionId, String outputName) throws Exception{
 
 		int result = 0;
 		List<String> commands = null;
@@ -300,8 +299,8 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 		// Arguments of the command
 		commands.add(scriptHome+exportPNG);
-		commands.add(suffix.toString());
 		commands.add(outputName);
+		commands.add(currentSessionId.toString());
 
 		logger.debug("Executing command: "+commands.toString());
 		commandExecutor = new OSCommandThreadImpl();
@@ -316,7 +315,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 
 	@Override
-	public String retrieveLayerType(String layerName, Long suffix)
+	public String retrieveLayerType(String layerName, Long currentSessionId)
 		throws Exception{
 
 		int result = 0;
@@ -329,7 +328,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		// Arguments of the command
 		commands.add(scriptHome+retrieveType);
 		commands.add(layerName);
-		commands.add(suffix.toString());
+		commands.add(currentSessionId.toString());
 
 		logger.debug("Executing command: "+commands.toString());
 		commandExecutor = new OSCommandThreadImpl();
@@ -347,7 +346,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	}
 
 	@Override
-	public String retrieveMinMaxValues(String layerName, Long suffix)
+	public String retrieveMinMaxValues(String layerName, Long currentSessionId)
 		throws Exception{
 
 		int result = 0;
@@ -359,7 +358,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		// Arguments of the command
 		commands.add(scriptHome+getMinMax);
 		commands.add(layerName);
-		commands.add(suffix.toString());
+		commands.add(currentSessionId.toString());
 
 		logger.debug("Executing command: "+commands.toString());
 		commandExecutor = new OSCommandThreadImpl();
@@ -378,7 +377,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	@Override
 	public List<String> retrieveCategories(String layerName
 											, String layerType
-											, Long suffix)
+											, Long currentSessionId)
 											throws Exception{
 
 		int result = 0;
@@ -392,8 +391,8 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		// Arguments of the command
 		commands.add(scriptHome+retrieveCategories);
 		commands.add(layerName);
-		commands.add(suffix.toString());
 		commands.add(layerType);
+		commands.add(currentSessionId.toString());
 
 		logger.debug("Executing command: "+commands.toString());
 		commandExecutor = new OSCommandThreadImpl();
@@ -418,7 +417,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	}
 
 	@Override
-	public void executeReclassification(String layerName, Long suffix)
+	public void executeReclassification(String layerName, Long currentSessionId)
 		throws Exception{
 
 		int result = 0;
@@ -430,7 +429,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		// Arguments of the command
 		commands.add(scriptHome+rasterReclasification);
 		commands.add(layerName);
-		commands.add(suffix.toString());
+		commands.add(currentSessionId.toString());
 
 		stdout = commandExecutor.getStandardOutput();
 		stderr = commandExecutor.getStandardError();
@@ -446,7 +445,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	}
 
 	@Override
-	public void asingResolution(Double resolution, Long suffix)
+	public void asingResolution(Double resolution, Long currentSessionId)
 		throws Exception{
 
 		int result = 0;
@@ -458,7 +457,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		// Arguments of the command
 		commands.add(scriptHome+asignResolution);
 		commands.add(resolution.toString());
-		commands.add(suffix.toString());
+		commands.add(currentSessionId.toString());
 
 
 		logger.debug("Executing command: "+commands.toString());
@@ -474,7 +473,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	}
 
 	@Override
-	public void asingBuffers(String layerName, String distances, int magicNumber, boolean reverted, Long suffix)
+	public void asingBuffers(String layerName, String distances, int magicNumber, boolean reverted, Long currentSessionId)
 		throws Exception{
 
 		int result = 0;
@@ -489,7 +488,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		commands.add(distances);
 		commands.add(magicNumber+"");
 		commands.add(reverted+"");
-		commands.add(suffix.toString());
+		commands.add(currentSessionId.toString());
 
 
 		logger.debug("Executing command: "+commands.toString());
@@ -504,7 +503,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	}
 
 	@Override
-	public List<String> retrieveColumns(String layerName, Long suffix)
+	public List<String> retrieveColumns(String layerName, Long currentSessionId)
 		throws Exception {
 
 		int result = 0;
@@ -520,7 +519,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		// Arguments of the command
 		commands.add(scriptHome+retrieveColumns);
 		commands.add(layerName);
-		commands.add(suffix.toString());
+		commands.add(currentSessionId.toString());
 
 
 		logger.debug("Executing command: "+commands.toString());
@@ -551,7 +550,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
  	@Override
 	public void executeVectorReclasification(String layerName
 											, String column
-											, Long suffix)
+											, Long currentSessionId)
 											throws Exception{
 
 		int result = 0;
@@ -564,7 +563,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		commands.add(scriptHome+vectorialReclasification);
 		commands.add(layerName);
 		commands.add(column);
-		commands.add(suffix.toString());
+		commands.add(currentSessionId.toString());
 
 		logger.debug("Executing command: "+commands.toString());
 		commandExecutor = new OSCommandThreadImpl();
@@ -579,9 +578,9 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 	@Override
 	/**
-	 * @see org.inbio.modeling.core.dao.grassDAO#asingColorScale(String layerName , Long suffix)
+	 * @see org.inbio.modeling.core.dao.grassDAO#asingColorScale(String layerName , Long currentSessionId)
 	 */
-	public void asingColorScale(String layerName , Long suffix) throws Exception{
+	public void asingColorScale(String layerName , Long currentSessionId) throws Exception{
 
 		int result = 0;
 		List<String> commands = null;
@@ -592,7 +591,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		// Arguments of the command
 		commands.add(scriptHome+setColorScale);
 		commands.add(layerName);
-		commands.add(suffix.toString());
+		commands.add(currentSessionId.toString());
 
 		logger.debug("Executing command: "+commands.toString());
 		commandExecutor = new OSCommandThreadImpl();
@@ -606,7 +605,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	}
 
 	@Override
-	public void deleteGRASSLocation(Long suffix){ }
+	public void deleteGRASSLocation(Long currentSessionId){ }
 
 	private void printThis(int exitCode
 							, StringBuilder stdout

@@ -1,31 +1,25 @@
 #!/bin/sh
-
+#
 # This script is Free Software under the GNU GPL (>= 3.0)
 #
-# Convert a vector map into a raster map.
+# Description: Convert a vector map into a raster map.
 #
 
 # Arguments
-MAP=$1
-SUFFIX=$2
-COLUMN=$3
+LAYER=$1
+COLUMN=$2
+SUFFIX=$3
 
-# Variables
-VMAP=V_"$MAP"_"$SUFFIX"
-RMAP=R_"$MAP"_"$SUFFIX"
-
-# Initialization
-export GISRC="/tmp/.grassrc6_$SUFFIX"
-export GISBASE="/usr/lib/grass64"
-export PATH="$PATH:$GISBASE/bin:$GISBASE/scripts"
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$GISBASE/lib"
+# configure environment
+SCRIPTS_DIR=`dirname $0`
+. $SCRIPTS_DIR/set_grass_variables.sh $SUFFIX
 
 # Import the map.
 if [ "" == "$COLUMN" ] || [ "cat" == "$COLUMN" ];
 then
-	v.to.rast input="$VMAP"_r output="$RMAP" use=cat --overwrite --quiet;
+	v.to.rast input=$LAYER$VRMAP output=$LAYER$RMAP use=cat --overwrite --quiet;
 else
-	v.to.rast input="$VMAP"_r output="$RMAP" use=attr column=cat labelcolumn="$COLUMN" --overwrite --quiet;
+	v.to.rast input=$LAYER$VRMAP output=$LAYER$RMAP use=attr column=cat labelcolumn="$COLUMN" --overwrite --quiet;
 fi
 
-exit $RESULT;
+exit 0;

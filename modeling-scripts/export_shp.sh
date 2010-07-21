@@ -1,25 +1,22 @@
 #!/bin/sh
-
+#
 # This script is Free Software under the GNU GPL (>= 3.0)
 #
-# Exports a resulting map into a ESRI Shapefile file format
+# Description: Exports a resulting map into a ESRI Shapefile file format
 #
 
 # Arguments
 SUFFIX=$1
+FINAL_MAP="$2_$TMAP"
 
-# Variables
-RESMAP="RES_$SUFFIX"
-
-# Initialization
-export GISRC="/tmp/.grassrc6_$SUFFIX"
-export GISBASE="/usr/lib/grass64"
-export PATH="$PATH:$GISBASE/bin:$GISBASE/scripts"
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$GISBASE/lib"
+# configure environment
+SCRIPTS_DIR=`dirname $0`
+. $SCRIPTS_DIR/set_grass_variables.sh $SUFFIX
 
 # convert the resulting map into vector format.
-RESULT=$(r.to.vect input=$RESMAP output=$RESMAP feature=area --quiet);
-# export the vectorial resulting map into a ESRI Shapefile
-RESULT=$(v.out.ogr -c input=$RESMAP type=area dsn=$RESMAP layer=1 format=ESRI_Shapefile  --quiet);
+r.to.vect input=$FINAL_MAP output=$FINAL_MAP feature=area --quiet;
 
-exit $RESULT;
+# export the vectorial resulting map into a ESRI Shapefile
+v.out.ogr -c input=$FINAL_MAP type=area dsn=$FINAL_MAP layer=1 format=ESRI_Shapefile  --quiet;
+
+exit 0;

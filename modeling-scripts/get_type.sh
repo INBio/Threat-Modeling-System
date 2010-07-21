@@ -1,33 +1,25 @@
 #!/bin/sh
-
+#
 # This script is Free Software under the GNU GPL (>= 3.0)
 #
-# Return the type of the shapefile inferenced acording to the
-# topological information grass returns with the command v.info.
+# Description: Return the type of the shapefile acording to the
+# topological information of the v.info command
 #
 
 # Arguments
-MAP=$1
+LAYER=$1
 SUFFIX=$2
 
-# Variables
-VMAP=V_"$MAP"_"$SUFFIX"
+# configure environment
+SCRIPTS_DIR=`dirname $0`
+. $SCRIPTS_DIR/set_grass_variables.sh $SUFFIX
 
-# Initialization
-export GISRC="/tmp/.grassrc6_$SUFFIX"
-export GISBASE="/usr/lib/grass64"
-export PATH="$PATH:$GISBASE/bin:$GISBASE/scripts"
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$GISBASE/lib"
+v.info -t map=$LAYER$VMAP | \
+	egrep "points|lines|areas" | \
+	awk '{ 
+			split($1, array, "=");
+			if(array[2] != 0)
+				print array[1]; 
+		 }';
 
-RESULT=$(
-v.info -t map=$VMAP | \
-egrep "points|lines|areas" | \
-awk '{ 
-		split($1, array, "=");
-		if(array[2] != 0)
-			print array[1]; 
-	 }'	);
-
-echo $RESULT
-
-exit;
+exit 0;

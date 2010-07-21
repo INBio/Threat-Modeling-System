@@ -28,29 +28,29 @@ public interface GrassManager{
 	/**
 	 * Configure the grassrc6 file to use the grass gis software
 	 * @param location
-	 * @param suffix
+	 * @param currentSessionId
 	 * @throws Exception
 	 */
-	public void configureEnvironment(String location, Long suffix)
+	public void configureEnvironment(Long currentSessionId)
 		throws Exception;
 
 	/**
 	 * Import a layer from the file system to the grass database
 	 * @param layerName
-	 * @param suffix
+	 * @param currentSessionId
 	 * @throws Exception
 	 */
-	public void importLayer(GrassLayerDTO layer, Long suffix)
+	public void importLayer(GrassLayerDTO layer, Long currentSessionId)
 		throws Exception;
 
 	/**
 	 * Transform a vectorial layer into a raster one
 	 * @param layerName
-	 * @param suffix
+	 * @param currentSessionId
 	 * @param column
 	 * @throws Exception
 	 */
-	public void convertLayer2Raster(GrassLayerDTO layer, Long suffix) throws Exception;
+	public void convertLayer2Raster(GrassLayerDTO layer, Long currentSessionId) throws Exception;
 
 	/**
 	 * Executes a weighted sum with the provided layers and weights
@@ -58,143 +58,143 @@ public interface GrassManager{
 	 * @param weight1
 	 * @param layerName2
 	 * @param weight2
-	 * @param suffix
+	 * @param currentSessionId
 	 * @param outputName
 	 * @throws Exception
 	 */
 	public void executeWeightedSum(GrassLayerDTO layer1
 									, GrassLayerDTO layer2
 									, GrassLayerDTO outpututName
-									, Long suffix)
+									, Long currentSessionId)
 									throws Exception;
 
 	/**
 	 * Export a raster layer as an png image
-	 * @param suffix
+	 * @param currentSessionId
 	 * @param layerName
 	 * @throws Exception
 	 */
-	public void exportLayer2Image(GrassLayerDTO layer, Long suffix)
+	public void exportLayer2Image(GrassLayerDTO layer, Long currentSessionId)
 		throws Exception;
 
 	/**
 	 * return the minimun and the maximun value of a raster layer
 	 * @param layerName
-	 * @param suffix
+	 * @param currentSessionId
 	 * @throws Exception
 	 */
-	public void getMinMaxValuesFromLayer(GrassLayerDTO layer, Long suffix)
+	public void getMinMaxValuesFromLayer(GrassLayerDTO layer, Long currentSessionId)
 		throws Exception;
 
 	/**
 	 * Return the type (area, line, point) of a layer.
 	 * @param layerName
-	 * @param suffix
+	 * @param currentSessionId
 	 * @return
 	 * @throws Exception
 	 */
-	public LayerType retrieveLayerType(GrassLayerDTO layer, Long suffix)
+	public LayerType retrieveLayerType(GrassLayerDTO layer, Long currentSessionId)
 		throws Exception;
 
 	/**
 	 * Return a list with the categories of a specific layer
 	 * @param layerName
 	 * @param layerType
-	 * @param suffix
+	 * @param currentSessionId
 	 * @return
 	 * @throws Exception
 	 */
 	public List<CategoryDTO> getLayerCategories(GrassLayerDTO layer
 												, String dataType
-												, Long suffix)
+												, Long currentSessionId)
 		throws Exception;
 
 	/**
 	 * execute a raster reclasification base on the information writen into a
-	 * rules file /tmp/rules-<suffix>.rcl
+	 * rules file /tmp/rules-<currentSessionId>.rcl
 	 * @param layerName
-	 * @param suffix
+	 * @param currentSessionId
 	 * @throws Exception
 	 */
-	public void advanceReclasification(GrassLayerDTO layer, Long suffix)
+	public void advanceReclasification(GrassLayerDTO layer, Long currentSessionId)
 		throws Exception;
 
 	/**
 	 * Executes a normalization of the values of a vectorial layer
 	 * @param layerName
 	 * @param column
-	 * @param suffix
+	 * @param currentSessionId
 	 * @throws Exception
 	 */
-	public void executeVectorReclasification(GrassLayerDTO layer , Long suffix)
+	public void executeVectorReclasification(GrassLayerDTO layer , Long currentSessionId)
 		throws Exception;
 
 	/**
 	 * Change the resolution of a grass environment.
 	 * @param resolution
-	 * @param suffix
+	 * @param currentSessionId
 	 * @throws Exception
 	 */
-	public void setResolution(Double resolution, Long suffix) throws Exception;
+	public void setResolution(Double resolution, Long currentSessionId) throws Exception;
 
 	public Map<String,String> retrieveAvailableColumns(GrassLayerDTO layer
-															, Long suffix)
+															, Long currentSessionId)
 															throws Exception;
 
 	/**
 	 * Delete the location to free some space from the grass database.
-	 * @param suffix
+	 * @param currentSessionId
 	 */
-	public void deleteGRASSLocation(Long suffix);
+	public void deleteGRASSLocation(Long currentSessionId);
 
 	/**
 	 * Asing buffers
 	 * @param layerName
 	 * @param distances
-	 * @param suffix
+	 * @param currentSessionId
 	 * @throws Exception
 	 */
-	public void asingBuffers(GrassLayerDTO layer, Long suffix)
+	public void asingBuffers(GrassLayerDTO layer, Long currentSessionId)
 		throws Exception;
 
 	/**
 	 * rename the name of a layer from V_<layerBasename>_sufix to
 	 * V_<layerBasename>_sufix_r
 	 * @param layerName
-	 * @param suffix
+	 * @param currentSessionId
 	 * @throws Exception
 	 */
-	public void renameFile (GrassLayerDTO layer, Long suffix) throws Exception;
+	public void renameFile (GrassLayerDTO layer, Long currentSessionId) throws Exception;
 
 	/**
 	 * Asing color scale to the given layer, low values are green higher values
 	 * are red.
 	 * @param layerName
-	 * @param suffix
+	 * @param currentSessionId
 	 * @throws Exception
 	 */
-	public void asingColorScale(GrassLayerDTO layer , Long suffix) throws Exception;
+	public void asingColorScale(GrassLayerDTO layer , Long currentSessionId) throws Exception;
 
     /**
      * Create a new location within the grass database.
      * @param newLocationName
      * @throws Exception
      */
-    public void createNewLocation(String newLocationName) throws Exception;
+    public void createNewLocation(Long currentSessionId) throws Exception;
 
 
     /**
      * Sets a region in a grass location.
      * @param limitLayerName
-     * @param suffix
+     * @param currentSessionId
      */
-    public void setRegion(String limitLayerName, Long suffix) throws Exception;
+    public void setRegion(String limitLayerName, Long currentSessionId) throws Exception;
 
     /**
      * Species Map - Threats map
      * @param resMap
      * @param layerURI
-     * @param suffix
+     * @param currentSessionId
      */
-    public void mixSpeciesDistributionLayer(String resMap, String layerURI , Long suffix) throws Exception;
+    public void mixSpeciesDistributionLayer(String resMap, String layerURI , Long currentSessionId) throws Exception;
 }

@@ -29,33 +29,32 @@ public interface GrassDAO extends BaseDAO {
 	 * Configure the grassrc6 file that set the variables to executes scripts
 	 * correctly
 	 * @param location
-	 * @param suffix
+	 * @param currentSessionId
 	 * @throws Exception
 	 */
-	public void configureEnvironment(String location
-									, Long suffix)
+	public void configureEnvironment( Long currentSessionId)
 									throws Exception;
 
 	/**
 	 * Import a layer from the file system into the grass database.
 	 * @param layerName
-	 * @param suffix
+	 * @param currentSessionId
 	 * @throws Exception
 	 */
 	public void importLayer(String shortOutputName
 							, String uri
-							, Long suffix)
+							, Long currentSessionId)
 							throws Exception;
 
 	/**
 	 * Convert a vectorial layer into a raster one
 	 * @param layerName
-	 * @param suffix
+	 * @param currentSessionId
 	 * @param column
 	 * @throws Exception
 	 */
 	public void executeRasterization(String layerName
-									, Long suffix
+									, Long currentSessionId
 									, String column)
 									throws Exception;
 
@@ -65,7 +64,7 @@ public interface GrassDAO extends BaseDAO {
 	 * @param weight1
 	 * @param layerName2
 	 * @param weight2
-	 * @param suffix
+	 * @param currentSessionId
 	 * @param outputName
 	 * @throws Exception
 	 */
@@ -73,17 +72,17 @@ public interface GrassDAO extends BaseDAO {
 									, Double weight1
 									, String layerName2
 									, Double weight2
-									, Long suffix
+									, Long currentSessionId
 									, String outputName)
 									throws Exception;
 
 	/**
 	 * esport a raster map as an image
-	 * @param suffix
+	 * @param currentSessionId
 	 * @param outputName
 	 * @throws Exception
 	 */
-	public void exportAsImage(Long suffix
+	public void exportAsImage(Long currentSessionId
 								, String outputName)
 								throws Exception;
 
@@ -91,122 +90,122 @@ public interface GrassDAO extends BaseDAO {
 	 * Return the type of a layer according to the data store into the grass
 	 * database.
 	 * @param layerName
-	 * @param suffix
+	 * @param currentSessionId
 	 * @return
 	 * @throws Exception
 	 */
 	public String retrieveLayerType(String layerName
-										, Long suffix)
+										, Long currentSessionId)
 										throws Exception;
 
 	/**
 	 * Return the type of a layer according to the data store into the grass
 	 * database.
 	 * @param layerName
-	 * @param suffix
+	 * @param currentSessionId
 	 * @return minValue:maxValue
 	 * @throws Exception
 	 */
 	public String retrieveMinMaxValues(String layerName
-									, Long suffix)
+									, Long currentSessionId)
 									throws Exception;
 
 	/**
 	 * Return the categories o intervals asociated to a layer
 	 * @param layerName
 	 * @param layerType
-	 * @param suffix
+	 * @param currentSessionId
 	 * @return
 	 * @throws Exception
 	 */
 	public List<String> retrieveCategories(String layerName
 												, String layerType
-												, Long suffix)
+												, Long currentSessionId)
 												throws Exception;
 
 	/**
 	 * Reclassify a raster map with the file created by the
 	 * org.inbio.modeling.core.manager.FileManager.writeReclassFile()
 	 * @param layerName
-	 * @param suffix
+	 * @param currentSessionId
 	 * @throws Exception
 	 */
 	public void executeReclassification(String layerName
-										, Long suffix)
+										, Long currentSessionId)
 										throws Exception;
 
 	/**
 	 * Set the resolution to be used by grass in the maps.
 	 * @param resolution
-	 * @param suffix
+	 * @param currentSessionId
 	 * @throws Exception
 	 */
 	public void asingResolution(Double resolution
-								, Long suffix)
+								, Long currentSessionId)
 								throws Exception;
 
 	/**
 	 * Asing color scale to the given layer, low values are green higher values
 	 * are red.
 	 * @param layerName
-	 * @param suffix
+	 * @param currentSessionId
 	 * @throws Exception
 	 */
 	public void asingColorScale(String layerName
-								, Long suffix)
+								, Long currentSessionId)
 								throws Exception;
 
 	/**
 	 * Delete a location
-	 * @param suffix
+	 * @param currentSessionId
 	 */
-	public void deleteGRASSLocation(Long suffix);
+	public void deleteGRASSLocation(Long currentSessionId);
 
 	/**
 	 * Return the columns of the dbf associated to the layer
 	 * @param layerName
-	 * @param suffix
+	 * @param currentSessionId
 	 * @return
 	 * @throws Exception
 	 */
 	public List<String> retrieveColumns(String layerName
-										  , Long suffix)
+										  , Long currentSessionId)
 										  throws Exception;
 
 	/**
 	 * Normalize the values of a vector layer and its dbf
 	 * @param layerName
 	 * @param column
-	 * @param suffix
+	 * @param currentSessionId
 	 * @throws Exception
 	 */
 	public void executeVectorReclasification(String layerName
 											, String column
-											, Long suffix)
+											, Long currentSessionId)
 											throws Exception;
 
 	/**
 	 * Generates buffers for line type layers.
 	 * @param layerName
 	 * @param distances
-	 * @param suffix
+	 * @param currentSessionId
 	 * @throws Exception
 	 */
 	public void asingBuffers(String layerName
 							, String distances
 							, int magicNumber
 							, boolean reverted
-							, Long suffix)
+							, Long currentSessionId)
 							throws Exception;
 
 	/**
-	 * Rename a vector map from V_<layerBaseName>_suffix to V_<layerBaseName>_suffix_r
+	 * Rename a vector map from V_<layerBaseName>_currentSessionId to V_<layerBaseName>_currentSessionId_r
 	 * @param layerName
-	 * @param suffix
+	 * @param currentSessionId
 	 * @throws Exception
 	 */
 	public void rename(String layerName
-						, Long suffix)
+						, Long currentSessionId)
 						throws Exception ;
 
     /**
@@ -219,18 +218,18 @@ public interface GrassDAO extends BaseDAO {
     /**
      * Configure the general region according to a specific layer.
      * @param limitLayerName
-     * @param suffix
+     * @param currentSessionId
      * @throws Exception
      */
-    public void setRegion(String limitLayerName, Long suffix) throws Exception;
+    public void setRegion(String limitLayerName, Long currentSessionId) throws Exception;
 
     /**
      * Species map - Threats map.
      * @param resmap
      * @param speciesMapName
-     * @param suffix
+     * @param currentSessionId
      * @throws Exception
      */
-    public void mixSpeciesDistributionLayer(String resmap, String speciesMapName, Long suffix) throws Exception;
+    public void mixSpeciesDistributionLayer(String resmap, String speciesMapName, Long currentSessionId) throws Exception;
 
 }

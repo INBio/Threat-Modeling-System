@@ -1,22 +1,17 @@
 #!/bin/sh
-
+#
 # This script is Free Software under the GNU GPL (>= 3.0)
 #
-# change the color scale of the map
+# Description: change the color scale of the map
 #
 
 # Arguments
-MAP=$1
+LAYER=$1
 SUFFIX=$2
 
-# Variables
-RMAP=R_"$MAP"_"$SUFFIX"_r
-
-# Initialization
-export GISRC="/tmp/.grassrc6_$SUFFIX"
-export GISBASE="/usr/lib/grass64"
-export PATH="$PATH:$GISBASE/bin:$GISBASE/scripts"
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$GISBASE/lib"
+# configure environment
+SCRIPTS_DIR=`dirname $0`
+. $SCRIPTS_DIR/set_grass_variables.sh $SUFFIX
 
 ## Posible color scales
 # - ------ +
@@ -35,8 +30,6 @@ export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$GISBASE/lib"
 #	y:	yellow
 #	r:	red
 
-RESULT=$( r.colors map="$RMAP" color="gyr");
+r.colors map="$LAYER$TMAP" color="gyr";
 
-echo $RESULT
-
-exit;
+exit 0;
