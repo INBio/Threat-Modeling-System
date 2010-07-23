@@ -134,6 +134,7 @@ public class LayerManagerImpl implements LayerManager {
 		layer.setScale(newLayer.getScale());
 		layer.setUri(newLayer.getUri());
 		layer.setYear(newLayer.getYear());
+        layer.setSpeciesMap(newLayer.isSpeciesMap());
 
 		this.layerDAOImpl.create(layer);
 	}
@@ -147,7 +148,8 @@ public class LayerManagerImpl implements LayerManager {
 		layer.setDescription(newLayer.getDescription());
 		layer.setScale(newLayer.getScale());
 		layer.setUri(newLayer.getUri());
-		layer.setYear(layer.getYear());
+		layer.setYear(newLayer.getYear());
+        layer.setSpeciesMap(newLayer.isSpeciesMap());
 
 		this.layerDAOImpl.update(layer);
 	}
@@ -167,6 +169,7 @@ public class LayerManagerImpl implements LayerManager {
 		resultLayer.setDescription(layer.getDescription());
 		resultLayer.setScale(layer.getScale());
 		resultLayer.setUri(layer.getUri());
+        resultLayer.setSpeciesMap(layer.isSpeciesMap());
 		resultLayer.setYear(layer.getYear());
 
 		return resultLayer;

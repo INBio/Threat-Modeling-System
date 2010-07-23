@@ -12,7 +12,7 @@
         <%@ include file="/common/theme" %>
         <%@ include file="/common/javascript" %>
     </head>
-    <body>
+    <body onload="checkSize()">
         <div id="Header">
             <jsp:include page="/common/header.jsp"/>
         </div>
@@ -61,6 +61,14 @@
                         </td>
                         <td>
                             <form:textarea path="description" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <fmt:message key="layer.speciesMap" />
+                        </td>
+                        <td>
+                            <form:checkbox path="speciesMap" />
                         </td>
                     </tr>
                     <tr>

@@ -11,8 +11,44 @@
     <head>
         <%@ include file="/common/theme" %>
         <%@ include file="/common/javascript" %>
+
+        <script type="text/javascript">
+
+//Using to show the loading panel
+            YAHOO.namespace("example.container");
+
+            var loadingImage = "<img src='${pageContext.request.contextPath}/themes/default/images/ajax-loader.gif' ></img>";
+            var loadingText = "<fmt:message key="common.loading"/>";
+
+            /*
+             * Initialize a panel to show the loading image
+             */
+            function initLoadingPanel(){
+                if (!YAHOO.example.container.wait) {
+                   YAHOO.example.container.wait =
+                        new YAHOO.widget.Panel("wait",
+                    {
+                        width:"300px",
+                        fixedcenter:true,
+                        close:false,
+                        draggable:false,
+                        zindex:999,
+                        modal:true,
+                        visible:false
+                    }
+                );
+                    YAHOO.example.container.wait.setHeader(loadingText);
+                    YAHOO.example.container.wait.setBody(loadingImage);
+                    YAHOO.example.container.wait.render(document.getElementById('contenido'));
+                }
+            }
+
+        </script>
+
+
     </head>
-    <body>
+
+    <body onload="initLoadingPanel()" class="yui-skin-sam">
         <div id="Header">
             <jsp:include page="/common/header.jsp"/>
         </div>
@@ -34,14 +70,17 @@
 
             <div id="limitForm">
                 <form:form method="post" action="limit.html" commandName="limitForm">
-                    <table width="35%" border="0" align="center" cellpadding="4" cellspacing="1" class="tabla-contenido">
+                    <table width="60%" border="0" align="center" cellpadding="4" cellspacing="1" class="tabla-contenido">
                         <tr class="celda02">
+                            <td colspan="2" style="text-align: left; "><span class="textosnegrita" style="text-align: left; font-size: 17px"><fmt:message key="title.limit"/></span></td>
+                        </tr>
+                        <tr class="celda01" style="height: 100px">
                             <td>
                                 <span class="textosnegrita">
                                     <fmt:message key="layer.layer" />
                                 </span>
                             </td>
-                            <td>
+                            <td align="center">
                                 <form:select path="selectedLayerName">
                                     <form:options items="${limitForm.layers}" itemValue="name" itemLabel="name" />
                                 </form:select>
@@ -49,7 +88,7 @@
                         </tr>
                         <tr class="celda02">
                             <td colspan="2">
-                                <input id="submitButton" type="submit" class="modeling_btn" value='<fmt:message key="layer.nextStep"/>' />
+                                <input id="submitButton" type="submit" class="button-simple" value='<fmt:message key="layer.nextStep"/>' onclick="YAHOO.example.container.wait.show();" />
                             </td>
                         </tr>
                     </table>

@@ -11,10 +11,6 @@ rules.prefix=rules-
 rules.suffix=.rcl
 
 # - Scripts
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> next
 scripts.configuration=set_configuration.sh
 scripts.exportPNG=export_png.sh
 scripts.importSHP=import_shp.sh
@@ -33,30 +29,6 @@ scripts.rename=rename_layer.sh
 scripts.colorScale=set_color_scale.sh
 scripts.newLocation=create_new_location.sh
 scripts.asingRegion=set_region.sh
-scripts.mixSpeciesMap=
-<<<<<<< HEAD
-=======
-scripts.configuration=configureGISRC.sh
-scripts.exportPNG=exportPNG.sh
-scripts.importSHP=importSHP.sh
-scripts.importWFS=importWFS.sh
-scripts.rasterization=executeRasterization.sh
-scripts.mapAlgebra=executeWeightedSum.sh
-scripts.getMinMax=retrieveMinMaxValues.sh
-scripts.vectorialReclasification=executeVectorReclass.sh
-scripts.retrieveCategories=retrieveCategories.sh
-scripts.retrieveColumns=retrieveColumns.sh
-scripts.rasterReclasification=asingCategories.sh
-scripts.asignResolution=asingResolution.sh
-scripts.retrieveType=retrieveType.sh
-scripts.asingBuffers=asingBuffers.sh
-scripts.rename=renameMap.sh
-scripts.colorScale=setColorScale.sh
-scripts.newLocation=newLocation.sh
-scripts.asingRegion=asingRegion.sh
-scripts.mixSpeciesMap=mixSpeciesMap.sh
->>>>>>> Add support to substract a layer to the final result
-=======
->>>>>>> next
-scripts.deleteGrassLocation=
 scripts.exportSHP=export_shp.sh
+scripts.mixSpeciesMap=a
+scripts.deleteGrassLocation=

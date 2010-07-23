@@ -12,44 +12,32 @@
         <%@ include file="/common/theme" %>
         <%@ include file="/common/javascript" %>
     </head>
-    <body>
+    <body onload="checkSize()">
         <div id="Header">
             <jsp:include page="/common/header.jsp"/>
         </div>
         <div id="contenido">
             <div align="center">
                 <form:form  id="layerForm" commandName="layerForm" action="/listLayers.html">
-                    <table width="60%" style="border: 1px">
-                            <tr style="font-weight: bold">
-                                <td width="5%">
+                    <table id="layerListTable" cellspacing="0" cellpadding="3px" >
+                        <tr style="font-weight: bold; width: auto; ">
+                                <td class="layerListHeader" width="4%">
                                     &nbsp;
                                 </td>
-                                <td width="40%">
+                                <td class="layerListHeader" width="30%" style="" >
                                     <fmt:message key="layer.layerName" />
                                 </td>
-                                <td width="5%">
-                                    <fmt:message key="layer.year" />
-                                </td>
-                                <td width="15%">
-                                    <fmt:message key="layer.scale"/>
-                                </td>
-                                <td width="35%">
+                                <td class="layerListHeader" >
                                     <fmt:message key="layer.description" />
                                 </td>
                             </tr>
                         <c:forEach items="${layers}" var="layer">
-                            <tr  >
+                            <tr>
                                 <td>
                                     <form:radiobutton value="${layer.id}" path="id" /> &nbsp;
                                 </td>
                                 <td>
                                     <c:out value="${layer.name}" />&nbsp;
-                                </td>
-                                <td>
-                                    <c:out value="${layer.year}" />&nbsp;
-                                </td>
-                                <td>
-                                    <c:out value="${layer.scale}" />&nbsp;
                                 </td>
                                 <td>
                                     <c:out value="${layer.description}" />&nbsp;

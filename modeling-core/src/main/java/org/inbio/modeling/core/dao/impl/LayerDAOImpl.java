@@ -38,8 +38,8 @@ public class LayerDAOImpl extends BaseDAOImpl implements LayerDAO {
 		MapSqlParameterSource args = null;
 
 		createStatement = "INSERT INTO "+this.table+"(" +
-			"\"name\", description, uri,  scale, \"year\", last_update)"+
-			"VALUES (:name, :description, :uri, :scale, :year, :last_update);";
+			"\"name\", description, uri,  scale, \"year\", last_update, species_map)"+
+			"VALUES (:name, :description, :uri, :scale, :year, :last_update, :species_map);";
 
 		args = new MapSqlParameterSource();
 		args.addValue("name", newLayer.getName());
@@ -48,6 +48,7 @@ public class LayerDAOImpl extends BaseDAOImpl implements LayerDAO {
 		args.addValue("scale", newLayer.getScale());
 		args.addValue("year", newLayer.getYear());
 		args.addValue("last_update", Calendar.getInstance().getTime());
+        args.addValue("species_map", newLayer.isSpeciesMap());
 
 		getSimpleJdbcTemplate().update(createStatement, args);
 	}
@@ -63,7 +64,8 @@ public class LayerDAOImpl extends BaseDAOImpl implements LayerDAO {
 			" uri = :uri, " +
 			" scale = :scale, " +
 			" year = :year, " +
-			" last_update = :last_update " +
+			" last_update = :last_update, " +
+			" species_map= :species_map " +
 			" WHERE id = :layer_id" ;
 
 		args = new MapSqlParameterSource();
@@ -73,6 +75,7 @@ public class LayerDAOImpl extends BaseDAOImpl implements LayerDAO {
 		args.addValue("scale", updatedLayer.getScale());
 		args.addValue("year", updatedLayer.getYear());
 		args.addValue("last_update", Calendar.getInstance().getTime());
+        args.addValue("species_map", updatedLayer.isSpeciesMap());
 		args.addValue("layer_id", updatedLayer.getId());
 
 		getSimpleJdbcTemplate().update(createStatement, args);
@@ -122,7 +125,7 @@ public class LayerDAOImpl extends BaseDAOImpl implements LayerDAO {
 		List<Layer> layers = null;
 
 		sqlStatement = "SELECT * FROM "+this.table+" " +
-			" WHERE is_species = :isSpecies" ;
+			" WHERE species_map = :isSpecies" ;
 
 		args = new MapSqlParameterSource();
 		args.addValue("isSpecies", true);
@@ -148,6 +151,7 @@ public class LayerDAOImpl extends BaseDAOImpl implements LayerDAO {
 			layer.setUri(rs.getString("uri"));
 			layer.setScale(rs.getString("scale"));
 			layer.setYear(rs.getString("year"));
+            layer.setSpeciesMap(rs.getBoolean("species_map"));
 			return layer;
 		}
 	}

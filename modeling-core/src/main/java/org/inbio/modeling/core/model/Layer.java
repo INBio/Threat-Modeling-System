@@ -29,6 +29,7 @@ public class Layer {
 	private String uri;
 	private String year;
 	private String scale;
+    private boolean speciesMap;
 	private String description;
 
 	public Layer() { }
@@ -84,4 +85,12 @@ public class Layer {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+    public boolean isSpeciesMap() {
+        return speciesMap;
+    }
+
+    public void setSpeciesMap(boolean speciesMap) {
+        this.speciesMap = speciesMap;
+    }
 }

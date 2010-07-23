@@ -24,7 +24,7 @@
                     <font color="red">${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</font>
                 </c:if>
 
-                    <div id="layer_names" class="content_div" style="float: none">
+                    <div id="login_box" >
                     <table  style="margin: 10px;" cellspacing="0">
                         <tr class="">
                             <td>

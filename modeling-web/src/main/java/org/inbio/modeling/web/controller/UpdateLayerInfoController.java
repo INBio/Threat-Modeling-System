@@ -23,7 +23,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.inbio.modeling.core.dto.LayerDTO;
 import org.inbio.modeling.core.manager.LayerManager;
 import org.springframework.validation.BindException;
-import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractFormController;
 

@@ -19,10 +19,10 @@ body {
 	width: 100%;
 	height:18px;
 	z-index:auto;
-	padding-top: 15px;
-	padding-right: 0;
-	padding-bottom: 0;
-	padding-left: 0;
+	padding-top: 20px;
+	padding-right: 0px;
+	padding-bottom: 10px;
+	padding-left: 0px;
 	background-color:#043780;
 	vertical-align: middle;
 
@@ -32,15 +32,13 @@ body {
 /* Banner title */
 #title {
 	font-family:arial, helvetica, sans-serif;
-	text-align:center;
 	font-size: 32px;
 	font-weight:bold;
 	color: white;
 	float: right;
 	vertical-align: middle;
-	top: 8px;
+    padding-right: 25px;
 }
-
 
 /* Banner style */
 #banner {
@@ -48,7 +46,6 @@ body {
 	background-image: url(images/bannerGis.jpg);
 	background-repeat: repeat-x;
 	background-position: center center;
-
 	border: 1px;
 
 }
@@ -64,20 +61,11 @@ body {
 
 /* Para divs contenido  Leila */
 
-#contenido {
-	width:100%;
-	vertical-align: top;
-	text-align: center;
-	background-color: #FFFFDE;
-	padding: 4px;
-    elevation: 45;
-
-}
 
 
 .titulo-principal{
 	font-family: Georgia, "Times New Roman", Times, serif;
-	font-size: 14px;
+	font-size: 25px;
 	color: #C00;
 	vertical-align: top;
 	font-weight: bold;
@@ -97,7 +85,10 @@ body {
 
 .tabla-contenido {
 	background-color: #039;
+}
 
+.celda01 input{
+    width: 90%;
 }
 
 .celda01 {
@@ -210,18 +201,6 @@ a.link-celda02:visited {
 
 /* Pie p�gina Leila */
 
-#piepagina {
-	width: 100%;
-	height:12px;
-	z-index:auto;
-	background-color:#FFA652;
-	vertical-align: middle;
-	font-family: Verdana, Geneva, sans-serif;
-	font-size: 10px;
-	font-weight: normal;
-	text-align: center;
-	padding: 4px;
-}
 
 #map {
 }
@@ -238,74 +217,114 @@ a.link-celda02:visited {
     clear:both;
 }
 
-.layer_names{
+.buttons{
+    float: left;
+    width: 100px;
+
+}
+
+#layer_names{
     padding: 5px 3px 5px 3px;
-    width:120px;
+    width:  300px;
+    height: 250px;
     float:left;
+    background-color:#BADD58;
     text-align:center;
+    overflow: auto;
 }
 
-.layer_names2{
-    padding: 5px 3px 5px 3px;
-    width:250px;
+.headers_label {
     float:left;
-    text-align:left;
+    overflow:hidden;
+    display:block;
 }
 
-.layer_names2 label {float:left; width:220px; overflow:hidden; display:block;}
-.layer_names2 input {float:left; width:20px; display:block;}
-
+.headers_input {
+    float:left;
+    display:block;
+    text-align: center;
+}
 
 .content_div{
     float:left;
-    margin:5px;
+    padding: 0px 3px 0px 3px;
     -moz-border-radius: 10px;/*buscar las opciones para otros navegadores*/
 }
 
 .content_div_categorys{
-    height:250px;
-    width:450px;
     overflow:auto;
+    width: 400px;
+    height: 250px;
+    text-align:left;
 }
 
-.buttons{
-    text-align:left;
-    margin:5px;
-    padding: 5px 5px 5px 5px
+
+#login_box{
+    padding: 5px 3px 5px 3px;
+    background-color:#BADD58;
+    text-align:center;
+    width:400px;
+    margin: auto;
+    -moz-border-radius: 10px;/*buscar las opciones para otros navegadores*/
+}
+
+
+select{
+    width: 70%;
 }
 
 #layers_content{
-    overflow: auto;
-    max-height: 250px;
-    width: 400px;
 }
 
-#layer_names{
-    background-color:#BADD58;
-    padding: 0 2px 0 2px;
+
+.button-simple{
+    width:120px;
+    height:24px;
+    background-color: #e3fcbc;
+    border:4px thick #003DB8;
+    font-family:sans-serif;
+    text-align:center;
+    font-size:11px;
+    color: black;
+    cursor:pointer;
+    padding:1px;
+    margin:2px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
 }
 
-.my_Button{
-   width:65px;
-   height:24px;
-   text-align:center;
-   padding:1px;
-}
-
-.my_Button_up{
+.button-up{
    background:url("images/up.png") no-repeat;
-   width:20px;
-   height:24px;
-   text-align:center;
-   padding:1px;
+    width:120px;
+    height:24px;
+    background-color: #e3fcbc;
+    border:4px thick #003DB8;
+    font-family:sans-serif;
+    text-align:center;
+    font-size:11px;
+    color: black;
+    cursor:pointer;
+    padding:1px;
+    margin:2px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
 }
 
-.my_Button_down{
+.button-down{
    background:url("images/down.png") no-repeat;
-   width:20px;
-   height:24px;
-   text-align:center;
-   padding:1px;
+    width:120px;
+    height:24px;
+    background-color: #e3fcbc;
+    border:4px thick #003DB8;
+    font-family:sans-serif;
+    text-align:center;
+    font-size:11px;
+    color: black;
+    cursor:pointer;
+    padding:1px;
+    margin:2px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
 }
 
 #categoryInfo{
@@ -344,4 +363,42 @@ a.link-celda02:visited {
 
 .content_div br {
     clear:both;
+}
+
+#layerListTable {
+    border-style: solid;
+    border-width: 1px;
+    margin: auto;
+}
+
+#layerListTable td {
+    border-left-style: solid;
+    border-width: 1px;
+}
+
+.layerListHeader {
+    border-bottom-style: solid;
+    border-left-style: solid;
+    border-width: 1px;
+}
+
+#footer {
+	width: 100%;
+	height:12px;
+	z-index:auto;
+	background-color:#FFA652;
+	vertical-align: middle;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 10px;
+	font-weight: normal;
+	text-align: center;
+	padding: 4px;
+}
+
+#contenido {
+	width:90%;
+	vertical-align: top;
+	text-align: center;
+    margin: 15px auto 15px auto;
+	padding: 4px;
 }

@@ -54,11 +54,13 @@ function calculateValues(){
 		totalLabel.style.color = "red";
 		totalLabel.style.fontSize = "24";
 		submitButtom.disabled = true;
+		submitButtom.style.color = "gray";
 
 	}else{
 		totalLabel.style.color = "black";
 		totalLabel.style.fontSize = "16";
 		submitButtom.disabled = false;
+		submitButtom.style.color = "black";
 	}
 
 	return;
@@ -182,12 +184,18 @@ function activateButtons(){
     document.getElementById("groupButton").disabled = false;
     document.getElementById("topPriority").disabled = false;
     document.getElementById("lowPriority").disabled = false;
+    document.getElementById("groupButton").style.color = "black";
+    document.getElementById("topPriority").style.color = "black";
+    document.getElementById("lowPriority").style.color = "black";
 }
 
 function deActivateButtons(){
     document.getElementById("groupButton").disabled = true;
     document.getElementById("topPriority").disabled = true;
     document.getElementById("lowPriority").disabled = true;
+    document.getElementById("groupButton").style.color = "white";
+    document.getElementById("topPriority").style.color = "white";
+    document.getElementById("lowPriority").style.color = "white";
 
 }
 
@@ -204,7 +212,7 @@ function groupCategorys()
 		radio = radios[item];
 		if(radio.checked == true)
 			break;
-	4}
+	}
 
 	categories = document.getElementsByName(radio.id);
 
@@ -388,7 +396,3 @@ function editUser(){
 	form.action="editUser.html";
 	form.submit();
 }
-
-/**
- *
- */

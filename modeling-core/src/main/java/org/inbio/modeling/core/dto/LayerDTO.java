@@ -29,6 +29,7 @@ public class LayerDTO {
 	private String uri;
 	private String year;
 	private String scale;
+    private boolean speciesMap;
 	private String description;
 
 	public LayerDTO() { }
@@ -84,4 +85,12 @@ public class LayerDTO {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+    public boolean isSpeciesMap() {
+        return speciesMap;
+    }
+
+    public void setSpeciesMap(boolean speciesMap) {
+        this.speciesMap = speciesMap;
+    }
 }

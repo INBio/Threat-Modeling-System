@@ -6,7 +6,7 @@
 		<%@ include file="/common/theme" %>
 		<%@ include file="/common/javascript" %>
 	</head>
-	<body onload="calculateValues()">
+    <body onload="calculateValues();">
 		<div id="header-contenedor">
 			<jsp:include page="/common/header.jsp"/>
 		</div>
@@ -28,20 +28,20 @@
 			<div id="formXD">
 				<form:form id="layersForm" commandName="layersForm" method="post" action="layers.html" >
 					<div id="layers">
-						<table class="tabla-contenido" width="42%" border="0" align="center" cellpadding="4" cellspacing="1" >
+						<table id="layerTable" class="tabla-contenido" width="70%" border="0" align="center" cellpadding="4" cellspacing="1" >
 
 							<tr class="celda02">
-                                <td colspan="2"><span class="textosnegrita"><fmt:message key="layer.generalConfiguration"/></span></td>
+                                <td colspan="2" style="text-align: left; "><span class="textosnegrita" style="text-align: left; font-size: 17px"><fmt:message key="layer.generalConfiguration"/></span></td>
 							</tr>
 							<tr class="celda01">
 
-								<td width="60%">
+                                <td width="60%">
 									<span class="textos">
 										<fmt:message key="common.resolution"/><br />
 										<fmt:message key="layer.resolutionDecimalDegrees" />
 									</span>
 								</td>
-								<td width="40%">
+								<td>
                                     <form:input title="" path="resolution" />&nbsp;&deg;
 								</td>
 							</tr>
@@ -55,7 +55,7 @@
 								<tr class="celda01">
 								<div class="${layer.name}">
 									<td>
-										<span class="textos">
+                                        <span class="textos" title="<fmt:message key='layer.description' />: ${layer.description}">
 											<form:checkbox id="${layer.name}" path="layerList[${current.index}].selected" onclick="setValueToZero(this);" />
 											<c:out value="${layer.name}" />
 										</span>
@@ -100,7 +100,7 @@
 									</span>
 								</td>
 								<td>
-									<input class="modeling_btn" id="submitButton" disabled="true" type="submit" value='<fmt:message key="layer.nextStep"/>' />
+                                    <input class="button-simple" id="submitButton" disabled="true" type="submit" value='<fmt:message key="layer.nextStep"/>'  />
 								</td>
 							<tr>
 						</table>

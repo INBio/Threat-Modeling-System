@@ -7,7 +7,7 @@
 		<%@ include file="/common/theme" %>
 		<%@ include file="/common/javascript" %>
 	</head>
-	<body>
+    <body onload="checkSize()">
 		<div id="Header">
 			<!-- Header -->
 			<jsp:include page="/common/header.jsp"/>

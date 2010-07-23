@@ -10,7 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
-    <body>
+    <body onload="checkSize()">
         <div id="contenido">
             <h1>Contenidos</h1>
 			<ol>

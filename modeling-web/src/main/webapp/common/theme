@@ -1,3 +1,6 @@
 <link rel="stylesheet" 
 	  type="text/css"
 	  href="<c:out value="${pageContext.request.contextPath}"/><spring:theme code='styleSheet'/>"/>
+<link rel="stylesheet"
+	  type="text/css"
+	  href="<c:out value="${pageContext.request.contextPath}"/><spring:theme code='container'/>"/>
