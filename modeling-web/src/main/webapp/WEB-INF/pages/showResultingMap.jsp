@@ -88,7 +88,7 @@
                         {typename: "IABIN_amenazas:calles", extractAttributes: true, SRS:"EPSG:900913"});
                 */
 
-                var wfs = addLayerWFS("${fullSessionInfo.limitLayerName}","${fullSessionInfo.limitLayerName}");
+                var wfs = addLayerWFS("<fmt:message key='showMap.principal' />","${fullSessionInfo.limitLayerName}");
                 map.addLayer(wfs);
 
                 first = true;
@@ -98,18 +98,18 @@
 
                         bbox = wfs.getDataExtent();
                         if(first == true){
+
+                            first = false;
                             var img = new OpenLayers.Layer.Image("<fmt:message key='showMap.threats' />",
                                                 "/resmaps/${fullSessionInfo.imageName}_T_${fullSessionInfo.userSessionId}.png",
                                                 bbox,
                                                 500,
                                                 {isBaseLayer: false, transparent: true, opacity: 0.75 , singleTile: true, ratio: 1 });
                             map.addLayer(img);
-                            map.moveTo(bbox);
-                            first = false;
-                        }
-                        if(bbox != null)
                             map.panTo(bbox.getCenterLonLat());
-
+                            map.zoomToExtent(bbox);
+                            map.raiseLayer(img, map.getNumLayers()*-1);
+                        }
                     });
 
                 //--------------------------------------------------------------------------
