@@ -25,7 +25,7 @@
                                     &nbsp;
                                 </td>
                                 <td class="layerListHeader" width="30%" style="" >
-                                    <fmt:message key="layer.layerName" />
+                                    <fmt:message key="layer.displayName" />
                                 </td>
                                 <td class="layerListHeader" >
                                     <fmt:message key="layer.description" />
@@ -37,7 +37,7 @@
                                     <form:radiobutton value="${layer.id}" path="id" /> &nbsp;
                                 </td>
                                 <td>
-                                    <c:out value="${layer.name}" />&nbsp;
+                                    <c:out value="${layer.displayName}" />&nbsp;
                                 </td>
                                 <td>
                                     <c:out value="${layer.description}" />&nbsp;

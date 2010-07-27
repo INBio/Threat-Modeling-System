@@ -150,6 +150,7 @@ public class LimitController extends AbstractFormController {
 			return showForm(request, response, errors);
 		}
 
+
 		// Set the new information to the session info 
         currentInstanceData.setLimitLayerName(lForm.getSelectedLayerName());
 		session.setAttribute("CurrentSessionInfo", currentInstanceData);

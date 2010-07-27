@@ -12,8 +12,123 @@
     <head>
         <%@ include file="/common/theme" %>
         <%@ include file="/common/javascript" %>
+
+
+        <link rel="stylesheet" type="text/css" href="http://openlayers.org/theme/default/style.css"/>
+        <script type="text/JavaScript" src="http://openlayers.org/api/OpenLayers.js"></script>
+        <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAGtIHQJm1-pS3ci26k9D7hRQgngloALHesSZLYd1j0z536uH2MxQmIpE6xoh3_0LA7MpmysupPTjnvg" type="text/javascript"></script>
+
+        <script type="text/javascript" >
+
+            /**
+             *Add layers
+             */
+            //Use a proxy for GeoServer requesting
+            OpenLayers.ProxyHost = "cgi-bin/proxy.cgi/?url=";
+
+            /*
+             * Function to create new Layers
+             */
+            function addLayerWMS(name, layer)
+            {
+                return new OpenLayers.Layer.WMS( name, "http://216.75.53.105:80/geoserver/wms",
+                {layers: layer,
+                    transparent: "true",
+                    height: '478',
+                    width: '512'}, {isBaseLayer: false,singleTile: true, ratio: 1, opacity: 0.75});
+            }
+
+            /*
+             * Function to create new Layers
+             */
+            function addLayerWFS(name, serverNameLayer)
+            {
+                return new OpenLayers.Layer.WFS(
+                        name,
+                        'http://216.75.53.105:80/geoserver/wfs',
+                        {typename: serverNameLayer});
+            }
+
+            /*
+            * Initialazing the gis functionality
+            */
+            function initMap(divId){
+
+
+                var initialbounds = new OpenLayers.Bounds(
+                    -85.954, 8.04,
+                    -82.553, 11.22);
+
+                var options = {
+                    controls: [],
+                    maxResolution: 0.09776171875,
+                    projection: "EPSG:900913",
+                    units: 'm'
+                };
+
+                var myMapDiv = document.getElementById(divId);
+                map = new OpenLayers.Map(options);
+                map.render(myMapDiv);
+
+                //------------------------------ Layers ------------------------------------
+                //Base layer
+                googleLayer  = new OpenLayers.Layer.Google('Google Hybrid', {type: G_SATELLITE_MAP });
+                map.addLayer(googleLayer);
+
+                <c:forEach items="${speciesLayers}" var="layer">
+                            var aux = addLayerWMS("${layer.name}", "${layer.name}");//(name,id)
+                            map.addLayer(aux);
+                </c:forEach>
+
+
+                /*
+                var wfs = new OpenLayers.Layer.WFS(
+                        "calles",
+                        "http://216.75.53.105/geoserver/wfs",
+                        {typename: "IABIN_amenazas:calles", extractAttributes: true, SRS:"EPSG:900913"});
+                */
+
+                var wfs = addLayerWFS("${fullSessionInfo.limitLayerName}","${fullSessionInfo.limitLayerName}");
+                map.addLayer(wfs);
+
+                first = true;
+                bbox = undefined;
+
+                wfs.events.register("loadend", wfs, function() {
+
+                        bbox = wfs.getDataExtent();
+                        if(first == true){
+                            var img = new OpenLayers.Layer.Image("<fmt:message key='showMap.threats' />",
+                                                "/resmaps/${fullSessionInfo.imageName}_T_${fullSessionInfo.userSessionId}.png",
+                                                bbox,
+                                                500,
+                                                {isBaseLayer: false, transparent: true, opacity: 0.75 , singleTile: true, ratio: 1 });
+                            map.addLayer(img);
+                            map.moveTo(bbox);
+                            first = false;
+                        }
+                        if(bbox != null)
+                            map.panTo(bbox.getCenterLonLat());
+
+                    });
+
+                //--------------------------------------------------------------------------
+
+                //Build up all controls
+                map.zoomToExtent(initialbounds);
+                map.addControl(new OpenLayers.Control.PanZoomBar({
+                    position: new OpenLayers.Pixel(2, 15)
+                }));
+                map.addControl(new OpenLayers.Control.LayerSwitcher({'ascending':false},{'position':OpenLayers.Control}));
+                map.addControl(new OpenLayers.Control.Navigation());
+                map.addControl(new OpenLayers.Control.Scale($('scale')));
+                map.addControl(new OpenLayers.Control.MousePosition({element: $('location')}));
+            }
+
+        </script>
+
     </head>
-    <body onload="checkSize()">
+    <body onload="initMap('map')" >
         <div id="Header">
             <!-- Header -->
             <jsp:include page="/common/header.jsp"/>
@@ -93,9 +208,12 @@
                     <table  style="height:450px">
                         <tr>
                             <td class="mapTable">
-                                <div id="map" >
+                                <!--
+                                <div id="mapImage" >
                                     <img alt="<fmt:message key='maps.resultingMap' />" src="/resmaps/${fullSessionInfo.imageName}_T_${fullSessionInfo.userSessionId}.png" />
                                 </div>
+                                -->
+                                <div id="map" style="border:  1px solid black;"></div>
                             </td>
                             <td class="threat_image_text">
                                 <fmt:message key="showMap.highThreat" />

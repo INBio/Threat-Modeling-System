@@ -202,9 +202,6 @@ a.link-celda02:visited {
 /* Pie p�gina Leila */
 
 
-#map {
-}
-
 #scale_image {
 	background-image: url(images/scale.jpg);
 	background-repeat:no-repeat;
@@ -337,22 +334,12 @@ select{
     margin: 0 10px 0 10px;
 }
 
-#mapResults{
-    height:490px;
-    margin: 0 10px 0 10px;
-}
-
 #results{
     height:490px;
     width:1070px;
     margin:0 auto 0 auto;
 }
 
-.mapTable{
-    text-align: center;
-    width: 640px;
-    height:480px;
-}
 
 .threat_image_text{
     vertical-align: bottom;
@@ -412,4 +399,15 @@ select{
 
 .intervals_text{
     width: 250px;
+}
+
+/* The map and the location bar */
+#map {
+    position: relative;
+    width: 640px;
+    height:480px;
+    border: 1px solid silver;
+    border-style:solid;
+   -moz-border-radius: 5px;
+   -webkit-border-radius: 5px;
 }

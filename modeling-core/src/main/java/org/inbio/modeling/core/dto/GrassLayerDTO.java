@@ -32,6 +32,7 @@ public class GrassLayerDTO {
 	private boolean reverted;
 	private long   weight;
 	private String name;
+	private String displayName;
 	private String uri;
 	private LayerType type;
 	private String description;
@@ -116,4 +117,12 @@ public class GrassLayerDTO {
 	public void setReverted(boolean reverted) {
 		this.reverted = reverted;
 	}
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
 }

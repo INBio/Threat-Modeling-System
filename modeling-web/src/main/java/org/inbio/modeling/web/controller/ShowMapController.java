@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.inbio.modeling.core.manager.FileManager;
 import org.inbio.modeling.core.manager.GrassManager;
+import org.inbio.modeling.core.manager.LayerManager;
 import org.inbio.modeling.web.session.CurrentInstanceData;
 import org.inbio.modeling.web.session.SessionUtils;
 import org.springframework.validation.BindException;
@@ -38,6 +39,7 @@ import org.springframework.web.servlet.mvc.AbstractFormController;
 public class ShowMapController extends AbstractFormController {
 
 	private GrassManager grassManagerImpl;
+	private LayerManager layerManagerImpl;
 	private FileManager fileManagerImpl;
     private SpeciesDistributionController speciesDistributionControllerImpl;
 
@@ -78,6 +80,8 @@ public class ShowMapController extends AbstractFormController {
 		model = new ModelAndView();
 		model.setViewName("showResultingMap");
 		model.addObject("fullSessionInfo", currentInstanceData);
+		model.addObject("speciesLayers", layerManagerImpl.getSpeciesDistributionLayerList());
+		model.addObject("mainLayer", currentInstanceData.getLimitLayerName());
 
 		if(errors != null && errors.hasErrors())
 			model.addAllObjects(errors.getModel());
@@ -108,5 +112,13 @@ public class ShowMapController extends AbstractFormController {
 
     public void setSpeciesDistributionControllerImpl(SpeciesDistributionController speciesDistributionControllerImpl) {
         this.speciesDistributionControllerImpl = speciesDistributionControllerImpl;
+    }
+
+    public LayerManager getLayerManagerImpl() {
+        return layerManagerImpl;
+    }
+
+    public void setLayerManagerImpl(LayerManager layerManagerImpl) {
+        this.layerManagerImpl = layerManagerImpl;
     }
 }

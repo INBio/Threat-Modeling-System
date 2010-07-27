@@ -53,6 +53,7 @@ public class LayerManagerImpl implements LayerManager {
 		for(Layer layer : registeredLayers){
 			layerDTO = new GrassLayerDTO();
 			layerDTO.setName(layer.getName());
+			layerDTO.setDisplayName(layer.getDisplayName());
 			layerDTO.setDescription(layer.getDescription());
 			layerDTO.setUri(layer.getUri());
 			resultList.add(layerDTO);
@@ -86,6 +87,7 @@ public class LayerManagerImpl implements LayerManager {
 		for(Layer layer : registeredLayers){
 			layerDTO = new GrassLayerDTO();
 			layerDTO.setName(layer.getName());
+			layerDTO.setDisplayName(layer.getDisplayName());
 			layerDTO.setDescription(layer.getDescription());
 			layerDTO.setUri(layer.getUri());
 			resultList.add(layerDTO);
@@ -114,6 +116,7 @@ public class LayerManagerImpl implements LayerManager {
 			layerDTO.setId(layer.getId());
 			layerDTO.setName(layer.getName());
 			layerDTO.setDescription(layer.getDescription());
+			layerDTO.setDisplayName(layer.getDisplayName());
 			layerDTO.setUri(layer.getUri());
 			layerDTO.setYear(layer.getYear());
 			layerDTO.setScale(layer.getScale());
@@ -130,6 +133,7 @@ public class LayerManagerImpl implements LayerManager {
 		Layer layer = new Layer();
 
 		layer.setName(newLayer.getName());
+        layer.setDisplayName(newLayer.getDisplayName());
 		layer.setDescription(newLayer.getDescription());
 		layer.setScale(newLayer.getScale());
 		layer.setUri(newLayer.getUri());
@@ -146,6 +150,7 @@ public class LayerManagerImpl implements LayerManager {
 
 		layer.setName(newLayer.getName());
 		layer.setDescription(newLayer.getDescription());
+        layer.setDisplayName(newLayer.getDisplayName());
 		layer.setScale(newLayer.getScale());
 		layer.setUri(newLayer.getUri());
 		layer.setYear(newLayer.getYear());
@@ -167,6 +172,7 @@ public class LayerManagerImpl implements LayerManager {
 		resultLayer.setId(layer.getId());
 		resultLayer.setName(layer.getName());
 		resultLayer.setDescription(layer.getDescription());
+        resultLayer.setDisplayName(layer.getDisplayName());
 		resultLayer.setScale(layer.getScale());
 		resultLayer.setUri(layer.getUri());
         resultLayer.setSpeciesMap(layer.isSpeciesMap());

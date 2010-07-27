@@ -25,6 +25,14 @@
                 <table width="80%" >
                     <tr >
                         <td>
+                            <fmt:message key="layer.displayName" />
+                        </td>
+                        <td>
+                            <form:input path="displayName" />
+                        </td>
+                    </tr>
+                    <tr >
+                        <td>
                             <fmt:message key="layer.layerName" />
                         </td>
                         <td>

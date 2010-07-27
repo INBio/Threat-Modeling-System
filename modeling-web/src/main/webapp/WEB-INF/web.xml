@@ -61,4 +61,22 @@
         <param-name>log4jConfigLocation</param-name>
         <param-value>/WEB-INF/classes/log4j.xml</param-value>
     </context-param>
+    <!-- Configuring a proxy for GeoServer requests -->
+    <servlet>
+            <servlet-name>cgi</servlet-name>
+            <servlet-class>org.apache.catalina.servlets.CGIServlet</servlet-class>
+            <init-param>
+                    <param-name>debug</param-name>
+                    <param-value>0</param-value>
+            </init-param>
+            <init-param>
+                    <param-name>cgiPathPrefix</param-name>
+                    <param-value>WEB-INF/cgi</param-value>
+            </init-param>
+            <load-on-startup>5</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+            <servlet-name>cgi</servlet-name>
+            <url-pattern>/cgi-bin/*</url-pattern>
+    </servlet-mapping>
 </web-app>

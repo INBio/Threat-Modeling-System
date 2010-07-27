@@ -37,18 +37,19 @@ public class LayerDAOImpl extends BaseDAOImpl implements LayerDAO {
 		String createStatement = null;
 		MapSqlParameterSource args = null;
 
-		createStatement = "INSERT INTO "+this.table+"(" +
-			"\"name\", description, uri,  scale, \"year\", last_update, species_map)"+
-			"VALUES (:name, :description, :uri, :scale, :year, :last_update, :species_map);";
+		createStatement = "INSERT INTO "+this.table+"( display_name, " +
+			"\"name\", description, uri,  scale, \"year\", last_update, is_species_map)"+
+			"VALUES (:display_name, :name, :description, :uri, :scale, :year, :last_update, :is_species_map);";
 
 		args = new MapSqlParameterSource();
+		args.addValue("display_name", newLayer.getDisplayName());
 		args.addValue("name", newLayer.getName());
 		args.addValue("description", newLayer.getDescription());
 		args.addValue("uri", newLayer.getUri());
 		args.addValue("scale", newLayer.getScale());
 		args.addValue("year", newLayer.getYear());
 		args.addValue("last_update", Calendar.getInstance().getTime());
-        args.addValue("species_map", newLayer.isSpeciesMap());
+        args.addValue("is_species_map", newLayer.isSpeciesMap());
 
 		getSimpleJdbcTemplate().update(createStatement, args);
 	}
@@ -60,12 +61,13 @@ public class LayerDAOImpl extends BaseDAOImpl implements LayerDAO {
 
 		createStatement = "UPDATE "+this.table+" " +
 			" SET name = :name, " +
+            " display_name = :display_name, " +
 			" description = :description, " +
 			" uri = :uri, " +
 			" scale = :scale, " +
 			" year = :year, " +
 			" last_update = :last_update, " +
-			" species_map= :species_map " +
+			" is_species_map= :is_species_map " +
 			" WHERE id = :layer_id" ;
 
 		args = new MapSqlParameterSource();
@@ -75,8 +77,9 @@ public class LayerDAOImpl extends BaseDAOImpl implements LayerDAO {
 		args.addValue("scale", updatedLayer.getScale());
 		args.addValue("year", updatedLayer.getYear());
 		args.addValue("last_update", Calendar.getInstance().getTime());
-        args.addValue("species_map", updatedLayer.isSpeciesMap());
+        args.addValue("is_species_map", updatedLayer.isSpeciesMap());
 		args.addValue("layer_id", updatedLayer.getId());
+		args.addValue("display_name", updatedLayer.getDisplayName());
 
 		getSimpleJdbcTemplate().update(createStatement, args);
 
@@ -125,7 +128,7 @@ public class LayerDAOImpl extends BaseDAOImpl implements LayerDAO {
 		List<Layer> layers = null;
 
 		sqlStatement = "SELECT * FROM "+this.table+" " +
-			" WHERE species_map = :isSpecies" ;
+			" WHERE is_species_map = :isSpecies" ;
 
 		args = new MapSqlParameterSource();
 		args.addValue("isSpecies", true);
@@ -146,12 +149,13 @@ public class LayerDAOImpl extends BaseDAOImpl implements LayerDAO {
 		public Layer mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Layer layer = new Layer();
 			layer.setId(rs.getLong("id"));
+            layer.setDisplayName(rs.getString("display_name"));
 			layer.setName(rs.getString("name"));
 			layer.setDescription(rs.getString("description"));
 			layer.setUri(rs.getString("uri"));
 			layer.setScale(rs.getString("scale"));
 			layer.setYear(rs.getString("year"));
-            layer.setSpeciesMap(rs.getBoolean("species_map"));
+            layer.setSpeciesMap(rs.getBoolean("is_species_map"));
 			return layer;
 		}
 	}
