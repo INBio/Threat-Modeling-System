@@ -82,7 +82,7 @@
                             </td>
                             <td align="center">
                                 <form:select path="selectedLayerName">
-                                    <form:options items="${limitForm.layers}" itemValue="name" itemLabel="name" />
+                                    <form:options items="${limitForm.layers}" itemValue="name" itemLabel="displayName" />
                                 </form:select>
                             </td>
                         </tr>

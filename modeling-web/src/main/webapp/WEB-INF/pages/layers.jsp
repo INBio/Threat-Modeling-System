@@ -52,12 +52,13 @@
 							<c:forEach items="${layersForm.layerList}" var="layer"  varStatus="current">
 								<form:hidden path="layerList[${current.index}].name" />
 								<form:hidden path="layerList[${current.index}].uri" />
+								<form:hidden path="layerList[${current.index}].displayName" />
 								<tr class="celda01">
 								<div class="${layer.name}">
 									<td>
                                         <span class="textos" title="<fmt:message key='layer.description' />: ${layer.description}">
 											<form:checkbox id="${layer.name}" path="layerList[${current.index}].selected" onclick="setValueToZero(this);" />
-											<c:out value="${layer.name}" />
+											<c:out value="${layer.displayName}" />
 										</span>
 									</td>
 									<td>

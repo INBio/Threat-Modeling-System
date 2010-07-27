@@ -76,7 +76,7 @@
                 map.addLayer(googleLayer);
 
                 <c:forEach items="${speciesLayers}" var="layer">
-                            var aux = addLayerWMS("${layer.name}", "${layer.name}");//(name,id)
+                            var aux = addLayerWMS("${layer.displayName}", "${layer.name}");//(name,id)
                             map.addLayer(aux);
                 </c:forEach>
 
@@ -160,7 +160,7 @@
                         <br />
                         <table border="5" class="tabla-contenido">
                             <tr class="celda02">
-                                <td colspan="2" style="width:350px; font-weight:bold;max-width: 350px; overflow: hidden;"><c:out value="${layer.name}" /></td>
+                                <td colspan="2" style="width:350px; font-weight:bold;max-width: 350px; overflow: hidden;"><c:out value="${layer.displayName}" /></td>
                             </tr>
                             <tr class="celda02">
                             <span class="textosnegrita">

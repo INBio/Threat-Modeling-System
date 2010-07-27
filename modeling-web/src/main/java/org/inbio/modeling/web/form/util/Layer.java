@@ -38,6 +38,7 @@ public class Layer {
 	private long	weight;
 	private String	uri;
 	private String	name;
+	private String	displayName;
 	private String	description;
 
 	private LayerType type;
@@ -132,4 +133,12 @@ public class Layer {
 	public void setReverted(boolean reverted) {
 		this.reverted = reverted;
 	}
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
 }

@@ -43,6 +43,7 @@ public class FormDTOConverter {
 		GrassLayerDTO layerDTO = new GrassLayerDTO();
 
 		layerDTO.setName(layer.getName());
+		layerDTO.setDisplayName(layer.getDisplayName());
 		layerDTO.setDescription(layer.getDescription());
 		layerDTO.setUri(layer.getUri());
 		layerDTO.setColumns(layer.getColumns());
@@ -68,6 +69,7 @@ public class FormDTOConverter {
 		Layer layerForm = new Layer();
 
 		layerForm.setName(layer.getName());
+		layerForm.setDisplayName(layer.getDisplayName());
 		layerForm.setDescription(layer.getDescription());
 		layerForm.setUri(layer.getUri());
 		layerForm.setColumns(layer.getColumns());

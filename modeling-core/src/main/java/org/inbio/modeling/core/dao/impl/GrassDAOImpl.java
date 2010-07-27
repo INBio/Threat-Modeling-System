@@ -67,8 +67,8 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 		// Arguments of the command
 		commands.add(scriptHome+mixSpeciesDistribution);
-		commands.add(resmap);
-		commands.add(speciesMapName);
+		commands.add(resmap.replace(":", "_"));
+		commands.add(speciesMapName.replace(":", "_"));
 		commands.add(String.valueOf(currentSessionId));
 
 		logger.debug("Executing command: "+commands.toString());
@@ -121,7 +121,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 		// Arguments of the command
 		commands.add(scriptHome+asingRegion);
-		commands.add(limitLayerName);
+		commands.add(limitLayerName.replace(":", "_"));
 		commands.add(String.valueOf(currentSessionId));
 
 		logger.debug("Executing command: "+commands.toString());
@@ -146,7 +146,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 		// Arguments of the command
 		commands.add(scriptHome+newLocation);
-		commands.add(name);
+		commands.add(name.replace(":", "_"));
 
 		logger.debug("Executing command: "+commands.toString());
 
@@ -184,7 +184,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		// Arguments of the command
 		commands.add(importationScript);
 		commands.add(fullUri);
-		commands.add(shortOutputName);
+		commands.add(shortOutputName.replace(":", "_"));
 		commands.add(currentSessionId.toString());
 
 		logger.debug("Executing command: "+commands.toString());
@@ -208,7 +208,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 		// Arguments of the command
 		commands.add(scriptHome+rename);
-		commands.add(layerName);
+		commands.add(layerName.replace(":", "_"));
 		commands.add(currentSessionId.toString());
 
 		logger.debug("Executing command: "+commands.toString());
@@ -236,7 +236,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 		// Arguments of the command
 		commands.add(scriptHome+rasterization);
-		commands.add(layerName);
+		commands.add(layerName.replace(":", "_"));
 		commands.add(column);
 		commands.add(currentSessionId.toString());
 
@@ -269,11 +269,11 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 		// Arguments of the command
 		commands.add(scriptHome+mapAlgebra);
-		commands.add(layerName1);
+		commands.add(layerName1.replace(":", "_"));
 		commands.add(weight1.toString());
-		commands.add(layerName2);
+		commands.add(layerName2.replace(":", "_"));
 		commands.add(weight2.toString());
-		commands.add(outputName);
+		commands.add(outputName.replace(":", "_"));
 		commands.add(currentSessionId.toString());
 
 		logger.debug("Executing command: "+commands.toString());
@@ -299,7 +299,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 		// Arguments of the command
 		commands.add(scriptHome+exportPNG);
-		commands.add(outputName);
+		commands.add(outputName.replace(":", "_"));
 		commands.add(currentSessionId.toString());
 
 		logger.debug("Executing command: "+commands.toString());
@@ -327,7 +327,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 		// Arguments of the command
 		commands.add(scriptHome+retrieveType);
-		commands.add(layerName);
+		commands.add(layerName.replace(":", "_"));
 		commands.add(currentSessionId.toString());
 
 		logger.debug("Executing command: "+commands.toString());
@@ -357,7 +357,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 		// Arguments of the command
 		commands.add(scriptHome+getMinMax);
-		commands.add(layerName);
+		commands.add(layerName.replace(":", "_"));
 		commands.add(currentSessionId.toString());
 
 		logger.debug("Executing command: "+commands.toString());
@@ -390,7 +390,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 		// Arguments of the command
 		commands.add(scriptHome+retrieveCategories);
-		commands.add(layerName);
+		commands.add(layerName.replace(":", "_"));
 		commands.add(layerType);
 		commands.add(currentSessionId.toString());
 
@@ -428,7 +428,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 		// Arguments of the command
 		commands.add(scriptHome+rasterReclasification);
-		commands.add(layerName);
+		commands.add(layerName.replace(":", "_"));
 		commands.add(currentSessionId.toString());
 
 		stdout = commandExecutor.getStandardOutput();
@@ -484,7 +484,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 		// Arguments of the command
 		commands.add(scriptHome+asingBuffers);
-		commands.add(layerName);
+		commands.add(layerName.replace(":", "_"));
 		commands.add(distances);
 		commands.add(magicNumber+"");
 		commands.add(reverted+"");
@@ -518,7 +518,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 		// Arguments of the command
 		commands.add(scriptHome+retrieveColumns);
-		commands.add(layerName);
+		commands.add(layerName.replace(":", "_"));
 		commands.add(currentSessionId.toString());
 
 
@@ -561,7 +561,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 		// Arguments of the command
 		commands.add(scriptHome+vectorialReclasification);
-		commands.add(layerName);
+		commands.add(layerName.replace(":", "_"));
 		commands.add(column);
 		commands.add(currentSessionId.toString());
 
@@ -590,7 +590,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 		// Arguments of the command
 		commands.add(scriptHome+setColorScale);
-		commands.add(layerName);
+		commands.add(layerName.replace(":", "_"));
 		commands.add(currentSessionId.toString());
 
 		logger.debug("Executing command: "+commands.toString());

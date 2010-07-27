@@ -91,6 +91,7 @@
                                 </tr>
                                 <c:forEach items="${intervalsForm.layers}" var="layer"  varStatus="current">
                                     <form:hidden path="layers[${current.index}].name" />
+                                    <form:hidden path="layers[${current.index}].displayName" />
                                     <form:hidden path="layers[${current.index}].weight" />
                                     <form:hidden path="layers[${current.index}].type" />
                                     <tr>
@@ -116,7 +117,7 @@
                                             <div class="layer_names2">
                                                 <span class="textos" style="text-align:  left">
 
-                                                    <label><c:out value="${layer.name}" /></label>
+                                                    <label><c:out value="${layer.displayName}" /></label>
 
                                                 </span>
                                             </div>

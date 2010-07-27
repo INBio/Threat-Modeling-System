@@ -76,12 +76,13 @@
                         <tr>
                             <c:forEach items="${columnsForm.layers}" var="layer"  varStatus="current">
                                 <form:hidden  path="layers[${current.index}].name" />
+                                <form:hidden  path="layers[${current.index}].displayName" />
                                 <form:hidden path="layers[${current.index}].weight"/>
                                 <form:hidden path="layers[${current.index}].type"/>
                             <tr class="celda01" style="height: 40px">
                                 <td>
                                     <span class="textosnegrita">
-                                        <c:out value="${layer.name}" />
+                                        <c:out value="${layer.displayName}" />
                                     </span>
                                 </td>
                                 <td class="textos"><div align="center">
