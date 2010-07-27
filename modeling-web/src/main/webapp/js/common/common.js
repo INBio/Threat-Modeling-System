@@ -129,8 +129,8 @@ function addCategory(){
 	if(categories.className == "AREA"){
 		categories.innerHTML = categories.innerHTML+
 			"<div><input type='checkbox' name='"+radio.id+"'/>&nbsp;" +
-			"<input type='text' name='layers["+currentLayer+"].categories["+currentCategory+"].value'  class='intervals_txt' />&nbsp;"+
-			"<input class='intervals_txt' name='layers["+currentLayer+"].categories["+currentCategory+"].description' /><br /></div>";
+			"<input type='text' name='layers["+currentLayer+"].categories["+currentCategory+"].value'  class='intervals_value' />&nbsp;"+
+			"<input class='intervals_text' name='layers["+currentLayer+"].categories["+currentCategory+"].description' /><br /></div>";
 	}else{
 		categories.innerHTML = categories.innerHTML+
 			"<div><input type='checkbox' name='"+radio.id+"'/>&nbsp;" +

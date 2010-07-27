@@ -150,8 +150,8 @@
                                         <c:when test="${'AREA' eq layer.type}" >
                                             <div id="category_${currentCategory.index}" >
                                                 <input type="checkbox" name="${layer.name}"/>
-                                                <form:input readonly="true" cssClass="intervals_txt" path="layers[${current.index}].categories[${currentCategory.index}].value" />
-                                                <form:input readonly="true" cssClass="intervals_txt" path="layers[${current.index}].categories[${currentCategory.index}].description" />
+                                                <form:input readonly="true" cssClass="intervals_value" path="layers[${current.index}].categories[${currentCategory.index}].value" />
+                                                <form:input readonly="true" cssClass="intervals_text" path="layers[${current.index}].categories[${currentCategory.index}].description" />
                                                 <br />
                                             </div>
                                         </c:when>

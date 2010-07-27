@@ -18,7 +18,7 @@
             <!-- Header -->
             <jsp:include page="/common/header.jsp"/>
         </div>
-        <div id="contenido" style="overflow: auto; width: 100%">
+        <div id="contenido" style="width: 100%">
 
             <spring:hasBindErrors name="intervalsForm">
                 <div class="errors">
@@ -106,6 +106,11 @@
                         </tr>
                     </table>
                 </div>
+            </div>
+            <div id="actions">
+                <input id="exportPNGButton" type="submit" class="button-simple" value='<fmt:message key="showMap.exportPNG"/>' onclick="exportImage();" />
+                <input id="exportSHPButton" type="submit" class="button-simple" value='<fmt:message key="showMap.exportSHP"/>' onclick="exportSHP();" />
+                <input id="exportPDFButton" type="submit" class="button-simple" value='<fmt:message key="showMap.exportPDF"/>' onclick="exportPDF();" />
             </div>
         </div>
         <div id="footer">

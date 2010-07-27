@@ -402,3 +402,14 @@ select{
     margin: 15px auto 15px auto;
 	padding: 4px;
 }
+
+.intervals_value{
+    width: 60px;
+    margin-left: 10px;
+    margin-right: 10px;
+    text-align: center;
+}
+
+.intervals_text{
+    width: 250px;
+}
