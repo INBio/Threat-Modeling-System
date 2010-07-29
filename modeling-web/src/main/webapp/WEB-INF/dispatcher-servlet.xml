@@ -33,6 +33,7 @@
                 <prop key="chooseSpeciesMap.html">speciesDistributionController</prop>
                 <prop key="login.html">loginController</prop>
                 <prop key="accessDeniedPage.html">accessDeniedController</prop>
+                <prop key="export.html">exportController</prop>
 
                 <prop key="admin/administration.html">administrationController</prop>
 

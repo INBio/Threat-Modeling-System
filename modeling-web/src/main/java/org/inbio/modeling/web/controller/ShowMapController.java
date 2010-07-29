@@ -25,6 +25,7 @@ import javax.servlet.http.HttpSession;
 import org.inbio.modeling.core.manager.FileManager;
 import org.inbio.modeling.core.manager.GrassManager;
 import org.inbio.modeling.core.manager.LayerManager;
+import org.inbio.modeling.web.form.ExportData;
 import org.inbio.modeling.web.session.CurrentInstanceData;
 import org.inbio.modeling.web.session.SessionUtils;
 import org.springframework.validation.BindException;
@@ -79,6 +80,7 @@ public class ShowMapController extends AbstractFormController {
 		// Send the layer list to the JSP
 		model = new ModelAndView();
 		model.setViewName("showResultingMap");
+		model.addObject("exportForm", new ExportData());
 		model.addObject("fullSessionInfo", currentInstanceData);
 		model.addObject("speciesLayers", layerManagerImpl.getSpeciesDistributionLayerList());
 		model.addObject("mainLayer", currentInstanceData.getLimitLayerName());

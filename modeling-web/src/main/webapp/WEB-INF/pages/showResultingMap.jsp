@@ -27,29 +27,6 @@
             OpenLayers.ProxyHost = "cgi-bin/proxy.cgi/?url=";
 
             /*
-             * Function to create new Layers
-             */
-            function addLayerWMS(name, layer)
-            {
-                return new OpenLayers.Layer.WMS( name, "http://216.75.53.105:80/geoserver/wms",
-                {layers: layer,
-                    transparent: "true",
-                    height: '478',
-                    width: '512'}, {isBaseLayer: false,singleTile: true, ratio: 1, opacity: 0.75});
-            }
-
-            /*
-             * Function to create new Layers
-             */
-            function addLayerWFS(name, serverNameLayer)
-            {
-                return new OpenLayers.Layer.WFS(
-                        name,
-                        'http://216.75.53.105:80/geoserver/wfs',
-                        {typename: serverNameLayer});
-            }
-
-            /*
             * Initialazing the gis functionality
             */
             function initMap(divId){
@@ -80,13 +57,6 @@
                             map.addLayer(aux);
                 </c:forEach>
 
-
-                /*
-                var wfs = new OpenLayers.Layer.WFS(
-                        "calles",
-                        "http://216.75.53.105/geoserver/wfs",
-                        {typename: "IABIN_amenazas:calles", extractAttributes: true, SRS:"EPSG:900913"});
-                */
 
                 var wfs = addLayerWFS("<fmt:message key='showMap.principal' />","${fullSessionInfo.limitLayerName}");
                 map.addLayer(wfs);
@@ -123,6 +93,15 @@
                 map.addControl(new OpenLayers.Control.Navigation());
                 map.addControl(new OpenLayers.Control.Scale($('scale')));
                 map.addControl(new OpenLayers.Control.MousePosition({element: $('location')}));
+            }
+
+
+            function exportResult( type ){
+
+                var outputType = document.getElementById('outputType');
+                outputType.value = type;
+
+                return true;
             }
 
         </script>
@@ -226,9 +205,12 @@
                 </div>
             </div>
             <div id="actions">
-                <input id="exportPNGButton" type="submit" class="button-simple" value='<fmt:message key="showMap.exportPNG"/>' onclick="exportImage();" />
-                <input id="exportSHPButton" type="submit" class="button-simple" value='<fmt:message key="showMap.exportSHP"/>' onclick="exportSHP();" />
-                <input id="exportPDFButton" type="submit" class="button-simple" value='<fmt:message key="showMap.exportPDF"/>' onclick="exportPDF();" />
+                <form:form action="export.html" commandName="exportForm">
+                    <form:hidden id="outputType" path="type"  />
+                    <input id="exportPNGButton" type="submit" class="button-simple" value='<fmt:message key="showMap.exportPNG"/>' onclick="exportResult('PNG');" />
+                    <input id="exportSHPButton" type="submit" class="button-simple" value='<fmt:message key="showMap.exportSHP"/>' onclick="exportResult('SHP');" />
+                    <input id="exportPDFButton" type="submit" class="button-simple" value='<fmt:message key="showMap.exportPDF"/>' onclick="exportResult('PDF');" />
+                </form:form>
             </div>
         </div>
         <div id="footer">

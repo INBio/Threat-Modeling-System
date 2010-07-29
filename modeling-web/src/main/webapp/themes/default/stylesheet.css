@@ -91,6 +91,10 @@ body {
     width: 90%;
 }
 
+.celda01 checkbox{
+    width: 0%;
+}
+
 .celda01 {
 	background-color: #e3fcbc;
 	padding: 1px;

@@ -396,3 +396,29 @@ function editUser(){
 	form.action="editUser.html";
 	form.submit();
 }
+
+/*
+ * showResultingMap.jsp
+ */
+
+/*
+ * Function to create new Layers
+ */
+function addLayerWMS(name, layer) {
+
+    return new OpenLayers.Layer.WMS( name, "http://216.75.53.105:80/geoserver/wms",
+    {layers: layer,
+        transparent: "true",
+        height: '478',
+        width: '512'}, {isBaseLayer: false,singleTile: true, ratio: 1, opacity: 0.50});
+}
+
+/*
+ * Function to create new Layers
+ */
+function addLayerWFS(name, serverNameLayer) {
+    return new OpenLayers.Layer.WFS(
+    name,
+    'http://216.75.53.105:80/geoserver/wfs',
+    {typename: serverNameLayer});
+}

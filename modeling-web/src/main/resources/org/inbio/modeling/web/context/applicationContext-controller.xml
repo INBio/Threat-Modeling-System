@@ -86,6 +86,17 @@
 
 	</bean>
 
+	<bean id="exportController" class="org.inbio.modeling.web.controller.ExportController" >
+
+		<property name="commandName" value="exportForm" />
+        <property name="commandClass" value="org.inbio.modeling.web.form.ExportData" />
+
+        <property name="grassManagerImpl" ref="grassManager" />
+        <property name="fileManagerImpl" ref="fileManager" />
+        <property name="showMapControllerImpl" ref="showMapController" />
+
+	</bean>
+
 
 <!-- administrative stuff -->
 	<bean id="administrationController" class="org.inbio.modeling.web.controller.AdministrationController" >
