@@ -127,6 +127,16 @@ public class GrassManagerImpl implements GrassManager {
 
 	@Override
 	/**
+	 * @see org.inbio.modeling.core.manager.GrassManager#exportLayer2Image( Long currentSessionId, String layerName)
+	 */
+	public void exportLayer2Shapefile( GrassLayerDTO layer, Long currentSessionId)
+		throws Exception {
+
+		this.grassDAOImpl.exportAsShapefile(currentSessionId, layer.getName());
+	}
+
+	@Override
+	/**
 	 * @see org.inbio.modeling.core.manager.GrassManager#getLayerCategories(String layerName , String layerType , Long currentSessionId)
 	 */
 	public List<CategoryDTO> getLayerCategories(GrassLayerDTO layer

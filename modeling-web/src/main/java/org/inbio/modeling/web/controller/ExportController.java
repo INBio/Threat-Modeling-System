@@ -17,18 +17,18 @@
  */
 package org.inbio.modeling.web.controller;
 
-import java.util.List;
+import java.io.FileInputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.inbio.modeling.core.dto.GrassLayerDTO;
+import org.inbio.modeling.core.manager.ExportManager;
 import org.inbio.modeling.core.manager.FileManager;
 import org.inbio.modeling.core.manager.GrassManager;
 import org.inbio.modeling.web.form.ExportData;
-import org.inbio.modeling.web.form.ListLayerForm;
 import org.inbio.modeling.web.session.CurrentInstanceData;
-import org.inbio.modeling.web.form.util.Layer;
 import org.inbio.modeling.web.session.SessionUtils;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
@@ -38,6 +38,7 @@ public class ExportController extends AbstractFormController {
 
     private GrassManager grassManagerImpl;
     private FileManager fileManagerImpl;
+    private ExportManager exportManagerImpl;
     private ShowMapController showMapControllerImpl;
 
     @Override
@@ -73,12 +74,30 @@ public class ExportController extends AbstractFormController {
 
         if(currentInstanceData != null){
 
-            if(exportForm.getType().equals("PDF")){
+            if(exportForm.getType().equals("PDF")){ // PDF File
                 System.out.println("#-> export a PDF");
-            }else if(exportForm.getType().equals("SHP")){
-                System.out.println("#-> export a SHP");
+
+
+            }else if(exportForm.getType().equals("SHP")){ // Shapefile
+
+                try {
+                    response = this.exportShapefile(currentInstanceData, response);
+                } catch (Exception ex) {
+                    ex = new Exception("errors.cantExportShape", ex);
+                    Logger.getLogger(ColumnController.class.getName()).log(Level.SEVERE, null, ex);
+                    errors.reject(ex.getMessage());
+                    return showForm(request, response, errors);
+                }
             }else{ // PNG
-                System.out.println("#-> export a PNG");
+
+                try {
+                    response = this.exportImage(currentInstanceData, response);
+                } catch (Exception ex) {
+                    ex = new Exception("errors.cantExportImage", ex);
+                    Logger.getLogger(ColumnController.class.getName()).log(Level.SEVERE, null, ex);
+                    errors.reject(ex.getMessage());
+                    return showForm(request, response, errors);
+                }
             }
 
         }else{
@@ -90,6 +109,66 @@ public class ExportController extends AbstractFormController {
 
 
         return showMapControllerImpl.showForm(request, response, errors);
+    }
+
+    /**
+     *
+     * @param currentInstanceData
+     */
+    private  HttpServletResponse exportShapefile( CurrentInstanceData currentInstanceData, HttpServletResponse response) throws Exception{
+
+
+        //generate a zip with all the files of the shapefile
+        this.grassManagerImpl.exportLayer2Shapefile(
+                new GrassLayerDTO(currentInstanceData.getImageName(), 1L)
+                , currentInstanceData.getUserSessionId());
+
+        FileInputStream fis = null;
+        byte[] bytez = new byte[1024];
+
+
+        //verify that the file exists and create a File Stream to read it.
+        fis = this.exportManagerImpl.exportShapefile(currentInstanceData.getImageName(), currentInstanceData.getUserSessionId());
+
+
+        if(fis != null){
+
+            // set the content type so the browser can see this as it is
+            response.setContentType("application/zip");
+            response.setHeader("Content-Disposition","attachment; filename=ShapefileAmenazas.zip");
+
+            // send the picture
+            while(fis.read(bytez)!=-1){
+                response.getOutputStream().write(bytez);
+            }
+        }
+        return response;
+    }
+    /**
+     *
+     * @param currentInstanceData
+     */
+    private  HttpServletResponse exportImage( CurrentInstanceData currentInstanceData, HttpServletResponse response) throws Exception{
+
+
+        FileInputStream fis = null;
+        byte[] bytez = new byte[1024];
+
+        fis = this.exportManagerImpl.exportImage(currentInstanceData.getImageName(), currentInstanceData.getUserSessionId());
+
+        if(fis != null){
+
+            // set the content type so the browser can see this as it is
+            response.setContentType("image/png");
+            response.setHeader("Content-Disposition","attachment; filename=MapaAmenazas.png");
+
+            // send the picture
+            while(fis.read(bytez)!=-1){
+                response.getOutputStream().write(bytez);
+            }
+        }
+
+        return response;
     }
 
     public FileManager getFileManagerImpl() {
@@ -114,5 +193,13 @@ public class ExportController extends AbstractFormController {
 
     public void setShowMapControllerImpl(ShowMapController showMapControllerImpl) {
         this.showMapControllerImpl = showMapControllerImpl;
+    }
+
+    public ExportManager getExportManagerImpl() {
+        return exportManagerImpl;
+    }
+
+    public void setExportManagerImpl(ExportManager exportManagerImpl) {
+        this.exportManagerImpl = exportManagerImpl;
     }
 }

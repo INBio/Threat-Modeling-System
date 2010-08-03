@@ -93,6 +93,7 @@
 
         <property name="grassManagerImpl" ref="grassManager" />
         <property name="fileManagerImpl" ref="fileManager" />
+        <property name="exportManagerImpl" ref="ExportManager" />
         <property name="showMapControllerImpl" ref="showMapController" />
 
 	</bean>

@@ -78,6 +78,15 @@ public interface GrassManager{
 		throws Exception;
 
 	/**
+	 * Export a raster layer as an png image
+	 * @param currentSessionId
+	 * @param layerName
+	 * @throws Exception
+	 */
+	public void exportLayer2Shapefile(GrassLayerDTO layer, Long currentSessionId)
+		throws Exception;
+
+	/**
 	 * return the minimun and the maximun value of a raster layer
 	 * @param layerName
 	 * @param currentSessionId

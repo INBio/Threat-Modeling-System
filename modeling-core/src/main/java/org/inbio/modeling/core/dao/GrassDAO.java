@@ -87,6 +87,16 @@ public interface GrassDAO extends BaseDAO {
 								throws Exception;
 
 	/**
+	 * export a raster map as an shapefile
+	 * @param currentSessionId
+	 * @param outputName
+	 * @throws Exception
+	 */
+	public void exportAsShapefile(Long currentSessionId
+                                    , String outputName)
+								throws Exception;
+
+	/**
 	 * Return the type of a layer according to the data store into the grass
 	 * database.
 	 * @param layerName

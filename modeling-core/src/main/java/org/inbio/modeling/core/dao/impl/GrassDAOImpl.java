@@ -315,6 +315,32 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
 
 	@Override
+	public void exportAsShapefile(Long currentSessionId, String outputName) throws Exception{
+
+		int result = 0;
+		List<String> commands = null;
+		StringBuilder stdout = null;
+		StringBuilder stderr = null;
+		commands = new ArrayList<String>();
+		commands = new ArrayList<String>();
+
+		// Arguments of the command
+		commands.add(scriptHome+exportSHP);
+		commands.add(outputName.replace(":", "_"));
+		commands.add(currentSessionId.toString());
+
+		logger.debug("Executing command: "+commands.toString());
+		commandExecutor = new OSCommandThreadImpl();
+		// executes the command
+		result = commandExecutor.run(commands);
+		// gets the output of the execution
+		stdout = commandExecutor.getStandardOutput();
+		stderr = commandExecutor.getStandardError();
+		// Prints the output of the command for good or for bad.
+		this.printThis(result, stdout, stderr);
+	}
+
+	@Override
 	public String retrieveLayerType(String layerName, Long currentSessionId)
 		throws Exception{
 

@@ -27,6 +27,9 @@ export DEF_LOCATION="Default"
 # rules file name
 export RULES_FILE="/tmp/rules-$SUFFIX.rcl"
 
+#export temp directory
+export TEMP_DIR=/tmp
+
 # vector map
 export VMAP="_V_$SUFFIX"
 # reclass vector map
