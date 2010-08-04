@@ -141,6 +141,8 @@ public class ExportController extends AbstractFormController {
             while(fis.read(bytez)!=-1){
                 response.getOutputStream().write(bytez);
             }
+            fis.close();
+            response.getOutputStream().close();
         }
         return response;
     }
@@ -166,6 +168,8 @@ public class ExportController extends AbstractFormController {
             while(fis.read(bytez)!=-1){
                 response.getOutputStream().write(bytez);
             }
+            fis.close();
+            response.getOutputStream().close();
         }
 
         return response;

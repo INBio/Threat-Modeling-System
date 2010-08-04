@@ -57,16 +57,64 @@
                             map.addLayer(aux);
                 </c:forEach>
 
+                var aux = addLayerWMS("<fmt:message key='showMap.principal' />","${fullSessionInfo.limitLayerName}");//(name,id)
+                map.addLayer(aux);
 
-                var wfs = addLayerWFS("<fmt:message key='showMap.principal' />","${fullSessionInfo.limitLayerName}");
-                map.addLayer(wfs);
 
-                first = true;
-                bbox = undefined;
+    //Prepare URL for XHR request:
+    var sUrl = "cgi-bin/proxy.cgi/?url=http://216.75.53.105:80/geoserver/wms?request=getCapabilities";
 
-                wfs.events.register("loadend", wfs, function() {
+    //Prepare callback object
+    var callback = {
 
-                        bbox = wfs.getDataExtent();
+        //If XHR call is successful
+        success: function(oResponse) {
+
+
+            //Root element -> response
+            var xmlDoc = oResponse.responseXML.documentElement;
+            //Get the list of specimens
+            var layerList = xmlDoc.getElementsByTagName("Layer");
+
+            //Add all the specimen point
+            for(var i = 0;i<layerList.length;i++){
+                var node = layerList[i];
+                var name = node.getElementsByTagName("Name")[0].childNodes[0].nodeValue;
+                if(name == "${fullSessionInfo.limitLayerName}"){
+                        var llAttributes = node.getElementsByTagName("BoundingBox")[0].attributes;
+                        var bbox =  new OpenLayers.Bounds();
+                        bbox.extend(new OpenLayers.LonLat( llAttributes.minx.value, llAttributes.miny.value));
+                        bbox.extend(new OpenLayers.LonLat( llAttributes.maxx.value, llAttributes.maxy.value));
+                            var img = new OpenLayers.Layer.Image("<fmt:message key='showMap.threats' />",
+                                                "/resmaps/${fullSessionInfo.imageName}_T_${fullSessionInfo.userSessionId}.png",
+                                                bbox,
+                                                500,
+                                                {isBaseLayer: false, transparent: true, opacity: 0.75 , singleTile: true, ratio: 1,bgcolor: 'transparent' });
+                            map.addLayer(img);
+                            map.panTo(bbox.getCenterLonLat());
+                            map.zoomToExtent(bbox);
+                            map.raiseLayer(img, map.getNumLayers()*-1);
+                }
+            }
+        },
+
+        //If XHR call is not successful
+        failure: function(oResponse) {
+            YAHOO.log("Failed to process XHR transaction.", "info", "example");
+        }
+    };
+
+    //Make our XHR call using Connection Manager's
+    YAHOO.util.Connect.asyncRequest('GET', sUrl, callback);
+
+
+/*******************************************************/
+
+/*
+                aux.events.register("loadend", aux, function() {
+                    alert(map.getMaxExtent(aux));
+
+                        bbox = aux.getTilesBounds();
                         if(first == true){
 
                             first = false;
@@ -74,13 +122,17 @@
                                                 "/resmaps/${fullSessionInfo.imageName}_T_${fullSessionInfo.userSessionId}.png",
                                                 bbox,
                                                 500,
-                                                {isBaseLayer: false, transparent: true, opacity: 0.75 , singleTile: true, ratio: 1 });
+                                                {isBaseLayer: false, transparent: true, opacity: 0.75 , singleTile: true, ratio: 1,bgcolor: 'transparent' });
                             map.addLayer(img);
                             map.panTo(bbox.getCenterLonLat());
                             map.zoomToExtent(bbox);
                             map.raiseLayer(img, map.getNumLayers()*-1);
                         }
-                    });
+                });
+*/
+
+                first = true;
+                bbox = undefined;
 
                 //--------------------------------------------------------------------------
 
