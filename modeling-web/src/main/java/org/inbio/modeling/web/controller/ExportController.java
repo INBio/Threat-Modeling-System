@@ -17,7 +17,11 @@
  */
 package org.inbio.modeling.web.controller;
 
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.pdf.PdfWriter;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +32,7 @@ import org.inbio.modeling.core.manager.ExportManager;
 import org.inbio.modeling.core.manager.FileManager;
 import org.inbio.modeling.core.manager.GrassManager;
 import org.inbio.modeling.web.form.ExportData;
+import org.inbio.modeling.web.form.converter.FormDTOConverter;
 import org.inbio.modeling.web.session.CurrentInstanceData;
 import org.inbio.modeling.web.session.SessionUtils;
 import org.springframework.validation.BindException;
@@ -75,10 +80,17 @@ public class ExportController extends AbstractFormController {
         if(currentInstanceData != null){
 
             if(exportForm.getType().equals("PDF")){ // PDF File
-                System.out.println("#-> export a PDF");
 
-
-            }else if(exportForm.getType().equals("SHP")){ // Shapefile
+                try {
+                    this.exportPDF(currentInstanceData, response);
+                } catch (Exception ex) {
+                    ex = new Exception("errors.cantExportPDF", ex);
+                    Logger.getLogger(ColumnController.class.getName()).log(Level.SEVERE, null, ex);
+                    errors.reject(ex.getMessage());
+                    return showForm(request, response, errors);
+                }
+                
+            } else if(exportForm.getType().equals("SHP")){ // Shapefile
 
                 try {
                     response = this.exportShapefile(currentInstanceData, response);
@@ -110,6 +122,26 @@ public class ExportController extends AbstractFormController {
 
         return showMapControllerImpl.showForm(request, response, errors);
     }
+
+    private void exportPDF(CurrentInstanceData currentInstanceData, HttpServletResponse response) throws Exception{
+
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition","attachment; filename=reporte.pdf;");
+        Document document = new Document();
+
+        PdfWriter.getInstance(document, response.getOutputStream());
+        document.open();
+
+        document =  exportManagerImpl.exportPDF(document,
+                currentInstanceData.getResolution(),
+                currentInstanceData.getImageName(),
+                currentInstanceData.getLimitLayerName(),
+                FormDTOConverter.convert(currentInstanceData.getLayerList(), GrassLayerDTO.class),
+                currentInstanceData.getUserSessionId());
+
+        document.close();
+    }
+
 
     /**
      *

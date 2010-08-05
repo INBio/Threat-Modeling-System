@@ -17,7 +17,10 @@
  */
 package org.inbio.modeling.core.manager;
 
+import com.lowagie.text.Document;
 import java.io.FileInputStream;
+import java.util.List;
+import org.inbio.modeling.core.dto.GrassLayerDTO;
 
 /**
  * Handle FileSystem actions
@@ -34,5 +37,7 @@ public interface ExportManager{
     public FileInputStream exportImage(String layerName, long suffix) throws Exception;
 
     public FileInputStream exportShapefile(String layerName, long suffix) throws Exception;
+
+    public Document exportPDF(Document document, Double resolution, String imageName, String limitLayerName, List<GrassLayerDTO>  layerList, long currentSessionId) throws Exception;
 
 }

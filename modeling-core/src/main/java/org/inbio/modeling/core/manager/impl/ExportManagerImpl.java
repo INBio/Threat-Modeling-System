@@ -17,8 +17,16 @@
  */
 package org.inbio.modeling.core.manager.impl;
 
+import com.lowagie.text.Chunk;
+import com.lowagie.text.Document;
+import com.lowagie.text.Image;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfPTable;
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.List;
+import org.inbio.modeling.core.dto.CategoryDTO;
+import org.inbio.modeling.core.dto.GrassLayerDTO;
 import org.inbio.modeling.core.manager.ExportManager;
 
 /**
@@ -56,6 +64,83 @@ public class ExportManagerImpl implements ExportManager {
 
         return fis;
     }
+
+    @Override
+    public Document exportPDF(Document document,
+            Double resolution,
+            String imageName,
+            String limitLayerName,
+            List<GrassLayerDTO>  layerList,
+            long currentSessionId) throws Exception{
+
+        //imagen que posee el mapa
+        Image foto = Image.getInstance(mapsHome+imageName+"_T_"+currentSessionId+".png");
+        //imagen que posee la escala
+        Image foto2 = Image.getInstance(mapsHome+"scale.jpg");
+
+        foto.scaleToFit(300, 300);
+        foto2.scaleToFit(20, 100);
+        document.add(new Paragraph("\n"));
+        document.add(new Paragraph("Resolution: " + resolution));
+        document.add(new Paragraph("\n"));
+
+        foto.setAlignment(Chunk.ALIGN_CENTER);
+        foto2.setAlignment(Chunk.ALIGN_LEFT);
+
+        document.add(foto);
+        document.add(new Paragraph("\n"));
+        document.add(new Paragraph("High threat"));
+        document.add(foto2);
+        document.add(new Paragraph("Low threat"));
+        document.add(new Paragraph("\n"));
+
+        List<CategoryDTO> categorys;
+        PdfPTable table;
+        for (GrassLayerDTO grassLayerDTO : layerList) {
+
+            if(grassLayerDTO.getType().match("areas")) {
+                document.add(new Paragraph("\n"));
+                document.add(new Paragraph("\n"));
+                document.add(new Paragraph(grassLayerDTO.getName()));
+                document.add(new Paragraph("\n"));
+                document.add(new Paragraph("Categorys:"));
+                document.add(new Paragraph("\n"));
+
+                table = new PdfPTable(2);
+                categorys = grassLayerDTO.getCategories();
+                for (CategoryDTO categoryDTO : categorys) {
+
+                    table.addCell(categoryDTO.getValue());
+                    table.addCell(categoryDTO.getDescription());
+                }
+
+                document.add(table);
+
+            } else {
+
+                document.add(new Paragraph("\n"));
+                document.add(new Paragraph("\n"));
+                document.add(new Paragraph(grassLayerDTO.getName()));
+                document.add(new Paragraph("\n"));
+                document.add(new Paragraph("Intervals:"));
+                document.add(new Paragraph("\n"));
+
+                table = new PdfPTable(1);
+                categorys = grassLayerDTO.getCategories();
+
+                for (CategoryDTO categoryDTO : categorys) {
+                    document.add(new Paragraph("        " + categoryDTO.getValue()));
+                }
+            }
+        }
+
+        return document;
+    }
+
+
+    /*
+     * ==================================================================
+     */
 
     public String getMapsHome() {
         return mapsHome;
