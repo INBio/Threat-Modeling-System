@@ -18,10 +18,8 @@
 package org.inbio.modeling.web.controller;
 
 import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
 import com.lowagie.text.pdf.PdfWriter;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -51,6 +49,12 @@ public class ExportController extends AbstractFormController {
             , HttpServletResponse response
             , BindException errors) {
 
+        ModelAndView model = null;
+
+		if(errors != null && errors.hasErrors()){
+            model = new ModelAndView();
+			model.addAllObjects(errors.getModel());
+        }
         return null;
     }
 
