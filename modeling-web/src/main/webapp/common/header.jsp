@@ -13,6 +13,6 @@
 			<div id="title"><fmt:message key="common.applicationName"/></div>
 		</div>
 		<div id="banner-contenedor">
-			<div id="banner" />
+            <div id="banner" ></div>
 		</div>
 </div>

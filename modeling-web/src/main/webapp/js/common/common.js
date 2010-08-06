@@ -26,7 +26,8 @@ function editLayer(){
 
 function calculateValues(){
 
-	var layerList   = document.getElementById("layers").childNodes;
+//	var layerList   = document.getElementById("layers").childNodes;
+	var layerList   = document.forms['layersForm'].getElementsByTagName("DIV");
 	var totalLabel = document.getElementById("totalImportanceValue");
 	var submitButtom = document.getElementById("submitButton");
 
@@ -35,15 +36,17 @@ function calculateValues(){
 	var checkbox = undefined;
 	var textfield = undefined;
 
-	for each(var layerDiv in layerList){
+	for (var layerDiv = 0; layerDiv<layerList.length; layerDiv++){
 
-		if(layerDiv.nodeName == "DIV"){
-			checkbox = document.getElementById(layerDiv.className);
-			textfield = document.getElementById(layerDiv.className+"_weight");
-			if(checkbox.checked == true){
-				totalImportanceValue += (+textfield.value);
-				textfield.disabled = false;
-			}
+		if(layerList[layerDiv].nodeName == "DIV" ){
+            if(layerList[layerDiv].className != ""){
+                checkbox = document.getElementById(layerList[layerDiv].className);
+                textfield = document.getElementById(layerList[layerDiv].className+"_weight");
+                if(checkbox.checked == true){
+                    totalImportanceValue += (+textfield.value);
+                    textfield.disabled = false;
+                }
+            }
 		}
 	}
 
@@ -91,7 +94,7 @@ function edit(radio){
 	var displayStyle = undefined;
 	var categoryDiv =  undefined;
 
-	for(var item in radios){
+	for(var item = 0; item < radios.length; item++){
 
 		if(item == "item")
 			break;
@@ -116,7 +119,7 @@ function addCategory(){
 	var currentLayer = undefined;
 	var currentCategory = undefined;
 
-	for(var item in radios){
+	for(var item = 0; item < radios.length; item++){
 		radio = radios[item];
 		if(radio.checked == true)
 			break;
@@ -144,7 +147,7 @@ function deleteCategory(){
 
 	var radios = document.getElementsByName("rbEditing");
 
-	for(var item in radios){
+	for(var item = 0; item < radios.length; item++){
 		radio = radios[item];
 		if(radio.checked == true)
 			break;
@@ -154,7 +157,8 @@ function deleteCategory(){
 
 	for(var ckb = categories.length-1; ckb >= 0; ckb--){
 		check = categories[ckb];
-		if(check.checked == true){
+		if(check.checked == true && check.parentNode.id != ""){
+            alert(check.parentNode.id);
 			check.parentNode.parentNode.removeChild(check.parentNode);
 		}
 	}
@@ -188,8 +192,7 @@ function groupCategorys()
 
 	var radios = document.getElementsByName("rbEditing");
 
-	for(var item in radios)
-	{
+	for(var item = 0; item < radios.length; item++){
 		radio = radios[item];
 		if(radio.checked == true)
 			break;
@@ -245,7 +248,7 @@ function topPriorityCategorys(){
 
 	var radios = document.getElementsByName("rbEditing");
 
-	for(var item in radios){
+	for(var item = 0; item < radios.length; item++){
         radio = radios[item];
         if(radio.checked == true)
             break;
@@ -303,7 +306,7 @@ function lowPriorityCategorys(){
 
 	var radios = document.getElementsByName("rbEditing");
 
-	for(var item in radios){
+	for(var item = 0; item < radios.length; item++){
         radio = radios[item];
         if(radio.checked == true)
             break;

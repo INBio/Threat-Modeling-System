@@ -57,7 +57,7 @@
 								<div class="${layer.name}">
 									<td>
                                         <span class="textos" title="<fmt:message key='layer.description' />: ${layer.description}">
-											<form:checkbox id="${layer.name}" path="layerList[${current.index}].selected" onclick="setValueToZero(this);" />
+                                            <form:checkbox cssStyle="width: 5%" id="${layer.name}" path="layerList[${current.index}].selected" onclick="setValueToZero(this);" />
 											<c:out value="${layer.displayName}" />
 										</span>
 									</td>

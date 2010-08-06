@@ -71,11 +71,11 @@
             <div id="limitForm">
                 <form:form method="post" action="limit.html" commandName="limitForm">
                     <table width="60%" border="0" align="center" cellpadding="4" cellspacing="1" class="tabla-contenido">
-                        <tr class="celda02">
+                        <tr class="celda02" >
                             <td colspan="2" style="text-align: left; "><span class="textosnegrita" style="text-align: left; font-size: 17px"><fmt:message key="title.limit"/></span></td>
                         </tr>
                         <tr class="celda01" style="height: 100px">
-                            <td>
+                            <td width="20%">
                                 <span class="textosnegrita">
                                     <fmt:message key="layer.layer" />
                                 </span>

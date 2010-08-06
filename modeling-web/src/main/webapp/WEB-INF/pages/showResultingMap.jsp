@@ -44,7 +44,7 @@
                 };
 
                 var myMapDiv = document.getElementById(divId);
-                map = new OpenLayers.Map(options);
+                map = new OpenLayers.Map(divId, options);
                 map.render(myMapDiv);
 
                 //------------------------------ Layers ------------------------------------
