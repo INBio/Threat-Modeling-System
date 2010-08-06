@@ -46,6 +46,14 @@ public class UpdateUserInfoController extends AbstractFormController {
 		if(uri.matches(".*deleteUser.*")){
 			this.deleteUser(userForm);
 		}else if(uri.matches(".*updateUser.*")){
+                    System.out.println();
+                    System.out.println("User " + userForm.getUsername());
+                    System.out.println("Full " +userForm.getFullname());
+                    System.out.println("pass1" + userForm.getPassword1());
+                    System.out.println("pass2" + userForm.getPassword2());
+                    System.out.println();
+                    System.out.println();
+
                     if(!userForm.getPassword1().equals(userForm.getPassword2()))
                     {
                         Exception ex = new Exception("errors.passwordNotMatch");
@@ -55,10 +63,40 @@ public class UpdateUserInfoController extends AbstractFormController {
                     }
                     else
                     {
-			if ( userForm.getUserId() == null)
-				this.newUser(userForm);
-			else                        
-                            this.updateUser(userForm);
+                        if((userForm.getPassword1().equals("") || userForm.getPassword2().equals("")))
+                        {
+                            Exception ex = new Exception("errors.emptyPassword");
+                            //Logger.getLogger(ColumnController.class.getName()).log(Level.SEVERE, null, ex);
+                            errors.reject(ex.getMessage());
+                            return showForm(request, response, errors);
+                        }
+                        else
+                        {
+                            if(userForm.getFullname().equals(""))
+                            {
+                                Exception ex = new Exception("errors.emptyFullName");
+                                //Logger.getLogger(ColumnController.class.getName()).log(Level.SEVERE, null, ex);
+                                errors.reject(ex.getMessage());
+                                return showForm(request, response, errors);
+                            }
+                            else
+                            {
+                                if(userForm.getUsername().equals(""))
+                                {
+                                    Exception ex = new Exception("errors.emptyUserName");
+                                    //Logger.getLogger(ColumnController.class.getName()).log(Level.SEVERE, null, ex);
+                                    errors.reject(ex.getMessage());
+                                    return showForm(request, response, errors);
+                                }
+                                else
+                                {
+                                    if ( userForm.getUserId() == null)
+                                            this.newUser(userForm);
+                                    else
+                                        this.updateUser(userForm);
+                                }
+                            }
+                        }
                     }
 		}
 
