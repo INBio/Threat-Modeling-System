@@ -17,6 +17,17 @@
 			<jsp:include page="/common/header.jsp"/>
 		</div>
 		<div id="contenido">
+                        <spring:hasBindErrors name="userForm">
+				<div class="errors">
+					<h3><fmt:message key="errors.title"/></h3>
+					<p>
+						<c:forEach items="${errors.allErrors}" var="error">
+							<fmt:message key="${error.code}" />
+						</c:forEach>
+					</p>
+				</div>
+			</spring:hasBindErrors>
+                    
 			<form:form commandName="userForm" action="updateUser.html">
                             <form:hidden path="userId"/>
                             <table align="center">

@@ -46,11 +46,20 @@ public class UpdateUserInfoController extends AbstractFormController {
 		if(uri.matches(".*deleteUser.*")){
 			this.deleteUser(userForm);
 		}else if(uri.matches(".*updateUser.*")){
-
+                    if(!userForm.getPassword1().equals(userForm.getPassword2()))
+                    {
+                        Exception ex = new Exception("errors.passwordNotMatch");
+                        //Logger.getLogger(ColumnController.class.getName()).log(Level.SEVERE, null, ex);
+                        errors.reject(ex.getMessage());
+                        return showForm(request, response, errors);
+                    }
+                    else
+                    {
 			if ( userForm.getUserId() == null)
 				this.newUser(userForm);
-			else
-				this.updateUser(userForm);
+			else                        
+                            this.updateUser(userForm);
+                    }
 		}
 
 		ModelAndView model = null;
@@ -66,9 +75,15 @@ public class UpdateUserInfoController extends AbstractFormController {
 	protected ModelAndView showForm(HttpServletRequest request
 									, HttpServletResponse response
 									, BindException errors)
-									throws Exception {
+									throws Exception
+        {
 
-		return new ModelAndView("index");
+		ModelAndView model = new ModelAndView();
+                if(errors != null && errors.hasErrors())
+                    model.addAllObjects(errors.getModel());
+
+                model.setViewName("admin/userDetails");
+                return model;
 	}
 
 	private void deleteUser(UserForm user){
@@ -76,7 +91,7 @@ public class UpdateUserInfoController extends AbstractFormController {
 	}
 
 	private void updateUser(UserForm user){
-
+            
 		String roles = "";
 		SystemUser su = null;
 
