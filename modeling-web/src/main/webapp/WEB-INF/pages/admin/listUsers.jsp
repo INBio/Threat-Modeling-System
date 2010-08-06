@@ -20,7 +20,7 @@
                 <div id="contenido">
                     
                     
-			<h2><fmt:message key="title.users"/></h2>
+			<h2><fmt:message key="title.user"/></h2>
                       <div style="width:700px; margin: 10px auto 10px auto">
                         
                         <div style="height: 350px; overflow: auto; width: 600px; float: left" >

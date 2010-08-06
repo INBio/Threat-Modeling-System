@@ -18,14 +18,38 @@
 		</div>
 		<div id="contenido">
 			<form:form commandName="userForm" action="updateUser.html">
-				<form:hidden path="userId"/>
-				<form:input path="username"/>
-				<form:input path="fullname" />
-				<form:password path="password1" />
-				<form:password path="password2" />
-				<form:checkbox path="enabled" />
-				<form:checkbox path="admin" />
-				<form:checkbox path="user" />
+                            <form:hidden path="userId"/>
+                            <table align="center">
+                                <tr>
+                                    <td style="text-align:right" >Nombre de Usuario</td>
+                                    <td><form:input path="username"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right">Nombre Completo</td>
+                                    <td><form:input path="fullname" /></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right">Contraseña</td>
+                                    <td><form:password path="password1" /></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right">Comprobar Contraseña</td>
+                                    <td><form:password path="password2" /></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right">Habilitado</td>
+                                    <td style="text-align:center"><form:checkbox path="enabled" /></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right">Administrador</td>
+                                    <td style="text-align:center"><form:checkbox path="admin" /></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right">Usuario</td>
+                                    <td style="text-align:center"><form:checkbox path="user" /></td>
+                                </tr>
+
+                            </table>
 				<input type="submit" value="<fmt:message key='common.save' />" />
 			</form:form>
 		</div>
