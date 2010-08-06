@@ -41,10 +41,7 @@
                     YAHOO.example.container.wait.render(document.getElementById('contenido'));
                 }
             }
-
         </script>
-
-
     </head>
     <body onload="initLoadingPanel()" class="yui-skin-sam">
         <div id="Header">
@@ -134,59 +131,59 @@
                             </table>
                         </div>
                     </div>
-                </div>
-                <div class="content_div" style="background-color:#E3FCBC; padding: 5px 5px 5px 5px">
-                    <div id="categorys_layer" class="content_div_categorys">
-                    <div style="text-align:center;">
-                        <span class="textosnegrita">
-                            <fmt:message key="interval.categories"/>
-                        </span>
-                    </div><br />
-                        <c:forEach items="${intervalsForm.layers}" var="layer"  varStatus="current">
+                    <div class="content_div" style="background-color:#E3FCBC; padding: 5px 5px 5px 5px">
+                        <div id="categorys_layer" class="content_div_categorys">
+                            <div style="text-align:center;">
+                                <span class="textosnegrita">
+                                    <fmt:message key="interval.categories"/>
+                                </span>
+                            </div><br />
+                            <c:forEach items="${intervalsForm.layers}" var="layer"  varStatus="current">
 
-                            <div id="${layer.name}_cats" style="display: none" class="${layer.type}">
+                                <div id="${layer.name}_cats" style="display: none" class="${layer.type}">
 
-                                <c:forEach items="${layer.categories}" var="category"  varStatus="currentCategory">
-                                    <c:choose>
-                                        <c:when test="${'AREA' eq layer.type}" >
-                                            <div id="category_${currentCategory.index}" >
-                                                <input type="checkbox" name="${layer.name}"/>
-                                                <form:input readonly="true" cssClass="intervals_value" path="layers[${current.index}].categories[${currentCategory.index}].value" />
-                                                <form:input readonly="true" cssClass="intervals_text" path="layers[${current.index}].categories[${currentCategory.index}].description" />
-                                                <br />
-                                            </div>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <div id="category_${currentCategory.index}">
-                                                <input type="checkbox" name="${layer.name}"/>
-                                                <form:input cssClass="intervals_txt" path="layers[${current.index}].categories[${currentCategory.index}].value" />
-                                                <br />
-                                            </div>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </c:forEach>
-                            </div>
+                                    <c:forEach items="${layer.categories}" var="category"  varStatus="currentCategory">
+                                        <c:choose>
+                                            <c:when test="${'AREA' eq layer.type}" >
+                                                <div id="category_${currentCategory.index}" >
+                                                    <input type="checkbox" name="${layer.name}"/>
+                                                    <form:input readonly="true" cssClass="intervals_value" path="layers[${current.index}].categories[${currentCategory.index}].value" />
+                                                    <form:input readonly="true" cssClass="intervals_text" path="layers[${current.index}].categories[${currentCategory.index}].description" />
+                                                    <br />
+                                                </div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div id="category_${currentCategory.index}">
+                                                    <input type="checkbox" name="${layer.name}"/>
+                                                    <form:input cssClass="intervals_txt" path="layers[${current.index}].categories[${currentCategory.index}].value" />
+                                                    <br />
+                                                </div>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
+                                </div>
 
-                        </c:forEach>
+                            </c:forEach>
+                        </div>
                     </div>
-                </div>
 
-                <div id="buttons" class="buttons">
+                    <div id="buttons" class="buttons">
 
-                    <input id="topPriority" class="button-up" onclick="topPriorityCategorys();"   value='<fmt:message key="interval.pullUpCategory"/>' type="button">
-                    <input id="lowPriority" class="button-down" onclick="lowPriorityCategorys();"   value='<fmt:message key="interval.pullDownCategory"/>' type="button">
-                    <br/>
-                    <input id="addButton" type="button" class="button-simple" onclick="addCategory();" value='<fmt:message key="interval.addCategory"/>' />
-                    <input id="groupButton" class="button-simple" onclick="groupCategorys();" value="<fmt:message key="interval.groupCategory"/>" type="button">
-                    <input id="joinButton" type="button" class="button-simple" onclick="deleteCategory();" value='<fmt:message key="interval.deleteCategory"/>' />
-                    <br/>
-                    <input id="submitButton" type="submit" class="button-simple" value='<fmt:message key="layer.finalStep"/>' onclick="YAHOO.example.container.wait.show();"   /><br />
-                </div>
-            </form:form>
+                        <input id="topPriority" class="button-up" onclick="topPriorityCategorys();"   value='<fmt:message key="interval.pullUpCategory"/>' type="button">
+                        <input id="lowPriority" class="button-down" onclick="lowPriorityCategorys();"   value='<fmt:message key="interval.pullDownCategory"/>' type="button">
+                        <br/>
+                        <input id="addButton" type="button" class="button-simple" onclick="addCategory();" value='<fmt:message key="interval.addCategory"/>' />
+                        <input id="groupButton" class="button-simple" onclick="groupCategorys();" value="<fmt:message key="interval.groupCategory"/>" type="button">
+                        <input id="joinButton" type="button" class="button-simple" onclick="deleteCategory();" value='<fmt:message key="interval.deleteCategory"/>' />
+                        <br/>
+                        <input id="submitButton" type="submit" class="button-simple" value='<fmt:message key="layer.finalStep"/>' onclick="YAHOO.example.container.wait.show();"   /><br />
+                    </div>
+                </form:form>
+            </div>
         </div>
-            <br />
-            <br />
-            <div id="footer" >
+        <br />
+        <br />
+        <div id="footer" >
             <jsp:include page="/common/footer.jsp"/>
         </div>
     </body>

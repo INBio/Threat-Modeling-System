@@ -108,29 +108,6 @@
     YAHOO.util.Connect.asyncRequest('GET', sUrl, callback);
 
 
-/*******************************************************/
-
-/*
-                aux.events.register("loadend", aux, function() {
-                    alert(map.getMaxExtent(aux));
-
-                        bbox = aux.getTilesBounds();
-                        if(first == true){
-
-                            first = false;
-                            var img = new OpenLayers.Layer.Image("<fmt:message key='showMap.threats' />",
-                                                "/resmaps/${fullSessionInfo.imageName}_T_${fullSessionInfo.userSessionId}.png",
-                                                bbox,
-                                                500,
-                                                {isBaseLayer: false, transparent: true, opacity: 0.75 , singleTile: true, ratio: 1,bgcolor: 'transparent' });
-                            map.addLayer(img);
-                            map.panTo(bbox.getCenterLonLat());
-                            map.zoomToExtent(bbox);
-                            map.raiseLayer(img, map.getNumLayers()*-1);
-                        }
-                });
-*/
-
                 first = true;
                 bbox = undefined;
 
