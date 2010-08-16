@@ -15,10 +15,10 @@ SCRIPTS_DIR=`dirname $0`
 FINAL_MAP="$1$TMAP"
 
 # convert the resulting map into vector format.
-r.to.vect input=$FINAL_MAP output=$FINAL_MAP feature=area --quiet;
+r.to.vect input=$FINAL_MAP output=$FINAL_MAP feature=area --overwrite --quiet;
 
 # export the vectorial resulting map into a ESRI Shapefile
-v.out.ogr -c input=$FINAL_MAP type=area dsn=$TEMP_DIR/$FINAL_MAP layer=1 format=ESRI_Shapefile  --quiet;
+v.out.ogr -c input=$FINAL_MAP type=area dsn=$TEMP_DIR/$FINAL_MAP layer=1 format=ESRI_Shapefile --quiet;
 
 # creates a zip file
 cd $TEMP_DIR;
