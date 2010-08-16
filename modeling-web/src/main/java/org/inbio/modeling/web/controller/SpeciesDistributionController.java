@@ -102,7 +102,6 @@ public class SpeciesDistributionController extends AbstractFormController {
 
             try {
 
-                grassManagerImpl.mixSpeciesDistributionLayer(currentInstanceData.getImageName(), lForm.getSelectedLayerName(), currentSessionId);
                 currentInstanceData.setImageName("Final");
 
             } catch (Exception ex) {

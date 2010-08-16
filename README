@@ -16,3 +16,11 @@ noun
 ===============================================================================
 
 See: http://oxforddictionaries.com/view/entry/m_en_us1268620#m_en_us1268620
+
+								 * * *
+
+Dependencies:
+	- Curl
+	- Bash
+	- Image magick
+	- GRASS GIS 6.4

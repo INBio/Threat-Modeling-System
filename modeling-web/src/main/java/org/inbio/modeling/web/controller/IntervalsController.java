@@ -99,6 +99,7 @@ public class IntervalsController extends AbstractFormController {
 
 				resultLayer = this.weightedSum(selectedLayers, currentSessionId);
 
+                this.applyMainLayer(currentInstanceData.getLimitLayerName(), resultLayer.getName(), currentSessionId);
 				this.setColorScale(resultLayer, currentSessionId);
 				this.createImage(resultLayer, currentSessionId);
 
@@ -125,6 +126,13 @@ public class IntervalsController extends AbstractFormController {
 	}
 
 
+    private void applyMainLayer(String mainLayerName, String resultLayerName, Long currentSessionId) throws Exception{
+        try{
+            this.grassManagerImpl.applyMainLayer(mainLayerName, resultLayerName, currentSessionId);
+        } catch (Exception ex) {
+            throw new Exception("errors.cantExecuteWeightedSum", ex);
+        }
+    }
 
 	/** default behavior for direct access */
 	@Override

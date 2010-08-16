@@ -146,6 +146,13 @@ public interface GrassManager{
 	 */
 	public void setResolution(Double resolution, Long currentSessionId) throws Exception;
 
+    /**
+     *
+     * @param layer
+     * @param currentSessionId
+     * @return
+     * @throws Exception
+     */
 	public Map<String,String> retrieveAvailableColumns(GrassLayerDTO layer
 															, Long currentSessionId)
 															throws Exception;
@@ -200,10 +207,11 @@ public interface GrassManager{
     public void setRegion(String limitLayerName, Long currentSessionId) throws Exception;
 
     /**
-     * Species Map - Threats map
-     * @param resMap
-     * @param layerURI
+     *
+     * @param mainLayerName
      * @param currentSessionId
+     * @throws Exception
      */
-    public void mixSpeciesDistributionLayer(String resMap, String layerURI , Long currentSessionId) throws Exception;
+    public void applyMainLayer(String mainLayerName, String resultLayer, Long currentSessionId) throws Exception;
+
 }

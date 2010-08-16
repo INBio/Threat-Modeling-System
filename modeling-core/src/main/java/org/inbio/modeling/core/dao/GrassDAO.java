@@ -234,12 +234,11 @@ public interface GrassDAO extends BaseDAO {
     public void setRegion(String limitLayerName, Long currentSessionId) throws Exception;
 
     /**
-     * Species map - Threats map.
-     * @param resmap
-     * @param speciesMapName
+     *
+     * @param mainLayerName
      * @param currentSessionId
      * @throws Exception
      */
-    public void mixSpeciesDistributionLayer(String resmap, String speciesMapName, Long currentSessionId) throws Exception;
+    public void applyMainLayer(String mainLayerName, String resultLayer, Long currentSessionId) throws Exception;
 
 }

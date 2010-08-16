@@ -55,34 +55,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 	private String setColorScale;
     private String newLocation;
     private String asingRegion;
-    private String mixSpeciesDistribution;
-
-    @Override
-    public void mixSpeciesDistributionLayer(String resmap, String speciesMapName, Long currentSessionId) throws Exception{
-         int result = 0;
-		List<String> commands = null;
-		StringBuilder stdout = null;
-		StringBuilder stderr = null;
-		commands = new ArrayList<String>();
-
-		// Arguments of the command
-		commands.add(scriptHome+mixSpeciesDistribution);
-		commands.add(resmap.replace(":", "_"));
-		commands.add(speciesMapName.replace(":", "_"));
-		commands.add(String.valueOf(currentSessionId));
-
-		logger.debug("Executing command: "+commands.toString());
-
-		commandExecutor = new OSCommandThreadImpl();
-		// executes the command
-		result = commandExecutor.run(commands);
-		// gets the output of the execution
-		stdout = commandExecutor.getStandardOutput();
-		stderr = commandExecutor.getStandardError();
-		// Prints the output of the command for good or for bad.
-		this.printThis(result, stdout, stderr);
-
-    }
+    private String applyMainLayer;
 
 	@Override
 	public void configureEnvironment(Long currentSessionId) throws Exception   {
@@ -630,6 +603,33 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		this.printThis(result, stdout, stderr);
 	}
 
+    @Override
+    public void applyMainLayer(String mainLayerName, String resultLayer, Long currentSessionId) throws Exception {
+
+		int result = 0;
+		List<String> commands = null;
+		StringBuilder stdout = null;
+		StringBuilder stderr = null;
+		commands = new ArrayList<String>();
+
+		// Arguments of the command
+		commands.add(scriptHome+applyMainLayer);
+		commands.add(mainLayerName.replace(":", "_"));
+		commands.add(resultLayer.replace(":", "_"));
+		commands.add(currentSessionId.toString());
+
+		logger.debug("Executing command: "+commands.toString());
+		commandExecutor = new OSCommandThreadImpl();
+		// executes the command
+		result = commandExecutor.run(commands);
+		// gets the output of the execution
+		stdout = commandExecutor.getStandardOutput();
+		stderr = commandExecutor.getStandardError();
+		// Prints the output of the command for good or for bad.
+		this.printThis(result, stdout, stderr);
+    }
+
+
 	@Override
 	public void deleteGRASSLocation(Long currentSessionId){ }
 
@@ -822,11 +822,11 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
         this.asingRegion = asingRegion;
     }
 
-    public String getMixSpeciesDistribution() {
-        return mixSpeciesDistribution;
+    public String getApplyMainLayer() {
+        return applyMainLayer;
     }
 
-    public void setMixSpeciesDistribution(String mixSpeciesDistribution) {
-        this.mixSpeciesDistribution = mixSpeciesDistribution;
+    public void setApplyMainLayer(String applyMainLayer) {
+        this.applyMainLayer = applyMainLayer;
     }
 }

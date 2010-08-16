@@ -40,17 +40,6 @@ public class GrassManagerImpl implements GrassManager {
 	private GrassDAO grassDAOImpl;
 
     @Override
-    public void mixSpeciesDistributionLayer(String resMap, String layerURI , Long currentSessionId) throws Exception{
-
-        this.grassDAOImpl.importLayer("speciesMap", layerURI, currentSessionId);
-        this.grassDAOImpl.executeVectorReclasification("speciesMap", "cat", currentSessionId);
-        this.grassDAOImpl.executeRasterization("speciesMap",currentSessionId, "cat");
-        this.grassDAOImpl.mixSpeciesDistributionLayer(resMap, "speciesMap", currentSessionId);
-        this.grassDAOImpl.asingColorScale("Final", currentSessionId);
-        this.exportLayer2Image(new GrassLayerDTO("Final", 1), currentSessionId);
-    }
-
-    @Override
     public void createNewLocation(Long currentSessionId) throws Exception{
         this.grassDAOImpl.createNewLocation(currentSessionId.toString());
     }
@@ -331,6 +320,17 @@ public class GrassManagerImpl implements GrassManager {
 										, layer.isReverted()
 										, currentSessionId);
 	}
+
+    /**
+     *
+     * @param mainLayerName
+     * @param currentSessionId
+     * @throws Exception
+     */
+    @Override
+    public void applyMainLayer(String mainLayerName, String resultLayer, Long currentSessionId) throws Exception{
+        this.grassDAOImpl.applyMainLayer(mainLayerName, resultLayer, currentSessionId);
+    }
 
 	@Override
 	/**

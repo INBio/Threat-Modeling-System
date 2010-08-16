@@ -36,7 +36,7 @@
 		<property name="setColorScale" value="${scripts.colorScale}" />
 		<property name="newLocation" value="${scripts.newLocation}" />
 		<property name="asingRegion" value="${scripts.asingRegion}" />
-        <property name="mixSpeciesDistribution" value="${scripts.mixSpeciesMap}" />
+        <property name="applyMainLayer" value="${scripts.applyMainLayer}" />
 	</bean>
 
     <bean id="layerDAO" class="org.inbio.modeling.core.dao.impl.LayerDAOImpl" parent="baseDAO" >
