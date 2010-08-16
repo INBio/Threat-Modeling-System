@@ -168,7 +168,7 @@ public class ColumnController extends AbstractFormController {
 					//convert the layer to a raster format
 					this.layer2Raster(layer, currentSessionId);
 
-					if( columnElements.length > 1 && layer.getType() == LayerType.AREA ){
+					if( columnElements.length > 1 && layer.getType().equals(LayerType.AREA )){
 
 						//asign the categories
 						this.asignCategories2Layer(layer

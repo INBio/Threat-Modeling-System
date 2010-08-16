@@ -18,6 +18,6 @@ r.out.png input=$FINAL_MAP output="$THREAT_MAPS_FOLDER/$FINAL_MAP.png" --quiet;
 
 # resize the image
 #cp -r "$THREAT_MAPS_FOLDER/$RESMAP.png" "$THREAT_MAPS_FOLDER/$FINAL_MAP"_org.png
-convert "$THREAT_MAPS_FOLDER/$FINAL_MAP.png" -resize 640x480 "$THREAT_MAPS_FOLDER/$FINAL_MAP.png"
+convert "$THREAT_MAPS_FOLDER/$FINAL_MAP.png" -transparent white -resize 640x480 "$THREAT_MAPS_FOLDER/$FINAL_MAP.png"
 
 exit 0;

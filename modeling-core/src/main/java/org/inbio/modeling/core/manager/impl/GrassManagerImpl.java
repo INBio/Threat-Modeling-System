@@ -169,7 +169,7 @@ public class GrassManagerImpl implements GrassManager {
 				category.setDescription(tarray[1]);
 				categoryList.add(category);
 			}
-		}else if(layer.getType() == LayerType.AREA){
+		}else if(layer.getType().equals(LayerType.AREA)){
 			// get the categories of the raster version of the map.
 			sTemp = this.grassDAOImpl.retrieveMinMaxValues(layer.getName(), currentSessionId);
 			tarray = sTemp.split(":");

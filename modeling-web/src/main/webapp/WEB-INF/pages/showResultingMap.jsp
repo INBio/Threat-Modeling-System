@@ -126,17 +126,44 @@
 
 
             function exportResult( type ){
-
                 var outputType = document.getElementById('outputType');
                 outputType.value = type;
 
                 return true;
             }
 
+//Using to show the loading panel
+            YAHOO.namespace("example.container");
+
+            var loadingImage = "<img src='${pageContext.request.contextPath}/themes/default/images/ajax-loader.gif' ></img>";
+            var loadingText = "<fmt:message key="common.loading"/>";
+
+            /*
+             * Initialize a panel to show the loading image
+             */
+            function initLoadingPanel(){
+                if (!YAHOO.example.container.wait) {
+                   YAHOO.example.container.wait =
+                        new YAHOO.widget.Panel("wait",
+                    {
+                        width:"300px",
+                        fixedcenter:true,
+                        close:false,
+                        draggable:false,
+                        zindex:999,
+                        modal:true,
+                        visible:false
+                    }
+                );
+                    YAHOO.example.container.wait.setHeader(loadingText);
+                    YAHOO.example.container.wait.setBody(loadingImage);
+                    YAHOO.example.container.wait.render(document.getElementById('contenido'));
+                }
+            }
         </script>
 
     </head>
-    <body onload="initMap('map')" >
+    <body onload="initMap('map');initLoadingPanel();" >
         <div id="Header">
             <!-- Header -->
             <jsp:include page="/common/header.jsp"/>

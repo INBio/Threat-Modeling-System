@@ -110,8 +110,10 @@ public class ExportManagerImpl implements ExportManager {
                 categorys = grassLayerDTO.getCategories();
                 for (CategoryDTO categoryDTO : categorys) {
 
-                    table.addCell(categoryDTO.getValue());
-                    table.addCell(categoryDTO.getDescription());
+                    if(categoryDTO != null){
+                        table.addCell(categoryDTO.getValue());
+                        table.addCell(categoryDTO.getDescription());
+                    }
                 }
 
                 document.add(table);

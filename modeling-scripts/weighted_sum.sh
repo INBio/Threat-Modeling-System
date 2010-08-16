@@ -31,7 +31,25 @@ SUFFIX=$6
 SCRIPTS_DIR=`dirname $0`
 . $SCRIPTS_DIR/set_grass_variables.sh $SUFFIX
 
+
+if [ "$WEIGHT_L1" == "1.0" ];
+then 
+	MAP1=$LAYER1$TMAP
+else
+	MAP1=$LAYER1$RRMAP
+fi;
+
+
+if [ "$WEIGHT_L2" == "1.0" ];
+then 
+	MAP2=$LAYER2$TMAP
+else
+	MAP2=$LAYER2$RRMAP
+fi;
+
 # do the math
-r.mapcalc "$OUTPUT_LAYER$TMAP = $LAYER1$RRMAP*$WEIGHT_L1 + $LAYER2$RRMAP*$WEIGHT_L2";
+r.mapcalc "$OUTPUT_LAYER$TMAP = if(isnull($MAP1),0,$MAP1)*$WEIGHT_L1 + if(isnull($MAP2),0,$MAP2)*$WEIGHT_L2";
+r.null map=$OUTPUT_LAYER$TMAP setnull=0 --quiet
+#r.mapcalc "$OUTPUT_LAYER$TMAP = $MAP1*$WEIGHT_L1 + $MAP2*$WEIGHT_L2";
 
 exit 0;

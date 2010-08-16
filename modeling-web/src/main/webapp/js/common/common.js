@@ -158,7 +158,6 @@ function deleteCategory(){
 	for(var ckb = categories.length-1; ckb >= 0; ckb--){
 		check = categories[ckb];
 		if(check.checked == true && check.parentNode.id != ""){
-            alert(check.parentNode.id);
 			check.parentNode.parentNode.removeChild(check.parentNode);
 		}
 	}

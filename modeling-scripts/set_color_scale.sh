@@ -30,6 +30,10 @@ SCRIPTS_DIR=`dirname $0`
 #	y:	yellow
 #	r:	red
 
-r.colors map="$LAYER$TMAP" color="ryg";
+# menor valor, mayor amenaza
+#r.colors map="$LAYER$TMAP" color="ryg";
+
+# mayor valor, mayor amenaza
+r.colors map="$LAYER$TMAP" color="gyr";
 
 exit 0;
