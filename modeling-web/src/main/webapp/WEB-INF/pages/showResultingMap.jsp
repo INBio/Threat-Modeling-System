@@ -20,11 +20,62 @@
 
         <script type="text/javascript" >
 
-            /**
-             *Add layers
-             */
-            //Use a proxy for GeoServer requesting
+
+            var taxonAutoCompleteUrls = new Array(${ fn:length(model.taxonFilters)});
+            <c:forEach items="${model.taxonFilters}" var="taxonFilter" varStatus="filterStatus" begin="0">
+              <c:if test="${not empty taxonFilter.autoCompleteUrl}">
+                taxonAutoCompleteUrls[${taxonFilter.id}] = "${pageContext.request.contextPath}/${taxonFilter.autoCompleteUrl}";
+              </c:if>
+            </c:forEach>
+            //--------------------------------------------------------------------------
+            bbox = undefined;
+            //--------------------------------------------------------------------------
+
+           //Use a proxy for GeoServer requesting
             OpenLayers.ProxyHost = "cgi-bin/proxy.cgi/?url=";
+
+            //Prepare URL for XHR request:
+            var sUrl = "cgi-bin/proxy.cgi/?url=http://216.75.53.105:80/geoserver/wms?request=getCapabilities";
+
+            //Prepare callback object
+            var callback = {
+
+                //If XHR call is successful
+                success: function(oResponse) {
+
+
+                    //Root element -> response
+                    var xmlDoc = oResponse.responseXML.documentElement;
+                    //Get the list of specimens
+                    var layerList = xmlDoc.getElementsByTagName("Layer");
+
+                    //Add all the specimen point
+                    for(var i = 0;i<layerList.length;i++){
+                        var node = layerList[i];
+                        var name = node.getElementsByTagName("Name")[0].childNodes[0].nodeValue;
+                        if(name == "${fullSessionInfo.limitLayerName}"){
+                                var llAttributes = node.getElementsByTagName("BoundingBox")[0].attributes;
+                                var bbox =  new OpenLayers.Bounds();
+                                bbox.extend(new OpenLayers.LonLat( llAttributes.minx.value, llAttributes.miny.value));
+                                bbox.extend(new OpenLayers.LonLat( llAttributes.maxx.value, llAttributes.maxy.value));
+                                    var img = new OpenLayers.Layer.Image("<fmt:message key='showMap.threats' />",
+                                                        "/resmaps/${fullSessionInfo.imageName}_T_${fullSessionInfo.userSessionId}.png",
+                                                        bbox,
+                                                        500,
+                                                        {isBaseLayer: false, transparent: true, opacity: 0.75 , singleTile: true, ratio: 1,bgcolor: 'transparent' });
+                                    map.addLayer(img);
+                                    map.panTo(bbox.getCenterLonLat());
+                                    map.zoomToExtent(bbox);
+                                    map.raiseLayer(img, map.getNumLayers()*-1);
+                        }
+                    }
+                },
+
+                //If XHR call is not successful
+                failure: function(oResponse) {
+                    YAHOO.log("Failed to process XHR transaction.", "info", "example");
+                }
+            };
 
             /*
             * Initialazing the gis functionality
@@ -53,65 +104,16 @@
                 map.addLayer(googleLayer);
 
                 <c:forEach items="${speciesLayers}" var="layer">
-                            var aux = addLayerWMS("${layer.displayName}", "${layer.name}");//(name,id)
-                            map.addLayer(aux);
+                    var aux = addLayerWMS("${layer.displayName}", "${layer.name}");//(name,id)
+                    map.addLayer(aux);
                 </c:forEach>
 
                 var aux = addLayerWMS("<fmt:message key='showMap.principal' />","${fullSessionInfo.limitLayerName}");//(name,id)
                 map.addLayer(aux);
 
+                //Make our XHR call using Connection Manager's
+                YAHOO.util.Connect.asyncRequest('GET', sUrl, callback);
 
-    //Prepare URL for XHR request:
-    var sUrl = "cgi-bin/proxy.cgi/?url=http://216.75.53.105:80/geoserver/wms?request=getCapabilities";
-
-    //Prepare callback object
-    var callback = {
-
-        //If XHR call is successful
-        success: function(oResponse) {
-
-
-            //Root element -> response
-            var xmlDoc = oResponse.responseXML.documentElement;
-            //Get the list of specimens
-            var layerList = xmlDoc.getElementsByTagName("Layer");
-
-            //Add all the specimen point
-            for(var i = 0;i<layerList.length;i++){
-                var node = layerList[i];
-                var name = node.getElementsByTagName("Name")[0].childNodes[0].nodeValue;
-                if(name == "${fullSessionInfo.limitLayerName}"){
-                        var llAttributes = node.getElementsByTagName("BoundingBox")[0].attributes;
-                        var bbox =  new OpenLayers.Bounds();
-                        bbox.extend(new OpenLayers.LonLat( llAttributes.minx.value, llAttributes.miny.value));
-                        bbox.extend(new OpenLayers.LonLat( llAttributes.maxx.value, llAttributes.maxy.value));
-                            var img = new OpenLayers.Layer.Image("<fmt:message key='showMap.threats' />",
-                                                "/resmaps/${fullSessionInfo.imageName}_T_${fullSessionInfo.userSessionId}.png",
-                                                bbox,
-                                                500,
-                                                {isBaseLayer: false, transparent: true, opacity: 0.75 , singleTile: true, ratio: 1,bgcolor: 'transparent' });
-                            map.addLayer(img);
-                            map.panTo(bbox.getCenterLonLat());
-                            map.zoomToExtent(bbox);
-                            map.raiseLayer(img, map.getNumLayers()*-1);
-                }
-            }
-        },
-
-        //If XHR call is not successful
-        failure: function(oResponse) {
-            YAHOO.log("Failed to process XHR transaction.", "info", "example");
-        }
-    };
-
-    //Make our XHR call using Connection Manager's
-    YAHOO.util.Connect.asyncRequest('GET', sUrl, callback);
-
-
-                first = true;
-                bbox = undefined;
-
-                //--------------------------------------------------------------------------
 
                 //Build up all controls
                 map.zoomToExtent(initialbounds);
@@ -124,42 +126,12 @@
                 map.addControl(new OpenLayers.Control.MousePosition({element: $('location')}));
             }
 
-
-            function exportResult( type ){
-                var outputType = document.getElementById('outputType');
-                outputType.value = type;
-
-                return true;
-            }
-
-//Using to show the loading panel
+            //Using to show the loading panel
             YAHOO.namespace("example.container");
 
             var loadingImage = "<img src='${pageContext.request.contextPath}/themes/default/images/ajax-loader.gif' ></img>";
             var loadingText = "<fmt:message key="common.loading"/>";
 
-            /*
-             * Initialize a panel to show the loading image
-             */
-            function initLoadingPanel(){
-                if (!YAHOO.example.container.wait) {
-                   YAHOO.example.container.wait =
-                        new YAHOO.widget.Panel("wait",
-                    {
-                        width:"300px",
-                        fixedcenter:true,
-                        close:false,
-                        draggable:false,
-                        zindex:999,
-                        modal:true,
-                        visible:false
-                    }
-                );
-                    YAHOO.example.container.wait.setHeader(loadingText);
-                    YAHOO.example.container.wait.setBody(loadingImage);
-                    YAHOO.example.container.wait.render(document.getElementById('contenido'));
-                }
-            }
         </script>
 
     </head>
@@ -193,7 +165,7 @@
                     </table>
                     <c:forEach items="${fullSessionInfo.layerList}" var="layer" >
                         <br />
-                        <table border="5" class="tabla-contenido">
+                        <table border="5" class="tabremoveElementla-contenido">
                             <tr class="celda02">
                                 <td colspan="2" style="width:350px; font-weight:bold;max-width: 350px; overflow: hidden;"><c:out value="${layer.displayName}" /></td>
                             </tr>
@@ -266,8 +238,32 @@
                     <input id="exportPNGButton" type="submit" class="button-simple" value='<fmt:message key="showMap.exportPNG"/>' onclick="exportResult('PNG');" />
                     <input id="exportSHPButton" type="submit" class="button-simple" value='<fmt:message key="showMap.exportSHP"/>' onclick="exportResult('SHP');" />
                     <input id="exportPDFButton" type="submit" class="button-simple" value='<fmt:message key="showMap.exportPDF"/>' onclick="exportResult('PDF');" />
+                    <input id="showOccurrences" type="button" class="button-simple" value='<fmt:message key="showMap.showOccurrences"/>' onclick="showOcurrencesSearchBox()" />
                 </form:form>
             </div>
+                <!-- Taxonomy Panel -->
+                <div id="queryPanel2" class="queryPanel">
+                    <p class="criteria_title">
+                        <fmt:message key="taxonomical_criteria_title"/></p>
+                    <p style="margin:2px"><a> <fmt:message key="taxonomy_level"/>: </a></p>
+                    <select name="taxonType" id="taxonTypeId" class="componentSize" tabindex="12" onchange="javascript:changeTaxonInput();" onKeyUp="javascript:changeTaxonInput();">
+                        <c:forEach items="${model.taxonFilters}" var="taxonFilter">
+                            <option value="<c:out value="${taxonFilter.id}"/>"<c:if test="${taxonFilter.id == taxonType}"> selected="selected"</c:if>>
+                                <fmt:message key="${taxonFilter.displayName}"/>
+                            </option>
+                        </c:forEach>
+                    </select>
+                    <p style="margin:2px"><a> <fmt:message key="taxon_name"/>: </a></p>
+                    <span id="newTaxonValue">
+                        <input id="taxonId" tabindex="13" class="componentSize" type="text" name="taxonValue" value="<c:out value="${taxonValue}"/>"/>
+                        <div id="taxonContainer"></div>
+                    </span>
+                    <input type="button" class="button-simple" id="addToListButtonTax" value="<fmt:message key="add_criteria"/>" onclick="addTaxonParam()" />
+                    <span id="taxParameters" style="font-size:10px"></span>
+                    <script type="text/javascript">
+                        changeTaxonInput();
+                    </script>
+                </div>
         </div>
         <div id="footer">
             <jsp:include page="/common/footer.jsp"/>

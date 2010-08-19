@@ -25,6 +25,7 @@ import javax.servlet.http.HttpSession;
 import org.inbio.modeling.core.manager.FileManager;
 import org.inbio.modeling.core.manager.GrassManager;
 import org.inbio.modeling.core.manager.LayerManager;
+import org.inbio.modeling.web.filter.FilterMapWrapper;
 import org.inbio.modeling.web.form.ExportData;
 import org.inbio.modeling.web.session.CurrentInstanceData;
 import org.inbio.modeling.web.session.SessionUtils;
@@ -43,6 +44,9 @@ public class ShowMapController extends AbstractFormController {
 	private LayerManager layerManagerImpl;
 	private FileManager fileManagerImpl;
     private SpeciesDistributionController speciesDistributionControllerImpl;
+
+    private FilterMapWrapper filtersMap;
+    private String filtersKey;
 
 	@Override
 	protected ModelAndView processFormSubmission(HttpServletRequest request
@@ -80,6 +84,7 @@ public class ShowMapController extends AbstractFormController {
 		// Send the layer list to the JSP
 		model = new ModelAndView();
 		model.setViewName("showResultingMap");
+        model.addObject(filtersKey,filtersMap.getFilters());
 		model.addObject("exportForm", new ExportData());
 		model.addObject("fullSessionInfo", currentInstanceData);
 		model.addObject("speciesLayers", layerManagerImpl.getSpeciesDistributionLayerList());
@@ -122,5 +127,21 @@ public class ShowMapController extends AbstractFormController {
 
     public void setLayerManagerImpl(LayerManager layerManagerImpl) {
         this.layerManagerImpl = layerManagerImpl;
+    }
+
+    public String getFiltersKey() {
+        return filtersKey;
+    }
+
+    public void setFiltersKey(String filtersKey) {
+        this.filtersKey = filtersKey;
+    }
+
+    public FilterMapWrapper getFiltersMap() {
+        return filtersMap;
+    }
+
+    public void setFiltersMap(FilterMapWrapper filtersMap) {
+        this.filtersMap = filtersMap;
     }
 }

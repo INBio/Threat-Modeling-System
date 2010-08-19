@@ -18,19 +18,28 @@
 		<property name="location" value="WEB-INF/classes/grassConfig.properties"/>
 	</bean>
 
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" destroy-method="close">
+	<!-- Configuring the transaction manager -->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="postgisDataSource" />
+    </bean>
+
+	<bean id="postgresDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" destroy-method="close">
 		<!-- Estas propiedad serán sobre escritas por el archivo /WEB-INF/classes/config.properties -->
 		<property name="driverClassName" value="org.postgresql.Driver"/>
 		<property name="url" value="jdbc:postgresql://localhost:5432/modeling"/>
 		<property name="username" value="model"/>
 		<property name="password" value="m0d3l"/>
-	</bean>	
+	</bean>
 
-	<!-- Configuring the transaction manager --> 
-    <bean id="transactionManager"
-          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource" />
-    </bean>
+	<bean id="postgisDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" destroy-method="close">
+		<!-- Estas propiedad serán sobre escritas por el archivo /WEB-INF/classes/config.properties -->
+		<property name="driverClassName" value="org.postgresql.Driver"/>
+		<property name="url" value="jdbc:postgresql://localhost:5432/modeling"/>
+		<property name="username" value="model"/>
+		<property name="password" value="m0d3l"/>
+	</bean>
+
 
 
 

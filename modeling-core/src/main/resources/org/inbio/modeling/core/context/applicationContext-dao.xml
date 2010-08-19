@@ -9,7 +9,7 @@
 	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
     <bean id="baseDAO" class="org.inbio.modeling.core.dao.impl.BaseDAOImpl">
-        <property name="dataSource" ref="dataSource" />
+        <property name="dataSource" ref="postgresDataSource" />
 	</bean>
 
 	<!-- DAO's -->
@@ -45,4 +45,26 @@
     <bean id="systemUserDAO" class="org.inbio.modeling.core.dao.impl.SystemUserDAOImpl" parent="baseDAO" >
 	</bean>
 
+    <!-- mata's -->
+     <bean id="specimenDAO" class="org.inbio.modeling.core.dao.impl.SpecimenDAOImpl">
+        <property name="dataSource" ref="postgisDataSource" />
+    </bean>
+     <bean id="taxonInfoIndexDAO" class="org.inbio.modeling.core.dao.impl.TaxonInfoIndexDAOImpl">
+        <property name="dataSource" ref="postgisDataSource" />
+    </bean>
+     <bean id="taxonIndexDAO" class="org.inbio.modeling.core.dao.impl.TaxonIndexDAOImpl">
+        <property name="dataSource" ref="postgisDataSource" />
+    </bean>
+
+    <!-- DAO that not extends SimpleJdbcDaoSupport -->
+    <!--bean id="dwcPropertyHolderDAO" class="org.inbio.modeling.core.dao.impl.DwcPropertyHolderDAOImpl"/>
+    <bean id="dwcDataAccessDAO" class="org.inbio.modeling.core.dao.impl.DwcDataAccessDAOImpl"/>
+    <bean id="plicPropertyHolderDAO" class="org.inbio.modeling.core.dao.impl.PlicPropertyHolderDAOImpl"/>
+    <bean id="plicDataAccessDAO" class="org.inbio.modeling.core.dao.impl.PlicDataAccessDAOImpl"/>
+    <bean id="layerPropertyHolderDAO" class="org.inbio.modeling.core.dao.impl.LayerPropertyHolderDAOImpl"/>
+    <bean id="layerDataAccessDAO" class="org.inbio.modeling.core.dao.impl.LayerDataAccessDAOImpl"/>
+    <bean id="indiPropertyHolderDAO" class="org.inbio.modeling.core.dao.impl.IndiPropertyHolderDAOImpl"/>
+    <bean id="indiDataAccessDAO" class="org.inbio.modeling.core.dao.impl.IndiDataAccessDAOImpl"/>
+    <bean id="tindiPropertyHolderDAO" class="org.inbio.modeling.core.dao.impl.TindiPropertyHolderDAOImpl"/>
+    <bean id="tindiDataAccessDAO" class="org.inbio.modeling.core.dao.impl.TindiDataAccessDAOImpl"/-->
 </beans>

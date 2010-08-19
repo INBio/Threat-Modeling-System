@@ -32,5 +32,50 @@
 		<property name="systemUserDAO" ref="systemUserDAO"/>
 	</bean>
 
+<!-- mata's -->
 
+    <!--bean id="analysisManager" class="org.inbio.modeling.core.manager.impl.AnalysisManagerImpl">
+        <property name="speciesDAO" ref="speciesDAO"/>
+        <property name="specimenDAO" ref="specimenDAO"/>
+    </bean>
+    <bean id="sysUserManagerImpl" class="org.inbio.modeling.core.manager.impl.SysUserManagerImpl">
+        <property name="systemUserDAO" ref="systemUserDAO"/>
+    </bean-->
+    <bean id="taxonomyManager" class="org.inbio.modeling.core.manager.impl.TaxonomyManagerImpl">
+        <property name="specimenDAO" ref="specimenDAO"/>
+    </bean>
+    <!--bean id="indicatorsManager" class="org.inbio.modeling.core.manager.impl.IndicatorsManagerImpl">
+        <property name="indicatorDAO" ref="indicatorDAO"/>
+    </bean-->
+    <bean id="queryManager" class="org.inbio.modeling.core.manager.impl.QueryManagerImpl">
+        <property name="taxonInfoIndexDAO" ref="taxonInfoIndexDAO"/>
+        <property name="taxonIndexDAO" ref="taxonIndexDAO"/>
+    </bean>
+    <bean id="pointsManager" class="org.inbio.modeling.core.manager.impl.PointsManagerImpl">
+        <property name="taxonInfoIndexDAO" ref="taxonInfoIndexDAO"/>
+        <property name="taxonIndexDAO" ref="taxonIndexDAO"/>
+        <property name="specimenDAO" ref="specimenDAO"/>
+    </bean>
+    <!--bean id="speciesManager" class="org.inbio.modeling.core.manager.impl.SpeciesManagerImpl">
+        <property name="taxonInfoIndexDAO" ref="taxonInfoIndexDAO"/>
+        <property name="taxonIndexDAO" ref="taxonIndexDAO"/>
+    </bean-->
+    <!--bean id="configManager" class="org.inbio.modeling.core.manager.impl.ConfigManagerImpl">
+        <property name="dwcPropertyHolderDAO" ref="dwcPropertyHolderDAO"/>
+        <property name="dwcDataAccessDAO" ref="dwcDataAccessDAO"/>
+        <property name="plicPropertyHolderDAO" ref="plicPropertyHolderDAO"/>
+        <property name="plicDataAccessDAO" ref="plicDataAccessDAO"/>
+        <property name="layerPropertyHolderDAO" ref="layerPropertyHolderDAO"/>
+        <property name="layerDataAccessDAO" ref="layerDataAccessDAO"/>
+        <property name="selectedLayerDAO" ref="selectedLayerDAO"/>
+        <property name="indiPropertyHolderDAO" ref="indiPropertyHolderDAO"/>
+        <property name="indiDataAccessDAO" ref="indiDataAccessDAO"/>
+        <property name="tindiPropertyHolderDAO" ref="tindiPropertyHolderDAO"/>
+        <property name="tindiDataAccessDAO" ref="tindiDataAccessDAO"/>
+        <property name="indicatorDAO" ref="indicatorDAO"/>
+        <property name="specimenDAO" ref="specimenDAO"/>
+        <property name="taxonIndicatorDAO" ref="taxonIndicatorDAO"/>
+        <property name="taxonIndexDAO" ref="taxonIndexDAO"/>
+        <property name="taxonInfoIndexDAO" ref="taxonInfoIndexDAO"/>
+    </bean-->
 </beans>

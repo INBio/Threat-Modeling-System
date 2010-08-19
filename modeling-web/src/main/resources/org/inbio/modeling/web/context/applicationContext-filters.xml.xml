@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+    <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>
+
+     <bean id="taxonFilters" class="org.inbio.modeling.web.filter.FilterMapWrapper">
+        <property name="filters">
+          <list>
+            <ref bean="kingdomFilter" />
+            <ref bean="phylumFilter" />
+            <ref bean="classFilter" />
+            <ref bean="orderFilter" />
+            <ref bean="familyFilter" />
+            <ref bean="genusFilter" />
+            <ref bean="specificEpithetFilter" />
+            <ref bean="scientificnameFilter" />
+          </list>
+        </property>
+      </bean>
+
+      <bean id="kingdomFilter" parent="baseFilter">
+        <property name="id" value="0" />
+        <property name="name" value="kingdom" />
+        <property name="displayName" value="kingdom" />
+        <property name="autoCompleteUrl" value="ajax/kingdom" />
+      </bean>
+
+      <bean id="phylumFilter" parent="baseFilter">
+        <property name="id" value="1" />
+        <property name="name" value="phylum" />
+        <property name="displayName" value="phylum" />
+        <property name="autoCompleteUrl" value="ajax/phylum" />
+      </bean>
+
+      <bean id="classFilter" parent="baseFilter">
+        <property name="id" value="2" />
+        <property name="name" value="class" />
+        <property name="displayName" value="class" />
+        <property name="autoCompleteUrl" value="ajax/class1" />
+      </bean>
+
+      <bean id="orderFilter" parent="baseFilter">
+        <property name="id" value="3" />
+        <property name="name" value="order" />
+        <property name="displayName" value="order" />
+        <property name="autoCompleteUrl" value="ajax/order" />
+      </bean>
+
+      <bean id="familyFilter" parent="baseFilter">
+        <property name="id" value="4" />
+        <property name="name" value="family" />
+        <property name="displayName" value="family" />
+        <property name="autoCompleteUrl" value="ajax/family" />
+      </bean>
+
+      <bean id="genusFilter" parent="baseFilter">
+        <property name="id" value="5" />
+        <property name="name" value="genus" />
+        <property name="displayName" value="genus" />
+        <property name="autoCompleteUrl" value="ajax/genus" />
+      </bean>
+
+      <bean id="specificEpithetFilter" parent="baseFilter">
+        <property name="id" value="6" />
+        <property name="name" value="specificEpithet" />
+        <property name="displayName" value="specificEpithet" />
+        <property name="autoCompleteUrl" value="ajax/specificEpithet" />
+      </bean>
+
+      <bean id="scientificnameFilter" parent="baseFilter">
+        <property name="id" value="7" />
+        <property name="name" value="scientificname" />
+        <property name="displayName" value="scientificname" />
+        <property name="autoCompleteUrl" value="ajax/scientificname" />
+      </bean>
+
+    <!-- This is inherited by all the major rank filter definition -->
+    <bean id="baseFilter" abstract="true" class="org.inbio.modeling.web.filter.FilterDTO">
+        <property name="wildcardFriendly" value="true"/>
+    </bean>
+
+
+</beans>

@@ -419,3 +419,38 @@ select{
     text-align: left;
     padding: 0 3px 0 3px;
 }
+
+/* Esteban's code */
+.queryPanel {
+    background-color:#F7FFEF;
+    width:260px;
+    text-align:left;
+    padding:10px 25px 10px 25px;
+    margin-bottom:7px;
+    border:solid gray 1px;
+   -moz-border-radius: 5px;
+   -webkit-border-radius: 5px;
+}
+
+
+.criteria_title{
+    font-weight:bold;
+    font-style:italic;
+    margin:2px;
+    text-align:left;
+    color:#21374F;
+    font-size:15px;
+}
+
+.componentSize {
+    width:260px;
+    text-align:justify;
+    height:24px;
+}
+
+<[if gte IE 5.5]><![if lt IE 7]>
+#footer {
+top: expression( ( 0 - footer.offsetHeight + ( document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight ) + ( ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop ) ) + 'px' );
+position:absolute;
+}
+<![endif]><![endif]>

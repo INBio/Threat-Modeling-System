@@ -72,6 +72,9 @@
         <property name="fileManagerImpl" ref="fileManager" />
         <property name="speciesDistributionControllerImpl" ref="speciesDistributionController" />
 
+        <property name="filtersMap" ref="taxonFilters"/>
+        <property name="filtersKey" value="taxonFilters"/>
+
 		<property name="validator" ref="editIntervalValidator" />
 	</bean>
 

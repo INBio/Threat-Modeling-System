@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  Application context definition for Taxonomy DispatcherServlet -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+    <!--  Defines how the dispatcher will select the contollers -->
+    <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+
+        <property name="mappings">
+            <props>
+            <!-- YUI AutoComplete  -->
+                <prop key="/kingdom/**/**">taxonomyAutoCompleteController</prop>
+                <prop key="/phylum/**/**">taxonomyAutoCompleteController</prop>
+                <prop key="/class1/**/**">taxonomyAutoCompleteController</prop>
+                <prop key="/order/**/**">taxonomyAutoCompleteController</prop>
+                <prop key="/family/**/**">taxonomyAutoCompleteController</prop>
+                <prop key="/genus/**/**">taxonomyAutoCompleteController</prop>
+                <prop key="/specificEpithet/**/**">taxonomyAutoCompleteController</prop>
+                <prop key="/scientificname/**/**">taxonomyAutoCompleteController</prop>
+            <!-- Query support -->
+                <prop key="/finalQuery/**/**">queryController</prop>
+            <!-- Getting specimen info to show in the map the specimens point -->
+                <prop key="/getPoints/**/**">pointsController</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!--.....................................................................-->
+    <!--........................ Autocomplete suppot ........................-->
+    <!--.....................................................................-->
+    <!-- Taxonomy search support  -->
+    <bean id="taxonomyAutoCompleteController" class="org.inbio.modeling.web.controller.ajax.TaxonomyAutoCompleteController">
+      <property name="taxonomyManager" ref="taxonomyManager"/>
+    </bean>
+
+    <!--.....................................................................-->
+    <!--.......................... Query suppot ..........................-->
+    <!--.....................................................................-->
+    <bean id="queryController" class="org.inbio.modeling.web.controller.ajax.QueryController">
+      <property name="queryManager" ref="queryManager"/>
+    </bean>
+    
+    <!--.....................................................................-->
+    <!--..................... Specimens map points ..........................-->
+    <!--.....................................................................-->
+    <bean id="pointsController" class="org.inbio.modeling.web.controller.ajax.PointsController">
+      <property name="pointsManager" ref="pointsManager"/>
+    </bean>
+</beans>
