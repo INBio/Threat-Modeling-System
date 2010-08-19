@@ -13,10 +13,10 @@
      <bean id="taxonFilters" class="org.inbio.modeling.web.filter.FilterMapWrapper">
         <property name="filters">
           <list>
-            <ref bean="kingdomFilter" />
+            <!--ref bean="kingdomFilter" />
             <ref bean="phylumFilter" />
             <ref bean="classFilter" />
-            <ref bean="orderFilter" />
+            <ref bean="orderFilter" /-->
             <ref bean="familyFilter" />
             <ref bean="genusFilter" />
             <ref bean="specificEpithetFilter" />
@@ -28,56 +28,56 @@
       <bean id="kingdomFilter" parent="baseFilter">
         <property name="id" value="0" />
         <property name="name" value="kingdom" />
-        <property name="displayName" value="kingdom" />
+        <property name="displayName" value="showMap.kingdom" />
         <property name="autoCompleteUrl" value="ajax/kingdom" />
       </bean>
 
       <bean id="phylumFilter" parent="baseFilter">
         <property name="id" value="1" />
         <property name="name" value="phylum" />
-        <property name="displayName" value="phylum" />
+        <property name="displayName" value="showMap.phylum" />
         <property name="autoCompleteUrl" value="ajax/phylum" />
       </bean>
 
       <bean id="classFilter" parent="baseFilter">
         <property name="id" value="2" />
         <property name="name" value="class" />
-        <property name="displayName" value="class" />
+        <property name="displayName" value="showMap.class" />
         <property name="autoCompleteUrl" value="ajax/class1" />
       </bean>
 
       <bean id="orderFilter" parent="baseFilter">
         <property name="id" value="3" />
         <property name="name" value="order" />
-        <property name="displayName" value="order" />
+        <property name="displayName" value="showMap.order" />
         <property name="autoCompleteUrl" value="ajax/order" />
       </bean>
 
       <bean id="familyFilter" parent="baseFilter">
         <property name="id" value="4" />
         <property name="name" value="family" />
-        <property name="displayName" value="family" />
+        <property name="displayName" value="showMap.family" />
         <property name="autoCompleteUrl" value="ajax/family" />
       </bean>
 
       <bean id="genusFilter" parent="baseFilter">
         <property name="id" value="5" />
         <property name="name" value="genus" />
-        <property name="displayName" value="genus" />
+        <property name="displayName" value="showMap.genus" />
         <property name="autoCompleteUrl" value="ajax/genus" />
       </bean>
 
       <bean id="specificEpithetFilter" parent="baseFilter">
         <property name="id" value="6" />
         <property name="name" value="specificEpithet" />
-        <property name="displayName" value="specificEpithet" />
+        <property name="displayName" value="showMap.specificEpithet" />
         <property name="autoCompleteUrl" value="ajax/specificEpithet" />
       </bean>
 
       <bean id="scientificnameFilter" parent="baseFilter">
         <property name="id" value="7" />
         <property name="name" value="scientificname" />
-        <property name="displayName" value="scientificname" />
+        <property name="displayName" value="showMap.scientificName" />
         <property name="autoCompleteUrl" value="ajax/scientificname" />
       </bean>
 
