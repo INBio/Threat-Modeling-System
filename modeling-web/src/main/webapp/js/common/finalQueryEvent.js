@@ -32,90 +32,28 @@ function executeFinalQuery(selectedLayers,selectedTaxa,selectedIndicators,
         success: function(oResponse) {
             //Root element -> response
             var xmlDoc = oResponse.responseXML.documentElement;
-            //Get the XML type. 0 means one or two parameters. 1 means 3 parameters
-            var type = xmlDoc.getElementsByTagName("type")[0].childNodes[0].nodeValue;
 
-            switch(type){
-                case '0': // 0 means one or this tow categories (geographical and taxonomical)
-                    //Get total count data
-                    var total = xmlDoc.getElementsByTagName("total")[0].childNodes[0].nodeValue;
-                    //Show general result and the search criteria
-                    var criteria = "";
-                    if(layersShow.length>0){
-                        criteria += "<b>"+geographical+" </b>";
-                        for(var i = 0;i<layersShow.length;i++){
-                            //criteria += layersShow[i]+"   ";
-                            criteria += "<a class=\"criteria\">"+layersShow[i]+"</a>";
-                        }
-                        criteria += "<br>";
-                    }
-                    if(taxonsShow.length>0){
-                        criteria += "<b>"+taxonomic+" </b>";
-                        for(var j = 0;j<taxonsShow.length;j++){
-                            //criteria += taxonsShow[j]+"   ";
-                            criteria += "<a class=\"criteria\">"+taxonsShow[j]+"</a>";
-                        }
-                        criteria += "<br>";
-                    }
-                    if(treeShow.length>0){
-                        criteria += "<b>"+indicators+" </b>";
-                        for(var k = 0;k<treeShow.length;k++){
-                            //criteria += treeShow[k]+"   ";
-                            criteria += "<a class=\"criteria\">"+treeShow[k]+"</a>";
-                        }
-                        criteria += "<br>";
-                    }                    
-                    //Show the results
-                    var resultHTML = createReportHeader(criteria, total);
-                    document.getElementById('resultsPanel').innerHTML = resultHTML;
-                    //Close de "Loading image"
-                    YAHOO.example.container.wait.hide();
-                    //Calling the anchor to positionate the page focus on the results
-                    callAnchor('#anchorTop');
-                    break;
+            //Get total count data
+            var total = xmlDoc.getElementsByTagName("total")[0].childNodes[0].nodeValue;
 
-                case '1': // 1 means 3 different criteria categories
-                    //Get total count data
-                    var total1 = xmlDoc.getElementsByTagName("total")[0].childNodes[0].nodeValue;
-                    //Show general result and the search criteria
-                    var criteria1 = "";
-                    if(layersShow.length>0){
-                        criteria1 += "<b>"+geographical+" </b>";
-                        for(var o = 0;o<layersShow.length;o++){
-                            //criteria1 += layersShow[o]+"   ";
-                            criteria1 += "<a class=\"criteria\">"+layersShow[o]+"</a>";
-                        }
-                        criteria1 += "<br>";
-                    }
-                    if(taxonsShow.length>0){
-                        criteria1 += "<b>"+taxonomic+" </b>";
-                        for(var p = 0;p<taxonsShow.length;p++){
-                            //criteria1 += taxonsShow[p]+"   ";
-                            criteria1 += "<a class=\"criteria\">"+taxonsShow[p]+"</a>";
-                        }
-                        criteria1 += "<br>";
-                    }
-                    if(treeShow.length>0){
-                        criteria1 += "<b>"+indicators+" </b>";
-                        for(var q = 0;q<treeShow.length;q++){
-                            //criteria1 += treeShow[q]+"   ";
-                            criteria1 += "<a class=\"criteria\">"+treeShow[q]+"</a>";
-                        }
-                        criteria1 += "<br>";
-                    }
-                    //Variables that are going to contain the results
-                    var byPolygon = xmlDoc.getElementsByTagName("bypolygon");
-                    var byIndicator = xmlDoc.getElementsByTagName("byindicator");
-                    //Show the results
-                    var result = createAdvancedHeader(byPolygon,byIndicator,layersShow,
-                    treeShow,total1,criteria1);
-                    document.getElementById('resultsPanel').innerHTML = result;
-                    //Close de "Loading image"
-                    YAHOO.example.container.wait.hide();
-                    //Calling the anchor to positionate the page focus on the results
-                    callAnchor('#anchorTop');
-                    break;
+            //Show general result and the search criteria
+            var criteria = "";
+            if(taxonsShow.length>0){
+                criteria += "<b>"+taxonomic+" </b>";
+                for(var j = 0;j<taxonsShow.length;j++){
+                    //criteria += taxonsShow[j]+"   ";
+                    criteria += "<a class=\"criteria\">"+taxonsShow[j]+"</a>";
+                }
+                criteria += "<br>";
             }
+
+            //Show the results
+            var resultHTML = createReportHeader(criteria, total);
+            document.getElementById('resultsPanel').innerHTML = resultHTML;
+            //Close de "Loading image"
+            YAHOO.example.container.wait.hide();
+            //Calling the anchor to positionate the page focus on the results
+            callAnchor('#anchorTop');
         },
 
         //If XHR call is not successful
@@ -126,75 +64,6 @@ function executeFinalQuery(selectedLayers,selectedTaxa,selectedIndicators,
     
     //Make our XHR call using Connection Manager's
     YAHOO.util.Connect.asyncRequest('GET', sUrl, callback);
-}
-
-/**
- * This function creates the general report, so, return an html string
- * to show on results panel
- */
-function createAdvancedHeader(byPolygon,byIndicator,layersShow,treeShow,total1,criteria1){
-    var result = ''; //Criteria with results
-    var others = '<p> '+criteriaWithoutResults+'</p>'; //Criteria without results
-    //Adding general result (with all search criteria)
-    divIds.push('t0');
-    buttonIds.push('showOnMapt0');
-    ids.push(0);
-    types.push('t');
-    result += '<div id="t0" class="detailed_results">'+
-    '<h3>'+searchCriteria+'</h3>'+criteria1+
-    '<h3>'+total1+' '+speciesMatches+'</h3>';
-    if(total1 > 0){
-        result += '<input type="button" class="button-simple" id="showOnMapt0" value="'+seeOnMap+'" onclick="showPoints(0,\'t\')" />'+
-        '<div id="t0map"></div></div>';
-    }    
-    //Adding results by polygon
-    result += '<p class="resultsTitle"> '+resultsGeo+'</p>';
-    for(var i = 0;i<byPolygon.length;i++){
-        //To manage the divs ids
-        divIds.push('p'+i);
-        buttonIds.push('showOnMapp'+i);
-        ids.push(i);
-        types.push('p');
-        //If the detail has results
-        if(byPolygon[i].childNodes[0].nodeValue != '0'){
-            result += '<div id="p'+i+'" class="detailed_results">'+
-            '<h3>'+layersShow[i]+'</h3>'+
-            '<p>'+byPolygon[i].childNodes[0].nodeValue+' '+layerMatches+'</p>'+
-            '<input type="button" class="button-simple" id="viewDetailp'+i+'" value="'+seeDetail+'" onclick="showDetails('+i+',\'p\',\''+arrayToString(treeShow)+'\')" />'+
-            '<input type="button" class="button-simple" id="showOnMapp'+i+'" value="'+seeOnMap+'" onclick="showPoints('+i+',\'p\')" />'+
-            '<div id="p'+i+'detail"></div><div id="p'+i+'map"></div></div>';
-        }
-        else{ //If the detail doesn't have results
-            others += '<div id="p'+i+'" class="detailed_results">'+
-            '<h3>'+layersShow[i]+'</h3>'+
-            '<div id="p'+i+'detail"></div><div id="p'+i+'map"></div></div>';
-        }
-    }    
-    //Adding results by indicators
-    result += '<p class="resultsTitle"> '+resultsIndi+'</p>';
-    for(var j = 0;j<byIndicator.length;j++){
-        //To manage the divs ids
-        divIds.push('i'+j);
-        buttonIds.push('showOnMapi'+j);
-        ids.push(j);
-        types.push('i');
-        //If the detail has results
-        if(byIndicator[j].childNodes[0].nodeValue != '0'){
-            result += '<div id="i'+j+'" class="detailed_results">'+
-            '<h3>'+treeShow[j]+'</h3>'+
-            '<p>'+byIndicator[j].childNodes[0].nodeValue+' '+indicatorMatches+'</p>'+
-            '<input type="button" class="button-simple" id="viewDetaili'+j+'" value="'+seeDetail+'" onclick="showDetails('+j+',\'i\',\''+arrayToString(layersShow)+'\')" />'+
-            '<input type="button" class="button-simple" id="showOnMapi'+j+'" value="'+seeOnMap+'" onclick="showPoints('+j+',\'i\')" />'+
-            '<div id="i'+j+'detail"></div><div id="i'+j+'map"></div></div>';
-        }
-        else{ //If the detail doesn't have results
-            others += '<div id="i'+j+'" class="detailed_results">'+
-            '<h3>'+treeShow[j]+'</h3>'+
-            '<div id="i'+j+'detail"></div><div id="i'+j+'map"></div></div>';
-        }
-    }
-    result+='<input type="submit" class="button-simple" id="newSearch" value="'+newSearch+'"/>'+others+'<br><br><br>';
-    return result;
 }
 
 /**

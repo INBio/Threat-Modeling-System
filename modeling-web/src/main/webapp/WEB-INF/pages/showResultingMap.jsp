@@ -204,7 +204,6 @@
              * Clean the page after request a new report
              */
             function cleanAfterRequest(){
-                document.getElementById('entryCriteria').innerHTML = "";
                 divIds = new Array();
                 buttonIds = new Array();
                 ids = new Array();
@@ -287,6 +286,20 @@
                 resultsIndi = "<fmt:message key="results_indi"/>";
             };
 
+            function showOcurrencesSearchBox(){
+
+                var mapInfo = document.getElementById('categoryInfo');
+                var searchBox = document.getElementById('entryCriteria');
+
+                if(mapInfo.style.display == "" && searchBox.style.display == "none"){
+                    mapInfo.style.display = "none" ;
+                    searchBox.style.display = "";
+                }else{
+                    mapInfo.style.display = "" ;
+                    searchBox.style.display = "none";
+                }
+            }
+
         </script>
 
     </head>
@@ -308,7 +321,32 @@
                 </div>
             </spring:hasBindErrors>
             <div id="results" >
-                <div id="categoryInfo">
+                <div id="entryCriteria" style="display: none" class="categoryInfo"> <!-- Entry criteria div -->
+                    <div id="querysPanel">
+                        <!-- Taxonomy Panel -->
+                        <div id="queryPanel2" class="queryPanel">
+                            <p class="criteria_title">
+                                <fmt:message key="taxonomical_criteria_title"/></p>
+                            <p style="margin:2px"><a> <fmt:message key="taxonomy_level"/>: </a></p>
+                            <select name="taxonType" id="taxonTypeId" class="componentSize" tabindex="12" onchange="javascript:changeTaxonInput();" onKeyUp="javascript:changeTaxonInput();">
+                                <c:forEach items="${taxonFilters}" var="taxonFilter">
+                                    <option value="<c:out value="${taxonFilter.id}"/>"<c:if test="${taxonFilter.id == taxonType}"> selected="selected"</c:if>>
+                                        <fmt:message key="${taxonFilter.displayName}"/> </option>
+                                    </c:forEach>
+                            </select>
+                            <p style="margin:2px"><a> <fmt:message key="taxon_name"/>: </a></p>
+                            <span id="newTaxonValue">
+                                <input id="taxonId" tabindex="13" class="componentSize" type="text" name="taxonValue" value="<c:out value="${taxonValue}"/>"/>
+                                <div id="taxonContainer"></div>
+                            </span>
+                            <input type="button" class="button-simple" id="addToListButtonTax" value="<fmt:message key="add_criteria"/>" onclick="addTaxonParam()" />
+                            <input type="button" class="button-simple" id="makeQueryButton" value="<fmt:message key="consult"/>" onclick="makeQuery()" />
+
+                            <span id="taxParameters" style="font-size:10px"></span>
+                        </div>
+                    </div>
+                </div>
+                <div id="categoryInfo" class="categoryInfo">
                     <table border="2" class="tabla-contenido">
                         <tr class="celda02"  >
                             <td colspan="2" style="width:350px; font-weight:bold;max-width: 350px; overflow: hidden;"><fmt:message key="showMap.leyend" /></td>
@@ -320,7 +358,7 @@
                     </table>
                     <c:forEach items="${fullSessionInfo.layerList}" var="layer" >
                         <br />
-                        <table border="5" class="tabremoveElementla-contenido">
+                        <table border="5" class="tabla-contenido">
                             <tr class="celda02">
                                 <td colspan="2" style="width:350px; font-weight:bold;max-width: 350px; overflow: hidden;"><c:out value="${layer.displayName}" /></td>
                             </tr>
@@ -395,32 +433,6 @@
                     <input id="exportPDFButton" type="submit" class="button-simple" value='<fmt:message key="showMap.exportPDF"/>' onclick="exportResult('PDF');" />
                     <input id="showOccurrences" type="button" class="button-simple" value='<fmt:message key="showMap.showOccurrences"/>' onclick="showOcurrencesSearchBox()" />
                 </form:form>
-            </div>
-            <div id="entryCriteria"> <!-- Entry criteria div -->
-                <div id="querysPanel">
-                    <!-- Taxonomy Panel -->
-                    <div id="queryPanel2" class="queryPanel">
-                        <p class="criteria_title">
-                            <fmt:message key="taxonomical_criteria_title"/></p>
-                        <p style="margin:2px"><a> <fmt:message key="taxonomy_level"/>: </a></p>
-                        <select name="taxonType" id="taxonTypeId" class="componentSize" tabindex="12" onchange="javascript:changeTaxonInput();" onKeyUp="javascript:changeTaxonInput();">
-                            <c:forEach items="${taxonFilters}" var="taxonFilter">
-                                <option value="<c:out value="${taxonFilter.id}"/>"<c:if test="${taxonFilter.id == taxonType}"> selected="selected"</c:if>>
-                                    <fmt:message key="${taxonFilter.displayName}"/>
-                                </option>
-                            </c:forEach>
-                        </select>
-                        <p style="margin:2px"><a> <fmt:message key="taxon_name"/>: </a></p>
-                        <span id="newTaxonValue">
-                            <input id="taxonId" tabindex="13" class="componentSize" type="text" name="taxonValue" value="<c:out value="${taxonValue}"/>"/>
-                            <div id="taxonContainer"></div>
-                        </span>
-                        <input type="button" class="button-simple" id="addToListButtonTax" value="<fmt:message key="add_criteria"/>" onclick="addTaxonParam()" />
-                        <input type="button" class="button-simple" id="makeQueryButton" value="<fmt:message key="consult"/>" onclick="makeQuery()" />
-
-                        <span id="taxParameters" style="font-size:10px"></span>
-                    </div>
-                </div>
             </div>
             <!-- Panel to show the result header (abstract) -->
             <div id="resultsPanel"></div>

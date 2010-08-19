@@ -324,11 +324,11 @@ select{
     -webkit-border-radius: 8px;
 }
 
-#categoryInfo{
+.categoryInfo{
     border-right: 1px solid #e3fcbc;
     text-align:left;
     float:left;
-    max-height:490px;
+    height:490px;
     width:350px;
     overflow:auto;
     margin: 0 10px 0 10px;
