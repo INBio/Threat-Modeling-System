@@ -140,7 +140,17 @@ public class LayerDAOImpl extends BaseDAOImpl implements LayerDAO {
 
 	@Override
 	public List<Layer> findAll() {
-		return super.findAllByTableName(this.table, new LayerRowMapper());
+
+        String sqlStatement = null;
+        MapSqlParameterSource args = null;
+        List<Layer> layers = null;
+
+        sqlStatement = "SELECT * FROM "+this.table+" " +"order by display_name ";
+
+        layers = getSimpleJdbcTemplate().query(sqlStatement, new LayerRowMapper());
+
+        return layers;
+
 	}
 
 	private static class LayerRowMapper implements ParameterizedRowMapper<Layer> {
