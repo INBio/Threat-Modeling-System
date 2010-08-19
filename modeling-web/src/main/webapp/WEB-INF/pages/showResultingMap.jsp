@@ -12,11 +12,12 @@
     <head>
         <%@ include file="/common/theme" %>
         <%@ include file="/common/javascript" %>
-
+        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 
         <link rel="stylesheet" type="text/css" href="http://openlayers.org/theme/default/style.css"/>
         <script type="text/JavaScript" src="http://openlayers.org/api/OpenLayers.js"></script>
-        <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAGtIHQJm1-pS3ci26k9D7hRQgngloALHesSZLYd1j0z536uH2MxQmIpE6xoh3_0LA7MpmysupPTjnvg" type="text/javascript"></script>
+        <!--script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAGtIHQJm1-pS3ci26k9D7hRQgngloALHesSZLYd1j0z536uH2MxQmIpE6xoh3_0LA7MpmysupPTjnvg" type="text/javascript"></script-->
+        <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAPwVPh_9lvEdVGuSx9bULhhQEKpM7ZWcZRfz-UdsvSoIjER5D5RSUMkmSTMm54S-8s0HtiMTGujMn2A" type="text/javascript"></script>
 
         <script type="text/javascript" >
 
@@ -67,6 +68,7 @@
 
                     //Root element -> response
                     var xmlDoc = oResponse.responseXML.documentElement;
+
                     //Get the list of specimens
                     var layerList = xmlDoc.getElementsByTagName("Layer");
 
@@ -132,9 +134,9 @@
                 var aux = addLayerWMS("<fmt:message key='showMap.principal' />","${fullSessionInfo.limitLayerName}");//(name,id)
                 map.addLayer(aux);
 
-                //Make our XHR call using Connection Manager's
-                YAHOO.util.Connect.asyncRequest('GET', sUrl, callback);
 
+                //Make our XHR call using Connection Manager's
+                YAHOO.util.Connect.asyncRequest('GET', sUrl, callback, null);
 
                 //Build up all controls
                 map.zoomToExtent(initialbounds);
@@ -145,6 +147,7 @@
                 map.addControl(new OpenLayers.Control.Navigation());
                 map.addControl(new OpenLayers.Control.Scale($('scale')));
                 map.addControl(new OpenLayers.Control.MousePosition({element: $('location')}));
+
             }
 
             /*
@@ -187,11 +190,7 @@
                 //Clean entry criteria lists
                 cleanAfterRequest();
 
-                //To unregister the function to introduce map info to the query criteria
-                //map.events.unregister('click', map, addMapListener);
-
-                //Call the function that returns the result (xml) asincronically
-                executeFinalQuery("",selectedTaxa,"", "",taxonsShow,"");
+                showPointFromHiddenData();
             };
 
             function simpleCleannig(){
@@ -218,72 +217,13 @@
                 document.getElementById('hiddenTaxa').value = selectedTaxa;
             }
 
-            /*
-             * Sets the HTML provided into the nodelist element from
-             * the maps response
-             */
-            function setHTML(response){
-                //Obtain the selected polygon(s), value set on currentPolygonId var
-                parseHTML(response.responseText);
-                //Verify if the list is null
-                if(polygonsList==null){
-                    return;
-                }
-                //Verify if the polygon is unique
-                if(polygonsList.length!=1){
-                    alert(selectOnePolygonE);
-                    return;
-                }
-                //Add the polygon to the geografical criteria list
-                currentPolygonId = polygonsList[0][0];
-                currentPolygonName = polygonsList[0][1];
-                addLayerParam(currentPolygonId,layerId,currentPolygonName,layerName);
-                //Clean the Loading status
-                document.getElementById('info').innerHTML = "";
-            }
-
             //Go to anchor
-            function callAnchor(anchor){
-            document.location.href = anchor;
-            }
-
             function internationalization(){
-                layerText =  "<fmt:message key="layers"/>";
-                loadingText = "<fmt:message key="loading"/>";
-                selectCriteriaE = "<fmt:message key="select_criteria_error"/>";
-                selectOnePolygonE = "<fmt:message key="select_one_polygon"/>";
-                invalidPolygonE = "<fmt:message key="not_valid_polygon"/>";
-                selectLayerPolyE = "<fmt:message key="select_layer_and_poly"/>";
-                alreadyAddedE = "<fmt:message key="already_criteria"/>";
-                specifyTaxonE = "<fmt:message key="taxon_name_error"/>";
-                selectIndicatorFirstE = "<fmt:message key="first_select_indicator"/>";
-                treeLeafE = "<fmt:message key="indicator_leaf"/>";
-                loadingImage = "<img src=\"${pageContext.request.contextPath}/themes/default/images/ajax-loader.gif\" ></img>";
-                searchResults = "<fmt:message key="search_results"/>";
-                geographical = "<fmt:message key="geographical"/>";
-                taxonomic = "<fmt:message key="taxonomic"/>";
-                indicators = "<fmt:message key="indicators"/>";
-                speciesMatches = "<fmt:message key="species_matches"/>";
-                seeOnMap = "<fmt:message key="see_on_map"/>";
-                seeDetail = "<fmt:message key="see_detail"/>";
-                searchCriteria = "<fmt:message key="search_criteria"/>";
-                speciesList = "<fmt:message key="species_list"/>";
-                newSearch = "<fmt:message key="new_search"/>";
-                criteriaText = "<fmt:message key="criteria"/>";
-                speciesText = "<fmt:message key="species"/>";
-                hideMap = "<fmt:message key="hide_map"/>";
-                hideDetail = "<fmt:message key="hide_detail"/>";
-                catalog = "<fmt:message key="catalog_number"/>";
-                latitude = "<fmt:message key="latitude"/>";
-                longitute = "<fmt:message key="longitude"/>";
-                scientificName = "<fmt:message key="scientificname"/>";
-                layerMatches = "<fmt:message key="layer_matches"/>";
-                indicatorMatches = "<fmt:message key="indicator_matches"/>";
-                resultDetails = "<fmt:message key="result_details"/>";
-                criteriaWithoutResults = "<fmt:message key="criteria_without_results"/>";
-                occurrences = "<fmt:message key="occurrences"/>";
-                resultsGeo = "<fmt:message key="results_geo"/>";
-                resultsIndi = "<fmt:message key="results_indi"/>";
+                selectCriteriaE = "<fmt:message key="showMap.selectCriteriaError"/>";
+                catalog = "<fmt:message key="showMap.catalogNumber"/>";
+                latitude = "<fmt:message key="showMap.latitude"/>";
+                longitute = "<fmt:message key="showMap.longitude"/>";
+                scientificName = "<fmt:message key="showMap.scientificName"/>";
             };
 
             function showOcurrencesSearchBox(){
@@ -326,22 +266,21 @@
                         <!-- Taxonomy Panel -->
                         <div id="queryPanel2" class="queryPanel">
                             <p class="criteria_title">
-                                <fmt:message key="taxonomical_criteria_title"/></p>
-                            <p style="margin:2px"><a> <fmt:message key="taxonomy_level"/>: </a></p>
+                                <fmt:message key="showMap.taxonomicalCriteriaTitle"/></p>
+                            <p style="margin:2px"><a> <fmt:message key="showMap.taxonomyLevel"/>: </a></p>
                             <select name="taxonType" id="taxonTypeId" class="componentSize" tabindex="12" onchange="javascript:changeTaxonInput();" onKeyUp="javascript:changeTaxonInput();">
                                 <c:forEach items="${taxonFilters}" var="taxonFilter">
                                     <option value="<c:out value="${taxonFilter.id}"/>"<c:if test="${taxonFilter.id == taxonType}"> selected="selected"</c:if>>
                                         <fmt:message key="${taxonFilter.displayName}"/> </option>
                                     </c:forEach>
                             </select>
-                            <p style="margin:2px"><a> <fmt:message key="taxon_name"/>: </a></p>
+                            <p style="margin:2px"><a> <fmt:message key="showMap.taxonName"/></a></p>
                             <span id="newTaxonValue">
                                 <input id="taxonId" tabindex="13" class="componentSize" type="text" name="taxonValue" value="<c:out value="${taxonValue}"/>"/>
                                 <div id="taxonContainer"></div>
                             </span>
-                            <input type="button" class="button-simple" id="addToListButtonTax" value="<fmt:message key="add_criteria"/>" onclick="addTaxonParam()" />
-                            <input type="button" class="button-simple" id="makeQueryButton" value="<fmt:message key="consult"/>" onclick="makeQuery()" />
-
+                            <input type="button" class="button-simple" id="addToListButtonTax" value="<fmt:message key="showMap.addCriteria"/>" onclick="addTaxonParam()" />
+                            <input type="button" class="button-simple" id="makeQueryButton" value="<fmt:message key="showMap.displayData"/>" onclick="makeQuery()" />
                             <span id="taxParameters" style="font-size:10px"></span>
                         </div>
                     </div>

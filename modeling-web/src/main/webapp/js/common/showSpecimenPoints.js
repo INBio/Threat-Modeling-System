@@ -22,7 +22,7 @@
 function showSpecimenPoints(selectedLayers,selectedTaxa,selectedIndicators)  {
 
     //Prepare URL for XHR request:
-    var sUrl = "/ait-web/ajax/getPoints?layers="+selectedLayers+"&taxons="+selectedTaxa+"&indi="+selectedIndicators;
+    var sUrl = "/modeling-web/ajax/getPoints?layers="+selectedLayers+"&taxons="+selectedTaxa+"&indi="+selectedIndicators;
 
     //Prepare callback object
     var callback = {
@@ -72,7 +72,7 @@ function showSpecimenPoints(selectedLayers,selectedTaxa,selectedIndicators)  {
                 -102.184, 7.204,
                 -77.157, 22.472
                 );*/
-            map.zoomToExtent(bounds);
+            //map.zoomToExtent(bounds);
 
             YAHOO.example.container.wait.hide();
         },
