@@ -464,3 +464,42 @@ function deselectAll(containerId){
 	for (var i=0; i<checkboxes.length; i++)
 		checkboxes[i].checked=false;
 }
+
+/*
+ * Add a new taxonomic filter
+ */
+function addTaxonParam() {
+    //Get the text field value
+    var txTaxon = document.getElementById('taxonId');
+    var text = txTaxon.value;
+    //Validate null values
+    if(text==null||text==''){
+        alert(specifyTaxonE);
+        txTaxon.value = '';
+        return
+    }
+    //Validate repeated values
+    var aux_exist = document.getElementById(text);
+    if(aux_exist!=null){
+        alert(alreadyAddedE);
+        txTaxon.value = '';
+        return;
+    }
+    //Add the search criteria
+    var taxonlist = document.getElementById('taxParameters');
+    var newdiv = document.createElement('div');
+    newdiv.setAttribute("id",text);
+    newdiv.innerHTML =
+        "<a class=\"criteria\" href=\"javascript:\" onclick=\"removeTaxonParamElement(\'"+text+"\')\">"+text+"</a>";
+    taxonlist.appendChild(newdiv);
+    txTaxon.value = '';
+}
+
+/*
+ * Deletes an element by it's id
+ */
+function removeTaxonParamElement(divNum) {
+  var d = document.getElementById('taxParameters');
+  var olddiv = document.getElementById(divNum);
+  d.removeChild(olddiv);
+}

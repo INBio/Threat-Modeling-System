@@ -20,15 +20,36 @@
 
         <script type="text/javascript" >
 
+            //Using to show the loading panel
+            YAHOO.namespace("example.container");
 
-            var taxonAutoCompleteUrls = new Array(${ fn:length(model.taxonFilters)});
-            <c:forEach items="${model.taxonFilters}" var="taxonFilter" varStatus="filterStatus" begin="0">
+            //--------------------------------------------------------------------------
+            var loadingImage = "<img src='${pageContext.request.contextPath}/themes/default/images/ajax-loader.gif' ></img>";
+            var loadingText = "<fmt:message key="common.loading"/>";
+            var taxonAutoCompleteUrls = new Array(${ fn:length(taxonFilters)});
+
+            <c:forEach items="${taxonFilters}" var="taxonFilter" varStatus="filterStatus" begin="0">
               <c:if test="${not empty taxonFilter.autoCompleteUrl}">
                 taxonAutoCompleteUrls[${taxonFilter.id}] = "${pageContext.request.contextPath}/${taxonFilter.autoCompleteUrl}";
               </c:if>
             </c:forEach>
-            //--------------------------------------------------------------------------
-            bbox = undefined;
+
+            var bbox = undefined;
+            //Layer to show specimens points
+            var vectorLayer;
+            //Control to manage pop ups on the map
+            var selectControl;
+            //Current selected especimen point into the map
+            var selectedFeature;
+            //To create a new atribute for each specimen point
+            var attributes;
+
+            //Internacionalization of the report texts
+            var searchResults,geographical,taxonomic,indicators,speciesMatches,
+            seeOnMap,seeDetail,searchCriteria,speciesList,newSearch,criteriaText,
+            speciesText,hideMap,hideDetail,catalog,latitude,longitute,scientificName,
+            layerMatches,indicatorMatches,resultDetails,criteriaWithoutResults,occurrences,
+            resultsGeo,resultsIndi;
             //--------------------------------------------------------------------------
 
            //Use a proxy for GeoServer requesting
@@ -126,16 +147,150 @@
                 map.addControl(new OpenLayers.Control.MousePosition({element: $('location')}));
             }
 
-            //Using to show the loading panel
-            YAHOO.namespace("example.container");
+            /*
+             * This function calls another function that is on charge to make the
+             * final query and show the result to the user
+             */
+            function makeQuery(){
+                //Show loading
+                YAHOO.example.container.wait.show();
+                //Clear vector layer
+                replaceVectorLayer();
+                //Getting the parameter lists
+                var taxonlist = document.getElementById('taxParameters');
+                //Arrays with parameters data (to show on the results table)
+                var taxonsShow = new Array();
+                //String with parameters data (to store in hidden field)
+                //Validate that exist at least one search criteria
+                if(taxonlist.childNodes.length==0){
+                    alert(selectCriteriaE);
+                    simpleCleannig();
+                    YAHOO.example.container.wait.hide();
+                    return;
+                }
+                //Loop over taxonomic criteria
+                var selectedTaxa = "";
+                for (var j =0; j <taxonlist.childNodes.length; j++){
+                    if(document.all){
+                        selectedTaxa += taxonlist.childNodes[j].innerText+"|";
+                        taxonsShow.push(taxonlist.childNodes[j].innerText);
+                    }
+                    else{
+                        selectedTaxa += taxonlist.childNodes[j].textContent+"|";
+                        taxonsShow.push(taxonlist.childNodes[j].textContent);
+                    }
+                }
 
-            var loadingImage = "<img src='${pageContext.request.contextPath}/themes/default/images/ajax-loader.gif' ></img>";
-            var loadingText = "<fmt:message key="common.loading"/>";
+                //Setting to hidden fields the query values.
+                setHiddenValues(selectedTaxa);
+
+                //Clean entry criteria lists
+                cleanAfterRequest();
+
+                //To unregister the function to introduce map info to the query criteria
+                //map.events.unregister('click', map, addMapListener);
+
+                //Call the function that returns the result (xml) asincronically
+                executeFinalQuery("",selectedTaxa,"", "",taxonsShow,"");
+            };
+
+            function simpleCleannig(){
+                document.getElementById('resultsPanel').innerHTML = "";
+                document.getElementById('detailedResults').innerHTML = "";
+                document.getElementById("detailedResults").className = "";
+            }
+
+            /*
+             * Clean the page after request a new report
+             */
+            function cleanAfterRequest(){
+                document.getElementById('entryCriteria').innerHTML = "";
+                divIds = new Array();
+                buttonIds = new Array();
+                ids = new Array();
+                types = new Array();
+            }
+
+            /*
+             * Setting to hidden fields the query values. Those info are going to
+             * be used to show specimens point into the map (not in use yet)
+             */
+            function setHiddenValues(selectedTaxa){
+                document.getElementById('hiddenTaxa').value = selectedTaxa;
+            }
+
+            /*
+             * Sets the HTML provided into the nodelist element from
+             * the maps response
+             */
+            function setHTML(response){
+                //Obtain the selected polygon(s), value set on currentPolygonId var
+                parseHTML(response.responseText);
+                //Verify if the list is null
+                if(polygonsList==null){
+                    return;
+                }
+                //Verify if the polygon is unique
+                if(polygonsList.length!=1){
+                    alert(selectOnePolygonE);
+                    return;
+                }
+                //Add the polygon to the geografical criteria list
+                currentPolygonId = polygonsList[0][0];
+                currentPolygonName = polygonsList[0][1];
+                addLayerParam(currentPolygonId,layerId,currentPolygonName,layerName);
+                //Clean the Loading status
+                document.getElementById('info').innerHTML = "";
+            }
+
+            //Go to anchor
+            function callAnchor(anchor){
+            document.location.href = anchor;
+            }
+
+            function internationalization(){
+                layerText =  "<fmt:message key="layers"/>";
+                loadingText = "<fmt:message key="loading"/>";
+                selectCriteriaE = "<fmt:message key="select_criteria_error"/>";
+                selectOnePolygonE = "<fmt:message key="select_one_polygon"/>";
+                invalidPolygonE = "<fmt:message key="not_valid_polygon"/>";
+                selectLayerPolyE = "<fmt:message key="select_layer_and_poly"/>";
+                alreadyAddedE = "<fmt:message key="already_criteria"/>";
+                specifyTaxonE = "<fmt:message key="taxon_name_error"/>";
+                selectIndicatorFirstE = "<fmt:message key="first_select_indicator"/>";
+                treeLeafE = "<fmt:message key="indicator_leaf"/>";
+                loadingImage = "<img src=\"${pageContext.request.contextPath}/themes/default/images/ajax-loader.gif\" ></img>";
+                searchResults = "<fmt:message key="search_results"/>";
+                geographical = "<fmt:message key="geographical"/>";
+                taxonomic = "<fmt:message key="taxonomic"/>";
+                indicators = "<fmt:message key="indicators"/>";
+                speciesMatches = "<fmt:message key="species_matches"/>";
+                seeOnMap = "<fmt:message key="see_on_map"/>";
+                seeDetail = "<fmt:message key="see_detail"/>";
+                searchCriteria = "<fmt:message key="search_criteria"/>";
+                speciesList = "<fmt:message key="species_list"/>";
+                newSearch = "<fmt:message key="new_search"/>";
+                criteriaText = "<fmt:message key="criteria"/>";
+                speciesText = "<fmt:message key="species"/>";
+                hideMap = "<fmt:message key="hide_map"/>";
+                hideDetail = "<fmt:message key="hide_detail"/>";
+                catalog = "<fmt:message key="catalog_number"/>";
+                latitude = "<fmt:message key="latitude"/>";
+                longitute = "<fmt:message key="longitude"/>";
+                scientificName = "<fmt:message key="scientificname"/>";
+                layerMatches = "<fmt:message key="layer_matches"/>";
+                indicatorMatches = "<fmt:message key="indicator_matches"/>";
+                resultDetails = "<fmt:message key="result_details"/>";
+                criteriaWithoutResults = "<fmt:message key="criteria_without_results"/>";
+                occurrences = "<fmt:message key="occurrences"/>";
+                resultsGeo = "<fmt:message key="results_geo"/>";
+                resultsIndi = "<fmt:message key="results_indi"/>";
+            };
 
         </script>
 
     </head>
-    <body onload="initMap('map');initLoadingPanel();" >
+    <body onload="initMap('map');initLoadingPanel();internationalization();changeTaxonInput()" >
         <div id="Header">
             <!-- Header -->
             <jsp:include page="/common/header.jsp"/>
@@ -241,29 +396,38 @@
                     <input id="showOccurrences" type="button" class="button-simple" value='<fmt:message key="showMap.showOccurrences"/>' onclick="showOcurrencesSearchBox()" />
                 </form:form>
             </div>
-                <!-- Taxonomy Panel -->
-                <div id="queryPanel2" class="queryPanel">
-                    <p class="criteria_title">
-                        <fmt:message key="taxonomical_criteria_title"/></p>
-                    <p style="margin:2px"><a> <fmt:message key="taxonomy_level"/>: </a></p>
-                    <select name="taxonType" id="taxonTypeId" class="componentSize" tabindex="12" onchange="javascript:changeTaxonInput();" onKeyUp="javascript:changeTaxonInput();">
-                        <c:forEach items="${model.taxonFilters}" var="taxonFilter">
-                            <option value="<c:out value="${taxonFilter.id}"/>"<c:if test="${taxonFilter.id == taxonType}"> selected="selected"</c:if>>
-                                <fmt:message key="${taxonFilter.displayName}"/>
-                            </option>
-                        </c:forEach>
-                    </select>
-                    <p style="margin:2px"><a> <fmt:message key="taxon_name"/>: </a></p>
-                    <span id="newTaxonValue">
-                        <input id="taxonId" tabindex="13" class="componentSize" type="text" name="taxonValue" value="<c:out value="${taxonValue}"/>"/>
-                        <div id="taxonContainer"></div>
-                    </span>
-                    <input type="button" class="button-simple" id="addToListButtonTax" value="<fmt:message key="add_criteria"/>" onclick="addTaxonParam()" />
-                    <span id="taxParameters" style="font-size:10px"></span>
-                    <script type="text/javascript">
-                        changeTaxonInput();
-                    </script>
+            <div id="entryCriteria"> <!-- Entry criteria div -->
+                <div id="querysPanel">
+                    <!-- Taxonomy Panel -->
+                    <div id="queryPanel2" class="queryPanel">
+                        <p class="criteria_title">
+                            <fmt:message key="taxonomical_criteria_title"/></p>
+                        <p style="margin:2px"><a> <fmt:message key="taxonomy_level"/>: </a></p>
+                        <select name="taxonType" id="taxonTypeId" class="componentSize" tabindex="12" onchange="javascript:changeTaxonInput();" onKeyUp="javascript:changeTaxonInput();">
+                            <c:forEach items="${taxonFilters}" var="taxonFilter">
+                                <option value="<c:out value="${taxonFilter.id}"/>"<c:if test="${taxonFilter.id == taxonType}"> selected="selected"</c:if>>
+                                    <fmt:message key="${taxonFilter.displayName}"/>
+                                </option>
+                            </c:forEach>
+                        </select>
+                        <p style="margin:2px"><a> <fmt:message key="taxon_name"/>: </a></p>
+                        <span id="newTaxonValue">
+                            <input id="taxonId" tabindex="13" class="componentSize" type="text" name="taxonValue" value="<c:out value="${taxonValue}"/>"/>
+                            <div id="taxonContainer"></div>
+                        </span>
+                        <input type="button" class="button-simple" id="addToListButtonTax" value="<fmt:message key="add_criteria"/>" onclick="addTaxonParam()" />
+                        <input type="button" class="button-simple" id="makeQueryButton" value="<fmt:message key="consult"/>" onclick="makeQuery()" />
+
+                        <span id="taxParameters" style="font-size:10px"></span>
+                    </div>
                 </div>
+            </div>
+            <!-- Panel to show the result header (abstract) -->
+            <div id="resultsPanel"></div>
+
+            <!-- Panel to show the detailed result -->
+            <div id="detailedResults"></div>
+            <input type="hidden" id="hiddenTaxa" value="">
         </div>
         <div id="footer">
             <jsp:include page="/common/footer.jsp"/>
