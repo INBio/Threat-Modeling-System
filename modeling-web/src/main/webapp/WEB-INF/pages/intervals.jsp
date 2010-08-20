@@ -41,6 +41,8 @@
                     YAHOO.example.container.wait.render(document.getElementById('contenido'));
                 }
             }
+
+            window.location = "${pageContext.request.contextPath}/intervals.html#";
         </script>
     </head>
     <body onload="initLoadingPanel()" class="yui-skin-sam">

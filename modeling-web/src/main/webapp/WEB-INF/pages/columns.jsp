@@ -13,7 +13,7 @@
         <%@ include file="/common/javascript" %>
         <script type="text/javascript">
 
-//Using to show the loading panel
+            //Using to show the loading panel
             YAHOO.namespace("example.container");
 
             var loadingImage = "<img src='${pageContext.request.contextPath}/themes/default/images/ajax-loader.gif' ></img>";
@@ -42,6 +42,7 @@
                 }
             }
 
+            window.location = "${pageContext.request.contextPath}/columns.html#";
         </script>
 
 
