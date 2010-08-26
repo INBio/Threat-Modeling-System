@@ -12,11 +12,9 @@
     <head>
         <%@ include file="/common/theme" %>
         <%@ include file="/common/javascript" %>
-        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 
         <link rel="stylesheet" type="text/css" href="http://openlayers.org/theme/default/style.css"/>
         <script type="text/JavaScript" src="http://openlayers.org/api/OpenLayers.js"></script>
-        <!--script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAGtIHQJm1-pS3ci26k9D7hRQgngloALHesSZLYd1j0z536uH2MxQmIpE6xoh3_0LA7MpmysupPTjnvg" type="text/javascript"></script-->
         <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAPwVPh_9lvEdVGuSx9bULhhQEKpM7ZWcZRfz-UdsvSoIjER5D5RSUMkmSTMm54S-8s0HtiMTGujMn2A" type="text/javascript"></script>
 
         <script type="text/javascript" >
@@ -44,6 +42,8 @@
             var selectedFeature;
             //To create a new atribute for each specimen point
             var attributes;
+            //map
+            var map;
 
             //Internacionalization of the report texts
             var searchResults,geographical,taxonomic,indicators,speciesMatches,
@@ -65,9 +65,22 @@
                 //If XHR call is successful
                 success: function(oResponse) {
 
+                    var xml;
+                    var parser;
+                    var xmlText = oResponse.responseText;
+
+                    if (window.DOMParser){
+                        parser=new DOMParser();
+                        xml=parser.parseFromString(xmlText,"text/xml");
+                    } else { // IE
+                        xml=new ActiveXObject("Microsoft.XMLDOM");
+                        xml.async="false";
+                        xml.loadXML(xmlText);
+                    }
 
                     //Root element -> response
-                    var xmlDoc = oResponse.responseXML.documentElement;
+                    //var xmlDoc = oResponse.responseXML.documentElement;
+                    var xmlDoc = xml.documentElement;
 
                     //Get the list of specimens
                     var layerList = xmlDoc.getElementsByTagName("Layer");
