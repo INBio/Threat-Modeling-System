@@ -448,6 +448,15 @@ select{
     height:24px;
 }
 
+#treeDiv{
+    width:258px;
+    max-height:160px;
+    overflow:auto;
+    border:dashed 1px gray;
+   -moz-border-radius: 5px;
+   -webkit-border-radius: 5px;
+}
+
 <[if gte IE 5.5]><![if lt IE 7]>
 #footer {
 top: expression( ( 0 - footer.offsetHeight + ( document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight ) + ( ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop ) ) + 'px' );

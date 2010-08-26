@@ -22,7 +22,7 @@
                 <h2><fmt:message key="layer.layerData" /></h2>
             <form:form  id="layerForm" commandName="layerForm" action="updateLayer.html">
                 <form:hidden path="id" />
-                <table width="80%" >
+                <table width="50%" >
                     <tr >
                         <td>
                             <fmt:message key="layer.displayName" />
@@ -81,7 +81,7 @@
                     </tr>
                     <tr>
                         <td colspan="2" align="center">
-                            <input type="submit" value="<fmt:message key='common.save' />" />
+                            <input class="button-simple" type="submit" value="<fmt:message key='common.save' />" />
 
                         </td>
                     </tr>

@@ -25,8 +25,9 @@ function showPointFromHiddenData(){
     YAHOO.example.container.wait.show();
     //Getting the query parameters
     var taxa = document.getElementById('hiddenTaxa').value;
+    var indic = document.getElementById('hiddenIndicators').value;
     //Drowing the points
-    showSpecimenPoints("",taxa,"");
+    showSpecimenPoints("",taxa,indic);
 }
 
 /**

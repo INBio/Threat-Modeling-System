@@ -46,9 +46,9 @@
                         </c:forEach>
                     </table>
                 </form:form>
-                <input type="button" value="<fmt:message key='common.edit' />" onclick="editLayer()"/>
-                <input type="button" value="<fmt:message key='common.delete' />" onclick="deleteLayer()"/>
-                <input type="button" value="<fmt:message key='common.new' />" onclick="newLayer()"/>
+                <input class="button-simple" type="button" value="<fmt:message key='common.edit' />" onclick="editLayer()"/>
+                <input class="button-simple" type="button" value="<fmt:message key='common.delete' />" onclick="deleteLayer()"/>
+                <input class="button-simple" type="button" value="<fmt:message key='common.new' />" onclick="newLayer()"/>
             </div>
         </div>
         <div id="footer">

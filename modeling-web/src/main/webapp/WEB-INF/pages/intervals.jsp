@@ -76,7 +76,7 @@
                                     <td colspan="1" width=" 60%">
                                         <div id="name" class="headers_label">
                                             <span class="textosnegrita">
-                                                <fmt:message key="layer.layerName" />
+                                                <fmt:message key="layer.displayName" />
                                             </span>
                                         </div>
                                     </td>
@@ -135,15 +135,29 @@
                     </div>
                     <div class="content_div" style="background-color:#E3FCBC; padding: 5px 5px 5px 5px">
                         <div id="categorys_layer" class="content_div_categorys">
-                            <div style="text-align:center;">
-                                <span class="textosnegrita">
-                                    <fmt:message key="interval.categories"/>
-                                </span>
-                            </div><br />
                             <c:forEach items="${intervalsForm.layers}" var="layer"  varStatus="current">
 
                                 <div id="${layer.name}_cats" style="display: none" class="${layer.type}">
-
+                                    <c:choose>
+                                        <c:when test="${'AREA' eq layer.type}" >
+                                            <div id="title_${layer.name}" style="text-align:center;">
+                                                <br />
+                                                <span class="textosnegrita">
+                                                    <fmt:message key="interval.categories"/>
+                                                </span>
+                                            </div><br />
+                                        </c:when>
+                                        <c:otherwise>
+                                            <div id="title_${layer.name}" style="text-align:center;">
+                                                <br />
+                                                <span class="textosnegrita">
+                                                    <fmt:message key="showMap.intervals"/>
+                                                </span>
+                                                <br />
+                                                <br />
+                                            </div>
+                                        </c:otherwise>
+                                    </c:choose>
                                     <c:forEach items="${layer.categories}" var="category"  varStatus="currentCategory">
                                         <c:choose>
                                             <c:when test="${'AREA' eq layer.type}" >

@@ -68,11 +68,6 @@ function showSpecimenPoints(selectedLayers,selectedTaxa,selectedIndicators)  {
             var maxY = getMaxY(latArray);
             var bounds = new OpenLayers.Bounds(
                 minX, minY, maxX, maxY);
-            /*var bounds = new OpenLayers.Bounds(
-                -102.184, 7.204,
-                -77.157, 22.472
-                );*/
-            //map.zoomToExtent(bounds);
 
             YAHOO.example.container.wait.hide();
         },

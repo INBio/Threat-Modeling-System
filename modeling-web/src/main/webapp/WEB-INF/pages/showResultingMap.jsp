@@ -44,6 +44,15 @@
             var attributes;
             //map
             var map;
+            //Indicators tree
+            var tree;
+            var currentIconMode;
+            //Getting a reference to the root node of indicators tree
+            var rootNode;
+            //Current selected indicators tree node
+            var selectedNodeId;
+            var selectedNodeName;
+            var isLeaf;
 
             //Internacionalization of the report texts
             var searchResults,geographical,taxonomic,indicators,speciesMatches,
@@ -51,6 +60,10 @@
             speciesText,hideMap,hideDetail,catalog,latitude,longitute,scientificName,
             layerMatches,indicatorMatches,resultDetails,criteriaWithoutResults,occurrences,
             resultsGeo,resultsIndi;
+
+            //Array that contains the id's of each <div> from multiple div results
+            var divIds = new Array(),buttonIds = new Array(),
+            ids = new Array(),types = new Array();
             //--------------------------------------------------------------------------
 
            //Use a proxy for GeoServer requesting
@@ -90,19 +103,19 @@
                         var node = layerList[i];
                         var name = node.getElementsByTagName("Name")[0].childNodes[0].nodeValue;
                         if(name == "${fullSessionInfo.limitLayerName}"){
-                                var llAttributes = node.getElementsByTagName("BoundingBox")[0].attributes;
-                                var bbox =  new OpenLayers.Bounds();
-                                bbox.extend(new OpenLayers.LonLat( llAttributes.minx.value, llAttributes.miny.value));
-                                bbox.extend(new OpenLayers.LonLat( llAttributes.maxx.value, llAttributes.maxy.value));
-                                    var img = new OpenLayers.Layer.Image("<fmt:message key='showMap.threats' />",
-                                                        "/resmaps/${fullSessionInfo.imageName}_T_${fullSessionInfo.userSessionId}.png",
-                                                        bbox,
-                                                        500,
-                                                        {isBaseLayer: false, transparent: true, opacity: 0.75 , singleTile: true, ratio: 1,bgcolor: 'transparent' });
-                                    map.addLayer(img);
-                                    map.panTo(bbox.getCenterLonLat());
-                                    map.zoomToExtent(bbox);
-                                    map.raiseLayer(img, map.getNumLayers()*-1);
+                            var llAttributes = node.getElementsByTagName("BoundingBox")[0].attributes;
+                            var bbox =  new OpenLayers.Bounds();
+                            bbox.extend(new OpenLayers.LonLat( llAttributes.minx.value, llAttributes.miny.value));
+                            bbox.extend(new OpenLayers.LonLat( llAttributes.maxx.value, llAttributes.maxy.value));
+                            var img = new OpenLayers.Layer.Image("<fmt:message key='showMap.threats' />",
+                            "/resmaps/${fullSessionInfo.imageName}_T_${fullSessionInfo.userSessionId}.png",
+                            bbox,
+                            500,
+                            {isBaseLayer: false, transparent: true, opacity: 0.75 , singleTile: true, ratio: 1,bgcolor: 'transparent' });
+                            map.addLayer(img);
+                            map.panTo(bbox.getCenterLonLat());
+                            map.zoomToExtent(bbox);
+                            map.raiseLayer(img, map.getNumLayers()*-1);
                         }
                     }
                 },
@@ -174,16 +187,22 @@
                 replaceVectorLayer();
                 //Getting the parameter lists
                 var taxonlist = document.getElementById('taxParameters');
+                var treelist = document.getElementById('treeParameters');
+
+                var indiAsText = '';
+
                 //Arrays with parameters data (to show on the results table)
-                var taxonsShow = new Array();
+                var taxonsShow = new Array(),treeShow = new Array();
                 //String with parameters data (to store in hidden field)
                 //Validate that exist at least one search criteria
-                if(taxonlist.childNodes.length==0){
+                if(taxonlist.childNodes.length==0||treelist.childNodes.length==0){
                     alert(selectCriteriaE);
                     simpleCleannig();
                     YAHOO.example.container.wait.hide();
                     return;
                 }
+
+
                 //Loop over taxonomic criteria
                 var selectedTaxa = "";
                 for (var j =0; j <taxonlist.childNodes.length; j++){
@@ -197,8 +216,21 @@
                     }
                 }
 
+                //Loop over indicators criteria
+                var selectedIndicators = "";
+                for (var k =0; k <treelist.childNodes.length; k++){
+                    selectedIndicators += treelist.childNodes[k].id+"|";
+                    if(document.all){
+                        treeShow.push(treelist.childNodes[k].innerText);
+                        indiAsText += treelist.childNodes[k].innerText+'|';
+                    }
+                    else{
+                        treeShow.push(treelist.childNodes[k].textContent);
+                        indiAsText += treelist.childNodes[k].textContent+'|';
+                    }
+                }
                 //Setting to hidden fields the query values.
-                setHiddenValues(selectedTaxa);
+                setHiddenValues(selectedTaxa,selectedIndicators,indiAsText);
 
                 //Clean entry criteria lists
                 cleanAfterRequest();
@@ -226,8 +258,11 @@
              * Setting to hidden fields the query values. Those info are going to
              * be used to show specimens point into the map (not in use yet)
              */
-            function setHiddenValues(selectedTaxa){
+
+            function setHiddenValues(selectedTaxa,selectedIndicators,indiAsText){
                 document.getElementById('hiddenTaxa').value = selectedTaxa;
+                document.getElementById('hiddenIndicators').value = selectedIndicators;
+                document.getElementById('hiddenIndiToShow').value = indiAsText;
             }
 
             //Go to anchor
@@ -237,6 +272,7 @@
                 latitude = "<fmt:message key="showMap.latitude"/>";
                 longitute = "<fmt:message key="showMap.longitude"/>";
                 scientificName = "<fmt:message key="showMap.scientificName"/>";
+                treeLeafE = "<fmt:message key="showMap.indicatorLeaf"/>";
             };
 
             function showOcurrencesSearchBox(){
@@ -273,11 +309,32 @@
                 }
             }
 
+
+            function init(){                
+                //Load messages content
+                internationalization();
+                
+                //initialize map functionality
+                initMap('map');
+                
+                //Init indicators tree
+                initIndicators();
+
+                //Init the loading javascript                
+                initLoadingPanel();
+
+                // init the taxon information
+                changeTaxonInput()
+
+                <fmt:setBundle basename="config" var="config" />
+                <fmt:message bundle="${config}" key="indicatorsSystem.integration" var="indiIntegration"/>
+            };
+
             window.location = "${pageContext.request.contextPath}/showResultingMap.html#";
-        </script>
+    </script>
 
     </head>
-    <body onload="initMap('map');initLoadingPanel();internationalization();changeTaxonInput()" >
+    <body onload="init()" >
         <div id="Header">
             <!-- Header -->
             <jsp:include page="/common/header.jsp"/>
@@ -308,15 +365,25 @@
                                         <fmt:message key="${taxonFilter.displayName}"/> </option>
                                     </c:forEach>
                             </select>
-                            <p style="margin:2px"><a> <fmt:message key="showMap.taxonName"/></a></p>
+                            <p style="margin:2px"><a> <fmt:message key="showMap.taxonName"/>:</a></p>
                             <span id="newTaxonValue">
                                 <input id="taxonId" tabindex="13" class="componentSize" type="text" name="taxonValue" value="<c:out value="${taxonValue}"/>"/>
                                 <div id="taxonContainer"></div>
                             </span>
                             <input type="button" class="button-simple" id="addToListButtonTax" value="<fmt:message key="showMap.addCriteria"/>" onclick="addTaxonParam()" />
-                            <input type="button" class="button-simple" id="makeQueryButton" value="<fmt:message key="showMap.displayData"/>" onclick="makeQuery()" />
                             <span id="taxParameters" style="font-size:10px"></span>
                         </div>
+                            <!-- Indicator Panel -->
+                            <div id="queryPanel3" class="queryPanel">
+                                <p class="criteria_title">
+                                    <fmt:message key="showMap.indicatorCriteriaTitle"/></p>
+                                <div id="treeDiv"></div>
+                                <input type="button" class="button-simple" id="addToListButtonIndi" value="<fmt:message key="showMap.addCriteria"/>" onclick="addIndicatorParam();" />
+                                <span id="treeParameters" style="font-size:10px"></span>
+                            </div>
+                                <div id="queryPanel3" class="queryPanel" style="text-align: center">
+                                <input type="button" class="button-simple" id="makeQueryButton" value="<fmt:message key="showMap.displayData"/>" onclick="makeQuery()" />
+                            </div>
                     </div>
                 </div>
                 <div id="categoryInfo" class="categoryInfo">
@@ -404,7 +471,9 @@
                     <input id="exportPNGButton" type="submit" class="button-simple" value='<fmt:message key="showMap.exportPNG"/>' onclick="exportResult('PNG');" />
                     <input id="exportSHPButton" type="submit" class="button-simple" value='<fmt:message key="showMap.exportSHP"/>' onclick="exportResult('SHP');" />
                     <input id="exportPDFButton" type="submit" class="button-simple" value='<fmt:message key="showMap.exportPDF"/>' onclick="exportResult('PDF');" />
-                    <input id="showOccurrences" type="button" class="button-simple" value='<fmt:message key="showMap.showOccurrences"/>' onclick="showOcurrencesSearchBox()" />
+                    <c:if test="${'true' eq indiIntegration}" >
+                        <input id="showOccurrences" type="button" class="button-simple" value='<fmt:message key="showMap.showOccurrences"/>' onclick="showOcurrencesSearchBox()" />
+                    </c:if>
                 </form:form>
             </div>
             <!-- Panel to show the result header (abstract) -->
@@ -413,6 +482,8 @@
             <!-- Panel to show the detailed result -->
             <div id="detailedResults"></div>
             <input type="hidden" id="hiddenTaxa" value="">
+            <input type="hidden" id="hiddenIndicators" value="">
+            <input type="hidden" id="hiddenIndiToShow" value="">
         </div>
         <div id="footer">
             <jsp:include page="/common/footer.jsp"/>

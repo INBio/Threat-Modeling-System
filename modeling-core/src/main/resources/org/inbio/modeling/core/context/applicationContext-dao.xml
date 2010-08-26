@@ -56,6 +56,10 @@
         <property name="dataSource" ref="postgisDataSource" />
     </bean>
 
+     <bean id="indicatorDAO" class="org.inbio.modeling.core.dao.impl.IndicatorDAOImpl">
+        <property name="dataSource" ref="postgisDataSource" />
+    </bean>
+
     <!-- DAO that not extends SimpleJdbcDaoSupport -->
     <!--bean id="dwcPropertyHolderDAO" class="org.inbio.modeling.core.dao.impl.DwcPropertyHolderDAOImpl"/>
     <bean id="dwcDataAccessDAO" class="org.inbio.modeling.core.dao.impl.DwcDataAccessDAOImpl"/>

@@ -393,7 +393,7 @@ function addLayerWMS(name, layer) {
     {layers: layer,
         transparent: "true",
         height: '478',
-        width: '512'}, {isBaseLayer: false,singleTile: true, ratio: 1, opacity: 0.50, 'buffer': 0 });
+        width: '512'}, {isBaseLayer: false,singleTile: true, ratio: 1, opacity: 0.50, 'buffer': 0, visibility: false});
 }
 
 /*
@@ -409,11 +409,14 @@ function addLayerWFS(name, serverNameLayer) {
 /*Inverse the order of the cathegorys*/
 function inverseValues(layerId){
 
+    var titleDiv = document.getElementById("title_"+layerId);
     var categoryDiv = document.getElementById(layerId + "_cats");
     var categories = categoryDiv.childNodes;
+    var check = new Array();
 
+    document.getElementById(layerId + "_cats").appendChild(titleDiv);
     for(var ckb = categories.length-1; ckb >= 0; ckb--){
-        var check = categories[ckb];
+        check = categories[ckb];
         document.getElementById(layerId + "_cats").appendChild(check);
     }
 }

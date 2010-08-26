@@ -27,6 +27,8 @@
                 <prop key="/finalQuery/**/**">queryController</prop>
             <!-- Getting specimen info to show in the map the specimens point -->
                 <prop key="/getPoints/**/**">pointsController</prop>
+            <!-- YUI Tree -->
+                <prop key="/nodeInfo/**/**">indicatorsTreeController</prop>
             </props>
         </property>
     </bean>
@@ -51,5 +53,11 @@
     <!--.....................................................................-->
     <bean id="pointsController" class="org.inbio.modeling.web.controller.ajax.PointsController">
       <property name="pointsManager" ref="pointsManager"/>
+    </bean>
+    <!--.....................................................................-->
+    <!--.......................... YUI Tree suppot ..........................-->
+    <!--.....................................................................-->
+    <bean id="indicatorsTreeController" class="org.inbio.modeling.web.controller.ajax.IndicatorsTreeController">
+      <property name="indicatorsManager" ref="indicatorsManager"/>
     </bean>
 </beans>

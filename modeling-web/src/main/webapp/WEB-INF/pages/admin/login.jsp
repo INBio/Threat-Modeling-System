@@ -45,7 +45,7 @@
                         <tr class="">
                             <td colspan="2" align="center">
                                 <br />
-                                <input type="submit" value="<fmt:message key="common.accept"/>" />
+                                <input class="button-simple" type="submit" value="<fmt:message key="common.accept"/>" />
                             </td>
                         </tr>
                     </table>

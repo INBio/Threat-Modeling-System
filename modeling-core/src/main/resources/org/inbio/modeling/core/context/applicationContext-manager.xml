@@ -44,9 +44,9 @@
     <bean id="taxonomyManager" class="org.inbio.modeling.core.manager.impl.TaxonomyManagerImpl">
         <property name="specimenDAO" ref="specimenDAO"/>
     </bean>
-    <!--bean id="indicatorsManager" class="org.inbio.modeling.core.manager.impl.IndicatorsManagerImpl">
+    <bean id="indicatorsManager" class="org.inbio.modeling.core.manager.impl.IndicatorsManagerImpl">
         <property name="indicatorDAO" ref="indicatorDAO"/>
-    </bean-->
+    </bean>
     <bean id="queryManager" class="org.inbio.modeling.core.manager.impl.QueryManagerImpl">
         <property name="taxonInfoIndexDAO" ref="taxonInfoIndexDAO"/>
         <property name="taxonIndexDAO" ref="taxonIndexDAO"/>
