@@ -13,7 +13,7 @@ export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$GISBASE/lib"
 export MAPSET="PERMANENT"
 
 # grass database configuration.
-export DBASE="$HOME/Projects/sand_box/grass"
+export DBASE="$HOME/Resources/GRASSDB/"
 
 # Threats image map folder.
 export THREAT_MAPS_FOLDER="$CATALINA_HOME/webapps/resmaps"

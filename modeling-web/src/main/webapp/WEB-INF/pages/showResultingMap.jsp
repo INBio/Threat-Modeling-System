@@ -334,7 +334,7 @@
     </script>
 
     </head>
-    <body onload="init()" >
+    <body onload="init()"  >
         <div id="Header">
             <!-- Header -->
             <jsp:include page="/common/header.jsp"/>
