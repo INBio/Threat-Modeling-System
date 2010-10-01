@@ -28,8 +28,11 @@ public class LayerDTO {
 	private String name;
 	private String displayName;
 	private String uri;
+    private String source;
 	private String year;
-	private String scale;
+	private String vizScale;
+	private String dataScale;
+    private String generationProcedure;
     private boolean speciesMap;
 	private String description;
 
@@ -63,14 +66,6 @@ public class LayerDTO {
 		this.uri = uri;
 	}
 
-	public String getScale() {
-		return scale;
-	}
-
-	public void setScale(String scale) {
-		this.scale = scale;
-	}
-
 	public String getYear() {
 		return year;
 	}
@@ -101,5 +96,37 @@ public class LayerDTO {
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
+    }
+
+    public String getDataScale() {
+        return dataScale;
+    }
+
+    public void setDataScale(String dataScale) {
+        this.dataScale = dataScale;
+    }
+
+    public String getGenerationProcedure() {
+        return generationProcedure;
+    }
+
+    public void setGenerationProcedure(String generationProcedure) {
+        this.generationProcedure = generationProcedure;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getVizScale() {
+        return vizScale;
+    }
+
+    public void setVizScale(String vizScale) {
+        this.vizScale = vizScale;
     }
 }

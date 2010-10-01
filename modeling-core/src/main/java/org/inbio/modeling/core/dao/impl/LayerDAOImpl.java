@@ -38,17 +38,20 @@ public class LayerDAOImpl extends BaseDAOImpl implements LayerDAO {
 		MapSqlParameterSource args = null;
 
 		createStatement = "INSERT INTO "+this.table+"( display_name, " +
-			"\"name\", description, uri,  scale, \"year\", last_update, is_species_map)"+
-			"VALUES (:display_name, :name, :description, :uri, :scale, :year, :last_update, :is_species_map);";
+			"\"name\", description, uri, \"year\", last_update, is_species_map, source, visualization_scale, data_scale, generation_procedure)"+
+			"VALUES (:display_name, :name, :description, :uri, :year, :last_update, :is_species_map, :source, :viz_scale, :data_scale, :generation_procedure);";
 
 		args = new MapSqlParameterSource();
-		args.addValue("display_name", newLayer.getDisplayName());
 		args.addValue("name", newLayer.getName());
-		args.addValue("description", newLayer.getDescription());
+		args.addValue("display_name", newLayer.getDisplayName());
 		args.addValue("uri", newLayer.getUri());
-		args.addValue("scale", newLayer.getScale());
+        args.addValue("source", newLayer.getSource());
 		args.addValue("year", newLayer.getYear());
+		args.addValue("viz_scale", newLayer.getVizScale());
+		args.addValue("data_scale", newLayer.getDataScale());
+        args.addValue("generation_procedure", newLayer.getGenerationProcedure());
 		args.addValue("last_update", Calendar.getInstance().getTime());
+		args.addValue("description", newLayer.getDescription());
         args.addValue("is_species_map", newLayer.isSpeciesMap());
 
 		getSimpleJdbcTemplate().update(createStatement, args);
@@ -64,22 +67,27 @@ public class LayerDAOImpl extends BaseDAOImpl implements LayerDAO {
             " display_name = :display_name, " +
 			" description = :description, " +
 			" uri = :uri, " +
-			" scale = :scale, " +
+            " source = :source " +
 			" year = :year, " +
+            " data_scale = :data_scale "+
+            " visualization_scale = :viz_scale " +
 			" last_update = :last_update, " +
+            " generation_procedure = :generation_procedure " +
 			" is_species_map= :is_species_map " +
 			" WHERE id = :layer_id" ;
 
 		args = new MapSqlParameterSource();
 		args.addValue("name", updatedLayer.getName());
-		args.addValue("description", updatedLayer.getDescription());
-		args.addValue("uri", updatedLayer.getUri());
-		args.addValue("scale", updatedLayer.getScale());
-		args.addValue("year", updatedLayer.getYear());
-		args.addValue("last_update", Calendar.getInstance().getTime());
-        args.addValue("is_species_map", updatedLayer.isSpeciesMap());
-		args.addValue("layer_id", updatedLayer.getId());
 		args.addValue("display_name", updatedLayer.getDisplayName());
+		args.addValue("uri", updatedLayer.getUri());
+        args.addValue("source", updatedLayer.getSource());
+		args.addValue("year", updatedLayer.getYear());
+		args.addValue("viz_scale", updatedLayer.getVizScale());
+		args.addValue("data_scale", updatedLayer.getDataScale());
+        args.addValue("generation_procedure", updatedLayer.getGenerationProcedure());
+		args.addValue("last_update", Calendar.getInstance().getTime());
+		args.addValue("description", updatedLayer.getDescription());
+        args.addValue("is_species_map", updatedLayer.isSpeciesMap());
 
 		getSimpleJdbcTemplate().update(createStatement, args);
 
@@ -159,14 +167,19 @@ public class LayerDAOImpl extends BaseDAOImpl implements LayerDAO {
 		public Layer mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Layer layer = new Layer();
 			layer.setId(rs.getLong("id"));
-            layer.setDisplayName(rs.getString("display_name"));
 			layer.setName(rs.getString("name"));
-			layer.setDescription(rs.getString("description"));
+            layer.setDisplayName(rs.getString("display_name"));
 			layer.setUri(rs.getString("uri"));
-			layer.setScale(rs.getString("scale"));
+            layer.setSource(rs.getString("source"));
 			layer.setYear(rs.getString("year"));
+            layer.setVizScale(rs.getString("visualization_scale"));
+            layer.setDataScale(rs.getString("data_scale"));
+            layer.setGenerationProcedure(rs.getString("generation_procedure"));
             layer.setSpeciesMap(rs.getBoolean("is_species_map"));
+			layer.setDescription(rs.getString("description"));
+
 			return layer;
+
 		}
 	}
 }

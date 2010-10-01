@@ -49,18 +49,42 @@
                     </tr>
                     <tr>
                         <td>
-                            <fmt:message key="layer.year" />
+                            <fmt:message key="layer.source" />
                         </td>
                         <td>
-                            <form:input size="4" path="year" />
+                            <form:input path="source" />
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <fmt:message key="layer.scale" />
+                            <fmt:message key="layer.year" />
                         </td>
                         <td>
-                            <form:input path="scale" />
+                            <form:input path="year" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <fmt:message key="layer.vizScale" />
+                        </td>
+                        <td>
+                            <form:input path="vizScale" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <fmt:message key="layer.dataScale" />
+                        </td>
+                        <td>
+                            <form:input path="dataScale" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <fmt:message key="layer.generationProcedure" />
+                        </td>
+                        <td>
+                            <form:textarea path="generationProcedure" />
                         </td>
                     </tr>
                     <tr>

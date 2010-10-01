@@ -304,7 +304,7 @@ public class IntervalsController extends AbstractFormController {
         layer.getCategories().get(0).setValue(cellNumber.toString());
 
 		try {
-            this.grassManagerImpl.calculateDensity(layer, currentSessionId);
+            this.grassManagerImpl.calculateDensity(layer, radioInMeters.toString(), currentSessionId);
 		} catch (Exception ex) {
 			throw new Exception("errors.cantCreateImage", ex);
 		}

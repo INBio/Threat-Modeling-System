@@ -19,7 +19,7 @@
             <ref bean="orderFilter" /-->
             <ref bean="familyFilter" />
             <ref bean="genusFilter" />
-            <ref bean="specificEpithetFilter" />
+            <!--ref bean="specificEpithetFilter" /-->
             <ref bean="scientificnameFilter" />
           </list>
         </property>

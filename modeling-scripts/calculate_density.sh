@@ -18,6 +18,6 @@ SCRIPTS_DIR=`dirname $0`
 TEMPORAL_MAP="temp_$SUFFIX"
 
 r.neighbors -c input=$LAYER$RMAP output=$TEMPORAL_MAP method=sum size=$RADIUS  --quiet --overwrite
-r.mapcalc "$LAYER$RRMAP = ($TEMPORAL_MAP/$RADIO_IN_METERS)*100";
+r.mapcalc "$LAYER$RRMAP = ($TEMPORAL_MAP/$RADIO_IN_METERS)";
 
 exit 0;

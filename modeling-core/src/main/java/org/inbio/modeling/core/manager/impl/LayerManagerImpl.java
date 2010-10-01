@@ -119,7 +119,11 @@ public class LayerManagerImpl implements LayerManager {
 			layerDTO.setDisplayName(layer.getDisplayName());
 			layerDTO.setUri(layer.getUri());
 			layerDTO.setYear(layer.getYear());
-			layerDTO.setScale(layer.getScale());
+            layerDTO.setDataScale(layer.getDataScale());
+            layerDTO.setVizScale(layer.getVizScale());
+            layerDTO.setSource(layer.getSource());
+            layerDTO.setGenerationProcedure(layer.getGenerationProcedure());
+
 			resultList.add(layerDTO);
 		}
 
@@ -132,13 +136,16 @@ public class LayerManagerImpl implements LayerManager {
 
 		Layer layer = new Layer();
 
-		layer.setName(newLayer.getName());
+        layer.setName(newLayer.getName());
         layer.setDisplayName(newLayer.getDisplayName());
-		layer.setDescription(newLayer.getDescription());
-		layer.setScale(newLayer.getScale());
-		layer.setUri(newLayer.getUri());
-		layer.setYear(newLayer.getYear());
+        layer.setDescription(newLayer.getDescription());
+        layer.setUri(newLayer.getUri());
+        layer.setYear(newLayer.getYear());
         layer.setSpeciesMap(newLayer.isSpeciesMap());
+        layer.setDataScale(newLayer.getDataScale());
+        layer.setVizScale(newLayer.getVizScale());
+        layer.setSource(newLayer.getSource());
+        layer.setGenerationProcedure(newLayer.getGenerationProcedure());
 
 		this.layerDAOImpl.create(layer);
 	}
@@ -148,13 +155,16 @@ public class LayerManagerImpl implements LayerManager {
 
 		Layer layer = layerDAOImpl.findById(newLayer.getId());
 
-		layer.setName(newLayer.getName());
-		layer.setDescription(newLayer.getDescription());
+        layer.setName(newLayer.getName());
+        layer.setDescription(newLayer.getDescription());
         layer.setDisplayName(newLayer.getDisplayName());
-		layer.setScale(newLayer.getScale());
-		layer.setUri(newLayer.getUri());
-		layer.setYear(newLayer.getYear());
+        layer.setUri(newLayer.getUri());
+        layer.setYear(newLayer.getYear());
         layer.setSpeciesMap(newLayer.isSpeciesMap());
+        layer.setDataScale(newLayer.getDataScale());
+        layer.setVizScale(newLayer.getVizScale());
+        layer.setSource(newLayer.getSource());
+        layer.setGenerationProcedure(newLayer.getGenerationProcedure());
 
 		this.layerDAOImpl.update(layer);
 	}
@@ -173,10 +183,13 @@ public class LayerManagerImpl implements LayerManager {
 		resultLayer.setName(layer.getName());
 		resultLayer.setDescription(layer.getDescription());
         resultLayer.setDisplayName(layer.getDisplayName());
-		resultLayer.setScale(layer.getScale());
 		resultLayer.setUri(layer.getUri());
         resultLayer.setSpeciesMap(layer.isSpeciesMap());
-		resultLayer.setYear(layer.getYear());
+        resultLayer.setYear(layer.getYear());
+        resultLayer.setDataScale(layer.getDataScale());
+        resultLayer.setVizScale(layer.getVizScale());
+        resultLayer.setSource(layer.getSource());
+        resultLayer.setGenerationProcedure(layer.getGenerationProcedure());
 
 		return resultLayer;
 	}
