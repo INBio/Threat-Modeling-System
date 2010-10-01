@@ -241,4 +241,12 @@ public interface GrassDAO extends BaseDAO {
      */
     public void applyMainLayer(String mainLayerName, String resultLayer, Long currentSessionId) throws Exception;
 
+    /**
+     * 
+     * @param layerName
+     * @param radius
+     * @param currentSessionId
+     * @throws Exception
+     */
+    public void calculateDensity(String layerName, String radius, Long currentSessionId) throws Exception;
 }

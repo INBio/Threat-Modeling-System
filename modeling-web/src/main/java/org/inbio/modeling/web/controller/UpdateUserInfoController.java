@@ -46,13 +46,6 @@ public class UpdateUserInfoController extends AbstractFormController {
 		if(uri.matches(".*deleteUser.*")){
 			this.deleteUser(userForm);
 		}else if(uri.matches(".*updateUser.*")){
-                    System.out.println();
-                    System.out.println("User " + userForm.getUsername());
-                    System.out.println("Full " +userForm.getFullname());
-                    System.out.println("pass1" + userForm.getPassword1());
-                    System.out.println("pass2" + userForm.getPassword2());
-                    System.out.println();
-                    System.out.println();
 
                     if(!userForm.getPassword1().equals(userForm.getPassword2()))
                     {

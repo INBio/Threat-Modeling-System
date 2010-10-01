@@ -117,13 +117,12 @@
                                                 <span class="textos" style="text-align:  left">
 
                                                     <label><c:out value="${layer.displayName}" /></label>
-
                                                 </span>
                                             </div>
                                         </td>
                                         <td width="">
                                             <div class="headers_input">
-                                                <c:if test="${'AREA' ne layer.type}" >
+                                                <c:if test="${'LINE' eq layer.type}" >
                                                     <form:checkbox path="layers[${current.index}].reverted" onclick="inverseValues('${layer.name}')" />
                                                 </c:if>
                                             </div>
@@ -147,11 +146,21 @@
                                                 </span>
                                             </div><br />
                                         </c:when>
-                                        <c:otherwise>
+                                        <c:when test="${'LINE' eq layer.type}" >
                                             <div id="title_${layer.name}" style="text-align:center;">
                                                 <br />
                                                 <span class="textosnegrita">
                                                     <fmt:message key="showMap.intervals"/>
+                                                </span>
+                                                <br />
+                                                <br />
+                                            </div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <div id="title_${layer.name}" style="text-align:center;">
+                                                <br />
+                                                <span class="textosnegrita">
+                                                    <fmt:message key="showMap.radius"/>
                                                 </span>
                                                 <br />
                                                 <br />
@@ -168,9 +177,16 @@
                                                     <br />
                                                 </div>
                                             </c:when>
-                                            <c:otherwise>
+                                            <c:when test="${'LINE' eq layer.type}" >
                                                 <div id="category_${currentCategory.index}">
                                                     <input type="checkbox" name="${layer.name}"/>
+                                                    <form:input cssClass="intervals_txt" path="layers[${current.index}].categories[${currentCategory.index}].value" />
+                                                    <br />
+                                                </div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div id="category_${currentCategory.index}">
+                                                    <fmt:message key="showMap.radius" />
                                                     <form:input cssClass="intervals_txt" path="layers[${current.index}].categories[${currentCategory.index}].value" />
                                                     <br />
                                                 </div>

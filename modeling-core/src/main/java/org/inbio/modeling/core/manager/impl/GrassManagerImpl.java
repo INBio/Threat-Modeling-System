@@ -176,12 +176,13 @@ public class GrassManagerImpl implements GrassManager {
 
 				dTemp = dTemp+intervalSize;
 			}
-		}else{
+		}else if(layer.getType().equals(LayerType.LINE)){
 	
-			for(int i = 0; i< 5;i++)
-				categoryList.add(new CategoryDTO(String.valueOf((i+1)*500)));
-
-		}
+            for(int i = 0; i< 5;i++)
+                categoryList.add(new CategoryDTO(String.valueOf((i+1)*500)));
+		}else {
+            categoryList.add(new CategoryDTO("0.1"));
+        }
 
 		return categoryList;
 	}
@@ -349,6 +350,16 @@ public class GrassManagerImpl implements GrassManager {
 
 		this.grassDAOImpl.rename(layer.getName(), currentSessionId);
 	}
+
+
+    @Override
+    public void calculateDensity(GrassLayerDTO layer, Long currentSessionId)
+        throws Exception{
+
+        this.grassDAOImpl.calculateDensity(layer.getName(), layer.getCategories().get(0).getValue(), currentSessionId);
+
+
+    }
 
 	/* getters and setters */
 	public GrassDAO getGrassDAOImpl() {

@@ -409,8 +409,11 @@
                                         <c:when test="${'AREA' eq layer.type}" >
                                             <fmt:message key="showMap.categories" />
                                         </c:when>
-                                        <c:otherwise>
+                                        <c:when test="${'LINE' eq layer.type}" >
                                             <fmt:message key="showMap.intervals" />
+                                        </c:when>
+                                        <c:otherwise>
+                                            <fmt:message key="showMap.radius" />
                                         </c:otherwise>
                                     </c:choose>
                                 </td>

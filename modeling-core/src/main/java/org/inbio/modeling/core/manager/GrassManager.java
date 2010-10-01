@@ -214,4 +214,12 @@ public interface GrassManager{
      */
     public void applyMainLayer(String mainLayerName, String resultLayer, Long currentSessionId) throws Exception;
 
+    /**
+     *
+     * @param layer
+     * @param currentSessionId
+     * @throws Exception
+     */
+    public void calculateDensity(GrassLayerDTO layer, Long currentSessionId) throws Exception;
+
 }

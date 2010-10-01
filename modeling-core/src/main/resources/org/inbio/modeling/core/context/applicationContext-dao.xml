@@ -37,6 +37,7 @@
 		<property name="newLocation" value="${scripts.newLocation}" />
 		<property name="asingRegion" value="${scripts.asingRegion}" />
         <property name="applyMainLayer" value="${scripts.applyMainLayer}" />
+        <property name="calculateDensity" value="${scripts.calculateDensity}" />
 	</bean>
 
     <bean id="layerDAO" class="org.inbio.modeling.core.dao.impl.LayerDAOImpl" parent="baseDAO" >

@@ -91,9 +91,12 @@ public class IntervalsController extends AbstractFormController {
 						this.writeFile(layer, currentSessionId);
 						// trigger the reclassification script.
 						this.reclass(layer, currentSessionId);
-					}else{
+					}else if(LayerType.LINE== layer.getType()){
 						// create the buffers.
 						this.createBuffers(layer, currentSessionId);
+					}else{
+						// create the buffers.
+						this.calculateDensity(layer, currentSessionId);
 					}
 				}
 
@@ -284,6 +287,13 @@ public class IntervalsController extends AbstractFormController {
 		}
 	}
 
+    private void calculateDensity(GrassLayerDTO layer, Long currentSessionId) throws Exception{
+		try {
+			this.grassManagerImpl.calculateDensity(layer, currentSessionId);
+		} catch (Exception ex) {
+			throw new Exception("errors.cantCreateImage", ex);
+		}
+    }
 
 	/* Getters and Setters */
 	public GrassManager getGrassManagerImpl() {

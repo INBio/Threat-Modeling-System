@@ -17,7 +17,7 @@ SCRIPTS_DIR=`dirname $0`
 # Import the map.
 if [ "" == "$COLUMN" ] || [ "cat" == "$COLUMN" ];
 then
-	v.to.rast input=$LAYER$VRMAP output=$LAYER$RMAP use=cat --overwrite --quiet;
+	v.to.rast input=$LAYER$VRMAP output=$LAYER$RMAP use=val value=1 --overwrite --quiet;
 else
 	v.to.rast input=$LAYER$VRMAP output=$LAYER$RMAP use=attr column=cat labelcolumn="$COLUMN" --overwrite --quiet;
 fi

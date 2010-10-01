@@ -110,10 +110,10 @@ public class SystemUserDAOImpl extends BaseDAOImpl implements SystemUserDAO {
 
         try{
             sqlStatement = "UPDATE "+this.table+
-				"SET fullname = :fullname "+
-				"SET password = :passwd " +
-				"SET enabled = :enabled " +
-				"SET roles = :roles "+
+				" SET fullname = :fullname"+
+				", password = :passwd" +
+				", enabled = :enabled" +
+				", roles = :roles"+
 				" WHERE username = :username ";
 
 

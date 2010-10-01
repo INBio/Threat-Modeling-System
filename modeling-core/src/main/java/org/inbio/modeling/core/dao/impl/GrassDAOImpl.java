@@ -56,6 +56,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
     private String newLocation;
     private String asingRegion;
     private String applyMainLayer;
+    private String calculateDensity;
 
 	@Override
 	public void configureEnvironment(Long currentSessionId) throws Exception   {
@@ -629,6 +630,32 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		this.printThis(result, stdout, stderr);
     }
 
+    @Override
+    public void calculateDensity(String layerName, String radius, Long currentSessionId)
+            throws Exception{
+
+		int result = 0;
+		List<String> commands = null;
+		StringBuilder stdout = null;
+		StringBuilder stderr = null;
+		commands = new ArrayList<String>();
+
+		// Arguments of the command
+		commands.add(scriptHome+calculateDensity);
+		commands.add(layerName.replace(":", "_"));
+		commands.add(radius);
+		commands.add(currentSessionId.toString());
+
+		logger.debug("Executing command: "+commands.toString());
+		commandExecutor = new OSCommandThreadImpl();
+		// executes the command
+		result = commandExecutor.run(commands);
+		// gets the output of the execution
+		stdout = commandExecutor.getStandardOutput();
+		stderr = commandExecutor.getStandardError();
+		// Prints the output of the command for good or for bad.
+		this.printThis(result, stdout, stderr);
+    }
 
 	@Override
 	public void deleteGRASSLocation(Long currentSessionId){ }
@@ -828,5 +855,13 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 
     public void setApplyMainLayer(String applyMainLayer) {
         this.applyMainLayer = applyMainLayer;
+    }
+
+    public String getCalculateDensity() {
+        return calculateDensity;
+    }
+
+    public void setCalculateDensity(String calculateDensity) {
+        this.calculateDensity = calculateDensity;
     }
 }
