@@ -40,6 +40,13 @@ public interface LayerDAO extends BaseDAO {
 	public Layer findById(Long id);
 
 	/**
+	 * return a layer according to a given name
+	 * @param id
+	 * @return
+	 */
+
+	public Layer findByName(String id);
+	/**
 	 * Delete a already registered layer
 	 * @param id
 	 */

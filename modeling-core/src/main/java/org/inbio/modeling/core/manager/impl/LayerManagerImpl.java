@@ -195,6 +195,31 @@ public class LayerManagerImpl implements LayerManager {
 	}
 
 	@Override
+	public LayerDTO getLayerByName(String name){
+
+		LayerDTO resultLayer = null;
+		Layer layer = null;
+
+		layer = this.layerDAOImpl.findByName(name);
+
+		resultLayer = new LayerDTO();
+
+		resultLayer.setId(layer.getId());
+		resultLayer.setName(layer.getName());
+		resultLayer.setDescription(layer.getDescription());
+        resultLayer.setDisplayName(layer.getDisplayName());
+		resultLayer.setUri(layer.getUri());
+        resultLayer.setSpeciesMap(layer.isSpeciesMap());
+        resultLayer.setYear(layer.getYear());
+        resultLayer.setDataScale(layer.getDataScale());
+        resultLayer.setVizScale(layer.getVizScale());
+        resultLayer.setSource(layer.getSource());
+        resultLayer.setGenerationProcedure(layer.getGenerationProcedure());
+
+		return resultLayer;
+	}
+
+	@Override
 	public void deleteLayer(Long layerId){
 		this.layerDAOImpl.deleteById(layerId);
 	}

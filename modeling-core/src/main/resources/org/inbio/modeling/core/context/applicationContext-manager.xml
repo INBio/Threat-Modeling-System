@@ -26,6 +26,7 @@
     <bean id="ExportManager" class="org.inbio.modeling.core.manager.impl.ExportManagerImpl">
         <property name="tempDir" value="${temp.dir}" />
         <property name="mapsHome" value="${maps.home}" />
+        <property name="layerManager" ref="layerManager" />
 	</bean>
 
 	<bean id="userManager" class="org.inbio.modeling.core.manager.impl.UserDetailsManagerImpl" >

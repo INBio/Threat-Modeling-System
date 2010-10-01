@@ -61,6 +61,13 @@ public interface LayerManager{
 	 */
 	public LayerDTO getLayerById(Long id);
 
+	/**
+	 * return a layer identified by its name.
+	 * @param id
+	 * @return
+	 */
+	public LayerDTO getLayerByName(String name);
+
     /**
      * retrieve a list of the layers identified to be species distribution
      * maps.

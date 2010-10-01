@@ -130,6 +130,25 @@ public class LayerDAOImpl extends BaseDAOImpl implements LayerDAO {
 	}
 
 	@Override
+	public Layer findByName(String name) {
+		String sqlStatement = null;
+		MapSqlParameterSource args = null;
+		Layer layer = null;
+
+		sqlStatement = "SELECT * FROM "+this.table+" " +
+			" WHERE name = :name limit 1 ";
+
+		args = new MapSqlParameterSource();
+		args.addValue("name", name);
+
+		layer = getSimpleJdbcTemplate().
+			queryForObject(sqlStatement, new LayerRowMapper(), args);
+
+
+		return layer;
+	}
+
+	@Override
 	public List<Layer> findAllSpeciesLayers() {
 		String sqlStatement = null;
 		MapSqlParameterSource args = null;
