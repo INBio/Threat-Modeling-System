@@ -44,13 +44,40 @@
                 }
             }
 
+            /*
+             * Initialize a panel to show the descriptions
+             */
+            function initHelpPanel(){
+                if (!YAHOO.example.help) {
+                   YAHOO.example.help =
+                        new YAHOO.widget.Panel("help",
+                    {
+                        width:"500px",
+                        fixedcenter:true,
+                        close:true,
+                        draggable:true,
+                        zindex:999,
+                        modal:false,
+                        visible:false
+                    });
+                }
+            }
+
+            //Show description panel
+            function showPanel(title,description){
+                YAHOO.example.help.setHeader(title);
+                YAHOO.example.help.setBody("<p>"+description+"</p>");
+                YAHOO.example.help.render(document.getElementById('help-box'));
+                YAHOO.example.help.show();
+            }
+
             window.location = "${pageContext.request.contextPath}/limit.html#";
         </script>
 
 
     </head>
 
-    <body onload="initLoadingPanel()" class="yui-skin-sam">
+    <body onload="initHelpPanel();initLoadingPanel()" class="yui-skin-sam">
         <div id="Header">
             <jsp:include page="/common/header.jsp"/>
         </div>
@@ -59,6 +86,7 @@
                 <p class="titulo-principal"><fmt:message key="title.limit"/></p>
             </div>
 
+            <div id="help-box" ></div>
             <spring:hasBindErrors name="limitForm">
                 <div class="errors">
                     <h3><fmt:message key="errors.title"/></h3>
@@ -74,7 +102,12 @@
                 <form:form method="post" action="limit.html" commandName="limitForm">
                     <table width="60%" border="0" align="center" cellpadding="4" cellspacing="1" class="tabla-contenido">
                         <tr class="celda02" >
-                            <td colspan="2" style="text-align: left; "><span class="textosnegrita" style="text-align: left; font-size: 17px"><fmt:message key="title.limit"/></span></td>
+                            <td colspan="2" style="text-align: left; ">
+                                <span class="textosnegrita" style="text-align: left; font-size: 17px">
+                                    <fmt:message key="title.limit"/>
+                                </span>
+                                <div  class="link_help"  onclick="showPanel('<fmt:message key="help.limit.title" />','<fmt:message key="help.limit.cont" />')" >&nbsp;</div>
+                            </td>
                         </tr>
                         <tr class="celda01" style="height: 100px">
                             <td width="20%">

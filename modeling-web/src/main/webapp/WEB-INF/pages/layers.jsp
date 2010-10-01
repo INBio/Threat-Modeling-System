@@ -5,8 +5,41 @@
 	<head>
 		<%@ include file="/common/theme" %>
 		<%@ include file="/common/javascript" %>
+        <script language="javascript" type="text/javascript">
+
+            //Using to show the loading panel
+            YAHOO.namespace("example.container");
+
+            /*
+             * Initialize a panel to show the descriptions
+             */
+            function initHelpPanel(){
+                if (!YAHOO.example.help) {
+                   YAHOO.example.help =
+                        new YAHOO.widget.Panel("help",
+                    {
+                        width:"500px",
+                        fixedcenter:true,
+                        close:true,
+                        draggable:true,
+                        zindex:999,
+                        modal:false,
+                        visible:false
+                    });
+                }
+            }
+
+            //Show description panel
+            function showPanel(title,description){
+                YAHOO.example.help.setHeader(title);
+                YAHOO.example.help.setBody("<p>"+description+"</p>");
+                YAHOO.example.help.render(document.getElementById('help-box'));
+                YAHOO.example.help.show();
+            }
+
+        </script>
 	</head>
-    <body onload="calculateValues();">
+    <body onload="initHelpPanel();calculateValues();" class="yui-skin-sam" >
 		<div id="header-contenedor">
 			<jsp:include page="/common/header.jsp"/>
 		</div>
@@ -14,6 +47,7 @@
 
 			<p class="titulo-principal"><fmt:message key="title.layer"/></p>
 
+            <div id="help-box" ></div>
 			<spring:hasBindErrors name="layersForm">
 				<div class="errors">
 					<h3><fmt:message key="errors.title"/></h3>
@@ -37,8 +71,8 @@
 
                                 <td width="60%">
 									<span class="textos">
-										<fmt:message key="common.resolution"/><br />
-										<fmt:message key="layer.resolutionDecimalDegrees" />
+                                        <fmt:message key="common.resolution"/>
+                                        <div  class="link_help"  onclick="showPanel('<fmt:message key="help.resolution.title" />','<fmt:message key="help.resolution.cont" />')" >&nbsp;</div>
 									</span>
 								</td>
 								<td>
@@ -46,7 +80,8 @@
 								</td>
 							</tr>
 							<tr class="celda02">
-								<td><span class="textosnegrita"><fmt:message key="layer.availableLayers"/></span></td>
+								<td><span class="textosnegrita"><fmt:message key="layer.availableLayers"/></span>
+                                <div  class="link_help"  onclick="showPanel('<fmt:message key="help.layerList.title" />','<fmt:message key="help.layerList.cont" />')" >&nbsp;</div></td>
 								<td><span class="textosnegrita"><fmt:message key="layer.importanceValue"/></span></td>
 							</tr>
 							<c:forEach items="${layersForm.layerList}" var="layer"  varStatus="current">

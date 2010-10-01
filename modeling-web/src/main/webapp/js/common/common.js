@@ -42,7 +42,7 @@ function calculateValues(){
             if(layerList[layerDiv].className != ""){
                 checkbox = document.getElementById(layerList[layerDiv].className);
                 textfield = document.getElementById(layerList[layerDiv].className+"_weight");
-                if(checkbox.checked == true){
+                if(checkbox != null && checkbox.checked == true){
                     totalImportanceValue += (+textfield.value);
                     textfield.disabled = false;
                 }
@@ -429,3 +429,4 @@ function exportResult( type ){
 
     return true;
 }
+

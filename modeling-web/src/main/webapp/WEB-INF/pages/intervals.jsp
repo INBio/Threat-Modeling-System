@@ -42,10 +42,37 @@
                 }
             }
 
+            /*
+             * Initialize a panel to show the descriptions
+             */
+            function initHelpPanel(){
+                if (!YAHOO.example.help) {
+                   YAHOO.example.help =
+                        new YAHOO.widget.Panel("help",
+                    {
+                        width:"500px",
+                        fixedcenter:true,
+                        close:true,
+                        draggable:true,
+                        zindex:999,
+                        modal:false,
+                        visible:false
+                    });
+                }
+            }
+
+            //Show description panel
+            function showPanel(title,description){
+                YAHOO.example.help.setHeader(title);
+                YAHOO.example.help.setBody("<p>"+description+"</p>");
+                YAHOO.example.help.render(document.getElementById('help-box'));
+                YAHOO.example.help.show();
+            }
+
             window.location = "${pageContext.request.contextPath}/intervals.html#";
         </script>
     </head>
-    <body onload="initLoadingPanel()" class="yui-skin-sam">
+    <body onload="initHelpPanel();initLoadingPanel()" class="yui-skin-sam">
         <div id="Header">
             <jsp:include page="/common/header.jsp"/>
         </div>
@@ -54,6 +81,7 @@
                 <p class="titulo-principal"><fmt:message key="title.intervals"/></p>
             </div>
 
+            <div id="help-box" ></div>
             <spring:hasBindErrors name="intervalsForm">
                 <div class="errors">
                     <h3><fmt:message key="errors.title"/></h3>
@@ -139,6 +167,7 @@
                                 <div id="${layer.name}_cats" style="display: none" class="${layer.type}">
                                     <c:choose>
                                         <c:when test="${'AREA' eq layer.type}" >
+                                <div  class="link_help"  onclick="showPanel('<fmt:message key="help.intervalsArea.title" />','<fmt:message key="help.intervalsArea.cont" />')" >&nbsp;</div>
                                             <div id="title_${layer.name}" style="text-align:center;">
                                                 <br />
                                                 <span class="textosnegrita">
@@ -147,6 +176,7 @@
                                             </div><br />
                                         </c:when>
                                         <c:when test="${'LINE' eq layer.type}" >
+                                <div  class="link_help"  onclick="showPanel('<fmt:message key="help.intervalsLine.title" />','<fmt:message key="help.intervalsLine.cont" />')" >&nbsp;</div>
                                             <div id="title_${layer.name}" style="text-align:center;">
                                                 <br />
                                                 <span class="textosnegrita">
@@ -157,6 +187,7 @@
                                             </div>
                                         </c:when>
                                         <c:otherwise>
+                                <div  class="link_help"  onclick="showPanel('<fmt:message key="help.intervalsPoint.title" />','<fmt:message key="help.intervalsLine.cont" />')" >&nbsp;</div>
                                             <div id="title_${layer.name}" style="text-align:center;">
                                                 <br />
                                                 <span class="textosnegrita">

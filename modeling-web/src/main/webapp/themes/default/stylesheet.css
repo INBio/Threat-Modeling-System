@@ -177,6 +177,15 @@ a.link-celda02:visited {
 	background-image: url(images/about.png);
 }
 
+/* Para el link de about modificado Leila*/
+.link_help{
+	background-repeat:no-repeat;
+	background-image: url(images/help.png);
+    width: 23px;
+    height: 23px;
+    float: right;
+}
+
 
 .textos {
 	font-size:12px;
@@ -455,6 +464,10 @@ select{
     border:dashed 1px gray;
    -moz-border-radius: 5px;
    -webkit-border-radius: 5px;
+}
+
+#actions {
+    padding: auto;
 }
 
 <[if gte IE 5.5]><![if lt IE 7]>

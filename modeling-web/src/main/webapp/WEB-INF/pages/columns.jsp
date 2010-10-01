@@ -42,12 +42,38 @@
                 }
             }
 
+            /*
+             * Initialize a panel to show the descriptions
+             */
+            function initHelpPanel(){
+                if (!YAHOO.example.help) {
+                   YAHOO.example.help =
+                        new YAHOO.widget.Panel("help",
+                    {
+                        width:"500px",
+                        fixedcenter:true,
+                        close:true,
+                        draggable:true,
+                        zindex:999,
+                        modal:false,
+                        visible:false
+                    });
+                }
+            }
+
+            //Show description panel
+            function showPanel(title,description){
+                YAHOO.example.help.setHeader(title);
+                YAHOO.example.help.setBody("<p>"+description+"</p>");
+                YAHOO.example.help.render(document.getElementById('help-box'));
+                YAHOO.example.help.show();
+            }
             window.location = "${pageContext.request.contextPath}/columns.html#";
         </script>
 
 
     </head>
-    <body onload="initLoadingPanel()" class="yui-skin-sam">
+    <body onload="initHelpPanel();initLoadingPanel()" class="yui-skin-sam">
         <div id="Header">
             <jsp:include page="/common/header.jsp"/>
         </div>
@@ -55,6 +81,7 @@
         <div id="contenido">
             <p class="titulo-principal"><fmt:message key="title.columns"/></p>
 
+            <div id="help-box" ></div>
             <spring:hasBindErrors name="columnsForm">
                 <div class="errors">
                     <h3><fmt:message key="errors.title"/></h3>
@@ -100,9 +127,15 @@
                                                     </form:option>
                                                 </c:forEach>
                                             </form:select>
+                                            <div  class="link_help"  onclick="showPanel('<fmt:message key="help.columnsArea.title" />','<fmt:message key="help.columnsArea.cont" />')" >&nbsp;</div>
+                                        </c:when>
+                                        <c:when test="${layer.type eq 'POINT'}">
+                                            <fmt:message key="common.pointLayerType" />
+                                            <div  class="link_help"  onclick="showPanel('<fmt:message key="help.columnsPoint.title" />','<fmt:message key="help.columnsPoint.cont" />')" >&nbsp;</div>
                                         </c:when>
                                         <c:otherwise>
-                                            <fmt:message key="common.notAreaLayerType" />
+                                            <fmt:message key="common.lineLayerType" />
+                                            <div  class="link_help"  onclick="showPanel('<fmt:message key="help.columnsLine.title" />','<fmt:message key="help.columnsLine.cont" />')" >&nbsp;</div>
                                         </c:otherwise>
                                     </c:choose>
                                 </td>

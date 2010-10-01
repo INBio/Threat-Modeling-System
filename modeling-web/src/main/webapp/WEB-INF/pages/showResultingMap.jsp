@@ -309,6 +309,34 @@
                 }
             }
 
+            /*
+             * Initialize a panel to show the descriptions
+             */
+            function initHelpPanel(){
+                if (!YAHOO.example.help) {
+                   YAHOO.example.help =
+                        new YAHOO.widget.Panel("help",
+                    {
+                        width:"500px",
+                        fixedcenter:true,
+                        close:true,
+                        draggable:true,
+                        zindex:999,
+                        modal:false,
+                        visible:false
+                    });
+                }
+            }
+
+            //Show description panel
+            function showPanel(title,description){
+                YAHOO.example.help.setHeader(title);
+                YAHOO.example.help.setBody("<p>"+description+"</p>");
+                YAHOO.example.help.render(document.getElementById('help-box'));
+                YAHOO.example.help.show();
+            }
+
+
 
             function init(){                
                 //Load messages content
@@ -324,7 +352,9 @@
                 initLoadingPanel();
 
                 // init the taxon information
-                changeTaxonInput()
+                changeTaxonInput();
+
+                initHelpPanel();
 
                 <fmt:setBundle basename="config" var="config" />
                 <fmt:message bundle="${config}" key="indicatorsSystem.integration" var="indiIntegration"/>
@@ -334,13 +364,14 @@
     </script>
 
     </head>
-    <body onload="init()"  >
+    <body onload="init()" class="yui-skin-sam" >
         <div id="Header">
             <!-- Header -->
             <jsp:include page="/common/header.jsp"/>
         </div>
         <div id="contenido" style="width: 100%">
 
+            <div id="help-box" ></div>
             <spring:hasBindErrors name="intervalsForm">
                 <div class="errors">
                     <h3><fmt:message key="errors.title"/></h3>
@@ -356,6 +387,7 @@
                     <div id="querysPanel">
                         <!-- Taxonomy Panel -->
                         <div id="queryPanel2" class="queryPanel">
+                                <div  class="link_help"  onclick="showPanel('<fmt:message key="help.taxonCriteria.title" />','<fmt:message key="help.taxonCriteria.cont" />')" >&nbsp;</div>
                             <p class="criteria_title">
                                 <fmt:message key="showMap.taxonomicalCriteriaTitle"/></p>
                             <p style="margin:2px"><a> <fmt:message key="showMap.taxonomyLevel"/>: </a></p>
@@ -375,6 +407,7 @@
                         </div>
                             <!-- Indicator Panel -->
                             <div id="queryPanel3" class="queryPanel">
+                                <div  class="link_help"  onclick="showPanel('<fmt:message key="help.indicatorCriteria.title" />','<fmt:message key="help.indicatorCriteria.cont" />')" >&nbsp;</div>
                                 <p class="criteria_title">
                                     <fmt:message key="showMap.indicatorCriteriaTitle"/></p>
                                 <div id="treeDiv"></div>
@@ -469,6 +502,7 @@
                 </div>
             </div>
             <div id="actions">
+
                 <form:form action="export.html" commandName="exportForm">
                     <form:hidden id="outputType" path="type"  />
                     <input id="exportPNGButton" type="submit" class="button-simple" value='<fmt:message key="showMap.exportPNG"/>' onclick="exportResult('PNG');" />
@@ -477,6 +511,7 @@
                     <c:if test="${'true' eq indiIntegration}" >
                         <input id="showOccurrences" type="button" class="button-simple" value='<fmt:message key="showMap.showOccurrences"/>' onclick="showOcurrencesSearchBox()" />
                     </c:if>
+                    <input class="link_help" type="button" style="float:none; border: none " onclick="showPanel('<fmt:message key="help.buttons.title" />','<fmt:message key="help.buttons.cont" />')" />
                 </form:form>
             </div>
             <!-- Panel to show the result header (abstract) -->
