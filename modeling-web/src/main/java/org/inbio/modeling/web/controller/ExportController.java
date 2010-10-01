@@ -20,6 +20,7 @@ package org.inbio.modeling.web.controller;
 import com.lowagie.text.Document;
 import com.lowagie.text.pdf.PdfWriter;
 import java.io.FileInputStream;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +34,7 @@ import org.inbio.modeling.web.form.ExportData;
 import org.inbio.modeling.web.form.converter.FormDTOConverter;
 import org.inbio.modeling.web.session.CurrentInstanceData;
 import org.inbio.modeling.web.session.SessionUtils;
+import org.springframework.context.ApplicationContext;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractFormController;
@@ -86,7 +88,7 @@ public class ExportController extends AbstractFormController {
             if(exportForm.getType().equals("PDF")){ // PDF File
 
                 try {
-                    this.exportPDF(currentInstanceData, response);
+                    this.exportPDF(currentInstanceData, response, request.getLocale());
                 } catch (Exception ex) {
                     ex = new Exception("errors.cantExportPDF", ex);
                     Logger.getLogger(ColumnController.class.getName()).log(Level.SEVERE, null, ex);
@@ -127,7 +129,7 @@ public class ExportController extends AbstractFormController {
         return showMapControllerImpl.showForm(request, response, errors);
     }
 
-    private void exportPDF(CurrentInstanceData currentInstanceData, HttpServletResponse response) throws Exception{
+    private void exportPDF(CurrentInstanceData currentInstanceData, HttpServletResponse response, Locale l) throws Exception{
 
         response.setContentType("application/pdf");
         response.setHeader("Content-Disposition","attachment; filename=reporte.pdf;");
@@ -141,7 +143,8 @@ public class ExportController extends AbstractFormController {
                 currentInstanceData.getImageName(),
                 currentInstanceData.getLimitLayerName(),
                 FormDTOConverter.convert(currentInstanceData.getLayerList(), GrassLayerDTO.class),
-                currentInstanceData.getUserSessionId());
+                currentInstanceData.getUserSessionId(),
+                l);
 
         document.close();
     }

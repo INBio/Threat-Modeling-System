@@ -3,7 +3,7 @@
     Created on : 19/05/2010, 09:55:45 AM
     Author     : asanabria
 --%>
-<%@ page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <%@ include file="/common/taglibs" %>
 
 <html>
@@ -42,11 +42,11 @@
                             <td><form:input path="fullname" /></td>
                         </tr>
                         <tr>
-                            <td>ContraseÃ±a</td>
+                            <td>Contraseña</td>
                             <td><form:password path="password1" /></td>
                         </tr>
                         <tr>
-                            <td>Comprobar ContraseÃ±a</td>
+                            <td>Comprobar Contraseña</td>
                             <td><form:password path="password2" /></td>
                         </tr>
                         <tr>

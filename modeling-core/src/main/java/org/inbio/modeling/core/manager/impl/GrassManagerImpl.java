@@ -181,7 +181,7 @@ public class GrassManagerImpl implements GrassManager {
             for(int i = 0; i< 5;i++)
                 categoryList.add(new CategoryDTO(String.valueOf((i+1)*500)));
 		}else {
-            categoryList.add(new CategoryDTO("0.1"));
+            categoryList.add(new CategoryDTO("1000"));
         }
 
 		return categoryList;

@@ -20,6 +20,7 @@ package org.inbio.modeling.core.manager;
 import com.lowagie.text.Document;
 import java.io.FileInputStream;
 import java.util.List;
+import java.util.Locale;
 import org.inbio.modeling.core.dto.GrassLayerDTO;
 
 /**
@@ -38,6 +39,6 @@ public interface ExportManager{
 
     public FileInputStream exportShapefile(String layerName, long suffix) throws Exception;
 
-    public Document exportPDF(Document document, Double resolution, String imageName, String limitLayerName, List<GrassLayerDTO>  layerList, long currentSessionId) throws Exception;
+    public Document exportPDF(Document document, Double resolution, String imageName, String limitLayerName, List<GrassLayerDTO>  layerList, long currentSessionId, Locale locale) throws Exception;
 
 }

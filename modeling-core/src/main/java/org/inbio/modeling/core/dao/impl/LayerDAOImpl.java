@@ -67,12 +67,12 @@ public class LayerDAOImpl extends BaseDAOImpl implements LayerDAO {
             " display_name = :display_name, " +
 			" description = :description, " +
 			" uri = :uri, " +
-            " source = :source " +
+            " source = :source, " +
 			" year = :year, " +
-            " data_scale = :data_scale "+
-            " visualization_scale = :viz_scale " +
+            " data_scale = :data_scale, "+
+            " visualization_scale = :viz_scale, " +
 			" last_update = :last_update, " +
-            " generation_procedure = :generation_procedure " +
+            " generation_procedure = :generation_procedure, " +
 			" is_species_map= :is_species_map " +
 			" WHERE id = :layer_id" ;
 
@@ -88,6 +88,7 @@ public class LayerDAOImpl extends BaseDAOImpl implements LayerDAO {
 		args.addValue("last_update", Calendar.getInstance().getTime());
 		args.addValue("description", updatedLayer.getDescription());
         args.addValue("is_species_map", updatedLayer.isSpeciesMap());
+        args.addValue("layer_id", updatedLayer.getId());
 
 		getSimpleJdbcTemplate().update(createStatement, args);
 

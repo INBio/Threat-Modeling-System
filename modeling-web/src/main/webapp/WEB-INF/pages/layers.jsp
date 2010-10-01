@@ -1,4 +1,4 @@
-<%@ page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <%@include file="/common/taglibs" %>
 
 <html>
@@ -42,7 +42,7 @@
 									</span>
 								</td>
 								<td>
-                                    <form:input title="" path="resolution" />&nbsp;&deg;
+                                    <form:input title="" path="resolution" />&nbsp;m
 								</td>
 							</tr>
 							<tr class="celda02">

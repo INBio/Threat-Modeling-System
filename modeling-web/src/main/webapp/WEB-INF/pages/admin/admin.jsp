@@ -1,4 +1,4 @@
-<%@ page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html" pageEncoding="ISO-8859-1"%>
 
 <%@include file="/common/taglibs" %>
 
@@ -18,7 +18,7 @@
 					<!--li><a href="listUsers.html">Usuarios</a></li-->
 					<li><a href="listLayers.html">Capas</a></li>
 					<li><a href="listUsers.html">Usuarios</a></li>
-					<li><a href="resolution.html">ResoluciÃ³n</a></li>
+					<li><a href="resolution.html">Resolución</a></li>
 				</ol>
 			</div>
 		</div>
