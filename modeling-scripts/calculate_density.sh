@@ -8,7 +8,8 @@
 # Arguments
 LAYER=$1
 RADIUS=$2
-SUFFIX=$3
+RADIO_IN_METERS=$3
+SUFFIX=$4
 
 # configure environment
 SCRIPTS_DIR=`dirname $0`
@@ -17,6 +18,6 @@ SCRIPTS_DIR=`dirname $0`
 TEMPORAL_MAP="temp_$SUFFIX"
 
 r.neighbors -c input=$LAYER$RMAP output=$TEMPORAL_MAP method=sum size=$RADIUS  --quiet --overwrite
-r.mapcalc "$LAYER$RRMAP = ($TEMPORAL_MAP/$RADIUS.0)*1000";
+r.mapcalc "$LAYER$RRMAP = ($TEMPORAL_MAP/$RADIO_IN_METERS)*100";
 
 exit 0;
