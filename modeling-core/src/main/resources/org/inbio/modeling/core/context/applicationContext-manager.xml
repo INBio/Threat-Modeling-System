@@ -31,6 +31,9 @@
 	<bean id="userManager" class="org.inbio.modeling.core.manager.impl.UserDetailsManagerImpl" >
 		<property name="systemUserDAO" ref="systemUserDAO"/>
 	</bean>
+    <bean id="configManager" class="org.inbio.modeling.core.manager.impl.ConfigManagerImpl">
+        <property name="configDAO" ref="configDAO"/>
+    </bean>
 
 <!-- mata's -->
 

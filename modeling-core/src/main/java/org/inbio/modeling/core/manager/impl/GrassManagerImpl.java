@@ -353,10 +353,10 @@ public class GrassManagerImpl implements GrassManager {
 
 
     @Override
-    public void calculateDensity(GrassLayerDTO layer, Long currentSessionId)
+    public void calculateDensity(GrassLayerDTO layer,String radioInMeters, Long currentSessionId)
         throws Exception{
 
-        this.grassDAOImpl.calculateDensity(layer.getName(), layer.getCategories().get(0).getValue(), currentSessionId);
+        this.grassDAOImpl.calculateDensity(layer.getName(), layer.getCategories().get(0).getValue(), radioInMeters, currentSessionId);
 
 
     }

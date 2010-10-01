@@ -631,7 +631,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
     }
 
     @Override
-    public void calculateDensity(String layerName, String radius, Long currentSessionId)
+    public void calculateDensity(String layerName, String radius,String radioInMeters, Long currentSessionId)
             throws Exception{
 
 		int result = 0;
@@ -644,6 +644,7 @@ public class GrassDAOImpl extends BaseDAOImpl implements GrassDAO {
 		commands.add(scriptHome+calculateDensity);
 		commands.add(layerName.replace(":", "_"));
 		commands.add(radius);
+		commands.add(radioInMeters);
 		commands.add(currentSessionId.toString());
 
 		logger.debug("Executing command: "+commands.toString());

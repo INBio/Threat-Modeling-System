@@ -43,6 +43,9 @@
     <bean id="layerDAO" class="org.inbio.modeling.core.dao.impl.LayerDAOImpl" parent="baseDAO" >
 	</bean>
 
+    <bean id="configDAO" class="org.inbio.modeling.core.dao.impl.ConfigDAOImpl" parent="baseDAO" >
+	</bean>
+
     <bean id="systemUserDAO" class="org.inbio.modeling.core.dao.impl.SystemUserDAOImpl" parent="baseDAO" >
 	</bean>
 

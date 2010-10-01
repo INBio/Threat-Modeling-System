@@ -19,6 +19,7 @@ package org.inbio.modeling.web.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.inbio.modeling.core.manager.ConfigManager;
 import org.inbio.modeling.web.form.ResolutionForm;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,7 +27,7 @@ import org.springframework.web.servlet.mvc.AbstractFormController;
 
 public class ResolutionController extends AbstractFormController {
 
-    //private ConfigManager configManager;
+    private ConfigManager configManager;
 
 	@Override
 	protected ModelAndView showForm(HttpServletRequest request
@@ -35,10 +36,14 @@ public class ResolutionController extends AbstractFormController {
 									throws Exception {
 
 		ModelAndView model = null;
+        ResolutionForm resForm = new ResolutionForm();
+        String res = configManager.retrieveResolution();
+
+        resForm.setResolution(res);
 
 		// Send the layer list to the JSP
 		model = new ModelAndView();
-        model.addObject("resolutionForm", new ResolutionForm());
+        model.addObject("resolutionForm", resForm);
 		model.setViewName("admin/resolution");
 
         return model;
@@ -52,6 +57,17 @@ public class ResolutionController extends AbstractFormController {
 												, BindException errors)
 												throws Exception {
 
-		return new ModelAndView("index");
+        ResolutionForm rForm = (ResolutionForm) command;
+        configManager.saveResolution(rForm.getResolution());
+
+		return new ModelAndView("admin/admin");
 	}
+
+    public ConfigManager getConfigManager() {
+        return configManager;
+    }
+
+    public void setConfigManager(ConfigManager configManager) {
+        this.configManager = configManager;
+    }
 }

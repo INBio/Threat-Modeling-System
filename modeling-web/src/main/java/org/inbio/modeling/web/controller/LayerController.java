@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.inbio.modeling.core.manager.ConfigManager;
 import org.inbio.modeling.core.manager.LayerManager;
 import org.inbio.modeling.web.form.ListLayerForm;
 import org.inbio.modeling.web.session.CurrentInstanceData;
@@ -38,6 +39,7 @@ import org.springframework.web.servlet.mvc.AbstractFormController;
 public class LayerController extends AbstractFormController {
 
     private LayerManager layerManager;
+    private ConfigManager configManager;
     private LimitController limitController;
 
     @Override
@@ -90,6 +92,10 @@ public class LayerController extends AbstractFormController {
         HttpSession session = null;
         Double resolution = null;
 
+        Double resInMeters = null;
+        Double resInDegrees = null;
+        Double meterDegrees = null;
+
         if(errors.hasErrors())
             return showForm(request, response, errors);
 
@@ -105,8 +111,11 @@ public class LayerController extends AbstractFormController {
         if(currentInstanceData != null){
 
             // retrieve the resolution.
-            resolution = layerListForm.getResolution();
-            currentInstanceData.setResolution(resolution);
+            meterDegrees = Double.parseDouble(configManager.retrieveResolution());
+            resInMeters = layerListForm.getResolution();
+            resInDegrees = resInMeters * meterDegrees;
+
+            currentInstanceData.setResolution(resInDegrees);
 
             layers = new ArrayList<Layer>();
             layers.addAll(layerListForm.getLayerList());
@@ -148,5 +157,13 @@ public class LayerController extends AbstractFormController {
 
     public void setLimitController(LimitController limitController) {
         this.limitController = limitController;
+    }
+
+    public ConfigManager getConfigManager() {
+        return configManager;
+    }
+
+    public void setConfigManager(ConfigManager configManager) {
+        this.configManager = configManager;
     }
 }

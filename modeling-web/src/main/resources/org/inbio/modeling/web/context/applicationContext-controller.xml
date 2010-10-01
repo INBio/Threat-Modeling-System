@@ -30,6 +30,7 @@
         <property name="commandClass" value="org.inbio.modeling.web.form.ListLayerForm" />
 
 		<property name="layerManager" ref="layerManager" />
+        <property name="configManager" ref="configManager" />
         <property name="limitController" ref="limitController" />
 
 		<property name="validator" ref="layerFormValidator" />
@@ -57,6 +58,7 @@
         <property name="commandClass" value="org.inbio.modeling.web.form.EditIntervalForm" />
 
         <property name="fileManagerImpl" ref="fileManager" />
+        <property name="configManager" ref="configManager" />
         <property name="grassManagerImpl" ref="grassManager" />
         <property name="showMapController" ref="showMapController" />
 
@@ -158,7 +160,7 @@
         <property name="commandClass" value="org.inbio.modeling.core.dto.LayerDTO" />
 	</bean>
     <bean id="resolutionController" class="org.inbio.modeling.web.controller.ResolutionController">
-        <!--property name="configManager" ref="configurationManager" /-->
+        <property name="configManager" ref="configManager" />
 
 		<property name="commandName" value="resolutionForm" />
         <property name="commandClass" value="org.inbio.modeling.web.form.ResolutionForm" />

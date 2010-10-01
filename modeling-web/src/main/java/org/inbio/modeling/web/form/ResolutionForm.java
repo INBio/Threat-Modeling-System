@@ -11,13 +11,13 @@ package org.inbio.modeling.web.form;
  */
 public class ResolutionForm {
 
-    private Long resolution;
+    private String resolution;
 
-    public Long getResolution() {
+    public String getResolution() {
         return resolution;
     }
 
-    public void setResolution(Long resolution) {
+    public void setResolution(String resolution) {
         this.resolution = resolution;
     }
 

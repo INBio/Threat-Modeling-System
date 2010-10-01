@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.inbio.modeling.core.dto.GrassLayerDTO;
 import org.inbio.modeling.core.layer.LayerType;
+import org.inbio.modeling.core.manager.ConfigManager;
 import org.inbio.modeling.core.manager.FileManager;
 import org.inbio.modeling.core.manager.GrassManager;
 import org.inbio.modeling.web.form.EditIntervalForm;
@@ -46,6 +47,7 @@ public class IntervalsController extends AbstractFormController {
 	private FileManager fileManagerImpl;
     // Show the final map and the information related  to it
     private ShowMapController showMapController;
+    private ConfigManager configManager;
 
 	@Override
 	protected ModelAndView processFormSubmission(HttpServletRequest request
@@ -57,6 +59,7 @@ public class IntervalsController extends AbstractFormController {
 		Long currentSessionId = null;
 		HttpSession session = null;
 		ModelAndView model = null;
+        Double resolution = null;
 
 		if(errors.hasErrors())
 			return showForm(request, response, errors);
@@ -81,6 +84,7 @@ public class IntervalsController extends AbstractFormController {
 		if(currentInstanceData != null){
 
 			currentSessionId = currentInstanceData.getUserSessionId();
+            resolution = Double.valueOf(currentInstanceData.getResolution());
 
 			try {
 
@@ -96,7 +100,7 @@ public class IntervalsController extends AbstractFormController {
 						this.createBuffers(layer, currentSessionId);
 					}else{
 						// create the buffers.
-						this.calculateDensity(layer, currentSessionId);
+						this.calculateDensity(layer, resolution ,currentSessionId);
 					}
 				}
 
@@ -287,9 +291,20 @@ public class IntervalsController extends AbstractFormController {
 		}
 	}
 
-    private void calculateDensity(GrassLayerDTO layer, Long currentSessionId) throws Exception{
+    private void calculateDensity(GrassLayerDTO layer, Double resolution, Long currentSessionId) throws Exception{
+
+        Double radioInMeters = Double.valueOf(layer.getCategories().get(0).getValue());
+        Double conversionRate = Double.parseDouble(configManager.retrieveResolution());
+
+        Double cellNumber = (radioInMeters * conversionRate )/ resolution;
+
+        if((cellNumber % 2) == 0)
+            cellNumber++;
+
+        layer.getCategories().get(0).setValue(cellNumber.toString());
+
 		try {
-			this.grassManagerImpl.calculateDensity(layer, currentSessionId);
+            this.grassManagerImpl.calculateDensity(layer, currentSessionId);
 		} catch (Exception ex) {
 			throw new Exception("errors.cantCreateImage", ex);
 		}
@@ -319,4 +334,13 @@ public class IntervalsController extends AbstractFormController {
     public void setShowMapController(ShowMapController showMapController) {
         this.showMapController = showMapController;
     }
+
+    public ConfigManager getConfigManager() {
+        return configManager;
+    }
+
+    public void setConfigManager(ConfigManager configManager) {
+        this.configManager = configManager;
+    }
+
 }

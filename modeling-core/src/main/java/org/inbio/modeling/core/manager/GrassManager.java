@@ -220,6 +220,6 @@ public interface GrassManager{
      * @param currentSessionId
      * @throws Exception
      */
-    public void calculateDensity(GrassLayerDTO layer, Long currentSessionId) throws Exception;
+    public void calculateDensity(GrassLayerDTO layer, String radioInMeters, Long currentSessionId) throws Exception;
 
 }
