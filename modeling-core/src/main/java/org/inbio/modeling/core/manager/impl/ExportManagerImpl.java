@@ -26,6 +26,7 @@ import com.lowagie.text.Image;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Table;
 import com.lowagie.text.pdf.PdfWriter;
+import com.lowagie.text.pdf.draw.LineSeparator;
 import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
@@ -84,10 +85,17 @@ public class ExportManagerImpl implements ExportManager {
             long currentSessionId) throws Exception{
 
         // Fonts Definition
-        Font titleFont = new Font(Font.TIMES_ROMAN, 18, Font.BOLD);
+        Font titleFont = new Font(Font.TIMES_ROMAN, 24, Font.BOLD);
         Font subtitleFont = new Font(Font.TIMES_ROMAN, 16, Font.BOLD);
         Font layerNameFont = new Font(Font.TIMES_ROMAN, 14, Font.BOLD);
         Font boldFont = new Font(Font.TIMES_ROMAN, 12 , Font.BOLD);
+
+        Font smallFont = new Font(Font.TIMES_ROMAN, 12 , Font.BOLD);
+        Font smallGreenFont = new Font(Font.TIMES_ROMAN, 12 , Font.BOLD, Color.GREEN);
+        Font smallDarkGreenFont = new Font(Font.TIMES_ROMAN, 12 , Font.BOLD, new Color(135,194,53));
+
+        LineSeparator sep = new LineSeparator();
+        sep.setOffset(-5F);
         
         // Add metadata
 		document.addTitle("Modelado de amenazas");
@@ -98,43 +106,42 @@ public class ExportManagerImpl implements ExportManager {
         // Modeling threats report (Main title)
         Paragraph mainTitle = new Paragraph();
 		this.addEmptyLine(mainTitle, 1);
-		mainTitle.add(new Paragraph("Title of the document", titleFont));
+		mainTitle.add(new Paragraph("Modelo de amenazas", titleFont));
         this.addEmptyLine(mainTitle, 1);
 
         // Generated escenary (Sub title)
         Paragraph escenarySubtitle = new Paragraph();
         this.addEmptyLine(escenarySubtitle, 1);
-        escenarySubtitle.add(new Paragraph("Subtitle", subtitleFont));
+        escenarySubtitle.add(new Chunk("Escenario Propuesto", subtitleFont));
+        escenarySubtitle.add(sep);
         this.addEmptyLine(escenarySubtitle, 1);
 
 
-        //Image mapImage = Image.getInstance(mapsHome+imageName+"_T_"+currentSessionId+".png");
-        Image mapImage = Image.getInstance("/home/asanabria/map.png");
+        Image mapImage = Image.getInstance(mapsHome+imageName+"_T_"+currentSessionId+".png");
         mapImage.scaleToFit(640, 480);
         mapImage.setAlignment(Image.ALIGN_LEFT);
 
         // scale
-        // Image scaleImage = Image.getInstance(mapsHome+"scale.jpg");
-        Image scaleImage = Image.getInstance("/home/asanabria/scale.jpg");
-        scaleImage.scaleToFit(40, 200);
-        scaleImage.setAlignment(Image.ALIGN_TOP);
+        Image scaleImage = Image.getInstance(mapsHome+"scale.jpg");
+        scaleImage.scaleToFit(30, 150);
+        scaleImage.setAlignment(Image.ALIGN_RIGHT);
 
         Paragraph images = new Paragraph();
         images.setAlignment(Paragraph.ALIGN_RIGHT);
 
         //upper scale leyend
-        images.add(new Chunk("High threat\n\n\n\n\n\n\n\n\n\n"));
+        images.add(new Chunk("High threat\n\n\n\n\n\n\n", new Font(Font.COURIER, 8, Font.BOLDITALIC)));
         // Map
         images.add(new Chunk(mapImage, 1F, 1F));
         // Scale
         images.add(new Chunk(scaleImage, 1F, 1F));
         // lower scale leyend
-        images.add(new Chunk("\nLow threat\n"));
+        images.add(new Chunk("\nLow threat\n",new Font(Font.COURIER, 8, Font.BOLDITALIC) ));
 
         // resolution information
         Paragraph resolutionSubtitle = new Paragraph();
         this.addEmptyLine(resolutionSubtitle, 1);
-        resolutionSubtitle.add(new Paragraph("Subtitle", subtitleFont));
+        resolutionSubtitle.add(new Paragraph("Infomación General", subtitleFont));
         this.addEmptyLine(resolutionSubtitle, 1);
 
         // resolution information
@@ -148,7 +155,7 @@ public class ExportManagerImpl implements ExportManager {
 
         document.add(mainTitle);
         document.add(escenarySubtitle);
-        this.addNewLine(document, 16);
+        this.addNewLine(document, 20);
         document.add(images);
         document.add(resolutionSubtitle);
         document.add(new Paragraph("Resolution: " + resolution + " meters"));
@@ -227,6 +234,7 @@ public class ExportManagerImpl implements ExportManager {
             table.addCell(grassLayerDTO.getType().toString());
 
             document.add(layerName);
+            document.add(sep);
             document.add(table);
 
                 table = new Table(2);
@@ -272,6 +280,18 @@ public class ExportManagerImpl implements ExportManager {
             }
                 document.add(table);
         }
+
+        Paragraph footer = new Paragraph();
+        footer.add(sep);
+        footer.setAlignment(Paragraph.ALIGN_CENTER);
+        this.addEmptyLine(footer, 1);
+        footer.add(new Paragraph("El software utilizado para generar este reporte fue desarrollado por: ", smallFont));
+        footer.add(new Paragraph(" El Instituto Nacional de Biodiversidad(INBio), Costa Rica", smallGreenFont));
+        footer.add(new Paragraph(" y finaciado por la Red Interamericana de Información para la Biodiversidad (IABIN) ", smallDarkGreenFont));
+        this.addEmptyLine(footer, 1);
+
+        document.add(footer);
+
         return document;
     }
 
