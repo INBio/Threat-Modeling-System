@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.inbio.modeling.core.dto.CategoryDTO;
 import org.inbio.modeling.core.dto.GrassLayerDTO;
 import org.inbio.modeling.core.layer.LayerType;
 import org.inbio.modeling.core.manager.ConfigManager;
@@ -88,6 +89,20 @@ public class IntervalsController extends AbstractFormController {
 
 			try {
 
+                int maxIntervalQuantity = 0;
+				// Reclassification
+                for(GrassLayerDTO layer : selectedLayers){
+                    if(!layer.getType().equals(LayerType.POINT)){
+
+                        int intervalQuantity = this.countCategories(layer.getCategories());
+
+                        if(intervalQuantity > maxIntervalQuantity)
+                            maxIntervalQuantity = intervalQuantity;
+
+
+                    }
+                }
+
 				// Reclassification
 				for(GrassLayerDTO layer : selectedLayers){
 
@@ -100,7 +115,7 @@ public class IntervalsController extends AbstractFormController {
 						this.createBuffers(layer, currentSessionId);
 					}else{
 						// create the buffers.
-						this.calculateDensity(layer, resolution ,currentSessionId);
+						this.calculateDensity(layer, resolution , String.valueOf(maxIntervalQuantity), currentSessionId);
 					}
 				}
 
@@ -132,6 +147,17 @@ public class IntervalsController extends AbstractFormController {
         return showMapController.showForm(request, response, errors);
 	}
 
+    private int countCategories(List<CategoryDTO> cats){
+
+        int result = 0;
+
+        for(CategoryDTO cat : cats)
+            if(cat != null)
+                result++;
+
+        return result;
+
+    }
 
     private void applyMainLayer(String mainLayerName, String resultLayerName, Long currentSessionId) throws Exception{
         try{
@@ -291,7 +317,7 @@ public class IntervalsController extends AbstractFormController {
 		}
 	}
 
-    private void calculateDensity(GrassLayerDTO layer, Double resolution, Long currentSessionId) throws Exception{
+    private void calculateDensity(GrassLayerDTO layer, Double resolution, String maxIntervalQuantity, Long currentSessionId) throws Exception{
 
         Double radioInMeters = Double.valueOf(layer.getCategories().get(0).getValue());
         Double conversionRate = Double.parseDouble(configManager.retrieveResolution());
@@ -304,7 +330,7 @@ public class IntervalsController extends AbstractFormController {
         layer.getCategories().get(0).setValue(cellNumber.toString());
 
 		try {
-            this.grassManagerImpl.calculateDensity(layer, radioInMeters.toString(), currentSessionId);
+            this.grassManagerImpl.calculateDensity(layer, radioInMeters.toString(), maxIntervalQuantity, currentSessionId);
 		} catch (Exception ex) {
 			throw new Exception("errors.cantCreateImage", ex);
 		}
