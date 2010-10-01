@@ -18,6 +18,7 @@
 					<!--li><a href="listUsers.html">Usuarios</a></li-->
 					<li><a href="listLayers.html">Capas</a></li>
 					<li><a href="listUsers.html">Usuarios</a></li>
+					<li><a href="resolution.html">Resolución</a></li>
 				</ol>
 			</div>
 		</div>

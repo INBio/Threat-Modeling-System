@@ -157,4 +157,10 @@
 		<property name="commandName" value="layerForm" />
         <property name="commandClass" value="org.inbio.modeling.core.dto.LayerDTO" />
 	</bean>
+    <bean id="resolutionController" class="org.inbio.modeling.web.controller.ResolutionController">
+        <!--property name="configManager" ref="configurationManager" /-->
+
+		<property name="commandName" value="resolutionForm" />
+        <property name="commandClass" value="org.inbio.modeling.web.form.ResolutionForm" />
+	</bean>
 </beans>

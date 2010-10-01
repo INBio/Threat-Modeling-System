@@ -37,6 +37,8 @@
 
                 <prop key="admin/administration.html">administrationController</prop>
 
+                <prop key="admin/resolution.html">resolutionController</prop>
+
                 <prop key="admin/listUsers.html">listUserController</prop>
                 <prop key="admin/newUser.html">newUserController</prop>
                 <prop key="admin/editUser.html">editUserController</prop>
