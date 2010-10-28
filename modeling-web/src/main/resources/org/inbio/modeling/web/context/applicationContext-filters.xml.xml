@@ -10,7 +10,7 @@
 
     <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>
 
-     <bean id="taxonFilters" class="org.inbio.modeling.web.filter.FilterMapWrapper">
+     <bean id="taxonFilters" class="org.inbio.modeling.web.common.filter.FilterMapWrapper">
         <property name="filters">
           <list>
             <!--ref bean="kingdomFilter" />
@@ -82,7 +82,7 @@
       </bean>
 
     <!-- This is inherited by all the major rank filter definition -->
-    <bean id="baseFilter" abstract="true" class="org.inbio.modeling.web.filter.FilterDTO">
+    <bean id="baseFilter" abstract="true" class="org.inbio.modeling.web.common.filter.FilterDTO">
         <property name="wildcardFriendly" value="true"/>
     </bean>
 

@@ -37,27 +37,27 @@
     <!--........................ Autocomplete suppot ........................-->
     <!--.....................................................................-->
     <!-- Taxonomy search support  -->
-    <bean id="taxonomyAutoCompleteController" class="org.inbio.modeling.web.controller.ajax.TaxonomyAutoCompleteController">
+    <bean id="taxonomyAutoCompleteController" class="org.inbio.modeling.web.common.controller.ajax.TaxonomyAutoCompleteController">
       <property name="taxonomyManager" ref="taxonomyManager"/>
     </bean>
 
     <!--.....................................................................-->
     <!--.......................... Query suppot ..........................-->
     <!--.....................................................................-->
-    <bean id="queryController" class="org.inbio.modeling.web.controller.ajax.QueryController">
+    <bean id="queryController" class="org.inbio.modeling.web.common.controller.ajax.QueryController">
       <property name="queryManager" ref="queryManager"/>
     </bean>
     
     <!--.....................................................................-->
     <!--..................... Specimens map points ..........................-->
     <!--.....................................................................-->
-    <bean id="pointsController" class="org.inbio.modeling.web.controller.ajax.PointsController">
+    <bean id="pointsController" class="org.inbio.modeling.web.common.controller.ajax.PointsController">
       <property name="pointsManager" ref="pointsManager"/>
     </bean>
     <!--.....................................................................-->
     <!--.......................... YUI Tree suppot ..........................-->
     <!--.....................................................................-->
-    <bean id="indicatorsTreeController" class="org.inbio.modeling.web.controller.ajax.IndicatorsTreeController">
+    <bean id="indicatorsTreeController" class="org.inbio.modeling.web.common.controller.ajax.IndicatorsTreeController">
       <property name="indicatorsManager" ref="indicatorsManager"/>
     </bean>
 </beans>

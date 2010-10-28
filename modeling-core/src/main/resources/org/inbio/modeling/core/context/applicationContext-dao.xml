@@ -50,17 +50,17 @@
 	</bean>
 
     <!-- mata's -->
-     <bean id="specimenDAO" class="org.inbio.modeling.core.dao.impl.SpecimenDAOImpl">
+     <bean id="specimenDAO" class="org.inbio.modeling.core.common.dao.impl.SpecimenDAOImpl">
         <property name="dataSource" ref="postgisDataSource" />
     </bean>
-     <bean id="taxonInfoIndexDAO" class="org.inbio.modeling.core.dao.impl.TaxonInfoIndexDAOImpl">
+     <bean id="taxonInfoIndexDAO" class="org.inbio.modeling.core.common.dao.impl.TaxonInfoIndexDAOImpl">
         <property name="dataSource" ref="postgisDataSource" />
     </bean>
-     <bean id="taxonIndexDAO" class="org.inbio.modeling.core.dao.impl.TaxonIndexDAOImpl">
+     <bean id="taxonIndexDAO" class="org.inbio.modeling.core.common.dao.impl.TaxonIndexDAOImpl">
         <property name="dataSource" ref="postgisDataSource" />
     </bean>
 
-     <bean id="indicatorDAO" class="org.inbio.modeling.core.dao.impl.IndicatorDAOImpl">
+     <bean id="indicatorDAO" class="org.inbio.modeling.core.common.dao.impl.IndicatorDAOImpl">
         <property name="dataSource" ref="postgisDataSource" />
     </bean>
 

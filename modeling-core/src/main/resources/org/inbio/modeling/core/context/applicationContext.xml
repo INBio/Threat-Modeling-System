@@ -39,8 +39,4 @@
 		<property name="username" value="model"/>
 		<property name="password" value="m0d3l"/>
 	</bean>
-
-
-
-
 </beans>

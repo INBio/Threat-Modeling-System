@@ -25,7 +25,7 @@ import javax.servlet.http.HttpSession;
 import org.inbio.modeling.core.manager.FileManager;
 import org.inbio.modeling.core.manager.GrassManager;
 import org.inbio.modeling.core.manager.LayerManager;
-import org.inbio.modeling.web.filter.FilterMapWrapper;
+import org.inbio.modeling.web.common.filter.FilterMapWrapper;
 import org.inbio.modeling.web.form.ExportData;
 import org.inbio.modeling.web.session.CurrentInstanceData;
 import org.inbio.modeling.web.session.SessionUtils;
