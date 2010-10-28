@@ -24,7 +24,6 @@ import java.util.List;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.inbio.modeling.core.common.manager.TaxonomyManager;
 import org.inbio.modeling.core.common.model.AutocompleteNode;
 import org.inbio.modeling.core.common.model.TaxonomicalRange;

@@ -1,4 +1,4 @@
-/* Modeling - Application to model threats.
+/* Modeling - Application to model threats
  *
  * Copyright (C) 2010  INBio (Instituto Nacional de Biodiversidad)
  *
@@ -22,7 +22,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import org.inbio.modeling.core.common.dao.TaxonInfoIndexDAO;
+import org.inbio.modeling.core.common.dao.sys.TaxonInfoIndexDAO;
 import org.inbio.modeling.core.common.model.TaxonInfoIndex;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
@@ -84,10 +84,7 @@ public class TaxonInfoIndexDAOImpl extends SimpleJdbcDaoSupport implements Taxon
     }
 
     /**
-     * Execute any query that returns a list of TaxonInfoIndex model object
-     * just with the scientific name
-     * @param q
-     * @return
+     * Execute any query that returns a list of scientific name ids
      */
     @Override
     public List<String> getScientificNames(String q) {
@@ -96,6 +93,22 @@ public class TaxonInfoIndexDAOImpl extends SimpleJdbcDaoSupport implements Taxon
             String query = q;
             tInfo = getSimpleJdbcTemplate().query(query,
                     new tSNMapper());
+        } catch (Exception e) {
+            return tInfo;
+        }
+        return tInfo;
+    }
+
+    /**
+     * Execute any query that returns a list of scientific name NAMES
+     */
+    @Override
+    public List<String> getScientificNamesAsText(String q) {
+        List<String> tInfo = new ArrayList<String>();
+        try {
+            String query = q;
+            tInfo = getSimpleJdbcTemplate().query(query,
+                    new tSNAsTextMapper());
         } catch (Exception e) {
             return tInfo;
         }
@@ -129,12 +142,13 @@ public class TaxonInfoIndexDAOImpl extends SimpleJdbcDaoSupport implements Taxon
         try {
             String sqlUpdate = "Insert into ait.taxon_info_index (globaluniqueidentifier, kingdom_id, phylum_id, " +
                     "class_id, order_id, family_id, genus_id, specific_epithet_id, scientific_name_id, indicator_id, " +
-                    "polygom_id, layer_table) select dc.globaluniqueidentifier,k.taxon_id as kingdom_id,p.taxon_id " +
+                    "polygom_id, layer_table,country) select dc.globaluniqueidentifier,k.taxon_id as kingdom_id,p.taxon_id " +
                     "as phylum_id,c.taxon_id as class_id,o.taxon_id as order_id,f.taxon_id as family_id,g.taxon_id " +
                     "as genus_id,s.taxon_id as specific_epithet_id,sn.taxon_id as scientific_name_id,ti.indicator_id " +
                     "as indicator_id,(Select gid from "+layer+" where " +
                     "ST_Contains(the_geom, 'POINT(' || dc.decimallongitude || ' ' ||  dc.decimallatitude || ')')) " +
-                    "as polygom_id,'"+layer+"' as layer_table from ait.darwin_core dc,ait.taxon_index k,ait.taxon_index p," +
+                    "as polygom_id,'"+layer+"' as layer_table,(Select iso_code from ait.country_iso_3166 where country_id = (Select gid from meso_limite_paies where ST_Contains(the_geom, 'POINT(' || dc.decimallongitude || ' ' ||  dc.decimallatitude || ')'))) as country " +
+                    "from ait.darwin_core dc,ait.taxon_index k,ait.taxon_index p," +
                     "ait.taxon_index c,ait.taxon_index o,ait.taxon_index f,ait.taxon_index g,ait.taxon_index s,ait.taxon_index sn," +
                     "ait.taxon_indicator ti where k.taxon_name = dc.kingdom and p.taxon_name = dc.phylum and c.taxon_name = " +
                     "dc.class and o.taxon_name = dc.orders and f.taxon_name = dc.family and g.taxon_name = dc.genus and s.taxon_name = " +
@@ -193,6 +207,15 @@ public class TaxonInfoIndexDAOImpl extends SimpleJdbcDaoSupport implements Taxon
         }
     }
 
+    private static class tSNAsTextMapper implements ParameterizedRowMapper<String> {
+
+        @Override
+        public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+            String result = rs.getString("scientific_name");
+            return result;
+        }
+    }
+
     private static class tSNMapper implements ParameterizedRowMapper<String> {
 
         @Override
@@ -204,5 +227,4 @@ public class TaxonInfoIndexDAOImpl extends SimpleJdbcDaoSupport implements Taxon
                 return result.toString();
         }
     }
-
 }

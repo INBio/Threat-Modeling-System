@@ -1,4 +1,4 @@
-/* Modeling - Application to model threats.
+/* Modeling - Application to model threats
  *
  * Copyright (C) 2010  INBio (Instituto Nacional de Biodiversidad)
  *
@@ -24,6 +24,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.inbio.modeling.core.common.manager.QueryManager;
+import org.inbio.modeling.web.common.controller.utils.Node;
 import org.inbio.modeling.web.common.controller.utils.TaxonInfoIndexColums;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
@@ -37,51 +38,82 @@ public class QueryController implements Controller{
     private QueryManager queryManager;
 
     @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ModelAndView handleRequest(HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 		String paramLayer = request.getParameter("layers");
         String paramTaxon = request.getParameter("taxons");
         String paramIndi = request.getParameter("indi");
-		String errorMsj = "Error con los parámetros: "+paramLayer+" "+paramTaxon+" "+paramIndi;
+        String limitPolygons = request.getParameter("limit");
+		String errorMsj = "Error con los parámetros: "+paramLayer+" "+paramTaxon+" "+paramIndi+" "+limitPolygons;
 
 		try {
-
             //Arrays that contains the parameters data
             String[] layerArray = paramLayer.split("\\|");
             String[] taxonArray = paramTaxon.split("\\|");
             String[] indiArray = paramIndi.split("\\|");
+            String[] limitArray = limitPolygons.split("\\|");
 
             /*If there is just one criteria category or especifically these categories
             (geographical-taxonomical or taxonomical-indicator). It means type 0 on xml*/
             //------------------------------------------------------------------
             if(isOneGeoTaxOrIndiTax(layerArray,taxonArray,indiArray)){
+                //Total of matches in the limit polygons
+                Long totalLimitMatches = queryManager.countByCriteria
+                        (limitArray, taxonArray, indiArray,TaxonInfoIndexColums.SPECIES.getName());
                 //Total of matches
                 Long totalMatches = queryManager.countByCriteria
                         (layerArray, taxonArray, indiArray,TaxonInfoIndexColums.SPECIES.getName());
-
-                return writeReponse0(request,response,totalMatches);
+                //Percentage that represents the total of retrived results
+                Long totalPercentage = 0L;
+                if(totalLimitMatches>0L){
+                    totalPercentage = (totalMatches*100)/totalLimitMatches;
+                }
+                return writeReponse0(request,response,totalMatches,totalPercentage);
             }
             //If there are three criteria categories. It means type 1 on xml
             else{
+                //Total of matches in the limit polygons
+                Long totalLimitMatches = queryManager.countByCriteria
+                        (limitArray, taxonArray, indiArray,TaxonInfoIndexColums.SPECIES.getName());
                 //Total of matches
                 Long totalMatches = queryManager.countByCriteria
                         (layerArray, taxonArray, indiArray,TaxonInfoIndexColums.SPECIES.getName());
+                //Percentage that represents the total of retrived results
+                Long totalPercentage = 0L;
+                if(totalLimitMatches>0L){
+                    totalPercentage = (totalMatches*100)/totalLimitMatches;
+                }
                 //Total matches by polygon
-                List<Long> matchesByPolygon = new ArrayList<Long>();
+                List<Node> matchesByPolygon = new ArrayList<Node>();
                 for(int i=0;i<layerArray.length;i++){
                     String[] thePolygon = {layerArray[i]};
-                    Long aux = queryManager.countByCriteria
+                    Long countAbs = queryManager.countByCriteria
                         (thePolygon, taxonArray, indiArray,TaxonInfoIndexColums.SPECIES.getName());
+                    Long percentage = 0L;
+                    if(totalLimitMatches>0){
+                        percentage = (countAbs*100)/totalLimitMatches;
+                    }
+                    Node aux = new Node(); //Absulute count,percentage
+                    aux.setValue1(countAbs);
+                    aux.setValue2(percentage);
                     matchesByPolygon.add(aux);
                 }
                 //Total matches by indicator
-                List<Long> matchesByIndicator = new ArrayList<Long>();
+                List<Node> matchesByIndicator = new ArrayList<Node>();
                 for(int i=0;i<indiArray.length;i++){
                     String[] theIndicator = {indiArray[i]};
-                    Long aux = queryManager.countByCriteria
+                    Long countAbs = queryManager.countByCriteria
                         (layerArray, taxonArray, theIndicator,TaxonInfoIndexColums.SPECIES.getName());
+                    Long percentage = 0L;
+                    if(totalLimitMatches>0){
+                        percentage = (countAbs*100)/totalLimitMatches;
+                    }
+                    Node aux = new Node(); //Absulute count,percentage
+                    aux.setValue1(countAbs);
+                    aux.setValue2(percentage);
                     matchesByIndicator.add(aux);
                 }
-                return writeReponse1(request,response,matchesByPolygon,matchesByIndicator,totalMatches);
+                return writeReponse1(request,response,matchesByPolygon,matchesByIndicator,totalMatches,totalPercentage);
             }
 
 		} catch (IllegalArgumentException iae) {
@@ -137,7 +169,7 @@ public class QueryController implements Controller{
      * @throws java.lang.Exception
      */
 	private ModelAndView writeReponse0(HttpServletRequest request,
-			HttpServletResponse response, Long totalMatch) throws Exception {
+			HttpServletResponse response, Long totalMatch,Long totalPercentage) throws Exception {
 
 		response.setCharacterEncoding("ISO-8859-1");
 		response.setContentType("text/xml");
@@ -146,7 +178,8 @@ public class QueryController implements Controller{
         StringBuilder result = new StringBuilder();
         result.append("<?xml version='1.0' encoding='ISO-8859-1'?><response>");
         result.append("<type>0</type>");
-        result.append("<total>"+totalMatch+"</total></response>");
+        result.append("<total>"+totalMatch+"</total>");
+        result.append("<totalp>"+totalPercentage+"</totalp></response>");
 
         out.println(result.toString());
 		out.flush();
@@ -166,8 +199,8 @@ public class QueryController implements Controller{
      * @throws java.lang.Exception
      */
 	private ModelAndView writeReponse1(HttpServletRequest request,
-			HttpServletResponse response, List<Long> matchesByPolygon,
-            List<Long> matchesByIndicator,Long totalMatches) throws Exception {
+			HttpServletResponse response, List<Node> matchesByPolygon,
+            List<Node> matchesByIndicator,Long totalMatches,Long totalPercentage) throws Exception {
 
 		response.setCharacterEncoding("ISO-8859-1");
 		response.setContentType("text/xml");
@@ -177,11 +210,18 @@ public class QueryController implements Controller{
         result.append("<?xml version='1.0' encoding='ISO-8859-1'?><response>");
         result.append("<type>1</type>");
         result.append("<total>"+totalMatches+"</total>");
-        for(Long mp : matchesByPolygon){
-            result.append("<bypolygon>"+mp+"</bypolygon>");
+        result.append("<totalp>"+totalPercentage+"</totalp>");
+        for(Node mp : matchesByPolygon){
+            result.append("<bypolygon>");
+            result.append("<abs>"+mp.getValue1()+"</abs>");
+            result.append("<per>"+mp.getValue2()+"</per>");
+            result.append("</bypolygon>");
         }
-        for(Long mi : matchesByIndicator){
-            result.append("<byindicator>"+mi+"</byindicator>");
+        for(Node mi : matchesByIndicator){
+            result.append("<byindicator>");
+            result.append("<abs>"+mi.getValue1()+"</abs>");
+            result.append("<per>"+mi.getValue2()+"</per>");
+            result.append("</byindicator>");
         }
         result.append("</response>");
 

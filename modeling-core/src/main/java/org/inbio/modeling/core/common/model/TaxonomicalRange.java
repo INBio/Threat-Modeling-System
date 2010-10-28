@@ -1,4 +1,4 @@
-/* Modeling - Application to model threats.
+/* Modeling - Application to model threats
  *
  * Copyright (C) 2010  INBio (Instituto Nacional de Biodiversidad)
  *
@@ -25,29 +25,31 @@ package org.inbio.modeling.core.common.model;
 
 public enum TaxonomicalRange {
 
-	ROOT(0, "Raíz","N/A"),
-	KINGDOM(1,"Reino","kingdom_id"),
-	PHYLUM(2, "Filo","phylum_id"),
-	CLASS(3, "Clase","class_id"),
-	ORDER(4,"Orden","order_id"),
-	FAMILY(5,"Familia","family_id"),
-	GENUS(6,"Género","genus_id"),
-	SPECIFICEPITHET(7,"Especie","specific_epithet_id"),
-    SCIENTIFICNAME(8,"NombreC","scientific_name_id");
+	ROOT(0, "Raíz","N/A","N/A"),
+	KINGDOM(1,"Reino","kingdom_id","kingdom"),
+	PHYLUM(2, "Filo","phylum_id","phylum"),
+	CLASS(3, "Clase","class_id","class"),
+	ORDER(4,"Orden","order_id","orders"),
+	FAMILY(5,"Familia","family_id","family"),
+	GENUS(6,"Género","genus_id","genus"),
+	SPECIFICEPITHET(7,"Especie","specific_epithet_id","specificepithet"),
+    SCIENTIFICNAME(8,"NombreC","scientific_name_id","scientificname");
 
 
 	private int id;
 	private String name;
     private String fieldName; //In taxon_info_index table
+    private String dwcFieldName; //In darwin_core table
 
 	/**
 	 * @param id
 	 * @param name
 	 */
-	private TaxonomicalRange(int id, String name,String fieldName) {
+	private TaxonomicalRange(int id, String name,String fieldName,String dwcFieldName) {
 		this.id = id;
 		this.name = name;
         this.fieldName = fieldName;
+        this.dwcFieldName = dwcFieldName;
 	}
 
 	/**
@@ -90,6 +92,20 @@ public enum TaxonomicalRange {
      */
     public void setFieldName(String fieldName) {
         this.fieldName = fieldName;
+    }
+
+    /**
+     * @return the dwcFieldName
+     */
+    public String getDwcFieldName() {
+        return dwcFieldName;
+    }
+
+    /**
+     * @param dwcFieldName the dwcFieldName to set
+     */
+    public void setDwcFieldName(String dwcFieldName) {
+        this.dwcFieldName = dwcFieldName;
     }
 
 }

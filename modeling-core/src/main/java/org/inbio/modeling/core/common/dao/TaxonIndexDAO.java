@@ -1,4 +1,4 @@
-/* Modeling - Application to model threats.
+/* Modeling - Application to model threats
  *
  * Copyright (C) 2010  INBio (Instituto Nacional de Biodiversidad)
  *
@@ -16,8 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.inbio.modeling.core.common.dao;
+package org.inbio.modeling.core.common.dao.sys;
 
+import java.util.List;
+import org.inbio.modeling.core.common.model.AutocompleteNode;
 import org.inbio.modeling.core.common.model.TaxonIndex;
 
 /**
@@ -26,12 +28,18 @@ import org.inbio.modeling.core.common.model.TaxonIndex;
  */
 public interface TaxonIndexDAO {
 
-    public TaxonIndex getTaxonIndexByName(String name);
+    public List<Long> getCountriesByTaxonIndi(String sql);
+
+    public TaxonIndex getTaxonIndexByName(String name,String range);
 
     public TaxonIndex getTaxonIndexById(String id);
 
     public boolean taxonIndexByRange(int rangeId,String rangeName) throws Exception;
 
     public boolean deleteAllTaxonIndex() throws Exception;
+
+    public List<String> getFormatedKingdoms();
+
+    public List<AutocompleteNode> getElementsByRange(String partialName, int range);
 
 }

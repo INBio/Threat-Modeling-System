@@ -1,4 +1,4 @@
-/* Modeling - Application to model threats.
+/* Modeling - Application to model threats
  *
  * Copyright (C) 2010  INBio (Instituto Nacional de Biodiversidad)
  *
@@ -20,7 +20,10 @@ package org.inbio.modeling.core.common.dao.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import org.inbio.modeling.core.common.dao.TaxonIndexDAO;
+import java.util.ArrayList;
+import java.util.List;
+import org.inbio.modeling.core.common.dao.sys.TaxonIndexDAO;
+import org.inbio.modeling.core.common.model.AutocompleteNode;
 import org.inbio.modeling.core.common.model.TaxonIndex;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
@@ -33,13 +36,31 @@ public class TaxonIndexDAOImpl extends SimpleJdbcDaoSupport implements TaxonInde
 
 
     /**
-     * Get id,range and name based on a specific taxon name
+     * Gets the list of countries linked with a specific taxon-indicator
+     * @param sql
+     * @return
      */
     @Override
-    public TaxonIndex getTaxonIndexByName(String name) {
+    public List<Long> getCountriesByTaxonIndi(String sql){
+        List<Long> result = new ArrayList<Long>();
+        try {
+            result = getSimpleJdbcTemplate().query(sql,new countriesMapper());
+        } catch (Exception e) {
+            //System.out.println(e);
+            return result;
+        }
+        return result;
+    }
+
+    /**
+     * Get id,range and name based on a specific taxon name and range
+     */
+    @Override
+    public TaxonIndex getTaxonIndexByName(String name,String range) {
         TaxonIndex tIndex = new TaxonIndex();
         try {
-            String query = "Select * from ait.taxon_index where taxon_name = '"+ name +"';";
+            String query = "Select * from ait.taxon_index where taxon_name = '"+
+                    name +"' and taxon_range = "+range+";";
             tIndex = getSimpleJdbcTemplate().queryForObject(query,new tIndexMapper());
         } catch (Exception e) {
             return tIndex;
@@ -85,6 +106,10 @@ public class TaxonIndexDAOImpl extends SimpleJdbcDaoSupport implements TaxonInde
         return result;
     }
 
+    /**
+     * Delete all taxon_index registers
+     * @throws java.lang.Exception
+     */
     @Override
     public boolean deleteAllTaxonIndex()  throws Exception{
         try {
@@ -96,6 +121,62 @@ public class TaxonIndexDAOImpl extends SimpleJdbcDaoSupport implements TaxonInde
         return true;
     }
 
+    /**
+     * Returns a list of kingdom with the format: kingdom~1 where kingdom
+     * represents the name and ~1 the range
+     */
+    @Override
+    public List<String> getFormatedKingdoms(){
+        List<String> result = new ArrayList<String>();
+        try {
+            String query = "Select taxon_name from ait.taxon_index where taxon_range = 1";
+            result = getSimpleJdbcTemplate().query(query,new kingdomsMapper());
+        } catch (Exception e) {
+            return result;
+        }
+        return result;
+    }
+
+    /**
+     * Return all disctint elements for classes,phylums,kingdoms ...
+     * @param partialName
+     * @param range
+     * @return
+     */
+    @Override
+    public List<AutocompleteNode> getElementsByRange(String partialName, int range) {
+        List<AutocompleteNode> nodes = new ArrayList<AutocompleteNode>();
+        try {
+            String query = "Select DISTINCT taxon_name from ait.taxon_index " +
+                    "where taxon_name like '%" + partialName + "%' and taxon_range = "+range+" limit 3;";
+
+            nodes = getSimpleJdbcTemplate().query(query,
+                    new AutocompleteMapper(range));
+        } catch (Exception e) {
+            return nodes;
+        }
+        return nodes;
+    }
+
+    private static class AutocompleteMapper implements ParameterizedRowMapper<AutocompleteNode> {
+
+        //To determine witch range is been used
+        private int range;
+
+        //Constructor
+        public AutocompleteMapper(int r){
+            this.range = r;
+        }
+
+        public AutocompleteNode mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            AutocompleteNode acn = new AutocompleteNode();
+            acn.setItemName(rs.getString("taxon_name"));
+            acn.setItemId(rs.getString("taxon_name"));
+            return acn;
+        }
+    }
+
     private static class tIndexMapper implements ParameterizedRowMapper<TaxonIndex> {
 
         @Override
@@ -105,6 +186,23 @@ public class TaxonIndexDAOImpl extends SimpleJdbcDaoSupport implements TaxonInde
             ti.setTaxon_name(rs.getString("taxon_name"));
             ti.setTaxon_range(rs.getLong("taxon_range"));
             return ti;
+        }
+    }
+
+    private static class countriesMapper implements ParameterizedRowMapper<Long> {
+        @Override
+        public Long mapRow(ResultSet rs, int rowNum) throws SQLException {
+            return rs.getLong("country_id");
+        }
+    }
+
+    private static class kingdomsMapper implements ParameterizedRowMapper<String> {
+
+        @Override
+        public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+            String r = new String();
+            r = rs.getString("taxon_name")+"~1";
+            return r;
         }
     }
 

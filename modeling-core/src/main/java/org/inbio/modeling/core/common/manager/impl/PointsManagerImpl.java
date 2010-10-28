@@ -1,4 +1,4 @@
-/* Modeling - Application to model threats.
+/* Modeling - Application to model threats
  *
  * Copyright (C) 2010  INBio (Instituto Nacional de Biodiversidad)
  *
@@ -18,13 +18,13 @@
 package org.inbio.modeling.core.common.manager.impl;
 
 import java.util.List;
-import org.inbio.modeling.core.common.dao.SpecimenDAO;
-import org.inbio.modeling.core.common.dao.TaxonIndexDAO;
-import org.inbio.modeling.core.common.dao.TaxonInfoIndexDAO;
+import org.inbio.modeling.core.common.dao.sys.SpecimenDAO;
+import org.inbio.modeling.core.common.dao.sys.TaxonIndexDAO;
+import org.inbio.modeling.core.common.dao.sys.TaxonInfoIndexDAO;
 import org.inbio.modeling.core.common.manager.PointsManager;
+import org.inbio.modeling.core.common.manager.QueryManager;
 import org.inbio.modeling.core.common.model.Specimen;
-import org.inbio.modeling.core.common.model.TaxonIndex;
-import org.inbio.modeling.core.common.model.TaxonomicalRange;
+import org.inbio.modeling.core.common.util.TaxonIndicatorRegionality;
 
 /**
  *
@@ -36,114 +36,29 @@ public class PointsManagerImpl implements PointsManager{
     private TaxonInfoIndexDAO taxonInfoIndexDAO;
     private TaxonIndexDAO taxonIndexDAO;
     private SpecimenDAO specimenDAO;
+    private QueryManager queryManager;
 
     @Override
     public List<Specimen> specimensByCriteria(String[] layerList, String[] taxonList, String[] indicList) {
-        //Build the query string base on parameters
-        StringBuilder query = new StringBuilder();
-        query.append("Select distinct globaluniqueidentifier from ait.taxon_info_index where ");
-
-        //If there is geografical criteria
-        if(layerList.length>0 && !layerList[0].equals("")){
-            query.append("(");
-            for(int i = 0;i<layerList.length;i++){
-                String[] aux = layerList[i].split("~");
-                String layer = aux[0];
-                String polygon = aux[1];
-                if(i==layerList.length-1){ //last element
-                    query.append("(layer_table = '"+layer+"' and polygom_id = "+polygon+")");
-                }
-                else{
-                    query.append("(layer_table = '"+layer+"' and polygom_id = "+polygon+") or ");
-                }
-            }
-            query.append(")");
+        String colum = "globaluniqueidentifier";
+        //If taxonList is empty the system is going to include all the kingdoms by default
+        if(taxonList[0].equals("")){
+            taxonList = this.taxonIndexDAO.getFormatedKingdoms().toArray(taxonList);
         }
-
-        //If there is taxonomy criteria
-        if(taxonList.length>0 && !taxonList[0].equals("")){
-            if(layerList.length>0 && !layerList[0].equals("")){
-                query.append(" and (");
-            }
-            else{
-                query.append("(");
-            }
-            for(int i = 0;i<taxonList.length;i++){
-                //Get the name and taxonomical level of the specified taxon
-                TaxonIndex ti = getTaxonIndexDAO().getTaxonIndexByName(taxonList[i]);
-                if(ti.getTaxon_id()!=null){
-                    //To search in the specified taxonomyField
-                    String levelColum;
-                    switch (ti.getTaxon_range().intValue()) {
-                        case 1:
-                            levelColum = TaxonomicalRange.KINGDOM.getFieldName();
-                            break;
-                        case 2:
-                            levelColum = TaxonomicalRange.PHYLUM.getFieldName();
-                            break;
-                        case 3:
-                            levelColum = TaxonomicalRange.CLASS.getFieldName();
-                            break;
-                        case 4:
-                            levelColum = TaxonomicalRange.ORDER.getFieldName();
-                            break;
-                        case 5:
-                            levelColum = TaxonomicalRange.FAMILY.getFieldName();
-                            break;
-                        case 6:
-                            levelColum = TaxonomicalRange.GENUS.getFieldName();
-                            break;
-                        case 7:
-                            levelColum = TaxonomicalRange.SPECIFICEPITHET.getFieldName();
-                            break;
-                        default:
-                            levelColum = TaxonomicalRange.SCIENTIFICNAME.getFieldName();
-                            break;
-                    }
-                    if(i==taxonList.length-1){ //last element
-                        query.append("("+levelColum+" = "+ti.getTaxon_id()+")");
-                    }
-                    else{
-                        query.append("("+levelColum+" = "+ti.getTaxon_id()+") or ");
-                    }
-                }
-                else{ //If the taxon doesn't exist on data base
-                    String levelColum = TaxonomicalRange.KINGDOM.getFieldName();
-                    if(i==taxonList.length-1){ //last element
-                        query.append("("+levelColum+" = "+-1+")");
-                    }
-                    else{
-                        query.append("("+levelColum+" = "+-1+") or ");
-                    }
-                }
-
-            }
-            query.append(")");
+        //Query variable
+        String query = new String();
+        //Getting a list of detailed information for taxon-indicator data
+        List<TaxonIndicatorRegionality> regList = queryManager.getRegionalityList(taxonList, indicList);
+        //If doesn't exist the taxon-indicator relation (do it as usual)
+        if(regList==null || regList.size()==0){
+            query = queryManager.elementsByCriteriaSql(layerList, taxonList, indicList, colum);
         }
-
-        //If there is indicators criteria
-        if(indicList.length>0 && !indicList[0].equals("")){
-            if((taxonList.length>0 && !taxonList[0].equals(""))||(layerList.length>0 && !layerList[0].equals(""))){
-                query.append(" and (");
-            }
-            else{
-                query.append("(");
-            }
-            for(int i = 0;i<indicList.length;i++){
-                if(i==indicList.length-1){ //last element
-                    query.append("(indicator_id = "+indicList[i]+")");
-                }
-                else{
-                    query.append("(indicator_id = "+indicList[i]+") or ");
-                }
-            }
-            query.append(")");
+        else{ //If there is taxon-indicator relations
+            query = queryManager.elementsByCriteriaRegSql(layerList, colum, regList);
         }
-
         //Get globaluniqueidentifiers
         List<String> tiiList = getTaxonInfoIndexDAO().
                 getGlobalUniqueIdentifiers(query.toString());
-
         //Get specimens by their globaluniqueidentifier
         StringBuilder specimenQuery = new StringBuilder();
         specimenQuery.append("Select * from ait.darwin_core as s where ");
@@ -155,9 +70,7 @@ public class PointsManagerImpl implements PointsManager{
                 specimenQuery.append("s.globaluniqueidentifier = '"+tiiList.get(i)+"' or ");
             }
         }
-
-        //System.out.println(query.toString());
-
+        //Execute the query
         return specimenDAO.getSpecimenListByQuery(specimenQuery.toString());
     }
 
@@ -201,6 +114,20 @@ public class PointsManagerImpl implements PointsManager{
      */
     public void setSpecimenDAO(SpecimenDAO specimenDAO) {
         this.specimenDAO = specimenDAO;
+    }
+
+    /**
+     * @return the queryManager
+     */
+    public QueryManager getQueryManager() {
+        return queryManager;
+    }
+
+    /**
+     * @param queryManager the queryManager to set
+     */
+    public void setQueryManager(QueryManager queryManager) {
+        this.queryManager = queryManager;
     }
 
 }

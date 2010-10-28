@@ -1,4 +1,4 @@
-/* Modeling - Application to model threats.
+/* Modeling - Application to model threats
  *
  * Copyright (C) 2010  INBio (Instituto Nacional de Biodiversidad)
  *
@@ -19,7 +19,7 @@
 package org.inbio.modeling.core.common.manager.impl;
 
 import java.util.List;
-import org.inbio.modeling.core.common.dao.IndicatorDAO;
+import org.inbio.modeling.core.common.dao.sys.IndicatorDAO;
 import org.inbio.modeling.core.common.manager.IndicatorsManager;
 import org.inbio.modeling.core.common.model.AutocompleteNode;
 

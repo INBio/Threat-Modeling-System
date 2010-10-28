@@ -1,4 +1,4 @@
-/* Modeling - Application to model threats.
+/* Modeling - Application to model threats
  *
  * Copyright (C) 2010  INBio (Instituto Nacional de Biodiversidad)
  *
@@ -19,10 +19,9 @@
 package org.inbio.modeling.core.common.manager.impl;
 
 import java.util.List;
-import org.inbio.modeling.core.common.dao.SpecimenDAO;
+import org.inbio.modeling.core.common.dao.sys.TaxonIndexDAO;
 import org.inbio.modeling.core.common.manager.TaxonomyManager;
 import org.inbio.modeling.core.common.model.AutocompleteNode;
-import org.inbio.modeling.core.common.model.TaxonomicalRange;
 
 /**
  * @author esmata
@@ -30,7 +29,7 @@ import org.inbio.modeling.core.common.model.TaxonomicalRange;
 public class TaxonomyManagerImpl implements TaxonomyManager {
 
 	// DAO's injection
-    private SpecimenDAO specimenDAO;
+    private TaxonIndexDAO taxonIndexDAO;
 
     /**
      * To get the elements for autocomplete by taxonomical range
@@ -40,7 +39,28 @@ public class TaxonomyManagerImpl implements TaxonomyManager {
      */
     @Override
 	public List<AutocompleteNode> getElementsByTaxonomicalRange(String value,int range) {
-        if(range == TaxonomicalRange.KINGDOM.getId()){
+        //View TaxonomicalRange enum
+        switch (range) {
+            case 1: //Kingdom
+                return taxonIndexDAO.getElementsByRange(value,range);
+            case 2: //phylum
+                return taxonIndexDAO.getElementsByRange(value,range);
+            case 3: //class
+                return taxonIndexDAO.getElementsByRange(value,range);
+            case 4: //orders
+                return taxonIndexDAO.getElementsByRange(value,range);
+            case 5: //family
+                return taxonIndexDAO.getElementsByRange(value,range);
+            case 6: //genus
+                return taxonIndexDAO.getElementsByRange(value,range);
+            case 7: //specificepithet
+                return taxonIndexDAO.getElementsByRange(value,range);
+            case 8: //scientificname
+                return taxonIndexDAO.getElementsByRange(value,range);
+           default:
+               return null;
+        }
+        /*if(range == TaxonomicalRange.KINGDOM.getId()){
             return specimenDAO.getElementsByRange(value,range,"kingdom");
         }
         else if(range == TaxonomicalRange.PHYLUM.getId()){
@@ -64,22 +84,21 @@ public class TaxonomyManagerImpl implements TaxonomyManager {
         else if(range == TaxonomicalRange.SCIENTIFICNAME.getId()){
             return specimenDAO.getElementsByRange(value,range,"scientificname");
         }
-        else return null;
+        else return null;*/
 	}
 
     /**
-     * @return the specimenDAO
+     * @return the taxonIndexDAO
      */
-    public // DAO's
-    SpecimenDAO getSpecimenDAO() {
-        return specimenDAO;
+    public TaxonIndexDAO getTaxonIndexDAO() {
+        return taxonIndexDAO;
     }
 
     /**
-     * @param specimenDAO the specimenDAO to set
+     * @param taxonIndexDAO the taxonIndexDAO to set
      */
-    public void setSpecimenDAO(SpecimenDAO specimenDAO) {
-        this.specimenDAO = specimenDAO;
+    public void setTaxonIndexDAO(TaxonIndexDAO taxonIndexDAO) {
+        this.taxonIndexDAO = taxonIndexDAO;
     }
 
 }

@@ -1,4 +1,4 @@
-/* Modeling - Application to model threats.
+/* Modeling - Application to model threats
  *
  * Copyright (C) 2010  INBio (Instituto Nacional de Biodiversidad)
  *
@@ -20,6 +20,7 @@ package org.inbio.modeling.core.common.manager;
 
 import java.util.List;
 import org.inbio.modeling.core.common.model.TaxonInfoIndex;
+import org.inbio.modeling.core.common.util.TaxonIndicatorRegionality;
 
 /**
  * @author esmata
@@ -51,5 +52,20 @@ public interface QueryManager {
     public Long countByIndicator(String species,String indicator,String colunm,String polygon);
 
     public Long countByPolygon(String species,String polygon,String colunm,String indicator);
+
+    public List<TaxonIndicatorRegionality> getRegionalityList(String[] taxonList,
+            String[] indicList);
+
+    public String countByCriteriaSql(String[] layerList, String[] taxonList,
+            String[] indicList,String colum);
+
+    public String countByCriteriaRegSql(String[] layerList,String colum,
+            List<TaxonIndicatorRegionality> regList);
+
+    public String elementsByCriteriaRegSql(String[] layerList,String colum,
+            List<TaxonIndicatorRegionality> regList);
+
+    public String elementsByCriteriaSql(String[] layerList, String[] taxonList,
+            String[] indicList,String colum);
 
 }

@@ -1,4 +1,4 @@
-/* Modeling - Application to model threats.
+/* Modeling - Application to model threats
  *
  * Copyright (C) 2010  INBio (Instituto Nacional de Biodiversidad)
  *
@@ -39,6 +39,7 @@ public class TaxonInfoIndex {
     private Long indicator_id;
     private Long layer_id;
     private Long polygom_id;
+    private String country;
 
     /**
      * @return the globaluniqueidentifier
@@ -206,6 +207,20 @@ public class TaxonInfoIndex {
      */
     public void setScientific_name_id(Long scientific_name_id) {
         this.scientific_name_id = scientific_name_id;
+    }
+
+    /**
+     * @return the country
+     */
+    public String getCountry() {
+        return country;
+    }
+
+    /**
+     * @param country the country to set
+     */
+    public void setCountry(String country) {
+        this.country = country;
     }
 
 }

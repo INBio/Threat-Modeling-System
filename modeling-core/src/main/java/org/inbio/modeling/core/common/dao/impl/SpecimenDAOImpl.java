@@ -1,4 +1,4 @@
-/* Modeling - Application to model threats.
+/* Modeling - Application to model threats
  *
  * Copyright (C) 2010  INBio (Instituto Nacional de Biodiversidad)
  *
@@ -22,7 +22,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import org.inbio.modeling.core.common.dao.SpecimenDAO;
+import org.inbio.modeling.core.common.dao.sys.SpecimenDAO;
 import org.inbio.modeling.core.common.model.AutocompleteNode;
 import org.inbio.modeling.core.common.model.Specimen;
 import org.inbio.modeling.core.common.model.SpecimenBase;
@@ -69,7 +69,7 @@ public class SpecimenDAOImpl extends SimpleJdbcDaoSupport implements SpecimenDAO
         }
         return specimens;
     }
-
+    
     /**
      * Return all disctint elements for classes,phylums,kingdoms ...
      * @param partialName
@@ -77,11 +77,12 @@ public class SpecimenDAOImpl extends SimpleJdbcDaoSupport implements SpecimenDAO
      * @return
      */
     @Override
+    @Deprecated
     public List<AutocompleteNode> getElementsByRange(String partialName, int range, String atributeName) {
         List<AutocompleteNode> nodes = new ArrayList<AutocompleteNode>();
         try {
             String query = "Select DISTINCT " + atributeName + " from ait.darwin_core as s " +
-                    "where s." + atributeName + " like '%" + partialName + "%' limit 10 offset 0;";
+                    "where s." + atributeName + " like '%" + partialName + "%' limit 2 offset 0;";
 
             nodes = getSimpleJdbcTemplate().query(query,
                     new AutocompleteMapper(range, atributeName));
@@ -127,6 +128,7 @@ public class SpecimenDAOImpl extends SimpleJdbcDaoSupport implements SpecimenDAO
                     sp.getGenus(), sp.getSpecificepithet(), sp.getDecimallongitude(),
                     sp.getDecimallatitude());
         } catch (Exception e) {
+            System.out.println(e);
             return 0;
         }
         return result;

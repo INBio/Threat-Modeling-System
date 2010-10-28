@@ -1,4 +1,4 @@
-/* Modeling - Application to model threats.
+/* Modeling - Application to model threats
  *
  * Copyright (C) 2010  INBio (Instituto Nacional de Biodiversidad)
  *
@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.inbio.modeling.core.common.dao;
+package org.inbio.modeling.core.common.dao.sys;
 
 import java.util.List;
 import org.inbio.modeling.core.common.model.AutocompleteNode;

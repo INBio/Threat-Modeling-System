@@ -1,4 +1,4 @@
-/* Modeling - Application to model threats.
+/* Modeling - Application to model threats
  *
  * Copyright (C) 2010  INBio (Instituto Nacional de Biodiversidad)
  *
@@ -22,7 +22,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import org.inbio.modeling.core.common.dao.IndicatorDAO;
+import org.inbio.modeling.core.common.dao.sys.IndicatorDAO;
 import org.inbio.modeling.core.common.model.AutocompleteNode;
 import org.inbio.modeling.core.common.model.Indicator;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;

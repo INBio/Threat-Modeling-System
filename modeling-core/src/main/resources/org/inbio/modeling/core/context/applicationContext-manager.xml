@@ -46,7 +46,7 @@
         <property name="systemUserDAO" ref="systemUserDAO"/>
     </bean-->
     <bean id="taxonomyManager" class="org.inbio.modeling.core.common.manager.impl.TaxonomyManagerImpl">
-        <property name="specimenDAO" ref="specimenDAO"/>
+        <property name="taxonIndexDAO" ref="taxonIndexDAO"/>
     </bean>
     <bean id="indicatorsManager" class="org.inbio.modeling.core.common.manager.impl.IndicatorsManagerImpl">
         <property name="indicatorDAO" ref="indicatorDAO"/>

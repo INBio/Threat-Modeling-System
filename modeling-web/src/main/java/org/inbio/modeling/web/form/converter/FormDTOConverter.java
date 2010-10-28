@@ -1,6 +1,6 @@
 /* Modeling - Application to model threats.
  *
- * Copyright (C) 2010  INBio ( Instituto Nacional de Biodiversidad )
+ * Copyright (C) 2010  INBio (Instituto Nacional de Biodiversidad)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
