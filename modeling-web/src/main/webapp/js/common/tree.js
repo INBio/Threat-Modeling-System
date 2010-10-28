@@ -6,6 +6,9 @@ function addTaxonParam() {
     //Get the text field value
     var txTaxon = document.getElementById('taxonId');
     var text = txTaxon.value;
+    var txRange = document.getElementById('taxonTypeId');
+    var rangeId = parseInt(txRange.value)+1;
+
     //Validate null values
     if(text==null||text==''){
         alert(specifyTaxonE);
@@ -22,9 +25,9 @@ function addTaxonParam() {
     //Add the search criteria
     var taxonlist = document.getElementById('taxParameters');
     var newdiv = document.createElement('div');
-    newdiv.setAttribute("id",text);
+    newdiv.setAttribute("id",text+"~"+rangeId); //Taxon~range
     newdiv.innerHTML =
-        "<a class=\"criteria\" href=\"javascript:\" onclick=\"removeTaxonParamElement(\'"+text+"\')\">"+text+"</a>";
+        "<a class=\"criteria\" href=\"javascript:\" onclick=\"removeTaxonParamElement(\'"+text+"~"+rangeId+"\')\">"+text+"</a>";
     taxonlist.appendChild(newdiv);
     txTaxon.value = '';
 }

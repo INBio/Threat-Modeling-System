@@ -15,7 +15,11 @@
 
         <link rel="stylesheet" type="text/css" href="http://openlayers.org/theme/default/style.css"/>
         <script type="text/JavaScript" src="http://openlayers.org/api/OpenLayers.js"></script>
-        <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAPwVPh_9lvEdVGuSx9bULhhQEKpM7ZWcZRfz-UdsvSoIjER5D5RSUMkmSTMm54S-8s0HtiMTGujMn2A" type="text/javascript"></script>
+        <!-- localhost -->
+        <!--script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAPwVPh_9lvEdVGuSx9bULhhQEKpM7ZWcZRfz-UdsvSoIjER5D5RSUMkmSTMm54S-8s0HtiMTGujMn2A" type="text/javascript"></script-->
+
+        <!-- Lucina -->
+        <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAcXLIcswpc7kEfEXYxvvNThRbo2pJpNQIEpt8-nIdM7Qcnrb6GBQa3aXumTFilc--XaPZCMFekCNS1Q" type="text/javascript"></script>
 
         <script type="text/javascript" >
 
@@ -207,11 +211,11 @@
                 var selectedTaxa = "";
                 for (var j =0; j <taxonlist.childNodes.length; j++){
                     if(document.all){
-                        selectedTaxa += taxonlist.childNodes[j].innerText+"|";
+                        selectedTaxa += taxonlist.childNodes[j].id+"|";
                         taxonsShow.push(taxonlist.childNodes[j].innerText);
                     }
                     else{
-                        selectedTaxa += taxonlist.childNodes[j].textContent+"|";
+                        selectedTaxa += taxonlist.childNodes[j].id+"|";
                         taxonsShow.push(taxonlist.childNodes[j].textContent);
                     }
                 }

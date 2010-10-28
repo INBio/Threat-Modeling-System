@@ -59,6 +59,7 @@
         <property name="taxonInfoIndexDAO" ref="taxonInfoIndexDAO"/>
         <property name="taxonIndexDAO" ref="taxonIndexDAO"/>
         <property name="specimenDAO" ref="specimenDAO"/>
+        <property name="queryManager" ref="queryManager" />
     </bean>
     <!--bean id="speciesManager" class="org.inbio.modeling.core.manager.impl.SpeciesManagerImpl">
         <property name="taxonInfoIndexDAO" ref="taxonInfoIndexDAO"/>

@@ -10,3 +10,6 @@
 <link rel="stylesheet"
       type="text/css"
       href="<c:out value="${pageContext.request.contextPath}"/>/<spring:theme code='tree'/>"/>
+<link rel="stylesheet"
+      type="text/css"
+      href="<c:out value="${pageContext.request.contextPath}"/>/<spring:theme code='menu'/>"/>

@@ -49,8 +49,9 @@ public class PointsManagerImpl implements PointsManager{
         String query = new String();
         //Getting a list of detailed information for taxon-indicator data
         List<TaxonIndicatorRegionality> regList = queryManager.getRegionalityList(taxonList, indicList);
+        //List<TaxonIndicatorRegionality> regList = null;
         //If doesn't exist the taxon-indicator relation (do it as usual)
-        if(regList==null || regList.size()==0){
+        if(regList==null || regList.isEmpty()){
             query = queryManager.elementsByCriteriaSql(layerList, taxonList, indicList, colum);
         }
         else{ //If there is taxon-indicator relations
