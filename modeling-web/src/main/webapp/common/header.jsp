@@ -15,4 +15,5 @@
 		<div id="banner-contenedor">
             <div id="banner" ></div>
 		</div>
+		<div id="spacer"> </div>
 </div>

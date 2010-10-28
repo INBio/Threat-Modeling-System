@@ -32,7 +32,7 @@
             //Show description panel
             function showPanel(title,description){
                 YAHOO.example.help.setHeader(title);
-                YAHOO.example.help.setBody("<p>"+description+"</p>");
+                YAHOO.example.help.setBody("<p align='left'>"+description+"</p>");
                 YAHOO.example.help.render(document.getElementById('help-box'));
                 YAHOO.example.help.show();
             }

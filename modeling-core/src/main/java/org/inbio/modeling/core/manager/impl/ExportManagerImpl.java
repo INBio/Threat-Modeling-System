@@ -199,7 +199,7 @@ public class ExportManagerImpl implements ExportManager {
         return document;
     }
 
-    private void addDocumentFooter(Document d, String[] texts){
+    private void addDocumentFooter(Document d, String[] texts) throws DocumentException{
 
         Font smallFont = new Font(Font.TIMES_ROMAN, 12 , Font.BOLD);
         Font smallGreenFont = new Font(Font.TIMES_ROMAN, 12 , Font.BOLD, Color.GREEN);
@@ -213,6 +213,7 @@ public class ExportManagerImpl implements ExportManager {
         footer.add(new Paragraph(texts[1], smallGreenFont));
         footer.add(new Paragraph(texts[2], smallDarkGreenFont));
         this.addEmptyLine(footer, 1);
+        d.add(footer);
     }
 
     private void addLineSeparator(Paragraph p, int number){

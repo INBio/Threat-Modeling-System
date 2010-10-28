@@ -16,9 +16,9 @@
 			<div style="padding-left: 40%; text-align: left">
 				<ol>
 					<!--li><a href="listUsers.html">Usuarios</a></li-->
-					<li><a href="listLayers.html">Capas</a></li>
-					<li><a href="listUsers.html">Usuarios</a></li>
-					<li><a href="resolution.html">Resolución</a></li>
+                    <li><a href="listLayers.html"><fmt:message key="common.layers" /></a></li>
+					<li><a href="listUsers.html"><fmt:message key="common.users" /></a></li>
+					<li><a href="resolution.html"><fmt:message key="common.resolution" /></a></li>
 				</ol>
 			</div>
 		</div>

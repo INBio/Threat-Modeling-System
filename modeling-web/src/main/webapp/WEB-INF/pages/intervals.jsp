@@ -64,7 +64,7 @@
             //Show description panel
             function showPanel(title,description){
                 YAHOO.example.help.setHeader(title);
-                YAHOO.example.help.setBody("<p>"+description+"</p>");
+                YAHOO.example.help.setBody("<p align='left'>"+description+"</p>");
                 YAHOO.example.help.render(document.getElementById('help-box'));
                 YAHOO.example.help.show();
             }
@@ -187,7 +187,7 @@
                                             </div>
                                         </c:when>
                                         <c:otherwise>
-                                <div  class="link_help"  onclick="showPanel('<fmt:message key="help.intervalsPoint.title" />','<fmt:message key="help.intervalsLine.cont" />')" >&nbsp;</div>
+                                <div  class="link_help"  onclick="showPanel('<fmt:message key="help.intervalsPoint.title" />','<fmt:message key="help.intervalsPoint.cont" />')" >&nbsp;</div>
                                             <div id="title_${layer.name}" style="text-align:center;">
                                                 <br />
                                                 <span class="textosnegrita">
