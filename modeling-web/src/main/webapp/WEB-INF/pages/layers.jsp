@@ -61,7 +61,7 @@
 
 			<div id="formXD">
 				<form:form id="layersForm" commandName="layersForm" method="post" action="layers.html" >
-					<div id="layers" style="border: 1px;">
+					<div id="layers" style="border: 1px;  text-align: center">
 						<div id="resolution"  style="border: 1px; margin-bottom: 5px">
 							<table id="layerTable" class="tabla-contenido" width="70%" border="0" align="center" cellpadding="4" cellspacing="1" >
 
@@ -70,7 +70,7 @@
 								</tr>
 								<tr class="celda01">
 
-									<td width="60%">
+										<td width="465px">
 										<span class="textos">
 											<fmt:message key="common.resolution"/>
 											<div  class="link_help"  onclick="showPanel('<fmt:message key="help.resolution.title" />','<fmt:message key="help.resolution.cont" />')" >&nbsp;</div>
@@ -85,18 +85,16 @@
 						<div >
 							<table id="layersTable" class="tabla-contenido" width="70%" border="0" align="center" cellpadding="4" cellspacing="1" >
 								<tr class="celda02">
-									<td width="60%"><span class="textosnegrita"><fmt:message key="common.layers"/></span>
+										<td width="465px">
+									<span class="textosnegrita"><fmt:message key="common.layers"/></span>
 										<div  class="link_help"  onclick="showPanel('<fmt:message key="help.layerList.title" />','<fmt:message key="help.layerList.cont" />')" >&nbsp;</div></td>
 									<td><span class="textosnegrita"><fmt:message key="layer.importanceValue"/></span></td>
 								</tr>
 							</table>
 						</div>
 
-						<div id="layerSelection" style="margin-bottom: 5px" >
-							<table id="layersTable" class="tabla-contenido" width="70%" border="0" align="center" cellpadding="4" cellspacing="1" >
-
-
-
+						<div id="layerSelection" style="margin: auto; width: 70%" >
+							<table id="layersTable" class="tabla-contenido" width="100%" border="0" align="center" cellpadding="4" cellspacing="1" >
 
 								<c:forEach items="${layersForm.layerList}" var="layer"  varStatus="current">
 									<form:hidden path="layerList[${current.index}].name" />
@@ -104,7 +102,7 @@
 									<form:hidden path="layerList[${current.index}].displayName" />
 									<tr class="celda01">
 									<div class="${layer.name}">
-										<td width="60%">
+										<td width="465px">
 											<span class="textos" title="<fmt:message key='layer.description' />: ${layer.description}">
 												<form:checkbox cssStyle="width: 5%" id="${layer.name}" path="layerList[${current.index}].selected" onclick="setValueToZero(this);" />
 												<c:out value="${layer.displayName}" />
@@ -143,7 +141,7 @@
 							<table id="layersTable" class="tabla-contenido" width="70%" border="0" align="center" cellpadding="4" cellspacing="1" >
 
 								<tr class="celda02">
-									<td width="60%">
+										<td width="465px">
 										<span class="textos">
 											<div id="importance">
 												<fmt:message key="layer.importanceValueTotal"/>
