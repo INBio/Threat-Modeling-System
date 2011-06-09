@@ -9,7 +9,6 @@
 <html>
 	<head>
 		<%@ include file="/common/theme" %>
-		<%@ include file="/common/javascript" %>
 	</head>
 	<body onload="">
 		<div id="Header">

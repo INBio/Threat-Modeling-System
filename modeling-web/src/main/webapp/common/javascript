@@ -14,4 +14,4 @@
 <script src="${pageContext.request.contextPath}/js/yui/autocomplete/autocomplete-min.js" type="text/javascript" language="javascript"></script>
 <script src="${pageContext.request.contextPath}/js/yui/treeview/treeview-min.js" type="text/javascript" language="javascript"></script>
 <script src="${pageContext.request.contextPath}/js/yui/dragdrop/dragdrop-min.js" type="text/javascript" language="javascript"></script>
-<script src="${pageContext.request.contextPath}/js/yui/container/container.js" type="text/javascript" language="javascript"></script>
+<script src="${pageContext.request.contextPath}/js/yui/container/container-min.js" type="text/javascript" language="javascript"></script>

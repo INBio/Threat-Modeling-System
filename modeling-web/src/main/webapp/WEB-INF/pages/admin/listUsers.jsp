@@ -10,7 +10,7 @@
 <html>
     <head>
         <%@ include file="/common/theme" %>
-        <%@ include file="/common/javascript" %>
+
     </head>
     <body onload="checkSize()">
         <div id="Header">

@@ -9,7 +9,6 @@
 <html>
     <head>
         <%@ include file="/common/theme" %>
-        <%@ include file="/common/javascript" %>
         <script language="javascript" type="text/javascript">
 
             //Using to show the loading panel

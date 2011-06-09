@@ -8,130 +8,87 @@
 <%@ include file="/common/taglibs" %>
 
 <html>
-    <head>
-        <%@ include file="/common/theme" %>
-        <%@ include file="/common/javascript" %>
+  <head>
+    <%@ include file="/common/theme" %>
 
-        <script type="text/javascript">
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/common/common.js"></script>
+    
+    <script type="text/javascript">
 
+      // javascript specific for this page
+      $(document).ready(function(){
+        initHelpDialog();
+      })
+  
+      waitingDialogTitle = '<fmt:message key="common.loading"/>';
 
-            //Using to show the loading panel
-            YAHOO.namespace("example.container");
-
-            var loadingImage = "<img src='${pageContext.request.contextPath}/themes/default/images/ajax-loader.gif' ></img>";
-            var loadingText = "<fmt:message key="common.loading"/>";
-
-            /*
-             * Initialize a panel to show the loading image
-             */
-            function initLoadingPanel(){
-                if (!YAHOO.example.container.wait) {
-                   YAHOO.example.container.wait =
-                        new YAHOO.widget.Panel("wait",
-                    {
-                        width:"300px",
-                        fixedcenter:true,
-                        close:false,
-                        draggable:false,
-                        zindex:999,
-                        modal:true,
-                        visible:false
-                    }
-                );
-                    YAHOO.example.container.wait.setHeader(loadingText);
-                    YAHOO.example.container.wait.setBody(loadingImage);
-                    YAHOO.example.container.wait.render(document.getElementById('contenido'));
-                }
-            }
-
-            /*
-             * Initialize a panel to show the descriptions
-             */
-            function initHelpPanel(){
-                if (!YAHOO.example.help) {
-                   YAHOO.example.help =
-                        new YAHOO.widget.Panel("help",
-                    {
-                        width:"500px",
-                        fixedcenter:true,
-                        close:true,
-                        draggable:true,
-                        zindex:999,
-                        modal:false,
-                        visible:false
-                    });
-                }
-            }
-
-            //Show description panel
-            function showPanel(title,description){
-                YAHOO.example.help.setHeader(title);
-                YAHOO.example.help.setBody("<p align='left'>"+description+"</p>");
-                YAHOO.example.help.render(document.getElementById('help-box'));
-                YAHOO.example.help.show();
-            }
-
-            window.location = "${pageContext.request.contextPath}/limit.html#";
-        </script>
+      window.location = "${pageContext.request.contextPath}/limit.html#";
+    </script>
 
 
-    </head>
+  </head>
 
-    <body onload="initHelpPanel();initLoadingPanel()" class="yui-skin-sam">
-        <div id="Header">
-            <jsp:include page="/common/header.jsp"/>
+  <body onload="" class="yui-skin-sam">
+    <div id="Header">
+      <jsp:include page="/common/header.jsp"/>
+    </div>
+    <div id="contenido">
+      <div id="limitTitle">
+        <p class="titulo-principal"><fmt:message key="title.limit"/></p>
+      </div>
+
+      <div id="help-box" class="loader" ></div>
+      <spring:hasBindErrors name="limitForm">
+        <div class="errors">
+          <h3><fmt:message key="errors.title"/></h3>
+          <p>
+            <c:forEach items="${errors.allErrors}" var="error">
+              <fmt:message key="${error.code}" />
+            </c:forEach>
+          </p>
         </div>
-        <div id="contenido">
-            <div id="limitTitle">
-                <p class="titulo-principal"><fmt:message key="title.limit"/></p>
-            </div>
+      </spring:hasBindErrors>
 
-            <div id="help-box" ></div>
-            <spring:hasBindErrors name="limitForm">
-                <div class="errors">
-                    <h3><fmt:message key="errors.title"/></h3>
-                    <p>
-                        <c:forEach items="${errors.allErrors}" var="error">
-                            <fmt:message key="${error.code}" />
-                        </c:forEach>
-                    </p>
-                </div>
-            </spring:hasBindErrors>
-
-            <div id="limitForm">
-                <form:form method="post" action="limit.html" commandName="limitForm">
-                    <table width="60%" border="0" align="center" cellpadding="4" cellspacing="1" class="tabla-contenido">
-                        <tr class="celda02" >
-                            <td colspan="2" style="text-align: left; ">
-                                <span class="textosnegrita" style="text-align: left; font-size: 17px">
-                                    <fmt:message key="title.limit"/>
-                                </span>
-                                <div  class="link_help"  onclick="showPanel('<fmt:message key="help.limit.title" />','<fmt:message key="help.limit.cont" />')" >&nbsp;</div>
-                            </td>
-                        </tr>
-                        <tr class="celda01" style="height: 100px">
-                            <td width="20%">
-                                <span class="textosnegrita">
-                                    <fmt:message key="layer.layer" />
-                                </span>
-                            </td>
-                            <td align="center">
-                                <form:select path="selectedLayerName">
-                                    <form:options items="${limitForm.layers}" itemValue="name" itemLabel="displayName" />
-                                </form:select>
-                            </td>
-                        </tr>
-                        <tr class="celda02">
-                            <td colspan="2">
-                                <input id="submitButton" type="submit" class="button-simple" value='<fmt:message key="layer.nextStep"/>' onclick="YAHOO.example.container.wait.show();" />
-                            </td>
-                        </tr>
-                    </table>
-                </form:form>
-            </div>
-        </div>
-        <div id="footer">
-            <jsp:include page="/common/footer.jsp"/>
-        </div>
-    </body>
+      <div id="limitForm">
+        <form:form method="post" action="limit.html" commandName="limitForm">
+          <table width="60%" border="0" align="center" cellpadding="4" cellspacing="1" class="tabla-contenido">
+            <tr class="celda02" >
+              <td colspan="2" style="text-align: left; ">
+                <span class="textosnegrita" style="text-align: left; font-size: 17px">
+                  <fmt:message key="title.limit"/>
+                </span>
+                <div  class="link_help"  onclick="showPanel('<fmt:message key="help.limit.title" />','<fmt:message key="help.limit.cont" />')" >&nbsp;</div>
+              </td>
+            </tr>
+            <tr class="celda01" style="height: 100px">
+              <td width="20%">
+                <span class="textosnegrita">
+                  <fmt:message key="layer.layer" />
+                </span>
+              </td>
+              <td align="center">
+                <form:select path="selectedLayerName">
+                  <form:options items="${limitForm.layers}" itemValue="name" itemLabel="displayName" />
+                </form:select>
+              </td>
+            </tr>
+            <tr class="celda02">
+              <td colspan="2">
+                <input id="submitButton" 
+                       type="submit" 
+                       class="button-simple" 
+                       value='<fmt:message key="layer.nextStep"/>' 
+                       onclick="showWaitingDialog()" />
+              </td>
+            </tr>
+          </table>
+        </form:form>
+      </div>
+    </div>
+    <div id="footer">
+      <jsp:include page="/common/footer.jsp"/>
+    </div>
+  </body>
 </html>

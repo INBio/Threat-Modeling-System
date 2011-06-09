@@ -69,7 +69,7 @@ function showSpecimenPoints(selectedLayers,selectedTaxa,selectedIndicators)  {
             var bounds = new OpenLayers.Bounds(
                 minX, minY, maxX, maxY);
 
-            YAHOO.example.container.wait.hide();
+            hideWaitingDialog();
         },
 
         //If XHR call is not successful

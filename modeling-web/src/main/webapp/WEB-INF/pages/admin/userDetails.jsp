@@ -10,7 +10,6 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <%@ include file="/common/theme" %>
-        <%@ include file="/common/javascript" %>
     </head>
     <body onload="checkSize()">
         <div id="Header">

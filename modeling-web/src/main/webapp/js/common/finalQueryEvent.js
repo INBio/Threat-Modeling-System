@@ -22,7 +22,7 @@
  */
 function showPointFromHiddenData(){
     //Show loading
-    YAHOO.example.container.wait.show();
+    showWaitingDialog();
     //Getting the query parameters
     var taxa = document.getElementById('hiddenTaxa').value;
     var indic = document.getElementById('hiddenIndicators').value;
@@ -39,7 +39,7 @@ function showPoints(id,type){
     var taxa = document.getElementById('hiddenTaxa').value;
 
     //Show loading
-    YAHOO.example.container.wait.show();
+    showWaitingDialog();
     //Indicate de current selected
     indicateCurrent('t'+id,'map');
     //Show map
