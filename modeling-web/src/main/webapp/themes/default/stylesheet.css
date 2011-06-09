@@ -367,8 +367,8 @@ a.link-celda02:visited {
 	padding: 50px;
 }
 
-#begin{
-	background-color:#BADD58;
+.begin-on{
+	background-color: #badd58;
 	padding: 5px 3px 5px 3px;
 	text-align:center;
 	width:400px;
@@ -377,6 +377,19 @@ a.link-celda02:visited {
 	margin-top: 30px;
 	margin-right: 50px;
 }
+
+.begin-off{
+	/*background-color:#e3fcbc;*/
+    background-color:#99dd50;
+	padding: 5px 3px 5px 3px;
+	text-align:center;
+	width:400px;
+	float: right;
+	-moz-border-radius: 10px;/*buscar las opciones para otros navegadores*/
+	margin-top: 30px;
+	margin-right: 50px;
+}
+
 
 #intro{
 	text-align: justify;

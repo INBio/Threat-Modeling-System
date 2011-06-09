@@ -4,12 +4,32 @@
 <html>
 	<head>
 		<%@ include file="/common/theme" %>
-		<%@ include file="/common/javascript" %>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 		<script type="text/javascript">
-			function redirectPage(){
-				window.location.pathname='<c:out value="${pageContext.request.contextPath}"/>'+'/layers.html';
-				return;
-			}
+            
+            // java script specific for this page
+             $(document).ready(function(){
+                 
+                 // change the color of the begin button
+                   $('#begin').hover(
+                    function(){
+                        
+                        $(this).addClass('begin-off');
+                    },
+                    
+                    function(){
+                        $(this).removeClass('begin-off');
+                    });
+                    
+                  // add a click event on the begin button  
+                  $('#begin').click(
+                    function(event){
+                        // redirect to the layers page
+                       window.location.pathname='<c:out value="${pageContext.request.contextPath}"/>'+'/layers.html'; 
+                    });
+             });
+                 
+			
 		</script>
 	</head>
 	<body onload="" class="yui-skin-sam" >
@@ -39,7 +59,7 @@
 			<div id="intro">
 				<fmt:message key="common.intro" />
 			</div>
-			<div id="begin" class="begin" onclick="redirectPage()">
+			<div id="begin" class="begin-on" onclick="">
 				<fmt:message key="common.begin" />
 			</div>
 		</div>
