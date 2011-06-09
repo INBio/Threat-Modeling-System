@@ -1,97 +1,97 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>org.inbio.modeling</groupId>
-    <artifactId>modeling-core</artifactId>
-    <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
-    <name>modeling-core</name>
-    <url>http://maven.apache.org</url>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.inbio.modeling</groupId>
+	<artifactId>modeling-core</artifactId>
+	<packaging>jar</packaging>
+	<version>1.0-SNAPSHOT</version>
+	<name>modeling-core</name>
+	<url>http://maven.apache.org</url>
 
-    <parent>
-        <groupId>org.inbio.modeling</groupId>
-        <artifactId>modeling</artifactId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
+	<parent>
+		<groupId>org.inbio.modeling</groupId>
+		<artifactId>modeling</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
 
-    <developers>
-        <developer>
-            <id>asanabria</id>
-            <name>Aurelio Sanabria</name>
-            <email>asanabria at inbio dot ac dot cr</email>
-            <organization>INBio</organization>
-            <organizationUrl>http://www.inbio.ac.cr</organizationUrl>
-            <roles>
-                <role>Developer</role>
-            </roles>
-            <timezone>-6</timezone>
-        </developer>
-    </developers>	
+	<developers>
+		<developer>
+			<id>asanabria</id>
+			<name>Aurelio Sanabria</name>
+			<email>asanabria at inbio dot ac dot cr</email>
+			<organization>INBio</organization>
+			<organizationUrl>http://www.inbio.ac.cr</organizationUrl>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<timezone>-6</timezone>
+		</developer>
+	</developers>	
 
-    <dependencies>
-        <dependency>
-            <groupId>org.inbio.system</groupId>
-            <artifactId>system-access</artifactId>
-            <version>1.1.0</version>
-        </dependency>
+	<dependencies>
+		<dependency>
+			<groupId>org.inbio.system</groupId>
+			<artifactId>system-access</artifactId>
+			<version>1.1.0</version>
+		</dependency>
 
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.14</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-            <version>2.5.6</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
-            <version>2.5.6</version>
-        </dependency>
-        <dependency>
-            <groupId>postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>8.3-603.jdbc4</version>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.14</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>2.5.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>2.5.6</version>
+		</dependency>
+		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>8.3-603.jdbc4</version>
 			<!--version>8.4-701.jdbc4</version-->
-        </dependency>
+	</dependency>
 
-        <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
-            <version>3.2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-core</artifactId>
-            <version>2.0.4</version>
-        </dependency>	
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>2.0.4</version>
+		</dependency>	
 
-        <dependency>
-            <groupId>com.lowagie</groupId>
-            <artifactId>itext</artifactId>
-            <version>2.1.7</version>
-        </dependency>
-    </dependencies>
+		<dependency>
+			<groupId>com.lowagie</groupId>
+			<artifactId>itext</artifactId>
+			<version>2.1.7</version>
+		</dependency>
+</dependencies>
 
-    <build>
-        <finalName>modeling-core</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+<build>
+	<finalName>modeling-core</finalName>
+	<plugins>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<configuration>
+				<source>1.6</source>
+				<target>1.6</target>
+			</configuration>
+		</plugin>
+	</plugins>
+</build>
 </project>
