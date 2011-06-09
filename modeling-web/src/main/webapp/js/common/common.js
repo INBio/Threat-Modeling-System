@@ -389,7 +389,7 @@ function editUser(){
  */
 function addLayerWMS(name, layer) {
 
-    return new OpenLayers.Layer.WMS( name, "http://216.75.53.105:80/geoserver/wms",
+    return new OpenLayers.Layer.WMS( name, "http://216.75.53.105:80/geoserver_2_0_x/wms",
     {layers: layer,
         transparent: "true",
         height: '478',

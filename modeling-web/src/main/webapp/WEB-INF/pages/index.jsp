@@ -1,23 +1,51 @@
 <%@ page contentType="text/html" pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
+<%@include file="/common/taglibs" %>
 
 <html>
-    <head>
-    </head>
-    <body onload="checkSize()">
-        <div id="contenido">
-            <h1>Contenidos</h1>
-			<ol>
-				<li><a href="layers.html">Capas</a></li>
-				<li><a href="admin/administration.html">Administración</a></li>
-			</ol>
+	<head>
+		<%@ include file="/common/theme" %>
+		<%@ include file="/common/javascript" %>
+		<script type="text/javascript">
+			function redirectPage(){
+				window.location.pathname='<c:out value="${pageContext.request.contextPath}"/>'+'/layers.html';
+				return;
+			}
+		</script>
+	</head>
+	<body onload="" class="yui-skin-sam" >
+		<div id="header-contenedor">
+			<div style="-rave-layout: grid">
+				<div id="lang" >
+					<div id="title" style="float: left;"><fmt:message key="common.applicationName"/></div>
+				</div>
+				<div id="banner-contenedor">
+					<a href="http://www.iabin.net">
+						<div id="banner" ></div>
+					</a>
+				</div>
+				<div id="spacer"> </div>
+			</div>
+		</div>
+		<div id="contenido" style="text-align: center">
+			<div id="div-logos">
+				<a id="iabin-logo" href="http://iabin.net/"></a>
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+				<a id="inbio-logo" style="float: right" href="http://www.inbio.ac.cr/"></a>
+			</div>
+			<div id="intro">
+				<fmt:message key="common.intro" />
+			</div>
+			<div id="begin" class="begin" onclick="redirectPage()">
+				<fmt:message key="common.begin" />
+			</div>
+		</div>
 
-        </div>
-    </body>
+		<div id="footer">
+			<jsp:include page="/common/footer.jsp"/>
+		</div>
+	</body>
 </html>
-

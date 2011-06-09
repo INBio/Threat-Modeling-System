@@ -11,12 +11,15 @@
 		<%@ include file="/common/theme" %>
 		<%@ include file="/common/javascript" %>
 	</head>
-    <body onload="checkSize()">
+	<body onload="">
 		<div id="Header">
 			<jsp:include page="/common/header.jsp"/>
 		</div>
 		<div id="contenido">
 			<h2>Access Denied!</h2>
 		</div>
-    </body>
+		<div id="footer">
+			<jsp:include page="/common/footer.jsp"/>
+		</div>
+	</body>
 </html>

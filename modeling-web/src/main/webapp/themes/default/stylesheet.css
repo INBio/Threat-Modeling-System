@@ -53,7 +53,7 @@ body {
 }
 
 #spacer {
-    height: 10px;
+    height: 3px;
     width: 100%;
 	background-color: #043780;
 }
@@ -178,14 +178,91 @@ a.link-celda02:visited {
 	background-image: url(images/about.png);
 }
 
+.link_admin{
+	background-repeat:no-repeat;
+	background-position: 30px 10px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 10px;
+	color: #FC0;
+	padding-left: 60px;
+	padding-top: 20px;
+	padding-right: 0;
+	padding-bottom: 5px;
+	background-image: url(images/admin.gif);
+}
+
+.link_wiki{
+	background-repeat:no-repeat;
+	background-position: 30px 10px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 10px;
+	color: #FC0;
+	padding-left: 60px;
+	padding-top: 20px;
+	padding-right: 0;
+	padding-bottom: 5px;
+	background-image: url(images/wiki.gif);
+}
+
 /* Para el link de about modificado Leila*/
 .link_help{
 	background-repeat:no-repeat;
-	background-image: url(images/help.png);
+/*	background-image: url(images/help.png); */
+	background-image: url(images/help.gif);
     width: 23px;
     height: 23px;
     float: right;
 }
+
+#iabin-logo{
+	background-repeat:no-repeat;
+	background-image: url(images/logo-iabin.jpg);
+	width: 300px;
+	height: 85px;
+	float: left;
+}
+
+#inbio-logo{
+	background-repeat:no-repeat;
+	background-image: url(images/logo-inbio.png);
+	width: 196px;
+	height: 70px;
+	float: left;
+}
+
+#oas-logo{
+	background-repeat:no-repeat;
+	background-image: url(images/logo-oas.jpg);
+	width: 283px;
+	height: 277px;
+	float: left;
+}
+
+#worlbank-logo{
+	background-repeat:no-repeat;
+	background-image: url(images/logo-worlbank.png);
+	width: 181px;
+	height: 181px;
+	float: left;
+}
+
+#gef-logo{
+	background-repeat:no-repeat;
+	background-image: url(images/logo-gef.gif);
+	width: 494px;
+	height: 125px;
+	float: left;
+}
+
+#sponsors {
+	height: 350px;
+	text-align: left;
+}
+
+#licenses {
+	text-align: left;
+}
+
 
 
 .textos {
@@ -275,6 +352,37 @@ a.link-celda02:visited {
     -moz-border-radius: 10px;/*buscar las opciones para otros navegadores*/
 }
 
+#login_box{
+    padding: 5px 3px 5px 3px;
+    background-color:#BADD58;
+    text-align:center;
+    width:400px;
+    margin: auto;
+    -moz-border-radius: 10px;/*buscar las opciones para otros navegadores*/
+}
+
+#div-logos{
+	float: left;
+	margin: auto;
+	padding: 50px;
+}
+
+#begin{
+	background-color:#BADD58;
+	padding: 5px 3px 5px 3px;
+	text-align:center;
+	width:400px;
+	float: right;
+	-moz-border-radius: 10px;/*buscar las opciones para otros navegadores*/
+	margin-top: 30px;
+	margin-right: 50px;
+}
+
+#intro{
+	text-align: justify;
+	float: right;
+	width: 50%;
+}
 
 select{
     width: 70%;
@@ -396,10 +504,18 @@ select{
 
 #contenido {
 	width:90%;
+	height: 450px;
 	vertical-align: top;
 	text-align: center;
-    margin: 15px auto 15px auto;
+	margin: 5px auto 15px auto;
 	padding: 4px;
+}
+
+#layerSelection{
+	height: 250px;
+	margin-right:  -20px;
+	overflow: auto;
+	text-align: center;
 }
 
 .intervals_value{

@@ -74,7 +74,7 @@
             OpenLayers.ProxyHost = "cgi-bin/proxy.cgi/?url=";
 
             //Prepare URL for XHR request:
-            var sUrl = "cgi-bin/proxy.cgi/?url=http://216.75.53.105:80/geoserver/wms?request=getCapabilities";
+            var sUrl = "cgi-bin/proxy.cgi/?url=http://216.75.53.105:80/geoserver_2_0_x/wms?request=getCapabilities";
 
             //Prepare callback object
             var callback = {
@@ -373,7 +373,7 @@
             <!-- Header -->
             <jsp:include page="/common/header.jsp"/>
         </div>
-        <div id="contenido" style="width: 100%">
+        <div id="contenido" style="width: 100%; height: auto;">
 
             <div id="help-box" ></div>
             <spring:hasBindErrors name="intervalsForm">
@@ -435,7 +435,7 @@
                     </table>
                     <c:forEach items="${fullSessionInfo.layerList}" var="layer" >
                         <br />
-                        <table border="5" class="tabla-contenido">
+                        <table border="2" class="tabla-contenido">
                             <tr class="celda02">
                                 <td colspan="2" style="width:350px; font-weight:bold;max-width: 350px; overflow: hidden;"><c:out value="${layer.displayName}" /></td>
                             </tr>
